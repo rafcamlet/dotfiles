@@ -143,12 +143,15 @@ mrebase() {
 fbp!() {
 # feature branch force push
 NAME=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+REPO=$(git config --get remote.origin.url | sed -e 's#git@github.com:\(.*\)\.git#\1#')
+
 if [ "$NAME" == "master" ]; then
   echo "Its a MASTER!!!" && return
 fi
 echo "Pushing $NAME to repo..."
 git push -f origin $NAME
 notify-send --urgency=low -i "terminal" "Git - $NAME" "Was pushed to repo"
+echo "Create PR https://github.com/$REPO/compare/$NAME"
 }
 
 send() {
@@ -176,3 +179,9 @@ f() {
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+###-tns-completion-start-###
+if [ -f /home/r/.tnsrc ]; then 
+    source /home/r/.tnsrc 
+fi
+###-tns-completion-end-###

@@ -55,3 +55,30 @@ element.empty();
 element.append(template);
 $compile(element.contents())(scope);
 endsnippet
+
+snippet rcc "create class/component" b
+import React, {Component} from 'react';
+
+class `!p snip.rv = snip.basename` extends Component {
+
+	render() {
+		return (
+			${VISUAL}$1
+		);
+	}
+
+}
+$0
+export default `!p snip.rv = snip.basename`;
+endsnippet
+
+
+snippet constructor "ES5 " b
+constructor(props) {
+	(props);
+
+	this.state = {
+		data: []
+	};
+}
+endsnippet

@@ -51,6 +51,7 @@ Plug 'godlygeek/tabular'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tmhedberg/matchit'
 Plug 'pangloss/vim-javascript'
 Plug 'othree/javascript-libraries-syntax.vim'
@@ -59,7 +60,6 @@ Plug 'mattn/emmet-vim'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'Valloric/MatchTagAlways'
 Plug 'tpope/vim-unimpaired'
-" Plug 'ngmy/vim-rubocop'
 Plug 'rking/ag.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'kana/vim-textobj-user'
@@ -76,27 +76,48 @@ Plug 'thinca/vim-quickrun' " Run current file and show output in new buffer
 Plug 'jeetsukumaran/vim-indentwise' " Indent motion
 Plug 'rafcamlet/resize-mode'
 Plug 'rafcamlet/shadowmoth' " best colorscheme ever!
+Plug 'coderifous/textobj-word-column.vim' " Select column of text example: vic
 
 " TEST plugin
-
+Plug 'othree/xml.vim' " A plugin for editing xml
+" Plug 'christoomey/vim-tmux-runner' "A simple, vimscript only, command runner for sending commands from vim to tmux.
+Plug 'janko-m/vim-test' "A Vim wrapper for running tests on different granularities.
+" Plug 'junegunn/vim-lengthmatters'
+" Plug 'junegunn/vim-peekaboo' "show the contents of the registers
+Plug 'junegunn/gv.vim' "A git commit browser
 Plug 'ecomba/vim-ruby-refactoring'
 Plug 'xolox/vim-misc'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'pelodelfuego/vim-swoop'
 Plug 'airblade/vim-gitgutter'
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar' "Vim plugin that displays tags in a window, ordered by scope
 Plug 'Shutnik/jshint2.vim'
 
 Plug 'mhinz/vim-grepper' " vim wrapper around 'grepprg' and 'grepformat'
-Plug 'textobj-indent'
 
-Plug 'coderifous/textobj-word-column.vim' " Select column of text example: vic
 Plug 'kassio/neoterm' " Wrapper of some neovim's :terminal functions.
 Plug 'tpope/vim-bundler' " Lightweight support for Ruby's Bundler
-Plug 'sjl/gundo.vim' " Plugin to visualize your Vim undo tree.
+" Plug 'sjl/gundo.vim' " Plugin to visualize your Vim undo tree.
+Plug 'terryma/vim-multiple-cursors' " True Sublime Text style multiple selections for Vim
+function! BuildComposer(info)
+  if a:info.status != 'unchanged' || a:info.force
+    !cargo build --release
+    UpdateRemotePlugins
+  endif
+endfunction
 
-Plug '~/projekty/test-plug' " My test plugin
+Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+Plug 'mxw/vim-jsx'
+Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'eugen0329/vim-esearch' "Plugin performing project-wide async search and replace
+Plug 'leafgarland/typescript-vim' "Typescript syntax files for Vim
+Plug 'tpope/vim-abolish' "easily search for, substitute, and abbreviate multiple variants of a word
+Plug 'tpope/vim-ragtag' " ragtag.vim: ghetto HTML/XML mappings (formerly allml.vim)
+
+" Plug '~/projekty/test-plug' " My test plugin
 Plug '~/projekty/show-me-db' " My test plugin
+Plug '~/projekty/vim-nest' " My test plugin
+
 
 call plug#end()
 "}}}
@@ -120,7 +141,7 @@ set showmatch                                  " highlight matching bracket
 set lazyredraw                                 " redraw only when we need to.
 set linebreak                                  " Wrap lines at convenient points
 set nobackup                                   " prevent backup
-" set noswapfile                               " prevent swapfile
+set noswapfile                               " prevent swapfile
 set nowritebackup                              " prevent backup
 set display+=lastline                          " show whole lines
 set virtualedit=onemore                        " Allow for cursor beyond last character
@@ -189,17 +210,19 @@ autocmd vimrc WinEnter * set nocursorline nocursorcolumn
 colorscheme shadowmoth
 
 set clipboard+=unnamedplus " integrate system clipboard
+
+let g:markdown_fenced_languages = ['html', 'vim', 'ruby', 'python', 'bash=sh']
 "}}}
 "====================================
 "----------2_Filetype_config---------
 "====================================
-
+" {{{
 " Automatic read dictionaries for filetype and add easy access to edit it
 " Use OpenDict command to edit current file type or pass filetype name
 " ex: :OpenDict ruby
 " Dictionaries are in $home/.config/nvim/dict directory
 " Author: Rafał Camlet raf.camlet@gmail.com
-" {{{
+
 function! s:set_dict(name)
   let dict_name = expand('$HOME') . '/.config/nvim/dict/' . a:name . '.txt'
 
@@ -227,12 +250,6 @@ augroup ruby_dict_group
   autocmd FileType vim call s:set_dict('vim')
 augroup END
 
-augroup turn_off_haml_indenting_group
-  autocmd!
-
-  autocmd FileType haml setl noai nocin nosi inde=
-augroup END
-
 augroup vim_group
   autocmd!
 
@@ -240,12 +257,66 @@ augroup vim_group
 augroup END
 
 "}}}
-
 "====================================
 "----------3_Plugins_config----------
 "====================================
 "{{{
 "
+"terryma/vim-multiple-cursors[
+function! Multiple_cursors_before()
+  let g:deoplete#disable_auto_complete = 1
+endfunction
+function! Multiple_cursors_after()
+  let g:deoplete#disable_auto_complete = 0
+endfunction
+"]
+
+
+" vim-ctrlspace/vim-ctrlspace[
+if executable("ag")
+  let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
+endif
+
+let g:CtrlSpaceSearchTiming = 500
+let g:CtrlSpaceSetDefaultMapping = 1
+let g:CtrlSpaceDefaultMappingKey = "<C-D>"
+let g:airline_exclude_preview = 1
+" ]
+
+
+" kassio/neoterm[
+let g:neoterm_position = 'vertical'
+"]
+
+" janko-m/vim-test[
+nnoremap <leader>tf :TestFile<cr>
+nnoremap <leader>tn :TestNearest<cr>
+
+" function! SilentNeoterm(cmd)
+"   call neoterm#do(a:cmd) | call neoterm#close()
+" endfunction
+" let g:test#custom_strategies = {'silent_neoterm': function('SilentNeoterm')}
+" let g:test#strategy = 'silent_neoterm'
+
+let g:test#strategy = 'neoterm'
+" let g:test#strategy = 'vtr'
+" let g:test#strategy = 'neovim'
+"]
+
+" vim-lengthmatters[
+let g:lengthmatters_start_at_column = 120
+"]
+
+" vim-jsx[
+let g:jsx_ext_required = 0
+"]
+
+" ShowMeDB[
+let g:ShowMeDB_default_mapping = 0
+nmap <space>db <plug>show_me_db_fzf_force
+nmap <space>gdb <plug>show_me_db_word_under_cursor_force
+"]
+
 " fzf[
 
 " Search thought buffers in fzf!
@@ -273,7 +344,9 @@ nnoremap <space>p :FZF<cr>
 "]
 
 " vim-grepper[
-nnoremap <leader>ag  :Grepper -tool ag  -open -switch -grepprg ag --column<cr>
+nnoremap <leader>ag  :Grepper -tool ag  -open -switch -grepprg ag<cr>
+nmap gs <plug>(GrepperOperator)
+xmap gs <plug>(GrepperOperator)
 "]
 
 
@@ -292,10 +365,10 @@ let g:airline#extensions#whitespace#enabled = 0
 "]
 
 " NERDTree [
-nnoremap <C-g> :NERDTreeToggle<cr>
-nnoremap <leader>G :NERDTreeFind<cr>
-autocmd vimrc VimEnter * NERDTree "autostart
-autocmd vimrc  VimEnter * wincmd p
+nnoremap <c-g><c-g> :NERDTreeToggle<cr>
+nnoremap <c-g><c-f> :NERDTreeFind<cr>
+autocmd vimrc VimEnter * NERDTree
+autocmd vimrc VimEnter * wincmd p
 "]
 
 " Tagbar [
@@ -366,7 +439,7 @@ let g:EasyMotion_inc_highlight = 1
 
 " Neomake[
 let g:neomake_coffeescript_enabled_makers = ['coffeelint', 'coffee']
-let g:neomake_javascript_enabled_makers = ['jshint']
+let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_ruby_enabled_makers = ['mri']
 autocmd! BufWritePost * Neomake
 "]
@@ -394,7 +467,7 @@ nnoremap <silent> <space>F :CtrlSFOpen<cr>
 let g:mapleader=","
 nnoremap ; :
 nnoremap ' `
-inoremap jk <esc>
+inoremap jk <esc>`^
 cnoremap jk <c-c>
 
 noremap K k
@@ -404,13 +477,14 @@ cnoremap <silent> <enter> <cr>
 
 "{ easy command history
 nmap <space>c q:
+nmap <space>q :copen<cr>
 
 augroup ECW_au
   au!
-  au CmdwinEnter * nmap <CR> <CR>
-  au CmdwinLeave * nnoremap <silent> <enter> :put =''<cr>
-  au CmdwinEnter * nmap <space>c :q<CR>
-  au CmdwinLeave * nmap <space>c q:
+  au CmdwinEnter * nmap <buffer> <CR> <CR>
+  au CmdwinEnter * nmap <buffer> <space>c :q<CR>
+  au BufReadPost quickfix nnoremap <buffer> <CR> <CR><c-w><c-p>
+  au BufReadPost quickfix nnoremap <buffer> o <CR>
 augroup END
 "}
 
@@ -440,7 +514,6 @@ nnoremap <leader><leader>a <esc>:A<cr>
 nnoremap <leader>c <esc>:Econtroller 
 nnoremap <leader>m <esc>:Emodel 
 nnoremap <leader>v <esc>:Eview 
-nnoremap <leader>db <esc>:Eschema 
 nnoremap <leader>ro <esc>:Einitializer<cr>
 nnoremap <leader>gem <esc>:Elib<cr>
 nnoremap <leader>js <esc>:Ejavascript application<cr>
@@ -468,7 +541,10 @@ nnoremap <leader>s<cr> :.s/\v^\s*//<cr>:.s/\v(\S)@<=\s+/\r/<cr>
 nnoremap <leader>s<tab>  :%s/	/  /<cr>
 nnoremap <leader>sc :.s#_\(\l\)#\u\1#<cr>
 nnoremap <leader>sC :.s#\v(<.)\|_(\l)#\u\1\2#<cr>
-nnoremap <leader>ss :.s#\v(\l+)(\u)#\l\1_\l\2#<cr>:.s#\v(<\u)#\l\1<cr>
+
+"snake case
+nnoremap <silent> <Plug>SSnakeCase :.s#\v(\l+)(\u)#\l\1_\l\2#<cr>:.s#\v(<\u)#\l\1<cr>:call repeat#set("\<Plug>SSnakeCase")<CR>
+nmap <leader>ss <Plug>SSnakeCase
 
 nnoremap <leader>s0 vip:s/\v\s*$//<cr>
 nnoremap <leader>s1 vip:s/\v\s*\S\s*$//<cr>
@@ -488,6 +564,10 @@ nmap <Leader>s; <Plug>SRemoveSemicolon
 
 nnoremap <silent> <Plug>SBrekTags :.s/</\r</<cr>:call repeat#set("\<Plug>SBrekTags")<CR>
 nmap <Leader>st <Plug>SBrekTags
+
+" brake line by chunck of 80 chars on commas
+nnoremap <silent> <Plug>Brake80 080lF,a:call repeat#set("\<Plug>Brake80")<CR>
+nmap <Leader>s8 <Plug>Brake80
 
 " move cursor to begening of pasted text
 vnoremap <silent> p p`[
@@ -533,7 +613,7 @@ nnoremap   <space>8      8gt
 nnoremap   <space>9      9gt
 nnoremap   <space>0      :tabfirst<CR>
 nnoremap   <silent>  <c-t><c-t> :tabnew<CR>:tabmove<cr>
-nnoremap   <silent>  <c-t>m <c-w>T
+nnoremap   <silent>  <c-t><c-m> <c-w>T
 nnoremap   <silent>  <c-t><c-q> :tabc<cr>
 
 "one-key-mark
@@ -554,6 +634,21 @@ hi EasyMotionMoveHL ctermbg=none ctermfg=cyan
 "----------6_Testing_new_features----
 "====================================
 "{{{
+
+" Replace and down
+nnoremap <silent> \| <down>:<C-U>exe repeat#run(v:count)<CR>
+
+" Paste from register
+nnoremap <space>np "np
+nnoremap <space>mp "mp
+
+" Open help in full window
+command! -nargs=? H execute 'help ' . <q-args> . ' | only'
+
+" vim grep under the cursor
+nnoremap gj :vimgrep <cword> *<cr>
+
+
 " terminal move
 tnoremap <A-h> <C-\><C-n><C-w>h
 tnoremap <A-j> <C-\><C-n><C-w>j
@@ -562,22 +657,14 @@ tnoremap <A-l> <C-\><C-n><C-w>l
 
 tnoremap jk <c-\><c-n>
 
-"send-key
-command! -nargs=1 Send1 execute ':silent !tmux send-keys -t1 "'.<q-args>.'" c-m' | execute ':redraw!'
-nnoremap c1 :Send1 
-
-"send-key
-command! -nargs=1 Send2 execute ':silent !tmux send-keys -t2 "'.<q-args>.'" c-m' | execute ':redraw!'
-nnoremap c2 :Send2 
-
 " search for visually highlighted text
-vnoremap // y/\V<C-R>"<CR>``:set hls<cr>
+vnoremap <silent> // y/\V<C-R>"<CR>``:set hls<cr>
 
 " select last pastet text
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
-vnoremap <c-d> :s/<c-r>"//<left>
-vnoremap <c-g> "zy:s/<c-r>z//<left>
+vnoremap <c-g> :<c-u>%s/<c-r>"//<left>
+vnoremap <c-d> :s/<c-r>z//<left>
 
 " highlight current word without search for next
 nnoremap <silent> * :set hls<cr>*``
@@ -622,6 +709,13 @@ endfunc
 "----------7_Scripts-----------------
 "====================================
 "{{{
+
+function! Bgrep(word, location)
+  exec "grep " . a:word . " $( find . -type f -wholename '*" . a:location . "*' ) "
+endfunction
+command! -nargs=* Bgrep call Bgrep(<f-args>)
+
+
 if exists("+showtabline")
   function! MyTabLine()
     let s = ' '
@@ -651,7 +745,7 @@ if exists("+showtabline")
     let s .= '%T%#TabLineFill#'
     return s
   endfunction
-  set tabline=%!MyTabLine()
+  " set tabline=%!MyTabLine()
 endif
 
 function! DeleteEmptyBuffers()
@@ -677,5 +771,36 @@ function! MyFoldText()
     return txt . '- L'. nl . repeat(' ', winwidth(0))
 endfunction
 set foldtext=MyFoldText()
+
+function! DoPrettyXML()
+  " save the filetype so we can restore it later
+  set ft=
+  " remove empty lines
+  silent! g/^$/de
+  " delete the xml header if it exists. This will
+  " permit us to surround the document with fake tags
+  " without creating invalid xml.
+  1s/.*<?xml .*?>//e
+  " insert fake tags around the entire document.
+  " This will permit us to pretty-format excerpts of
+  " XML that may contain multiple top-level elements.
+  0put ='<PrettyXML>'
+  $put ='</PrettyXML>'
+  silent %!xmllint --format -
+  " xmllint will insert an <?xml?> header. it's easy enough to delete
+  " if you don't want it.
+  " delete the fake tags
+  2d
+  $d
+  " restore the 'normal' indentation, which is one extra level
+  " too deep due to the extra tags we wrapped around the document.
+  silent %<
+  " back to home
+  1
+  " restore the filetype
+  exec 'setf xml'
+endfunction
+command! PrettyXML call DoPrettyXML()
+
 
 "}}}

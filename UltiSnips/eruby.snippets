@@ -1,0 +1,5 @@
+snippet modal
+$("#first_modal .modal-header h4").html('<%= t('title.title') %>');
+$("#first_modal .modal-body").html('<%= j render partial: 'partial_path', locals: {a: 1} %>');
+$("#first_modal").modal();
+endsnippet
