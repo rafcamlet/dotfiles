@@ -30,7 +30,7 @@ augroup END
 "    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 call plug#begin('~/.config/nvim/bundle')
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+
 Plug 'L9'
 Plug 'Raimondi/delimitMate'
 Plug 'Yggdroot/indentLine'
@@ -47,6 +47,7 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-rails'
 Plug 'UltiSnips'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'godlygeek/tabular'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'bling/vim-airline'
@@ -78,18 +79,12 @@ Plug 'rafcamlet/shadowmoth' " best colorscheme ever!
 Plug 'coderifous/textobj-word-column.vim' " Select column of text example: vic
 
 " TEST plugin
-Plug 'fishbullet/deoplete-ruby'
-Plug 'pgdouyon/vim-accio' "Dispatch meets Syntastic for Neovim
-" Plug 'syngan/vim-vimlint'
-Plug 'posva/vim-vue'
-Plug 'Shougo/denite.nvim' " Unite and create user interfaces
-Plug 'junegunn/vim-easy-align' " A Vim alignment plugin
-Plug 'junegunn/gv.vim' "A git commit browser
 Plug 'othree/xml.vim' " A plugin for editing xml
 " Plug 'christoomey/vim-tmux-runner' "A simple, vimscript only, command runner for sending commands from vim to tmux.
 Plug 'janko-m/vim-test' "A Vim wrapper for running tests on different granularities.
 " Plug 'junegunn/vim-lengthmatters'
 " Plug 'junegunn/vim-peekaboo' "show the contents of the registers
+Plug 'junegunn/gv.vim' "A git commit browser
 Plug 'ecomba/vim-ruby-refactoring'
 Plug 'xolox/vim-misc'
 Plug 'chrisbra/vim-diff-enhanced'
@@ -97,6 +92,7 @@ Plug 'pelodelfuego/vim-swoop'
 Plug 'airblade/vim-gitgutter'
 " Plug 'majutsushi/tagbar' "Vim plugin that displays tags in a window, ordered by scope
 Plug 'Shutnik/jshint2.vim'
+
 Plug 'mhinz/vim-grepper' " vim wrapper around 'grepprg' and 'grepformat'
 
 Plug 'kassio/neoterm' " Wrapper of some neovim's :terminal functions.
@@ -110,7 +106,7 @@ function! BuildComposer(info)
   endif
 endfunction
 
-" Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 Plug 'mxw/vim-jsx'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'eugen0329/vim-esearch' "Plugin performing project-wide async search and replace
@@ -118,9 +114,12 @@ Plug 'leafgarland/typescript-vim' "Typescript syntax files for Vim
 Plug 'tpope/vim-abolish' "easily search for, substitute, and abbreviate multiple variants of a word
 Plug 'tpope/vim-ragtag' " ragtag.vim: ghetto HTML/XML mappings (formerly allml.vim)
 
+Plug 'osyo-manga/vim-monster' "Ruby code completion.
+
 " Plug '~/projekty/test-plug' " My test plugin
 Plug '~/projekty/show-me-db' " My test plugin
 Plug '~/projekty/vim-nest' " My test plugin
+
 
 call plug#end()
 "}}}
@@ -266,15 +265,13 @@ augroup END
 "{{{
 "
 
-"vim-easy-align[
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+"vim-monster[
+" With deoplete.nvim
+let g:monster#completion#rcodetools#backend = "async_rct_complete"
+let g:deoplete#sources#omni#input_patterns = {
+\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+\}
 "]
-
-
 
 "terryma/vim-multiple-cursors[
 function! Multiple_cursors_before()
@@ -334,6 +331,25 @@ nmap <space>gdb <plug>show_me_db_word_under_cursor_force
 " fzf[
 
 " Search thought buffers in fzf!
+" https://github.com/junegunn/fzf/wiki/Examples-(vim)
+
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
+endfunction
+
+function! s:bufopen(e)
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+
+nnoremap <silent> <space><s-p> :call fzf#run({
+      \   'source':  reverse(<sid>buflist()),
+      \   'sink':    function('<sid>bufopen'),
+      \   'options': '+m',
+      \   'down':    len(<sid>buflist()) + 2
+      \ })<CR>
 
 nnoremap <space>p :FZF<cr>
 "]
@@ -351,12 +367,6 @@ let g:indentLine_color_term = 240
 
 "deoplete.nvim [
 let g:deoplete#enable_at_startup = 1
-
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
-let g:deoplete#sources#omni#input_patterns = {
-\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-\}
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 "]
 
 " Airline config [
@@ -387,6 +397,22 @@ let g:UltiSnipsEditSplit="vertical"
 set viminfo^=!
 let g:rails_default_file='config/database.yml'
 " ]
+
+
+" Tabularize [
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a: :Tabularize /:\zs<CR>
+vmap <Leader>a: :Tabularize /:\zs<CR>
+nmap <Leader>a, :Tabularize /,\zs<CR>
+vmap <Leader>a, :Tabularize /,\zs<CR>
+nmap <Leader>a" :Tabularize /"<CR>
+vmap <Leader>a" :Tabularize /"<CR>
+nmap <Leader>a{ :Tabularize /{<CR>
+vmap <Leader>a{ :Tabularize /{<CR>
+nmap <Leader>a<space> :Tabularize /<space><CR>
+vmap <Leader>a<space> :Tabularize /<space><CR>
+"]
 
 " Javascript library syntax [
 let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
@@ -426,7 +452,6 @@ let g:EasyMotion_inc_highlight = 1
 let g:neomake_coffeescript_enabled_makers = ['coffeelint', 'coffee']
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_ruby_enabled_makers = ['mri']
-" let g:neomake_vim_enabled_makers = ['vim-lint']
 autocmd! BufWritePost * Neomake
 "]
 
@@ -442,7 +467,7 @@ let g:aghighlight=1
 " CtralSF [
 "By default CtrlSF window will be opened at left, change it to right by
 let g:ctrlsf_position = 'right'
-nnoremap <space>f :CtrlSF -I -R 
+nnoremap <space>f :CtrlSF -I 
 nnoremap <silent> <space>F :CtrlSFOpen<cr>
 "]
 "}}}
@@ -551,6 +576,9 @@ nmap <Leader>s; <Plug>SRemoveSemicolon
 nnoremap <silent> <Plug>SBrekTags :.s/</\r</<cr>:call repeat#set("\<Plug>SBrekTags")<CR>
 nmap <Leader>st <Plug>SBrekTags
 
+" brake line by chunck of 80 chars on commas
+nnoremap <silent> <Plug>Brake80 080lF,a:call repeat#set("\<Plug>Brake80")<CR>
+nmap <Leader>s8 <Plug>Brake80
 
 " move cursor to begening of pasted text
 vnoremap <silent> p p`[
@@ -617,10 +645,6 @@ hi EasyMotionMoveHL ctermbg=none ctermfg=cyan
 "----------6_Testing_new_features----
 "====================================
 "{{{
-
-" Fzf shourtcuts
-nnoremap <leader>fb :Buffers<cr>
-nnoremap <leader>fg :GFiles?<cr>
 
 " Mark to last non blank character
 vnoremap $ g_
@@ -785,58 +809,12 @@ function! DoPrettyXML()
   " restore the 'normal' indentation, which is one extra level
   " too deep due to the extra tags we wrapped around the document.
   silent %<
-  silent %! htmlentity
   " back to home
   1
   " restore the filetype
   exec 'setf xml'
 endfunction
 command! PrettyXML call DoPrettyXML()
+
+
 "}}}
-
-
-
-function! K() range " {{{
-
-  let lines = getline(a:firstline, a:lastline)
-  let current_filetype = &filetype
-
-  if exists('s:view') && bufloaded(s:view) | exec s:view.'bd!' | endif
-  exec 'silent pedit Test'
-
-  wincmd P | wincmd K
-
-
-  let s:view = bufnr('%')
-  set modifiable
-
-
-  call append(0, lines)
-  exec 'setf ' . current_filetype
-
-  setl buftype=nofile
-  setl noswapfile
-  set  bufhidden=wipe
-  set  scrolloff=2
-
-  " setl nonu ro noma
-  if (exists('&relativenumber')) | setl norelativenumber | endif
-
-  exec ':1'
-
-
-  " command! -nargs=0 -buffer OpenThis call <sid>open_this()
-  " nnoremap <silent> <buffer> <cr> :OpenThis<cr>
-
-endfunction
-command! -range K <line1>,<line2>call K()
-vnoremap <c-k> :call K()<cr>
-
-function! T() range
-  let lines = getline(a:firstline, a:lastline)
-  for l in lines
-    echom match(l, '\S')
-  endfor
-
-endfunction
-command! -range=% T <line1>,<line2>call T()
