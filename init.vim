@@ -10,6 +10,9 @@
 "----------7_Scripts-----------------
 "====================================
 
+
+" :ec fnamemodify( '/usr/bin/', ':p:h')
+
 augroup nvim_init_group
   autocmd!
 
@@ -46,7 +49,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-rails'
 Plug 'UltiSnips'
-Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator' " Seamless navigation between tmux panes and vim splits
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'bling/vim-airline'
@@ -56,12 +59,11 @@ Plug 'pangloss/vim-javascript'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'burnettk/vim-angular'
 Plug 'mattn/emmet-vim'
-Plug 'Lokaltog/vim-easymotion'
 Plug 'Valloric/MatchTagAlways'
 Plug 'tpope/vim-unimpaired'
 Plug 'rking/ag.vim'
 Plug 'dyng/ctrlsf.vim'
-Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-user' "Vim plugin: Create your own text objects
 Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'AndrewRadev/splitjoin.vim' " Plugin that simplifies the transition between multiline and single-line code
 Plug 'airblade/vim-rooter'
@@ -73,13 +75,31 @@ Plug 'Shougo/deoplete.nvim' " Dark powered asynchronous completion framework for
 Plug 'benekastah/neomake' " asynch alternative for syntastic
 Plug 'thinca/vim-quickrun' " Run current file and show output in new buffer
 Plug 'jeetsukumaran/vim-indentwise' " Indent motion
-Plug 'rafcamlet/resize-mode'
 Plug 'rafcamlet/shadowmoth' " best colorscheme ever!
 Plug 'coderifous/textobj-word-column.vim' " Select column of text example: vic
 
 " TEST plugin
+" Plug 'w0rp/ale' " Asynchronous Lint Engine do przetestowania
+" Plug 'itchyny/vim-cursorword' " Underlines the word under the cursor 
+Plug 'sheerun/vim-polyglot' " A solid language pack for Vim.Plug 'benmills/vimux'
+Plug 'trevordmiller/nova-vim'
+Plug 'slim-template/vim-slim'
+Plug 'vim-scripts/SyntaxRange'
+Plug 'vim-scripts/Align'
+Plug 'vim-scripts/SQLUtilities'
+Plug 'tpope/vim-speeddating'
+Plug 'jceb/vim-orgmode' " Text outlining and task management for Vim based on Emacs' Org-Mode 
+
+Plug 'lambdalisue/gina.vim' " An awesome git handling plugin for Vim
+Plug 'bogado/file-line' "Plugin for vim to enabling opening a file in a given line
+Plug 'brooth/far.vim' "Find And Replace Vim plugin
+Plug 'gabesoft/vim-ags'
+Plug 'justinmk/vim-sneak'
+Plug 'koron/nyancat-vim'
+Plug 'rhysd/nyaovim-markdown-preview'
+Plug 'gabrielelana/vim-markdown'
+Plug 'dag/vim-fish'
 Plug 'fishbullet/deoplete-ruby'
-Plug 'pgdouyon/vim-accio' "Dispatch meets Syntastic for Neovim
 " Plug 'syngan/vim-vimlint'
 Plug 'posva/vim-vue'
 Plug 'Shougo/denite.nvim' " Unite and create user interfaces
@@ -202,6 +222,8 @@ set synmaxcol=1000 " max search in columns
 set guioptions-=T
 set guioptions-=L
 
+set inccommand=nosplit
+
 augroup vimrc
   autocmd!
 augroup END
@@ -259,12 +281,38 @@ augroup vim_group
   autocmd FileType vim let &l:foldmethod = 'marker'
 augroup END
 
+augroup markdown_group
+  autocmd!
+
+  autocmd FileType markdown setlocal spell spelllang=en,pl
+augroup END
+
+
 "}}}
 "====================================
 "----------3_Plugins_config----------
 "====================================
 "{{{
 "
+
+
+"Plug 'kassio/neoterm'[
+" hide/close terminal
+nnoremap <silent> ,th :call neoterm#close()<cr>
+" clear terminal
+nnoremap <silent> ,tl :call neoterm#clear()<cr>
+" kills the current job (send a <c-c>)
+nnoremap <silent> ,tc :call neoterm#kill()<cr>
+
+" Rails commands
+command! Troutes :T rake routes
+command! -nargs=+ Troute :T rake routes | grep <args>
+command! Tmigrate :T rake db:migrate
+"]
+
+"Plug 'justinmk/vim-sneak'[
+let g:sneak#s_next = 1
+"]
 
 "vim-easy-align[
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -277,11 +325,17 @@ nmap ga <Plug>(EasyAlign)
 
 
 "terryma/vim-multiple-cursors[
+let g:multi_cursor_quit_key='<C-c>'
+nnoremap <silent> <C-c> :call multiple_cursors#quit()<CR>
+
+let g:multi_cursor_exit_from_insert_mode = 0
+
 function! Multiple_cursors_before()
   let g:deoplete#disable_auto_complete = 1
 endfunction
 function! Multiple_cursors_after()
   let g:deoplete#disable_auto_complete = 0
+  " call clearmatches()
 endfunction
 "]
 
@@ -313,6 +367,7 @@ nnoremap <leader>tn :TestNearest<cr>
 " let g:test#strategy = 'silent_neoterm'
 
 let g:test#strategy = 'neoterm'
+" let g:test#strategy = 'vimux'
 " let g:test#strategy = 'vtr'
 " let g:test#strategy = 'neovim'
 "]
@@ -332,13 +387,20 @@ nmap <space>gdb <plug>show_me_db_word_under_cursor_force
 "]
 
 " fzf[
-
-" Search thought buffers in fzf!
+let $FZF_DEFAULT_COMMAND = 'ag -l -p ~/.agignore -g ""'
 
 nnoremap <space>p :FZF<cr>
 "]
 
 " vim-grepper[
+let g:grepper = {
+    \ 'tools': ['x', 'git', 'ag'],
+    \ 'x': {
+    \   'grepprg':    'ag --nogroup --nocolor --column',
+    \   'grepformat': '%f:%l:%m',
+    \   'escape':     '\+*^$()[]',
+    \ }}
+
 nnoremap <leader>ag  :Grepper -tool ag  -open -switch -grepprg ag<cr>
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
@@ -353,10 +415,6 @@ let g:indentLine_color_term = 240
 let g:deoplete#enable_at_startup = 1
 
 let g:monster#completion#rcodetools#backend = "async_rct_complete"
-let g:deoplete#sources#omni#input_patterns = {
-\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-\}
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 "]
 
 " Airline config [
@@ -395,7 +453,7 @@ let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
 " EasyMotion [
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
-nmap s <Plug>(easymotion-s)
+" nmap s <Plug>(easymotion-s)
 
 " Turn on case sensitive feature
 let g:EasyMotion_smartcase = 1
@@ -434,7 +492,9 @@ autocmd! BufWritePost * Neomake
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
   " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
+  " set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --vimgrep\ $*
+  set grepformat=%f:%l:%c:%m
 endif
 let g:aghighlight=1
 "]
@@ -455,8 +515,6 @@ nnoremap ; :
 nnoremap ' `
 inoremap jk <esc>`^
 cnoremap jk <c-c>
-
-noremap K k
 
 nnoremap <silent> <enter> :put =''<cr>
 cnoremap <silent> <enter> <cr>
@@ -497,9 +555,6 @@ nnoremap <leader><leader>r <esc>:R<cr>
 nnoremap <leader><leader>a <esc>:A<cr>
 
 " rails shorts
-nnoremap <leader>c <esc>:Econtroller 
-nnoremap <leader>m <esc>:Emodel 
-nnoremap <leader>v <esc>:Eview 
 nnoremap <leader>ro <esc>:Einitializer<cr>
 nnoremap <leader>gem <esc>:Elib<cr>
 nnoremap <leader>js <esc>:Ejavascript application<cr>
@@ -527,17 +582,6 @@ nnoremap <leader>s<cr> :.s/\v^\s*//<cr>:.s/\v(\S)@<=\s+/\r/<cr>
 nnoremap <leader>s<tab>  :%s/	/  /<cr>
 nnoremap <leader>sc :.s#_\(\l\)#\u\1#<cr>
 nnoremap <leader>sC :.s#\v(<.)\|_(\l)#\u\1\2#<cr>
-
-"snake case
-nnoremap <silent> <Plug>SSnakeCase :.s#\v(\l+)(\u)#\l\1_\l\2#<cr>:.s#\v(<\u)#\l\1<cr>:call repeat#set("\<Plug>SSnakeCase")<CR>
-nmap <leader>ss <Plug>SSnakeCase
-
-nnoremap <leader>s0 vip:s/\v\s*$//<cr>
-nnoremap <leader>s1 vip:s/\v\s*\S\s*$//<cr>
-nnoremap <leader>s2 vip:s/\v\s*.\s*\S\s*$//<cr>
-nnoremap <leader>s3 vip:s/\v\s*.{2}\s*\S\s*$//<cr>
-nnoremap <leader>s4 vip:s/\v\s*.{3}\s*\S\s*$//<cr>
-nnoremap <leader>s5 vip:s/\v\s*.{4}\s*\S\s*$//<cr>
 
 nnoremap <leader>sa vip:s/\v$//<left>
 vnoremap <leader>sa :s/\v$//<left>
@@ -599,10 +643,6 @@ nnoremap   <silent>  <c-t><c-t> :tabnew<CR>:tabmove<cr>
 nnoremap   <silent>  <c-t><c-m> <c-w>T
 nnoremap   <silent>  <c-t><c-q> :tabc<cr>
 
-"one-key-mark
-nnoremap - `Mzz
-nnoremap _ mM
-
 " Copy to end of line
 nnoremap Y y$
 "}}}
@@ -612,18 +652,73 @@ nnoremap Y y$
 "{{{
 hi EasyMotionTarget ctermbg=none ctermfg=red
 hi EasyMotionMoveHL ctermbg=none ctermfg=cyan
+hi agsvResultPattern ctermfg=red
 "}}}
 "====================================
 "----------6_Testing_new_features----
 "====================================
 "{{{
+"
+
+let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>"
+
+nnoremap cn :set hls<cr>*``cgn
+nnoremap cN :set hls<cr>*``cgN
+
+vnoremap <expr> cn g:mc . ":set hls<cr>``cgn"
+vnoremap <expr> cN g:mc . ":set hls<cr>``cgN"
+
+function! SetupCR()
+  set hls
+  let g:enter = mapcheck('<cr>', 'n')
+  nnoremap <Enter> :nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z
+  nnoremap <silent> <esc> :call ClearCR()<cr>
+endfunction
+function! ClearCR()
+  set nohls
+  exec 'unmap <esc>'
+  exec 'nnoremap <cr> ' . g:enter
+endfunction
+
+nnoremap cq :call SetupCR()<CR>*``qz
+nnoremap cQ :call SetupCR()<CR>#``qz
+
+vnoremap <expr> cq ":\<C-u>call SetupCR()\<CR>" . "gv" . g:mc . "``qz"
+vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"
+
+nnoremap <silent> ,s1 :<C-u>call RemoveLastChar()<CR>
+function! RemoveLastChar()
+  echo 'Remove last:'
+  execute "normal! vip:s/".nr2char(getchar())."\s*$//\<cr>"
+endfunction
+
+
+set path+=** 
+
+nnoremap <silent> + :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
+nnoremap <silent> - :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
+
+nnoremap <silent> <leader>ro :exec 'e ' . system('bash', 'find $(pwd) -name routes.rb -print -prune -o -path ./tmp ')<cr>
+
+nnoremap <silent> <leader>gs :Gstatus<cr>
+
 
 " Fzf shourtcuts
-nnoremap <leader>fb :Buffers<cr>
-nnoremap <leader>fg :GFiles?<cr>
+nnoremap <space>ob :Buffers<cr>
+nnoremap <space>og :GFiles?<cr>
+nnoremap <space>ot  :FZF spec<cr>
+nnoremap <space>ojs :FZF app/assets<cr>
+nnoremap <space>oc  :FZF app/controllers<cr>
+nnoremap <space>om  :FZF app/models<cr>
+nnoremap <space>ov  :FZF app/views<cr>
+nnoremap <space>os  :FZF app/services<cr>
+nnoremap <space>of  :FZF app/form_objects<cr>
+
+"Populate Arglist with shell command
+command! -nargs=1 PA args `=systemlist(<q-args>)` | argdo e | syntax on
 
 " Mark to last non blank character
-vnoremap $ g_
+" vnoremap $ g_
 
 " Replace and down
 nnoremap <silent> \| <down>:<C-U>exe repeat#run(v:count)<CR>
@@ -802,16 +897,15 @@ function! K() range " {{{
   let current_filetype = &filetype
 
   if exists('s:view') && bufloaded(s:view) | exec s:view.'bd!' | endif
-  exec 'silent pedit Test'
 
-  wincmd P | wincmd K
-
+  exec 'silent keepalt topleft ' . (len(lines) + 2) . ' split work_window'
 
   let s:view = bufnr('%')
   set modifiable
 
 
   call append(0, lines)
+  call append(0, '')
   exec 'setf ' . current_filetype
 
   setl buftype=nofile
@@ -822,15 +916,16 @@ function! K() range " {{{
   " setl nonu ro noma
   if (exists('&relativenumber')) | setl norelativenumber | endif
 
-  exec ':1'
+  exec ':2'
 
+  " au BufHidden <buffer> exec s:view . 'bd!'
 
   " command! -nargs=0 -buffer OpenThis call <sid>open_this()
   " nnoremap <silent> <buffer> <cr> :OpenThis<cr>
 
 endfunction
 command! -range K <line1>,<line2>call K()
-vnoremap <c-k> :call K()<cr>
+vnoremap <silent> <c-k> :call K()<cr>
 
 function! T() range
   let lines = getline(a:firstline, a:lastline)
@@ -839,4 +934,132 @@ function! T() range
   endfor
 
 endfunction
-command! -range=% T <line1>,<line2>call T()
+command! -range T <line1>,<line2>call T()
+
+
+function! AddToArgsList()
+  let buffers = map(range(1, bufnr('$')), 'bufname(v:val)')
+  call filter(buffers, '!empty(v:val)')
+
+  call fzf#run ({
+        \ 'source':  (buffers),
+        \ 'sink':   'argadd',
+        \ 'options': '-m'
+        \})
+endfunction
+command! ArgsAdd call AddToArgsList()
+
+function! IndentToLine(mod) range
+  if a:mod == 'up'
+    let line = getline(a:firstline - 1)
+  else
+    let line = getline(a:lastline + 1)
+  endif
+
+  let len = strlen(matchstr(line, '^\s*'))
+  let str = repeat(' ', len)
+
+  for l in range(a:firstline, a:lastline)
+    call setline(l, substitute(getline(l), '^\s*', str, ''))
+  endfor
+  call cursor('.', len + 1)
+endfunction
+
+nnoremap <silent> <s-k> :call IndentToLine("up")<cr>
+vnoremap <silent> <s-k> :call IndentToLine("up")<cr>
+
+function! GetAmount()
+
+ruby << EOF
+
+require 'nokogiri'
+require 'htmlentities'
+
+buffer = []
+1.upto(VIM::Buffer.current.length) do |nr|
+  buffer << VIM::Buffer.current[nr]
+end
+
+coder = HTMLEntities.new
+
+xml = Nokogiri::XML(buffer.join(?\n)).xpath('//RiskList').to_s
+xml = coder.decode(xml)
+xml = xml.lines.select { |l| l =~ /ComponentRef/ || l =~ /Amount/  }
+xml = xml.map do |l|
+  l =~ />(.*?)</
+  $1
+end
+
+xml.each do |l|
+  VIM::Buffer.current.append VIM::Buffer.current.length, l.to_s
+end
+EOF
+endfunction
+
+command! JSONFormat normal :%!python -m json.tool<cr>
+
+
+function! Send()
+  let g:Shell = {}
+
+  function! g:Shell.on_stdout(job_id, data) dict
+    call append(line('$'), self.get_name().' stdout: '.join(a:data))
+  endfunction
+
+  function! g:Shell.on_stderr(job_id, data) dict
+    call append(line('$'), self.get_name().' stderr: '.join(a:data))
+  endfunction
+
+  function! g:Shell.on_exit(job_id, data) dict
+    call append(line('$'), self.get_name().' exited')
+  endfunction
+
+  function! g:Shell.get_name() dict
+    return 'shell '.self.name
+  endfunction
+
+  function! g:Shell.new(name, ...) dict
+    let instance = extend(copy(g:Shell), {'name': a:name})
+    let argv = ['bash']
+    if a:0 > 0
+      let argv += ['-c', a:1]
+    endif
+    let instance.id = jobstart(argv, instance)
+    return instance
+  endfunction
+
+  let com = 'tmux send-keys -t 3 ' . getline('.') . ' enter'
+  g:Shell.new('1', com)
+endfunction
+command! Send :call Send()<cr>
+
+
+
+function! InsertClass()
+
+  ruby << EOF
+
+  def replace(str)
+    $curbuf.delete($curbuf.line_number)
+    $curbuf.append($curbuf.line_number - 1 , str)
+  end
+
+  def insert(str)
+    col = VIM::Window.current.cursor.last
+    replace [$curbuf.line[0..(col-1)], str, $curbuf.line[col..-1]].join
+  end
+
+  path = VIM::evaluate('expand("%:p")')
+  path =~ Regexp.new('.*app/[^/]*/(.*)\.rb$')
+  if $1
+    class_name = $1.split('/').map do |str|
+      str.split('_').collect(&:capitalize).join
+    end.join('::')
+    insert class_name
+  end
+
+EOF
+
+endfunction
+
+command! InsertClass call InsertClass()

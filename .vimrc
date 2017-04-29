@@ -10,97 +10,11 @@
 "----------8_Exaple_vim_plugin-------
 "====================================
 
-" Jump to Next/Previous section mapings
-map ]c /-{10}\d_<cr>zt
-map [c ?-{10}\d_<cr>zt
+call plug#begin('~/.vim/plugged')
 
-set nocompatible
-filetype off
+Plug 'rafcamlet/shadowmoth'
 
-set rtp+=~/.vim/bundle/vundle
-call vundle#begin()
-
-Plugin 'gmarik/vundle'
-Plugin 'L9'
-Plugin 'Raimondi/delimitMate'
-Plugin 'Yggdroot/indentLine'
-Plugin 'scrooloose/nerdtree'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'kmdsbng/vim-ruby-eval'
-Plugin 'mileszs/ack.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-rails'
-Plugin 'UltiSnips'
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'ctrlp.vim'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'godlygeek/tabular'
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'pbrisbin/vim-mkdir'
-Plugin 'scrooloose/syntastic'
-Plugin 'bling/vim-airline'
-Plugin 'ecomba/vim-ruby-refactoring'
-Plugin 'tmhedberg/matchit'
-Plugin 'pangloss/vim-javascript'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'burnettk/vim-angular'
-Plugin 'mattn/emmet-vim'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'croaker/mustang-vim'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'Valloric/MatchTagAlways'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'ngmy/vim-rubocop'
-Plugin 'rking/ag.vim'
-Plugin 'dyng/ctrlsf.vim'
-Plugin 'kana/vim-textobj-user'
-Plugin 'nelstrom/vim-textobj-rubyblock'
-Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'airblade/vim-rooter'
-Plugin 'junegunn/goyo.vim'
-Plugin 'luke-gru/vim-riml'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'rafcamlet/shadowmoth'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'Shutnik/jshint2.vim'
-Plugin 'gabrielelana/vim-markdown'
-Plugin 'othree/html5.vim'
-" TEST plugin
-Plugin 'xolox/vim-misc'
-" Plugin 'xolox/vim-notes'
-Plugin 'chrisbra/vim-diff-enhanced'
-Plugin 'pelodelfuego/vim-swoop'
-Plugin 'majutsushi/tagbar'
-Plugin 'benmills/vimux'
-Plugin 'hail2u/vim-css3-syntax'
-"" Plugin 'marijnh/tern_for_vim'
-Plugin 'chrisbra/NrrwRgn'
-Plugin 'diepm/vim-rest-console'
-" Plugin 'szw/vim-ctrlspace'
-" Plugin 'YankRing.vim'
-" Plugin 'xolox/vim-session'
-Plugin 'Shougo/vimshell.vim'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'thoughtbot/vim-rspec'
-Plugin 'textobj-indent'
-Plugin 'jeetsukumaran/vim-indentwise'
-Plugin 'jpo/vim-railscasts-theme'
-Plugin 'thinca/vim-quickrun'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'mru.vim'
-Plugin 'jgdavey/tslime.vim'
-Plugin 'coderifous/textobj-word-column.vim'
-Plugin 'rafcamlet/show-me-db'
-
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()
 
 "====================================
 "----------1_Basic_features----------
@@ -311,9 +225,9 @@ let g:airline_exclude_preview = 1
 "]
 
 " NERDTree [
-autocmd vimrc VimEnter * NERDTree "autostart
-autocmd vimrc  VimEnter * wincmd p
-nnoremap <C-g> :NERDTreeToggle<cr>
+"autocmd vimrc VimEnter * NERDTree "autostart
+"autocmd vimrc  VimEnter * wincmd p
+"nnoremap <C-g> :NERDTreeToggle<cr>
 "]
 
 " UltiSnips [

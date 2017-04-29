@@ -61,12 +61,13 @@ end
 endsnippet
 
 snippet benchmark "ruby benchamrk test"
-require 'benchmark'
+require 'benchmark/ips'
 
-r = 100_000
-Benchmark.bmbm do |x|
-	x.report('first')  { r.times{ } }
-	x.report('second') { r.times{ } }
+Benchmark.ips do |bench|
+	bench.report('frist')  { Array.new }
+	bench.report('second') { [] }
+	bench.report('third')  { nil.to_a  }
+	bench.compare!
 end
 endsnippet
 
