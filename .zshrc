@@ -60,6 +60,7 @@ plugins=(
   rvm
   grunt
   tmux
+  zsh-autosuggestions
 )
 
 # USER CONFIGURATION
