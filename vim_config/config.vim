@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-set shell=/bin/bash                            " Set bash as default shell. Fish can not eval backticks
+set shell=/bin/zsh                             " Set zsh as default shell. Fish can not eval backticks
 set shortmess+=A                               " Always edit file, even when swap file is found
 set diffopt=filler,iwhite                      " In diff mode, ignore whitespace changes and align unchanged lines
 set fileencodings=ucs-bom,utf-8,default,latin1 " encoding
@@ -36,7 +36,7 @@ set foldlevelstart=1                           " start folding from specyfic lev
 set guicursor=                                 " reset cursor shape
 
 " Display extra whitespace
-set list listchars=tab:»·,trail:·,nbsp:·
+set list listchars=tab:»»,trail:·,nbsp:·
 
 " This makes vim act like all other editors, buffers can
 " exist in the background without being in a window.
@@ -68,7 +68,7 @@ set noerrorbells
 set gdefault       " use global as default in regexp
 set incsearch      " search during typing
 " set hlsearch     " highlight previous search pattern
-set ignorecase     " Ignore case in search patterns
+"set ignorecase    " Ignore case in search patterns
 set smartcase      " Override ignorecase if the pattern contains upper case characters
 set synmaxcol=1000 " max search in columns
 
@@ -76,18 +76,25 @@ set synmaxcol=1000 " max search in columns
 set guioptions-=T
 set guioptions-=L
 
-set inccommand=nosplit
+set inccommand=nosplit "Shows the effects of a substitution incrementally, as you type
 
 augroup vimrc
   autocmd!
+  " auto remove columns and rows highlighting
+  autocmd vimrc WinLeave * set nocursorline nocursorcolumn
+  autocmd vimrc WinEnter * set nocursorline nocursorcolumn
 augroup END
-
-" auto remove columns and rows highlighting
-autocmd vimrc WinLeave * set nocursorline nocursorcolumn
-autocmd vimrc WinEnter * set nocursorline nocursorcolumn
 
 colorscheme shadowmoth
 
 set clipboard+=unnamedplus " integrate system clipboard
 
 let g:markdown_fenced_languages = ['html', 'vim', 'ruby', 'python', 'bash=sh']
+
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  " Use Ag over Grep
+  " set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --vimgrep\ $*
+  set grepformat=%f:%l:%c:%m
+endif

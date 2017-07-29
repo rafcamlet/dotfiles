@@ -31,26 +31,8 @@ nnoremap <silent> <leader>ro :exec 'e ' . system('bash', 'find $(pwd) -name rout
 
 nnoremap <silent> <leader>gs :Gstatus<cr>
 
-
-" Fzf shourtcuts
-nnoremap <space>ob :Buffers<cr>
-nnoremap <space>og :GFiles?<cr>
-nnoremap <space>ot  :FZF spec<cr>
-nnoremap <space>ojs :FZF app/assets<cr>
-nnoremap <space>oc  :FZF app/controllers<cr>
-nnoremap <space>om  :FZF app/models<cr>
-nnoremap <space>ov  :FZF app/views<cr>
-nnoremap <space>os  :FZF app/services<cr>
-nnoremap <space>of  :FZF app/form_objects<cr>
-
 "Populate Arglist with shell command
 command! -nargs=1 PA args `=systemlist(<q-args>)` | argdo e | syntax on
-
-" Mark to last non blank character
-" vnoremap $ g_
-
-" Replace and down
-nnoremap <silent> \| <down>:<C-U>exe repeat#run(v:count)<CR>
 
 " Paste from register
 nnoremap <space>np "np
@@ -58,10 +40,6 @@ nnoremap <space>mp "mp
 
 " Open help in full window
 command! -nargs=? -complete=help H execute 'help ' . <q-args> . ' | only'
-
-" vim grep under the cursor
-nnoremap gj :vimgrep <cword> *<cr>
-
 
 " terminal move
 tnoremap <A-h> <C-\><C-n><C-w>h
@@ -90,9 +68,6 @@ noremap <space>w @:<CR>
 noremap <tab> :bn<cr>
 noremap <S-tab> :bp<cr>
 
-" select last pasted text
-nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
-
 " put current time
 imap <F3> <C-R>=strftime("%Y-%m-%d %I:%M")<CR>
 
@@ -102,7 +77,6 @@ cnoremap <c-j> <down>
 cnoremap <c-k> <up>
 cnoremap <c-l> <right>
 cnoremap <c-a> <home>
-cnoremap <c-0> <home>
 cnoremap <c-0> <end>
 cnoremap <c-x> <del>
 cnoremap <c-v> <c-r>+
@@ -202,3 +176,17 @@ function! Args()
         \ 'options': '-m'})
 endfunction
 command! Args call Args()
+
+" Z - cd to recent / frequent directories
+command! -nargs=* Z :call Z(<f-args>)
+function! Z(...)
+  let l:cmd = 'fasd -d -e printf'
+  for l:arg in a:000
+    let l:cmd = l:cmd . ' ' . l:arg
+  endfor
+  let l:path = system(l:cmd)
+  if isdirectory(l:path)
+    echo l:path
+    exec 'e ' . l:path
+  endif
+endfunction

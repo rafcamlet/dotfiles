@@ -1,4 +1,4 @@
-let g:mapleader=","
+let g:mapleader=','
 nnoremap ; :
 nnoremap ' `
 inoremap jk <esc>`^
@@ -83,16 +83,6 @@ nmap <Leader>s; <Plug>SRemoveSemicolon
 nnoremap <silent> <Plug>SBrekTags :.s/</\r</<cr>:call repeat#set("\<Plug>SBrekTags")<CR>
 nmap <Leader>st <Plug>SBrekTags
 
-
-" move cursor to begening of pasted text
-vnoremap <silent> p p`[
-nnoremap <silent> p p`[<left>
-
-" yank without coursor move
-nnoremap <silent> yiw mpyiw`p
-nnoremap <silent> yiW mpyiW`p
-nnoremap <silent> yip mpyip`p
-
 "boost regexp, double dot insert nongreedy any character
 cnoremap .. .{-}
 
@@ -115,8 +105,6 @@ nmap <silent> cp :let @+ = expand("%:p")<cr>
 " inoremap <c-p> <c-r>0
 
 " tab mappings
-" nnoremap   L       gt
-" nnoremap   H       gT
 nnoremap   <space>1      1gt
 nnoremap   <space>2      2gt
 nnoremap   <space>3      3gt
