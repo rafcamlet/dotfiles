@@ -17,7 +17,7 @@ nmap <c-n> <plug>EasyClipSwapPasteBackwards
 
 augroup vim_after_object
   autocmd!
-  autocmd VimEnter * call after_object#enable(']', '[', '=', ':', ',')
+  autocmd VimEnter * call after_object#enable(']', '[', '=', ':', ',', '-')
 augroup END
 
 
@@ -38,6 +38,7 @@ nnoremap <space>om  :FZF app/models<cr>
 nnoremap <space>ov  :FZF app/views<cr>
 nnoremap <space>os  :FZF app/services<cr>
 nnoremap <space>of  :FZF app/form_objects<cr>
+nnoremap <space>on  :FZF ~/notes<cr>
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
@@ -59,7 +60,12 @@ nnoremap <silent> ,th :call neoterm#close()<cr>
 nnoremap <silent> ,tl :call neoterm#clear()<cr>
 " kills the current job (send a <c-c>)
 nnoremap <silent> ,tc :call neoterm#kill()<cr>
+nnoremap <leader>tt :Topen<cr>
+nnoremap <silent> <leader>ts :TREPLSendLine<cr>
+vnoremap <silent> <leader>ts :TREPLSendSelection<cr>
 
+" tnoremap <silent> <tab>c <c-\><c-n>:call neoterm#close()<cr>
+ nnoremap <silent> <f10> :TREPLSendFile<cr>
 
 " ================ tpope/vim-rails =================
 
@@ -159,8 +165,8 @@ let g:airline#extensions#whitespace#enabled = 0
 
 nnoremap <c-g><c-g> :NERDTreeToggle<cr>
 nnoremap <c-g><c-f> :NERDTreeFind<cr>
-autocmd vimrc VimEnter * NERDTree
-autocmd vimrc VimEnter * wincmd p
+" autocmd vimrc VimEnter * NERDTree
+" autocmd vimrc VimEnter * wincmd p
 
 
 " =============== SirVer/ultisnips =================
@@ -175,3 +181,27 @@ let g:UltiSnipsEditSplit='vertical'
 
 let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
 
+
+
+" =================== w0rp/ale =====================
+
+let g:ale_sign_column_always = 1
+let g:ale_ruby_flag = 0
+
+let g:ale_linters = { 'ruby': ['ruby'] }
+
+function! ChangeRubyLinters()
+  if g:ale_ruby_flag
+    echo 'simple'
+    let g:ale_linters = { 'ruby': ['ruby'] }
+    let g:ale_ruby_flag = 0
+  else
+    echo 'full'
+    let g:ale_linters = { 'ruby': ['brakeman', 'rails_best_practices', 'reek', 'rubocop', 'ruby'] }
+    let g:ale_ruby_flag = 1
+  end
+  ALELint
+endfunction
+
+command! ChangeRubyLinters call ChangeRubyLinters()
+nnoremap <space>r :ChangeRubyLinters<cr>

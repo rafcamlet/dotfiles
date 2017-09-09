@@ -1,0 +1,81 @@
+function prompt_my_precmd {
+  git-info
+
+  # ruby info
+  _ruby='%F{1}Ruby:%F{9}'
+  _ruby+=$(rvm-prompt v p)
+
+  _ruby_gemset=$(rvm-prompt g | sed 's/@//')
+
+  if [ -n "${_ruby_gemset// }" ]; then
+    _ruby+='%F{1}@%F{9}'
+    _ruby+=${_ruby_gemset}
+  fi
+  _ruby+='%f'
+
+  # last commit
+
+  _git=""
+
+  if [ -d .git ]; then
+
+    _last_commit=$(git log -1 --pretty='%s')
+
+    if [[ "$_last_commit" == "temp" ]]; then
+      _git+="%F{1} TEMP!!! "
+    fi
+
+  fi
+
+}
+
+function prompt_my_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+
+  # Load required functions.
+  autoload -Uz add-zsh-hook
+
+  # Add hook for calling git-info before each command.
+  add-zsh-hook precmd prompt_my_precmd
+
+  # Set git-info parameters.
+  zstyle ':prezto:module:git:info' verbose 'yes'
+  zstyle ':prezto:module:git:info:branch' format '%F{green}%b%f'
+  zstyle ':prezto:module:git:info:clean' format ' %F{green}✔%f'
+  zstyle ':prezto:module:git:info:dirty' format ' %F{red}✗%f'
+  zstyle ':prezto:module:git:info:keys' format \
+    'prompt' ' %F{green}(%f$(coalesce "%b" "%p" "%c")${git_info[rprompt]}%s%F{green})%f' \
+    'rprompt' '%C%D'
+
+
+
+  if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
+    _colors=(
+      "%F{81}"  # Turquoise
+      "%F{208}" # Orange
+      "%F{135}" # Purple
+      "%F{161}" # Hotpink
+      "%F{118}" # Limegreen
+    )
+  else
+    _colors=(
+      "%F{cyan}"
+      "%F{yellow}"
+      "%F{magenta}"
+      "%F{red}"
+      "%F{green}"
+    )
+  fi
+
+  # Define prompts.
+  PROMPT='
+%F{15}In ${_colors[3]}%~%f${(e)git_info[prompt]} $_ruby $_git
+%B%F{1}❯%F{3}❯%F{2}❯%f%b  '
+
+  RPROMPT=''
+  SPROMPT='zsh: correct %F{1}%R%f to %F{2}%r%f [nyae]? '
+}
+
+prompt_my_setup "$@"

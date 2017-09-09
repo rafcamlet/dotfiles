@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-set shell=/bin/zsh                             " Set zsh as default shell. Fish can not eval backticks
+set shell=/bin/bash                            " Set bash as default shell. Fish can not eval backticks
 set shortmess+=A                               " Always edit file, even when swap file is found
 set diffopt=filler,iwhite                      " In diff mode, ignore whitespace changes and align unchanged lines
 set fileencodings=ucs-bom,utf-8,default,latin1 " encoding
@@ -68,7 +68,7 @@ set noerrorbells
 set gdefault       " use global as default in regexp
 set incsearch      " search during typing
 " set hlsearch     " highlight previous search pattern
-"set ignorecase    " Ignore case in search patterns
+set ignorecase     " Ignore case in search patterns
 set smartcase      " Override ignorecase if the pattern contains upper case characters
 set synmaxcol=1000 " max search in columns
 
@@ -86,6 +86,7 @@ augroup vimrc
 augroup END
 
 colorscheme shadowmoth
+" colorscheme janah
 
 set clipboard+=unnamedplus " integrate system clipboard
 

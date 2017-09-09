@@ -7,3 +7,9 @@ endsnippet
 snippet render "render method" b
 render $1, locals: { $2 }
 endsnippet
+
+snippet trans "AR transaction" b
+ActiveRecord::Base.transaction do
+	${0:${VISUAL}}
+end
+endsnippet

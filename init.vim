@@ -7,59 +7,54 @@ runtime vim_config/file_types_config.vim
 runtime vim_config/plugins_config.vim
 runtime vim_config/keybindings.vim
 runtime vim_config/scripts.vim
+runtime vim_config/window_script.vim
 runtime vim_config/ruby_lib.vim
 runtime vim_config/ruby_scripts.vim
 runtime vim_config/doppelganger.vim
-
-" Custom colors
-
-hi EasyMotionTarget ctermbg=none ctermfg=red
-hi EasyMotionMoveHL ctermbg=none ctermfg=cyan
-hi agsvResultPattern ctermfg=red
+runtime vim_config/new_window.vim
+runtime vim_config/custom_start_window.vim
+runtime vim_config/tabline.vim
 
 
 "====================================
 "---------Testing_new_features-------
 "====================================
 
+command! CopyPath let @+ = expand("%:p")
+nnoremap cp :CopyPath<cr>
+
+nnoremap : ;
+nnoremap <c-q> <esc>qq
+vnoremap <c-q> :normal! @q<CR>
+
+command! Reek exec 'T "reek ' . expand('%:p') . '"'
+
+nnoremap <space>sd vip:s/.*//<left><left><left><left>
+
 set path+=**
 
 nnoremap <silent> + :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
 nnoremap <silent> - :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
-nnoremap <silent> <leader>ro :exec 'e ' . system('bash', 'find $(pwd) -name routes.rb -print -prune -o -path ./tmp ')<cr>
+nnoremap <leader><leader>r <esc>:R<cr>
+nnoremap <leader><leader>a <esc>:A<cr>
 
-nnoremap <silent> <leader>gs :Gstatus<cr>
+nmap <space>c q:
+nmap <space>q :copen<cr>
+
 
 "Populate Arglist with shell command
 command! -nargs=1 PA args `=systemlist(<q-args>)` | argdo e | syntax on
 
-" Paste from register
-nnoremap <space>np "np
-nnoremap <space>mp "mp
-
 " Open help in full window
 command! -nargs=? -complete=help H execute 'help ' . <q-args> . ' | only'
 
-" terminal move
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
-
-tnoremap <esc> <c-\><c-n>
-
-" search for visually highlighted text
-vnoremap <silent> // y/\V<C-R>"<CR>``:set hls<cr>
 
 " select last pastet text
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 vnoremap <c-g> :<c-u>%s/<c-r>"//<left>
 vnoremap <c-d> :s/<c-r>z//<left>
-
-" highlight current word without search for next
-nnoremap <silent> * :set hls<cr>*``
 
 " repeat last command
 noremap <space>w @:<CR>
@@ -71,15 +66,6 @@ noremap <S-tab> :bp<cr>
 " put current time
 imap <F3> <C-R>=strftime("%Y-%m-%d %I:%M")<CR>
 
-" moving aroung in command mode
-cnoremap <c-h> <left>
-cnoremap <c-j> <down>
-cnoremap <c-k> <up>
-cnoremap <c-l> <right>
-cnoremap <c-a> <home>
-cnoremap <c-0> <end>
-cnoremap <c-x> <del>
-cnoremap <c-v> <c-r>+
 
 imap <silent> <C-L> <CR><Esc>O
 
@@ -87,7 +73,7 @@ imap <silent> <C-L> <CR><Esc>O
 nnoremap <silent> M :call SynStack()<cr>
 
 function! SynStack()
-  if !exists("*synstack")
+  if !exists('*synstack')
     return
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
@@ -99,71 +85,26 @@ endfunc
 
 
 function! DeleteEmptyBuffers()
-  let [i, n; empty] = [1, bufnr('$')]
-  while i <= n
-    if bufexists(i) && buflisted(i) && bufwinnr(i)<0 && bufname(i) == ''
-      call add(empty, i)
+  let [l:i, l:n; l:empty] = [1, bufnr('$')]
+  while l:i <= l:n
+    if bufexists(l:i) && buflisted(l:i) && bufwinnr(l:i)<0 && bufname(l:i) ==? ''
+      call add(l:empty, l:i)
     endif
-    let i += 1
+    let l:i += 1
   endwhile
-  if len(empty) > 0
-    exe 'bdelete!' join(empty)
+  if len(l:empty) > 0
+    exe 'bdelete!' join(l:empty)
   endif
 endfunction
 
 command! DeleteEmptyBuffers call DeleteEmptyBuffers()
 
-function! K() range " {{{
-
-  let lines = getline(a:firstline, a:lastline)
-  let current_filetype = &filetype
-
-  if exists('s:view') && bufloaded(s:view) | exec s:view.'bd!' | endif
-
-  exec 'silent keepalt topleft ' . (len(lines) + 2) . ' split work_window'
-
-  let s:view = bufnr('%')
-  set modifiable
-
-
-  call append(0, lines)
-  call append(0, '')
-  exec 'setf ' . current_filetype
-
-  setl buftype=nofile
-  setl noswapfile
-  set  bufhidden=wipe
-  set  scrolloff=2
-
-  " setl nonu ro noma
-  if (exists('&relativenumber')) | setl norelativenumber | endif
-
-  exec ':2'
-
-  " au BufHidden <buffer> exec s:view . 'bd!'
-
-  " command! -nargs=0 -buffer OpenThis call <sid>open_this()
-  " nnoremap <silent> <buffer> <cr> :OpenThis<cr>
-
-endfunction
-command! -range K <line1>,<line2>call K()
-vnoremap <silent> <c-k> :call K()<cr>
-
-function! T() range
-  let lines = getline(a:firstline, a:lastline)
-  for l in lines
-    echom match(l, '\S')
-  endfor
-
-endfunction
-command! -range T <line1>,<line2>call T()
-
 function! AddToArgsList()
-  let buffers = map(range(1, bufnr('$')), 'bufname(v:val)')
-  call filter(buffers, '!empty(v:val)')
+  let l:buffers = map(range(1, bufnr('$')), 'bufname(v:val)')
+  call filter(l:buffers, '!empty(v:val)')
 
   call fzf#run ({
-        \ 'source':  (buffers),
+        \ 'source':  (l:buffers),
         \ 'sink':   'argadd',
         \ 'options': '-m'
         \})
@@ -177,16 +118,3 @@ function! Args()
 endfunction
 command! Args call Args()
 
-" Z - cd to recent / frequent directories
-command! -nargs=* Z :call Z(<f-args>)
-function! Z(...)
-  let l:cmd = 'fasd -d -e printf'
-  for l:arg in a:000
-    let l:cmd = l:cmd . ' ' . l:arg
-  endfor
-  let l:path = system(l:cmd)
-  if isdirectory(l:path)
-    echo l:path
-    exec 'e ' . l:path
-  endif
-endfunction

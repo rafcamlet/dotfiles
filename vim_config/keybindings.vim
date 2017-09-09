@@ -7,9 +7,6 @@ cnoremap jk <c-c>
 nnoremap <silent> <enter> :put =''<cr>
 cnoremap <silent> <enter> <cr>
 
-"{ easy command history
-nmap <space>c q:
-nmap <space>q :copen<cr>
 
 augroup ECW_au
   au!
@@ -28,19 +25,13 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
-
-" open vim folder
-command! Ovim ex ~/.config/nvim
+nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
+nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
 
 nnoremap <c-k> <c-w>k
 nnoremap <c-j> <c-w>j
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-
-nnoremap <leader><leader>r <esc>:R<cr>
-nnoremap <leader><leader>a <esc>:A<cr>
 
 " rails shorts
 nnoremap <leader>ro <esc>:Einitializer<cr>
@@ -90,8 +81,6 @@ cnoremap .. .{-}
 vnoremap . :normal .<CR>
 " repeat q macro for selected lines
 vnoremap @ :normal! @q<CR>
-" repreat last command for selected lines
-vnoremap \ :normal! @:<CR>
 
 "open path from system clipboard
 nmap <silent> co :e <c-r>+<cr>
@@ -121,3 +110,27 @@ nnoremap   <silent>  <c-t><c-q> :tabc<cr>
 
 " Copy to end of line
 nnoremap Y y$
+
+" terminal move
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+
+tnoremap <esc> <c-\><c-n>
+
+" search for visually highlighted text
+vnoremap <silent> // y/\V<C-R>"<CR>``:set hls<cr>
+
+" highlight current word without search for next
+nnoremap <silent> * :set hls<cr>*``
+
+" moving aroung in command mode
+cnoremap <c-h> <left>
+cnoremap <c-j> <down>
+cnoremap <c-k> <up>
+cnoremap <c-l> <right>
+cnoremap <c-a> <home>
+cnoremap <c-0> <end>
+cnoremap <c-x> <del>
+cnoremap <c-v> <c-r>+

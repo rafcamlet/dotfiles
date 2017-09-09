@@ -1,6 +1,39 @@
+function! Neonews()
+ruby << EOF
+  require 'rubygems'
+  require 'open-uri'
+  require 'nokogiri'
+  require 'action_view'
+
+  include ActionView::Helpers::DateHelper
+
+  url = 'https://github.com/neovim/neovim/wiki/Related-projects'
+  html = open(url)
+  doc = Nokogiri::HTML(html)
+  css =  '#wiki-wrapper > div.gh-header > div > div.gh-header-meta > relative-time'
+
+  last_date = Date.strptime(doc.css(css).text, '%b %d, %Y')
+  time_ago = time_ago_in_words(Date.strptime(doc.css(css).text, '%b %d, %Y'))
+
+  show = ->(str) { VIM::command("call WinAppend('#{str}')") }
+
+  [
+    'Neovim plugins - Ostatnia zmiana:',
+    '',
+    last_date,
+    time_ago
+  ].each &show
+EOF
+  return ''
+endfunction
+
+command! Neonews call Neonews()
+
+
+
 function! InsertClass()
 
-  ruby << EOF
+ruby << EOF
 
   current_path =~ Regexp.new('.*app/[^/]*/(.*)\.rb$')
   if $1
@@ -41,11 +74,9 @@ augroup find_last_file_group
 augroup END
 
 function! FindLastFileComplete(A,L,P)
- let l:result = []
-ruby << EOF
- let :result, FindLastFile.new.find_all(get('a:A')).first(10)
-EOF
- return l:result
+  let l:result = []
+  ruby let :result, FindLastFile.new.find_all(get('a:A')).first(10)
+  return l:result
 endfunction
 
 function! FindLastFile(name)
@@ -57,7 +88,6 @@ EOF
 endfunction
 
 command! -nargs=? -bang -complete=customlist,FindLastFileComplete FindLastFile call FindLastFile(<q-args>)
-nnoremap <space>r :FindLastFile 
 
 
 function! TestFindLastFileComplete(A)

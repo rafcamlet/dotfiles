@@ -1,10 +1,32 @@
-snippet gurad "gurad if"
+global !p
+def complete(t, opts):
+    if t:
+        opts = [m[len(t):] for m in opts if m.startswith(t) ]
+    if len(opts) == 1:
+        return opts[0]
+    return "(" + '|'.join(opts) + ")"
+endglobal
+
+snippet guard "guard if"
 if $0 | return 0 | endif
 endsnippet
 
 snippet f "function" b
-fun ${1:function_name}($2)
-	${3:" code}
-endf
+function! ${1:function}($2)
+	${3:${VISUAL:" code}}
+endfunction
 endsnippet
 
+snippet st "Status" b
+status $1`!p snip.rv=complete(t[1], ['new', 'test', 'dupa'])`
+endsnippet
+
+snippet let "let l" b
+let l:${1:${VISUAL}}$0
+endsnippet
+
+snippet for "for" b
+	for l:i in range($1)
+		${0:${VISUAL}}
+	endfor
+endsnippet
