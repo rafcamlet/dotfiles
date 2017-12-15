@@ -10,31 +10,93 @@ runtime vim_config/scripts.vim
 runtime vim_config/window_script.vim
 runtime vim_config/ruby_lib.vim
 runtime vim_config/ruby_scripts.vim
-runtime vim_config/doppelganger.vim
+" runtime vim_config/doppelganger.vim
 runtime vim_config/new_window.vim
 runtime vim_config/custom_start_window.vim
 runtime vim_config/tabline.vim
+runtime vim_config/standup.vim
 
 
 "====================================
 "---------Testing_new_features-------
 "====================================
 
+
+function! EditTest()
+  let l:path = expand('%')
+  let l:path = substitute(l:path, '^app', 'spec', '')
+  let l:path = substitute(l:path, '.rb$', '_spec.rb', '')
+  exec 'edit ' . l:path
+endfunction
+
+command! EditTest call EditTest()
+
+"   function! Insert(str)
+"     let l:line =  getline('.')
+"     call setline(line('.'), l:line[0:col('.')-2] . a:str . l:line[col('.')-1:])
+"   endfunction
+
+function! ResizeMode()
+  redraw!
+  let l:char = nr2char(getchar())
+
+  if l:char ==? 'h'
+    exec 'vertical resize ' . (winwidth(0) * 3/2)
+    call ResizeMode()
+  elseif l:char ==? 'l'
+    exec 'vertical resize ' . (winwidth(0) * 2/3)
+    call ResizeMode()
+  else
+    echo 'Exit ResizeMode'
+  end
+endfunction
+command! ResizeMode call ResizeMode()
+
+
+augroup leave_window
+  autocmd!
+  autocmd BufWinLeave * let g:last_buff = bufnr('%')
+augroup END
+
+command! Restore exec 'vnew | ' . g:last_buff . 'buff'
+nnoremap <tab>t :Restore<cr>
+
+au User CmSetup call cm#register_source({'name' : 'ruby-dict',
+  \ 'priority': 9,
+  \ 'scoping': 1,
+  \ 'scopes': ['ruby'],
+  \ 'abbreviation': 'ruby dict',
+  \ 'word_pattern': '[\w\-]+',
+  \ 'cm_refresh': 'RubyDict'
+  \ })
+
+function! RubyDict(info, ctx)
+  let l:list = readfile(expand('$HOME') . '/.config/nvim/dict/ruby.txt')
+  call cm#complete(a:info, a:ctx, a:ctx['startcol'], l:list)
+endfunction
+
+inoremap <expr> <c-l> fzf#complete("rg --color=never --no-filename --no-line-number -e '^.*?class +([a-zA-Z0-9:]*) ?.*$' app/models -r '$1' \| sed '/^$/d' \| sort")
+
+command! HorizontalMoveWindowRight exec 'normal! ' . (winwidth(0) - 10) . 'zl'
+nnoremap <silent> zl :HorizontalMoveWindowRight<cr>
+command! HorizontalMoveWindowLeft exec 'normal! ' . (winwidth(0) - 10) . 'zh'
+nnoremap <silent> zh :HorizontalMoveWindowLeft<cr>
+
+set cmdheight=2
+
+command! OpenFromCursor exec 'vsplit ' . getline('.')
+nnoremap <tab>o :OpenFromCursor<cr>
+
 command! CopyPath let @+ = expand("%:p")
 nnoremap cp :CopyPath<cr>
 
 nnoremap : ;
-nnoremap <c-q> <esc>qq
-vnoremap <c-q> :normal! @q<CR>
 
 command! Reek exec 'T "reek ' . expand('%:p') . '"'
 
 nnoremap <space>sd vip:s/.*//<left><left><left><left>
 
 set path+=**
-
-nnoremap <silent> + :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
-nnoremap <silent> - :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 nnoremap <leader><leader>r <esc>:R<cr>
 nnoremap <leader><leader>a <esc>:A<cr>
@@ -59,15 +121,15 @@ vnoremap <c-d> :s/<c-r>z//<left>
 " repeat last command
 noremap <space>w @:<CR>
 
-" Switch between buffers
-noremap <tab> :bn<cr>
-noremap <S-tab> :bp<cr>
+" " Switch between buffers
+" noremap <tab> :bn<cr>
+" noremap <S-tab> :bp<cr>
 
 " put current time
 imap <F3> <C-R>=strftime("%Y-%m-%d %I:%M")<CR>
 
 
-imap <silent> <C-L> <CR><Esc>O
+" imap <silent> <C-L> <CR><Esc>O
 
 " Show syntax highlighting groups for word under cursor
 nnoremap <silent> M :call SynStack()<cr>

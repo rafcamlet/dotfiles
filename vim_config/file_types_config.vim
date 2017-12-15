@@ -5,21 +5,21 @@
 " Author: Rafał Camlet raf.camlet@gmail.com
 
 function! s:set_dict(name)
-  let dict_name = expand('$HOME') . '/.config/nvim/dict/' . a:name . '.txt'
+  let l:dict_name = expand('$HOME') . '/.config/nvim/dict/' . a:name . '.txt'
 
-  if filereadable(dict_name)
-    let &l:dictionary = dict_name
+  if filereadable(l:dict_name)
+    let &l:dictionary = l:dict_name
   endif
 endfunction
 
 function! s:open_dict(...)
-  if empty(&filetype) && (a:0 == 0 || a:1 == '')
+  if empty(&filetype) && (a:0 == 0 || a:1 ==# '')
     echom 'No filetype set. Use :OpenDict <filetype>'
     return
   endif
 
-  let type = a:0 > 0 && a:1 != '' ? a:1 : &filetype
-  execute 'edit ' . expand('$HOME') . '/.config/nvim/dict/' . type . '.txt'
+  let l:type = a:0 > 0 && a:1 !=# '' ? a:1 : &filetype
+  execute 'edit ' . expand('$HOME') . '/.config/nvim/dict/' . l:type . '.txt'
 endfunction
 
 command! -nargs=? OpenDict call s:open_dict(<q-args>)
@@ -36,10 +36,3 @@ augroup vim_group
 
   autocmd FileType vim let &l:foldmethod = 'marker'
 augroup END
-
-augroup markdown_group
-  autocmd!
-
-  autocmd FileType markdown setlocal spell spelllang=en,pl
-augroup END
-

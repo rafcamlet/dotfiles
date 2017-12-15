@@ -159,6 +159,7 @@ let g:monster#completion#rcodetools#backend = 'async_rct_complete'
 let g:airline_theme='serene' " Theme
 let g:airline#extensions#whitespace#enabled = 0
 "let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 
 " ============== scrooloose/nerdtree ===============
@@ -186,6 +187,7 @@ let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
 " =================== w0rp/ale =====================
 
 let g:ale_sign_column_always = 1
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_ruby_flag = 0
 
 let g:ale_linters = { 'ruby': ['ruby'] }
@@ -203,5 +205,98 @@ function! ChangeRubyLinters()
   ALELint
 endfunction
 
+let g:ale_fixers = { 'ruby': ['rubocop'] }
+
 command! ChangeRubyLinters call ChangeRubyLinters()
 nnoremap <space>r :ChangeRubyLinters<cr>
+
+
+" ============ ryanoasis/vim-devicons ==============
+
+autocmd FileType nerdtree setlocal nolist
+
+
+
+" ============ plasticboy/vim-markdown =============
+
+let g:vim_markdown_folding_disabled = 1
+
+
+" ======== autozimu/LanguageClient-neovim ==========
+
+let g:LanguageClient_serverCommands = {
+      \ 'ruby': ['language_server-ruby'],
+      \ }
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <tab>s :call LanguageClient_textDocument_documentSymbol()<cr>
+
+
+" =============== vim-ruby/vim-ruby ================
+
+let g:ruby_indent_assignment_style = 'variable'
+let g:ruby_indent_block_style = 'do'
+let g:ruby_operators = 1
+
+
+" ========= haya14busa/vim-signjk-motion ===========
+
+map <space>j <Plug>(signjk-j)
+map <space>k <Plug>(signjk-k)
+
+
+" =========== AndrewRadev/splitjoin.vim ============
+
+let g:splitjoin_ruby_curly_braces = 0
+let g:splitjoin_ruby_hanging_args = 0
+
+
+" ======== nathanaelkane/vim-indent-guides =========
+
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=233
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=234
+
+
+" ============= itchyny/lightline.vim ==============
+
+set noshowmode
+
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ 'active': {
+      \   'left': [
+      \     [ 'mode', 'paste' ],
+      \     [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+      \   ],
+      \ 'right': [
+      \   ['linter_errors', 'linter_warnings', 'linter_ok'],
+      \   ['lineinfo'],
+      \   ['percent'],
+      \ ],
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
+let g:lightline.component_expand = {
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
+
+let g:lightline.component_type = {
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \ }
+
+let g:lightline.enable = {
+      \ 'statusline': 1,
+      \ 'tabline': 0
+      \ }
+
+let &updatetime = 2000
+autocmd CursorHold,BufWritePost * call lightline#update()

@@ -118,7 +118,7 @@ function! SendToTmxu(nr) range
 
   let l:cmd = 'tmux send-keys -t '  . a:nr . ' '
 
-  call map(l:lines, 'escape(v:val, "\"")')
+  call map(l:lines, 'escape(v:val, "\"$`;")')
   let l:content = join(l:lines, "\n")
 
   call system(l:cmd . '"' . l:content . '"' . ' c-m')
@@ -149,7 +149,7 @@ function! SendBufToTmxu(all) range
   end
 
 
-  call map(l:lines, 'escape(v:val, "\"")')
+  call map(l:lines, 'escape(v:val, "\"$`;")')
 
   let l:cmd = 'tmux send-keys -t '  . l:pane . ' '
   let l:content = join(l:lines, "\n")
@@ -162,7 +162,7 @@ nnoremap <silent> <space>f :call SendBufToTmxu(0)<cr>
 vnoremap <silent> <space>f :call SendBufToTmxu(0)<cr>
 
 function! TestThis()
-  call system('tmux send-keys -t 0.1 "rspec ' . escape(expand('%:p'), '"') .  '" c-m')
+  call system('tmux send-keys -t 3 "rspec ' . escape((expand('%:p') . ':' . line('.')), '"') .  '" c-m')
 endfunction
 command! TestThis call TestThis()
 "}}}

@@ -90,8 +90,6 @@ colorscheme shadowmoth
 
 set clipboard+=unnamedplus " integrate system clipboard
 
-let g:markdown_fenced_languages = ['html', 'vim', 'ruby', 'python', 'bash=sh']
-
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
   " Use Ag over Grep

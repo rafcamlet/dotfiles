@@ -4,12 +4,17 @@
 call plug#begin('~/.config/nvim/bundle')
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
-" Plug 'vim-scripts/L9' " Vim-script library
-" Plug 'MarcWeber/vim-addon-mw-utils' "plugin library
-" Plug 'tomtom/tlib_vim' "plugin library
-
+Plug 'vim-scripts/L9' " Vim-script library
+Plug 'MarcWeber/vim-addon-mw-utils' "plugin library
+Plug 'tomtom/tlib_vim' "plugin library
 Plug 'Raimondi/delimitMate' "Vim plugin, provides insert mode auto-completion for quotes, parens, brackets, etc.
-Plug 'Yggdroot/indentLine'
+Plug 'tmhedberg/matchit'
+Plug 'pbrisbin/vim-mkdir'
+
+" Plug 'Yggdroot/indentLine'
+" Plug 'bling/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+
 Plug 'scrooloose/nerdtree'
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
@@ -21,10 +26,6 @@ Plug 'tpope/vim-endwise'
 Plug 'SirVer/ultisnips'
 Plug 'christoomey/vim-tmux-navigator' " Seamless navigation between tmux panes and vim splits
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'pbrisbin/vim-mkdir'
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'tmhedberg/matchit'
 Plug 'burnettk/vim-angular'
 Plug 'mattn/emmet-vim'
 Plug 'Valloric/MatchTagAlways'
@@ -40,7 +41,7 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
 Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " A command-line fuzzy finder written in Go
 Plug 'junegunn/fzf.vim' " More options for fzf in vim
-Plug 'Shougo/deoplete.nvim' " Dark powered asynchronous completion framework for neovim
+" Plug 'Shougo/deoplete.nvim' " Dark powered asynchronous completion framework for neovim
 Plug 'tpope/vim-speeddating' " use CTRL-A/CTRL-X to increment dates, times, and more 
 Plug 'thinca/vim-quickrun' " Run current file and show output in new buffer
 Plug 'jeetsukumaran/vim-indentwise' " Indent motion
@@ -49,20 +50,35 @@ Plug 'coderifous/textobj-word-column.vim' " Select column of text example: vic
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'junegunn/vim-easy-align' " A Vim alignment plugin
 Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
-" Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'tpope/vim-abolish' "easily search for, substitute, and abbreviate multiple variants of a word
 Plug 'svermeulen/vim-easyclip' "Simplified clipboard functionality for Vim
 Plug 'francoiscabrol/ranger.vim' "Ranger integration in vim and neovim
 Plug 'rbgrouleff/bclose.vim' "dependency for ranger
-Plug 'w0rp/ale' " Asynchronous Lint Engine do przetestowania
-
+Plug 'w0rp/ale' " Asynchronous Lint Engine
+Plug 'roxma/nvim-completion-manager' "Fast, Extensible, Async Completion Framework for Neovim
+Plug 'roxma/ncm-rct-complete'
+Plug 'fgrsnau/ncm-otherbuf'
 
 " TEST plugin
 " Plug 'martingms/vipsql'
 
-" Plug 'mkitt/tabline.vim' "Configure tabs within Terminal Vim
-
 " Plug 'joshdick/onedark.vim'
+"hauleth/sad.vim do testu!!!
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'itchyny/lightline.vim'
+Plug 'itchyny/vim-gitbranch'
+Plug 'maximbaz/lightline-ale'
+
+" Plug 'machakann/vim-highlightedyank'
+Plug 'AndrewRadev/switch.vim'
+
+Plug 'haya14busa/vim-signjk-motion'
+
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'hail2u/vim-css3-syntax'
+Plug 'jreybert/vimagit'
+Plug 'ryanoasis/vim-devicons'
+
 Plug 'mhinz/vim-janah' "colorscheme
 " Plug 'mhinz/vim-startify'
 Plug 'ruby-formatter/rufo-vim'
@@ -105,7 +121,10 @@ Plug 'brooth/far.vim' "Find And Replace Vim plugin
 Plug 'gabesoft/vim-ags'
 Plug 'koron/nyancat-vim'
 Plug 'rhysd/nyaovim-markdown-preview'
-Plug 'gabrielelana/vim-markdown'
+
+" Plug 'gabrielelana/vim-markdown'
+Plug 'plasticboy/vim-markdown'
+
 Plug 'fishbullet/deoplete-ruby' "Deoplete sources for ruby language
 Plug 'Shougo/deoplete-rct' "deoplete rcodetools source for Ruby
 " Plug 'syngan/vim-vimlint'
@@ -135,6 +154,7 @@ Plug 'tpope/vim-ragtag' " ragtag.vim: ghetto HTML/XML mappings (formerly allml.v
 " Plug '~/projekty/test-plug' " My test plugin
 Plug '~/projekty/show-me-db' " My test plugin
 " Plug '~/projekty/vim-nest' " My test plugin
-Plug '~/projekty/vim-sag' " My test plugin
+Plug '~/projekty/vim-sg' " My test plugin
+Plug '~/projekty/vim-what-i-have-done' " My test plugin
 
 call plug#end()

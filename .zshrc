@@ -24,6 +24,7 @@ function gho {
 }
 
 function grm {
+  git co master
   git fetch
   git reset --hard origin/master
 }
@@ -32,6 +33,15 @@ function fco {
   git checkout $(git branch --sort=-committerdate | grep -v HEAD | fzf )
 }
 
+function show {
+  LESSOPEN="| pygmentize %s" LESS=' -RN' less "$@"
+}
+
+function _show {
+  _files
+}
+
+compdef _show show
 
 alias top=/usr/bin/top
 
@@ -58,3 +68,6 @@ alias sd='fasd -sid'     # interactive directory selection
 alias sf='fasd -sif'     # interactive file selection
 alias z='fasd_cd -d'     # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # cd with interactive selection
+
+alias lc='colorls -r -sd'
+alias gdn='git diff --name-only '
