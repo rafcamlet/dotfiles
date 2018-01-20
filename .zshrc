@@ -24,6 +24,12 @@ function gho {
 }
 
 function grm {
+  git diff-index --quiet HEAD --
+
+  if ! [[ $? -eq 0 ]]; then
+    echo 'You have changes!'; return 1
+  fi
+
   git co master
   git fetch
   git reset --hard origin/master
@@ -50,8 +56,12 @@ alias top=/usr/bin/top
 PATH=$PATH:/home/r/.cargo/bin
 PATH=$PATH:/usr/local/go/bin
 PATH=$PATH:$HOME/go/bin
+PATH=$PATH:$HOME/.yarn/bin
 
 export GOBIN=$HOME/go/bin
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
 
 # source ~/.zplug/init.zsh

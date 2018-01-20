@@ -63,7 +63,7 @@ command! PrettyXML call DoPrettyXML()
 " gn related scripts {{{
 let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>"
 
-nnoremap cn :set hls<cr>*``cgn
+nnoremap cn :set hls<cr>*``"_cgn
 nnoremap cN :set hls<cr>*``cgN
 
 vnoremap <expr> cn g:mc . ":set hls<cr>``cgn"

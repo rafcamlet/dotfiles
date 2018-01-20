@@ -12,7 +12,6 @@ nmap P <plug>G_EasyClipPasteBefore
 nmap <c-p> <plug>EasyClipSwapPasteForward
 nmap <c-n> <plug>EasyClipSwapPasteBackwards
 
-
 " =========== junegunn/vim-after-object ============
 
 augroup vim_after_object
@@ -199,7 +198,13 @@ function! ChangeRubyLinters()
     let g:ale_ruby_flag = 0
   else
     echo 'full'
-    let g:ale_linters = { 'ruby': ['brakeman', 'rails_best_practices', 'reek', 'rubocop', 'ruby'] }
+    let g:ale_linters = { 'ruby': [
+          \ 'rubocop',
+          \ 'rails_best_practices',
+          \ 'reek',
+          \ 'brakeman',
+          \ 'ruby'
+          \ ] }
     let g:ale_ruby_flag = 1
   end
   ALELint
@@ -219,7 +224,8 @@ autocmd FileType nerdtree setlocal nolist
 
 " ============ plasticboy/vim-markdown =============
 
-let g:vim_markdown_folding_disabled = 1
+" let g:vim_markdown_folding_disabled = 1
+
 
 
 " ======== autozimu/LanguageClient-neovim ==========
@@ -269,7 +275,8 @@ let g:lightline = {
       \ 'active': {
       \   'left': [
       \     [ 'mode', 'paste' ],
-      \     [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+      \     [ 'gitbranch', 'readonly'],
+      \     ['file_name']
       \   ],
       \ 'right': [
       \   ['linter_errors', 'linter_warnings', 'linter_ok'],
@@ -278,7 +285,8 @@ let g:lightline = {
       \ ],
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name'
+      \   'gitbranch': 'gitbranch#name',
+      \   'file_name': 'LightlineFilename'
       \ },
       \ }
 
@@ -298,5 +306,64 @@ let g:lightline.enable = {
       \ 'tabline': 0
       \ }
 
+function! LightlineFilename()
+  let l:result = ''
+
+  if &filetype ==# 'fzf' | return 'FZF' | endif
+  if &filetype ==# 'nerdtree' | return '' | endif
+
+  if expand('%:t') ==# ''
+    let l:result = '[No Name]'
+  else
+    let l:result = expand('%')
+  end
+
+  if &modified == 1 | let l:result .= ' +' | endif
+
+  return l:result
+endfunction
+
 let &updatetime = 2000
 autocmd CursorHold,BufWritePost * call lightline#update()
+
+
+" ============== alvan/vim-closetag ================
+
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.js'
+
+
+" ============== tpope/vim-markdown ================
+
+hi markdownBold ctermfg=203 cterm=bold
+
+
+
+" ======= thiagoalessio/rainbow_levels.vim =========
+
+nnoremap <silent> <tab>r :RainbowLevelsToggle<cr>
+
+let g:rainbow_levels = [
+    \{'ctermfg': 84,  'guifg': '#50fa7b'},
+    \{'ctermfg': 117, 'guifg': '#8be9fd'},
+    \{'ctermfg': 61,  'guifg': '#6272a4'},
+    \{'ctermfg': 212, 'guifg': '#ff79c6'},
+    \{'ctermfg': 203, 'guifg': '#ffb86c'},
+    \{'ctermfg': 228, 'guifg': '#f1fa8c'},
+    \{'ctermfg': 15,  'guifg': '#f8f8f2'},
+    \{'ctermfg': 59,  'guifg': '#6b4e32'}]
+    " \{'ctermfg': 231, 'guifg': '#525563'}]
+
+" let g:rainbow_levels = [
+"     \{'ctermfg': 185, 'guifg': '#d9d762'},
+"     \{'ctermfg': 109, 'guifg': '#86b4bb'},
+"     \{'ctermfg': 67,  'guifg': '#6c99bb'},
+"     \{'ctermfg': 98,  'guifg': '#8856d2'},
+"     \{'ctermfg': 203, 'guifg': '#ef5d32'},
+"     \{'ctermfg': 215, 'guifg': '#efac32'},
+"     \{'ctermfg': 188, 'guifg': '#e6e1c4'},
+"     \{'ctermfg': 59,  'guifg': '#6b4e32'}]
+
+
+" ================ vimwiki/vimwiki =================
+
+let g:vimwiki_list = [{'path': '~/workdir/vim_wiki'}]

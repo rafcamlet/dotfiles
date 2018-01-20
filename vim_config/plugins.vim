@@ -26,7 +26,7 @@ Plug 'tpope/vim-endwise'
 Plug 'SirVer/ultisnips'
 Plug 'christoomey/vim-tmux-navigator' " Seamless navigation between tmux panes and vim splits
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'burnettk/vim-angular'
+" Plug 'burnettk/vim-angular'
 Plug 'mattn/emmet-vim'
 Plug 'Valloric/MatchTagAlways'
 Plug 'tpope/vim-unimpaired'
@@ -36,9 +36,6 @@ Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'AndrewRadev/splitjoin.vim' " Plugin that simplifies the transition between multiline and single-line code
 Plug 'airblade/vim-rooter'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
-Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " A command-line fuzzy finder written in Go
 Plug 'junegunn/fzf.vim' " More options for fzf in vim
 " Plug 'Shougo/deoplete.nvim' " Dark powered asynchronous completion framework for neovim
@@ -59,8 +56,27 @@ Plug 'roxma/nvim-completion-manager' "Fast, Extensible, Async Completion Framewo
 Plug 'roxma/ncm-rct-complete'
 Plug 'fgrsnau/ncm-otherbuf'
 
+Plug 'mxw/vim-jsx' "React JSX syntax highlighting and indenting for vim.
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
+Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
+
 " TEST plugin
 " Plug 'martingms/vipsql'
+" Plug 'neoclide/vim-jsx-improve'
+Plug 'vimwiki/vimwiki'
+" Plug 'https://github.com/rhysd/clever-f.vim' "Extended f, F, t and T key mappings for Vim.
+
+Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighting.
+
+" Plug 'othree/csscomplete.vim' " Update the bult-in CSS complete function to latest CSS standard.
+Plug 'calebeby/ncm-css'
+
+" Plug 'plasticboy/vim-markdown'
+Plug 'tpope/vim-markdown'
+" Plug 'gabrielelana/vim-markdown'
+
+Plug 'alvan/vim-closetag'
 
 " Plug 'joshdick/onedark.vim'
 "hauleth/sad.vim do testu!!!
@@ -123,7 +139,6 @@ Plug 'koron/nyancat-vim'
 Plug 'rhysd/nyaovim-markdown-preview'
 
 " Plug 'gabrielelana/vim-markdown'
-Plug 'plasticboy/vim-markdown'
 
 Plug 'fishbullet/deoplete-ruby' "Deoplete sources for ruby language
 Plug 'Shougo/deoplete-rct' "deoplete rcodetools source for Ruby
@@ -146,15 +161,12 @@ Plug 'kassio/neoterm' " Wrapper of some neovim's :terminal functions.
 Plug 'tpope/vim-bundler' " Lightweight support for Ruby's Bundler
 
 " Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
-Plug 'mxw/vim-jsx'
 Plug 'eugen0329/vim-esearch' "Plugin performing project-wide async search and replace
 Plug 'leafgarland/typescript-vim' "Typescript syntax files for Vim
 Plug 'tpope/vim-ragtag' " ragtag.vim: ghetto HTML/XML mappings (formerly allml.vim)
 
-" Plug '~/projekty/test-plug' " My test plugin
-Plug '~/projekty/show-me-db' " My test plugin
-" Plug '~/projekty/vim-nest' " My test plugin
-Plug '~/projekty/vim-sg' " My test plugin
-Plug '~/projekty/vim-what-i-have-done' " My test plugin
+Plug '~/projekty/show-me-db'
+Plug '~/projekty/vim-sff'
+Plug '~/projekty/vim-what-i-have-done'
 
 call plug#end()

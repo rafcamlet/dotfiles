@@ -73,12 +73,23 @@ export default `!p snip.rv = snip.basename`;
 endsnippet
 
 
-snippet constructor "ES5 " b
+snippet constructor "constructor" b
 constructor(props) {
-	(props);
-
-	this.state = {
-		data: []
-	};
+	super(props);
+	this.state = {$0};
 }
+endsnippet
+
+snippet rfc "React Functional Component" b
+import React from 'react';
+
+function ${1:`!v expand('%:t:r')`}(props) {
+	return (
+		<div>
+      {props.children}
+		</div>
+	);
+}
+
+export default $1;
 endsnippet

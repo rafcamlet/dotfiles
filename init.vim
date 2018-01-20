@@ -1,10 +1,10 @@
 " Use gf to open config files
 
 runtime vim_config/meta.vim
-runtime vim_config/plugins.vim
-runtime vim_config/config.vim
 runtime vim_config/file_types_config.vim
+runtime vim_config/plugins.vim
 runtime vim_config/plugins_config.vim
+runtime vim_config/config.vim
 runtime vim_config/keybindings.vim
 runtime vim_config/scripts.vim
 runtime vim_config/window_script.vim
@@ -15,12 +15,17 @@ runtime vim_config/new_window.vim
 runtime vim_config/custom_start_window.vim
 runtime vim_config/tabline.vim
 runtime vim_config/standup.vim
+" runtime vim_config/status_line.vim
 
 
 "====================================
 "---------Testing_new_features-------
 "====================================
 
+vnoremap c "_c
+nnoremap <silent> \r :setf ruby<cr>
+
+set iskeyword+=-
 
 function! EditTest()
   let l:path = expand('%')

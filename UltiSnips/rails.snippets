@@ -13,3 +13,16 @@ ActiveRecord::Base.transaction do
 	${0:${VISUAL}}
 end
 endsnippet
+
+snippet desc "Rspec describe"
+describe $1 do
+	${0:${VISUAL}}
+end
+endsnippet
+
+snippet it "Rspec it"
+it '$0' do
+
+	expect().to
+end
+endsnippet
