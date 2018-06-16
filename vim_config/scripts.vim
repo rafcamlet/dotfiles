@@ -23,8 +23,8 @@ function! IndentToLine(mod) range
   call cursor('.', len + 1)
 endfunction
 
-nnoremap <silent> <s-k> :call IndentToLine("up")<cr>
-vnoremap <silent> <s-k> :call IndentToLine("up")<cr>
+" nnoremap <silent> <s-k> :call IndentToLine("up")<cr>
+" vnoremap <silent> <s-k> :call IndentToLine("up")<cr>
 " }}}
 
 " PrettyXML {{{
@@ -61,13 +61,32 @@ command! PrettyXML call DoPrettyXML()
 "}}}
 
 " gn related scripts {{{
+
+function! GetVisualSelection()
+  " Why is this not a built-in Vim script function?!
+  let [l:line_start, l:column_start] = getpos("'<")[1:2]
+  let [l:line_end, l:column_end] = getpos("'>")[1:2]
+  let l:lines = getline(l:line_start, l:line_end)
+  if len(l:lines) == 0
+    return ''
+  endif
+  let l:lines[-1] = l:lines[-1][: l:column_end - (&selection ==# 'inclusive' ? 1 : 2)]
+  let l:lines[0] = l:lines[0][l:column_start - 1:]
+  return join(l:lines, "\n")
+endfunction
+
+function! SelectionToSearch()
+  let @/ = escape(GetVisualSelection(), '.')
+  setlocal hlsearch
+endfunction
+
 let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>"
 
 nnoremap cn :set hls<cr>*``"_cgn
 nnoremap cN :set hls<cr>*``cgN
 
-vnoremap <expr> cn g:mc . ":set hls<cr>``cgn"
-vnoremap <expr> cN g:mc . ":set hls<cr>``cgN"
+vnoremap <silent> cn :<c-u>call SelectionToSearch()<cr>"_cgn
+vnoremap <silent> cN :<c-u>call SelectionToSearch()<cr>"_cgN
 
 function! SetupCR()
   set hlsearch
@@ -168,39 +187,39 @@ command! TestThis call TestThis()
 "}}}
 
 " ScratchWindow {{{
-function! ScratchWindow(copy) range
+" function! ScratchWindow(copy) range
 
-  let l:winnr = bufwinnr('__scratch_window__')
-  if l:winnr > -1 && !a:copy
-    exe l:winnr . ' wincmd w'
-    wincmd c
-    return
-  endif
+"   let l:winnr = bufwinnr('__scratch_window__')
+"   if l:winnr > -1 && !a:copy
+"     exe l:winnr . ' wincmd w'
+"     wincmd c
+"     return
+"   endif
 
-  if a:copy
-    let l:lines = getline(a:firstline, a:lastline)
-  endif
+"   if a:copy
+"     let l:lines = getline(a:firstline, a:lastline)
+"   endif
 
-  if a:copy && l:winnr > -1
-    exe l:winnr . ' wincmd w'
-  end
+"   if a:copy && l:winnr > -1
+"     exe l:winnr . ' wincmd w'
+"   end
 
-  if !a:copy || a:copy && l:winnr == -1
-    exec 'silent vnew __scratch_window__'
-    wincmd K
-    resize 10
-    setl buftype=nofile
-    setl noswapfile
-    setl scrolloff=0
-  endif
+"   if !a:copy || a:copy && l:winnr == -1
+"     exec 'silent vnew __scratch_window__'
+"     wincmd K
+"     resize 10
+"     setl buftype=nofile
+"     setl noswapfile
+"     setl scrolloff=0
+"   endif
 
-  if a:copy
-    call append(line('$'), l:lines)
-    call append(line('$'), '')
-  endif
-  normal! zb
-endfunction
+"   if a:copy
+"     call append(line('$'), l:lines)
+"     call append(line('$'), '')
+"   endif
+"   normal! zb
+" endfunction
 
-nnoremap <space>i :call ScratchWindow(0)<cr>
-vnoremap <space>i :call ScratchWindow(1)<cr>
+" nnoremap <space>i :call ScratchWindow(0)<cr>
+" vnoremap <space>i :call ScratchWindow(1)<cr>
 "}}}

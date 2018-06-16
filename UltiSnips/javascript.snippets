@@ -2,58 +2,12 @@ snippet if "javascript if"
 if ($1){$0}
 endsnippet
 
-snippet defp "default params"
-${1:params} = typeof $1 !== 'undefined' ? $1 : $0;
-endsnippet
-
 snippet log "console.log(...)" b
-console.log(${0:${VISUAL}});
+console.log(${0:${VISUAL}})
 endsnippet
 
 snippet fun "js function" i
 function($1){${0:${VISUAL}}}
-endsnippet
-
-snippet ngfor "angular.foreach loop" i
-angular.forEach(${1:iterateOver}, function(v, k) {$0})
-endsnippet
-
-snippet $f "scope function"
-$scope.${1:functionName} = function($2) {
-	${0:// console.log()}
-};
-endsnippet
-
-snippet s "scope"
-$scope.$0
-endsnippet
-
-snippet $o "scope object"
-$scope.${1:variable} = {
-	$0
-};
-endsnippet
-
-snippet uirouter "ui-router template"
-$urlRouterProvider.otherwise('/');
-$stateProvider
-	.state('state1', {
-		url: '/state1',
-		templateUrl: 'views/index.html'
-	});
-$0
-endsnippet
-
-snippet link "angular directive link function"
-link: function(scope, element, attrs, ctrl, transclude){
-	$0
-}
-endsnippet
-
-snippet compilee "compile directive element"
-element.empty();
-element.append(template);
-$compile(element.contents())(scope);
 endsnippet
 
 snippet rcc "create class/component" b
@@ -92,4 +46,29 @@ function ${1:`!v expand('%:t:r')`}(props) {
 }
 
 export default $1;
+endsnippet
+
+snippet try "try { ... } catch(e) { ... }"
+	try {
+		${0:${VISUAL}}
+	} catch (err) {
+		error(err)
+		response.fail({message: err}, 400)
+	}
+endsnippet
+
+snippet ctx "syncano default function"
+export default async ctx => {
+	${0:${VISUAL}}
+}
+endsnippet
+
+snippet d "debugger"
+debugger
+endsnippet
+
+snippet af "arrow function"
+() => ({
+	$0
+})
 endsnippet

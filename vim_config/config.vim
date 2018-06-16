@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-set shell=/bin/bash                            " Set bash as default shell. Fish can not eval backticks
+set shell=/bin/zsh                             " Set zsh as default shell
 set shortmess+=A                               " Always edit file, even when swap file is found
 set diffopt=filler,iwhite                      " In diff mode, ignore whitespace changes and align unchanged lines
 set fileencodings=ucs-bom,utf-8,default,latin1 " encoding

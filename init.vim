@@ -15,12 +15,137 @@ runtime vim_config/new_window.vim
 runtime vim_config/custom_start_window.vim
 runtime vim_config/tabline.vim
 runtime vim_config/standup.vim
+runtime vim_config/typescr.vim
+runtime vim_config/surroud_function.vim
+
 " runtime vim_config/status_line.vim
 
 
 "====================================
 "---------Testing_new_features-------
 "====================================
+set modeline
+
+function! GitShow()
+  normal! zz
+  let l:filetype = &filetype
+  let l:path = expand('%')
+  let l:line = line('.')
+  exec 'vnew'
+  call append(0, systemlist('git show origin/production:' . l:path))
+  exec 'setf ' . l:filetype
+  exec 'normal! ' . l:line . 'G'
+  normal! zz
+endfunction
+command! GitShow call GitShow()
+nnoremap <silent> <space>gs :GitShow<cr>
+
+function! TestColor()
+  for i in range(1, 255)
+    exec 'highlight MyGroup' . i . ' ctermfg=' . i
+    call append(line('$'), 'Test TEST test')
+    call matchadd('MyGroup' . i, '\%'. i . 'l')
+  endfor
+endfunction
+
+function! FindClass()
+  let l:str = substitute(@+, '::', '( *\n)?(( +class +| +module +)|::)', 'g')
+  exec 'Ag ' . l:str
+endfunction
+command! FindClass call FindClass()
+
+vnoremap <s-k> <esc>
+
+function! STest()
+  let s:path = expand('%')
+  let s:path = substitute(s:path, '\v\csrc', 'test', '')
+  let s:path = substitute(s:path, '\v\c\.js$', '.test.js', '')
+  exec 'e ' . s:path
+endfunction
+command! STest :silent call STest()<cr>
+
+command! RCursor :set guicursor=n-v-c-i:block
+
+nnoremap s /\%<c-r>=line('.')<cr>l
+
+let g:incsearch#magic = '\v' " very magic
+map / <Plug>(incsearch-forward)
+
+" function! ColumnMove(direction)
+"   if (a:direction ==# 'backward')
+"     let l:flags = 'bsWe'
+"   else
+"     let l:flags = 'sWe'
+"   end
+"   set cursorcolumn
+"   redraw
+"   echo 'Waiting for char: '
+"   let l:char = nr2char(getchar())
+"   let l:col = col('.') - 1
+"   let l:reg = '^.\{' . l:col  . '\}' . l:char
+"   echo l:reg
+"   call search(l:reg , l:flags)
+"   set nocursorcolumn
+" endfunction
+" nnoremap <silent> <space>k :call  ColumnMove('backward')<cr>
+" nnoremap <silent> <space>j :call  ColumnMove('forward')<cr>
+
+function! Pisz()
+  set textwidth=100
+  call lexical#init()
+  call pencil#init({'wrap': 'hard'})
+  set whichwrap=
+  set spelllang=pl,en
+endfunction
+
+command! Pisz call Pisz()<cr>
+
+nnoremap ,hi :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+
+nnoremap gd :TSDef<cr>
+
+let g:ale_lint_delay = 500
+
+function! ShowInOtherBranch(branch_name)
+  exec 'vnew'
+  let l:filename = expand('%:S')
+  let l:command = 'git show ' . a:branch_name . ':' . l:filename
+  echom l:command
+  call append(0, systemlist(l:command))
+  exec 'setf ruby'
+endfunction
+
+
+command! -nargs=1 SB :call ShowInOtherBranch(<f-args>)<cr>
+
+" copy from " to other buffer
+
+nnoremap <silent> <space>ya :let @a = @"<cr>
+nnoremap <silent> <space>yz :let @z = @"<cr>
+nnoremap <silent> <space>yx :let @x = @"<cr>
+nnoremap <silent> <space>yc :let @c = @"<cr>
+
+
+nnoremap <silent> <space>pa "ap
+nnoremap <silent> <space>pz "zp
+nnoremap <silent> <space>px "xp
+nnoremap <silent> <space>pc "cp
+
+
+" Like gJ, but always remove spaces
+fun! JoinSpaceless()
+    execute 'normal gJ'
+
+    " Character under cursor is whitespace?
+    if matchstr(getline('.'), '\%' . col('.') . 'c.') =~# '\s'
+        " When remove it!
+        execute 'normal dw'
+    endif
+endfun
+
+" Map it to a key
+nnoremap <space>J :call JoinSpaceless()<CR>
+
 
 vnoremap c "_c
 nnoremap <silent> \r :setf ruby<cr>
@@ -92,10 +217,16 @@ set cmdheight=2
 command! OpenFromCursor exec 'vsplit ' . getline('.')
 nnoremap <tab>o :OpenFromCursor<cr>
 
-command! CopyPath let @+ = expand("%:p")
+command! CopyAbsolutePath let @+ = expand("%:p")
+nnoremap cP :CopyAbsolutePath<cr>
+
+
+command! CopyPath let @+ = expand("%")
 nnoremap cp :CopyPath<cr>
 
 nnoremap : ;
+vnoremap : ;
+vnoremap ; :
 
 command! Reek exec 'T "reek ' . expand('%:p') . '"'
 
@@ -184,4 +315,3 @@ function! Args()
         \ 'options': '-m'})
 endfunction
 command! Args call Args()
-

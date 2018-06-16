@@ -3,14 +3,14 @@
 
 let g:EasyClipEnableBlackHoleRedirect = 0
 let g:EasyClipUseCutDefaults = 0
-let g:EasyClipUseSubstituteDefaults = 1
+" let g:EasyClipUseSubstituteDefaults = 1
 let g:EasyClipPreserveCursorPositionAfterYank = 1
 let g:EasyClipUsePasteDefaults = 0
 
 nmap p <plug>G_EasyClipPasteAfter
 nmap P <plug>G_EasyClipPasteBefore
-nmap <c-p> <plug>EasyClipSwapPasteForward
-nmap <c-n> <plug>EasyClipSwapPasteBackwards
+" nmap <c-p> <plug>EasyClipSwapPasteForward
+" nmap <c-n> <plug>EasyClipSwapPasteBackwards
 
 " =========== junegunn/vim-after-object ============
 
@@ -37,7 +37,7 @@ nnoremap <space>om  :FZF app/models<cr>
 nnoremap <space>ov  :FZF app/views<cr>
 nnoremap <space>os  :FZF app/services<cr>
 nnoremap <space>of  :FZF app/form_objects<cr>
-nnoremap <space>on  :FZF ~/notes<cr>
+nnoremap <space>on  :FZF ~/workdir/notes<cr>
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
@@ -150,7 +150,7 @@ let g:indentLine_color_term = 240
 " ============= Shougo/deoplete.nvim ===============
 
 let g:deoplete#enable_at_startup = 1
-let g:monster#completion#rcodetools#backend = 'async_rct_complete'
+" let g:monster#completion#rcodetools#backend = 'async_rct_complete'
 
 
 " =============== bling/vim-airline ================
@@ -210,17 +210,19 @@ function! ChangeRubyLinters()
   ALELint
 endfunction
 
-let g:ale_fixers = { 'ruby': ['rubocop'] }
+let g:ale_fixers = { 'ruby': ['rubocop'], 'typescript': ['eslint', 'prettier', 'tslint'] }
+
+
 
 command! ChangeRubyLinters call ChangeRubyLinters()
 nnoremap <space>r :ChangeRubyLinters<cr>
+nmap <silent> <tab>k <Plug>(ale_previous_wrap)
+nmap <silent> <tab>j <Plug>(ale_next_wrap)
 
 
 " ============ ryanoasis/vim-devicons ==============
 
 autocmd FileType nerdtree setlocal nolist
-
-
 
 " ============ plasticboy/vim-markdown =============
 
@@ -231,12 +233,18 @@ autocmd FileType nerdtree setlocal nolist
 " ======== autozimu/LanguageClient-neovim ==========
 
 let g:LanguageClient_serverCommands = {
-      \ 'ruby': ['language_server-ruby'],
+      \ 'ruby': ['tcp://localhost:7658'],
+      \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+      \ 'javascript': ['javascript-typescript-stdio'],
+      \ 'javascript.jsx': ['javascript-typescript-stdio'],
+      \ 'typescript': ['javascript-typescript-stdio'],
       \ }
 
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <tab>s :call LanguageClient_textDocument_documentSymbol()<cr>
+nnoremap <silent> <space>lr :call LanguageClient_textDocument_references()<cr>
+nnoremap <silent> <space>ld :call LanguageClient_textDocument_definition()<CR>
 
 
 " =============== vim-ruby/vim-ruby ================
@@ -335,6 +343,7 @@ let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.js'
 " ============== tpope/vim-markdown ================
 
 hi markdownBold ctermfg=203 cterm=bold
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ruby']
 
 
 
@@ -367,3 +376,68 @@ let g:rainbow_levels = [
 " ================ vimwiki/vimwiki =================
 
 let g:vimwiki_list = [{'path': '~/workdir/vim_wiki'}]
+
+" =============== reedes/vim-wheel =================
+
+let g:wheel#map#up   = '<c-y>'
+let g:wheel#map#down = '<c-e>'
+
+
+" ============ Valloric/MatchTagAlways =============
+
+let g:mta_filetypes = {
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'xml' : 1,
+    \ 'jinja' : 1,
+    \ 'typescript' : 1,
+    \}
+
+let g:mta_use_matchparen_group = 0
+
+
+" ============== airblade/vim-rooter ===============
+
+" let g:rooter_manual_only = 1
+
+
+" =========== easymotion/vim-easymotion ============
+
+map <space>l <Plug>(easymotion-lineforward)
+map <space>j <Plug>(easymotion-j)
+map <space>k <Plug>(easymotion-k)
+map <space>h <Plug>(easymotion-linebackward)
+nmap s <Plug>(easymotion-sl2)
+
+let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+let g:EasyMotion_smartcase = 1
+
+
+" ======== haya14busa/incsearch-fuzzy.vim ==========
+
+map z/ <Plug>(incsearch-fuzzy-/)
+map z? <Plug>(incsearch-fuzzy-?)
+map zg/ <Plug>(incsearch-fuzzy-stay)
+
+
+" ========= terryma/vim-multiple-cursors ===========
+
+nnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
+vnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
+let g:multi_cursor_exit_from_insert_mode = 0
+
+function! Multiple_cursors_before()
+  ALEDisable
+  TSStop
+  cm#disable_for_buffer()
+  LanguageClientStop
+endfunction
+
+function! Multiple_cursors_after()
+  ALEEnable
+  TSStart
+  cm#enable_for_buffer()
+  LanguageClientStart
+endfunction
+
+
