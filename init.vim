@@ -10,8 +10,6 @@ runtime vim_config/scripts.vim
 runtime vim_config/window_script.vim
 runtime vim_config/ruby_lib.vim
 runtime vim_config/ruby_scripts.vim
-" runtime vim_config/doppelganger.vim
-runtime vim_config/new_window.vim
 runtime vim_config/custom_start_window.vim
 runtime vim_config/tabline.vim
 runtime vim_config/standup.vim
@@ -19,7 +17,6 @@ runtime vim_config/typescr.vim
 runtime vim_config/surroud_function.vim
 
 " runtime vim_config/status_line.vim
-
 
 "====================================
 "---------Testing_new_features-------
@@ -69,26 +66,6 @@ command! RCursor :set guicursor=n-v-c-i:block
 nnoremap s /\%<c-r>=line('.')<cr>l
 
 let g:incsearch#magic = '\v' " very magic
-map / <Plug>(incsearch-forward)
-
-" function! ColumnMove(direction)
-"   if (a:direction ==# 'backward')
-"     let l:flags = 'bsWe'
-"   else
-"     let l:flags = 'sWe'
-"   end
-"   set cursorcolumn
-"   redraw
-"   echo 'Waiting for char: '
-"   let l:char = nr2char(getchar())
-"   let l:col = col('.') - 1
-"   let l:reg = '^.\{' . l:col  . '\}' . l:char
-"   echo l:reg
-"   call search(l:reg , l:flags)
-"   set nocursorcolumn
-" endfunction
-" nnoremap <silent> <space>k :call  ColumnMove('backward')<cr>
-" nnoremap <silent> <space>j :call  ColumnMove('forward')<cr>
 
 function! Pisz()
   set textwidth=100
@@ -207,11 +184,6 @@ endfunction
 
 inoremap <expr> <c-l> fzf#complete("rg --color=never --no-filename --no-line-number -e '^.*?class +([a-zA-Z0-9:]*) ?.*$' app/models -r '$1' \| sed '/^$/d' \| sort")
 
-command! HorizontalMoveWindowRight exec 'normal! ' . (winwidth(0) - 10) . 'zl'
-nnoremap <silent> zl :HorizontalMoveWindowRight<cr>
-command! HorizontalMoveWindowLeft exec 'normal! ' . (winwidth(0) - 10) . 'zh'
-nnoremap <silent> zh :HorizontalMoveWindowLeft<cr>
-
 set cmdheight=2
 
 command! OpenFromCursor exec 'vsplit ' . getline('.')
@@ -233,9 +205,6 @@ command! Reek exec 'T "reek ' . expand('%:p') . '"'
 nnoremap <space>sd vip:s/.*//<left><left><left><left>
 
 set path+=**
-
-nnoremap <leader><leader>r <esc>:R<cr>
-nnoremap <leader><leader>a <esc>:A<cr>
 
 nmap <space>c q:
 nmap <space>q :copen<cr>
