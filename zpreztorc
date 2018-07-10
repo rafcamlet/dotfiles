@@ -32,7 +32,6 @@ zstyle ':prezto:load' pmodule \
          'spectrum' \
          'utility' \
          'completion' \
-         'ruby' \
          'autosuggestions' \
          'fasd' \
          'git' \
@@ -40,6 +39,7 @@ zstyle ':prezto:load' pmodule \
          'history-substring-search' \
          'prompt'
 
+         # 'ruby' \
 
 #
 # Autosuggestions

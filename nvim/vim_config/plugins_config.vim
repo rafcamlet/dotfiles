@@ -52,7 +52,7 @@ nnoremap <silent> <space>F :CtrlSFOpen<cr>
 
 " ================ kassio/neoterm ==================
 
-let g:neoterm_position = 'vertical'
+" let g:neoterm_position = 'vertical'
 " hide/close terminal
 nnoremap <silent> ,th :call neoterm#close()<cr>
 " clear terminal

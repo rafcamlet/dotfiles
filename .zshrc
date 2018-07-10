@@ -53,16 +53,21 @@ alias top=/usr/bin/top
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-PATH=$PATH:/home/r/.cargo/bin
 PATH=$PATH:/usr/local/go/bin
-PATH=$PATH:$HOME/go/bin
 PATH=$PATH:$HOME/.yarn/bin
+PATH=$PATH:$HOME/bin
 
 export GOBIN=$HOME/go/bin
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
+unset rvm_bin_path
+unset rvm_prefix
+unset rvm_version
+unset rvm_path
+
+[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
 
 # source ~/.zplug/init.zsh
 

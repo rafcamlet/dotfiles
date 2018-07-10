@@ -185,10 +185,10 @@ Plug 'tpope/vim-bundler' " Lightweight support for Ruby's Bundler
 Plug 'eugen0329/vim-esearch' "Plugin performing project-wide async search and replace
 Plug 'tpope/vim-ragtag' " ragtag.vim: ghetto HTML/XML mappings (formerly allml.vim)
 
-Plug '~/projekty/show-me-db'
-Plug '~/projekty/vim-sff'
-Plug '~/projekty/vim-what-i-have-done'
-Plug '~/projekty/vim-filelist'
-Plug '~/projekty/vim-my-note'
+Plug '~/projects/show-me-db'
+Plug '~/projects/vim-sff'
+Plug '~/projects/vim-what-i-have-done'
+Plug '~/projects/vim-filelist'
+Plug '~/projects/vim-my-note'
 
 call plug#end()
