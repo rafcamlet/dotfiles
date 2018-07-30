@@ -170,9 +170,14 @@ exec_always --no-startup-id polybar my &
 exec --no-startup-id compton --config ~/.config/compton/compton.conf -b
 exec --no-startup-id feh --bg-fill ~/.config/wallpaper.jpg
 
-set $sink `pactl list short sinks | grep RUNNING | cut -f1`
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume $sink +10%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume $sink -10%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $sink toggle
+# set $sink `pactl list short sinks | grep RUNNING | cut -f1`
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +10%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -10%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 
 bindsym Insert exec --no-startup-id take_screenshot
+
+exec google-chrome
+exec --no-startup-id i3-msg 'workspace 2; exec gnome-terminal; workspace 1'
+
+assign [class="Google-chrome"] 1

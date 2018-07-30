@@ -87,4 +87,6 @@ alias zz='fasd_cd -d -i' # cd with interactive selection
 alias lc='colorls -r --sd'
 alias gdn='git diff --name-only '
 
+alias v='vifm' # vi file manager
+
 eval "$(direnv hook zsh)"

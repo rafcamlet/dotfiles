@@ -8,10 +8,8 @@
 ;=====================================================
 
 [colors]
-;background = ${xrdb:color0:#222}
 background = #222
 background-alt = #444
-;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
 foreground-alt = #888
 primary = #ffb52a
@@ -27,14 +25,15 @@ height = 25
 radius = 0.0
 fixed-center = true
 
+border-size = 0
+
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
+line-size = 0
 line-color = #f00
 
-border-size = 0
-border-color = #00000000
+border-color = ${colors.background}
 
 padding-left = 0
 padding-right = 2
@@ -44,23 +43,21 @@ module-margin-right = 2
 
 ; font-0 = fixed:pixelsize=10;1
 
-font-0 = terminus:pixelsize=11
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-; font-2 = siji:pixelsize=10;0
-font-2 = UbuntuMono Nerd Font:pixelsize=12;0
+font-0 = terminus:pixelsize=11;3
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;3
+font-2 = UbuntuMono Nerd Font:pixelsize=12;3
 
 ; modules-left = bspwm i3
 modules-left = i3
 modules-center =
-modules-right = filesystem volume memory cpu battery temperature date powermenu
+modules-right = filesystem volume memory cpu battery temperature date
 
 tray-position = right
 tray-padding = 2
 ;tray-transparent = true
 ;tray-background = #0063ff
 
-;wm-restack = bspwm
-
+; wm-restack = bspwm
 ; wm-restack = i3
 ; override-redirect = true
 
@@ -247,7 +244,7 @@ card = intel_backlight
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
+format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
 label = %percentage:2%%
@@ -318,10 +315,10 @@ label = %date% %time%
 type = internal/volume
 
 format-volume = <label-volume> <bar-volume>
-label-volume = VOL
+label-volume = " 墳 "
 label-volume-foreground = ${root.foreground}
 
-format-muted-prefix = " "
+format-muted-prefix = " 婢 "
 format-muted-foreground = ${colors.foreground-alt}
 label-muted = sound muted
 
@@ -358,21 +355,21 @@ format-full-prefix = "   "
 format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
+ramp-capacity-2 = 
+ramp-capacity-1 = 
+ramp-capacity-0 = 
 ramp-capacity-foreground = ${colors.foreground-alt}
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
+animation-charging-2 = "  "
+animation-charging-1 = "  "
+animation-charging-0 = "  "
 animation-charging-foreground = ${colors.foreground-alt}
 animation-charging-framerate = 750
 
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
-warn-temperature = 60
+warn-temperature = 67
 
 format = <ramp> <label>
 format-underline = #f50a4d
@@ -410,10 +407,10 @@ menu-0-1-exec = menu-open-2
 menu-1-0 = cancel
 menu-1-0-exec = menu-open-0
 menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
+menu-1-1-exec = reboot
 
 menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
+menu-2-0-exec = poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
 
