@@ -19,8 +19,13 @@ function commit {
 
 function gho {
   url=$(git config --get remote.origin.url | sed -nr 's/.*:(.*).git.*/\1/p')
-  branch=$(git rev-parse --abbrev-ref HEAD)
-  xdg-open "https://github.com/$url/compare/$branch?expand=1" > /dev/null 2>&1
+
+  if [ -z "$1" ]; then
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    xdg-open "https://github.com/$url/compare/$branch?expand=1" &>/dev/null
+  else
+    xdg-open "https://github.com/$url/commit/$1" &>/dev/null
+  fi
 }
 
 function grm {
