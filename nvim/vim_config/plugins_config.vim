@@ -235,10 +235,12 @@ autocmd FileType nerdtree setlocal nolist
 let g:LanguageClient_serverCommands = {
       \ 'ruby': ['tcp://localhost:7658'],
       \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-      \ 'javascript': ['javascript-typescript-stdio'],
-      \ 'javascript.jsx': ['javascript-typescript-stdio'],
-      \ 'typescript': ['javascript-typescript-stdio'],
       \ }
+
+
+      " \ 'javascript': ['javascript-typescript-stdio'],
+      " \ 'javascript.jsx': ['javascript-typescript-stdio'],
+      " \ 'typescript': ['javascript-typescript-stdio'],
 
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>

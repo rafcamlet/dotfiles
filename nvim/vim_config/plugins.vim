@@ -86,8 +86,8 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'reedes/vim-lexical'
 Plug 'reedes/vim-wheel'
 
-Plug 'mhartington/nvim-typescript'
-Plug 'leafgarland/typescript-vim'
+" Plug 'mhartington/nvim-typescript'
+" Plug 'leafgarland/typescript-vim'
 " Plug 'MaxMEllon/vim-jsx-pretty'  "Powoduje błędy! Przetestować!
 
 Plug 'reedes/vim-pencil'

@@ -6,6 +6,8 @@ fi
 
 setopt RM_STAR_WAIT
 
+export VISUAL=nvim
+export EDITOR="$VISUAL"
 
 function amend {
   git add .
