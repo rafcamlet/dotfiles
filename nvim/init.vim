@@ -21,6 +21,9 @@ runtime vim_config/surroud_function.vim
 "====================================
 "---------Testing_new_features-------
 "====================================
+nnoremap <nowait> <space>d :Sff 
+vnoremap <nowait> <space>d y:Sff <c-r>"<cr>
+
 set modeline
 
 function! GitShow()

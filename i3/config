@@ -166,7 +166,7 @@ bindsym $mod+Shift+e exec i3-msg exit
 new_window none
 
 exec --no-startup-id nm-applet
-exec_always --no-startup-id polybar my &
+exec_always --no-startup-id killall polybar; polybar my &
 exec --no-startup-id compton --config ~/.config/compton/compton.conf -b
 exec --no-startup-id feh --bg-fill ~/.config/wallpaper.jpg
 
@@ -174,6 +174,7 @@ exec --no-startup-id feh --bg-fill ~/.config/wallpaper.jpg
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +10%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -10%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym $mod+m move workspace to output left
 
 bindsym Insert exec --no-startup-id take_screenshot
 

@@ -21,8 +21,22 @@ let g:projects = [
       \   'root_path': 'projects/reactapp',
       \   'path': '.,src/**,,',
       \   'suffixesadd': '.js',
+      \   'dictionary': '~/.config/nvim/dict/react',
       \   'files': [
       \     ['c', 'src/components']
+      \   ]
+      \ },
+      \ {
+      \   'name': 'Ixl',
+      \   'settings':  [['shiftwidth', 4], ['softtabstop', 4], ['tabstop', 4], ['formatprg', '"prettier\ --stdin"']],
+      \   'root_path': 'projects/ixl-front-end',
+      \   'path': '.,src/**,,',
+      \   'suffixesadd': '.js',
+      \   'dictionary': '~/.config/nvim/dict/react',
+      \   'files': [
+      \     ['c', 'src/components'],
+      \     ['r', 'src/reducers'],
+      \     ['v', 'src/containers']
       \   ]
       \ }
       \]
@@ -67,6 +81,12 @@ function! SetupEnvironment()
       if has_key(l:project, 'suffixesadd')
         let &suffixesadd = get(l:project, 'suffixesadd')
       endif
+      if has_key(l:project, 'dictionary') && filereadable(expand(l:project['dictionary']))
+        let &l:dictionary = expand(l:project['dictionary'])
+      endif
+      for l:settings in get(l:project, 'settings', [])
+        exec 'let &l:' . l:settings[0] . ' = ' . l:settings[1]
+      endfor
 
       exec 'cd ' . matchstr(l:path, '.*' . l:project['root_path'])
     endif
