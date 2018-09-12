@@ -66,6 +66,7 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'posva/vim-vue'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'sodapopcan/vim-twiggy' "Git branch management for Vim
 

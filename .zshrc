@@ -48,12 +48,6 @@ function show {
   LESSOPEN="| pygmentize %s" LESS=' -RN' less "$@"
 }
 
-function _show {
-  _files
-}
-
-compdef _show show
-
 alias top=/usr/bin/top
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

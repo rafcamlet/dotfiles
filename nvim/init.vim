@@ -13,7 +13,7 @@ runtime vim_config/ruby_scripts.vim
 runtime vim_config/custom_start_window.vim
 runtime vim_config/tabline.vim
 runtime vim_config/standup.vim
-runtime vim_config/typescr.vim
+runtime vim_config/projects.vim
 runtime vim_config/surroud_function.vim
 
 " runtime vim_config/status_line.vim
@@ -22,6 +22,11 @@ runtime vim_config/surroud_function.vim
 "---------Testing_new_features-------
 "====================================
 set modeline
+
+
+nnoremap <space>s :Sff 
+vnoremap <space>s y:Sff <c-r>"<cr>
+nnoremap \z :exec 'normal vimzf'<cr>
 
 function! GitShow()
   normal! zz

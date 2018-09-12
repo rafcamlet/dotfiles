@@ -60,6 +60,7 @@ filetype indent on
 " vim commands autocomplet
 set wildmenu
 set wildmode=list:longest,full
+set wildignorecase " case insensitive filename completion
 
 "no error
 set noerrorbells
