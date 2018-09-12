@@ -15,6 +15,29 @@ let g:projects = [
       \   'files': [
       \     ['c', 'src/components']
       \   ],
+      \ },
+      \ {
+      \   'name': 'Reactapp',
+      \   'root_path': 'projects/reactapp',
+      \   'path': '.,src/**,,',
+      \   'suffixesadd': '.js',
+      \   'dictionary': '~/.config/nvim/dict/react',
+      \   'files': [
+      \     ['c', 'src/components']
+      \   ]
+      \ },
+      \ {
+      \   'name': 'Ixl',
+      \   'settings':  [['shiftwidth', 4], ['softtabstop', 4], ['tabstop', 4], ['formatprg', '"prettier\ --stdin"']],
+      \   'root_path': 'projects/ixl-front-end',
+      \   'path': '.,src/**,,',
+      \   'suffixesadd': '.js',
+      \   'dictionary': '~/.config/nvim/dict/react',
+      \   'files': [
+      \     ['c', 'src/components'],
+      \     ['r', 'src/reducers'],
+      \     ['v', 'src/containers']
+      \   ]
       \ }
       \]
 
@@ -27,6 +50,10 @@ function! FindInProject(cmd, path)
 endfunction
 
 function! SetupEnvironment()
+
+  if exists('b:setup_environmcnt_ready') | return | endif
+  let b:setup_environmcnt_ready = 1
+
   let l:project_found = 0
 
   if empty(expand('%:p'))
@@ -40,7 +67,7 @@ function! SetupEnvironment()
       echo 'Start projet ' . l:project['name']
       let g:rooter_manual_only = 1
       let l:project_found = 1
-      for l:mapping in l:project['mappings']
+      for l:mapping in get(l:project, 'mappings', [])
         exec 'nnoremap <buffer> <space>o' . l:mapping[0] . ' :call FindInProject("' . l:mapping[1] . '", "' . l:mapping[2] . '")<cr>'
       endfor
       for l:file in l:project['files']
@@ -54,6 +81,12 @@ function! SetupEnvironment()
       if has_key(l:project, 'suffixesadd')
         let &suffixesadd = get(l:project, 'suffixesadd')
       endif
+      if has_key(l:project, 'dictionary') && filereadable(expand(l:project['dictionary']))
+        let &l:dictionary = expand(l:project['dictionary'])
+      endif
+      for l:settings in get(l:project, 'settings', [])
+        exec 'let &l:' . l:settings[0] . ' = ' . l:settings[1]
+      endfor
 
       exec 'cd ' . matchstr(l:path, '.*' . l:project['root_path'])
     endif

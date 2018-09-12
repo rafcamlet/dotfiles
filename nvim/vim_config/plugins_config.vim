@@ -14,10 +14,10 @@ nmap P <plug>G_EasyClipPasteBefore
 
 " =========== junegunn/vim-after-object ============
 
-augroup vim_after_object
-  autocmd!
-  autocmd VimEnter * call after_object#enable(']', '[', '=', ':', ',', '-')
-augroup END
+" augroup vim_after_object
+"   autocmd!
+"   autocmd VimEnter * call after_object#enable(']', '[', '=', ':', ',', '-')
+" augroup END
 
 
 " ================= junegunn/fzf ===================
@@ -210,9 +210,9 @@ function! ChangeRubyLinters()
   ALELint
 endfunction
 
-let g:ale_fixers = { 'ruby': ['rubocop'], 'typescript': ['eslint', 'prettier', 'tslint'] }
-
-
+let g:ale_fixers = { 'ruby': ['rubocop'], 'typescript': ['eslint', 'prettier', 'tslint'],
+      \ 'javascript': ['prettier', 'eslint']
+      \ }
 
 command! ChangeRubyLinters call ChangeRubyLinters()
 nnoremap <space>r :ChangeRubyLinters<cr>
@@ -235,10 +235,12 @@ autocmd FileType nerdtree setlocal nolist
 let g:LanguageClient_serverCommands = {
       \ 'ruby': ['tcp://localhost:7658'],
       \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-      \ 'javascript': ['javascript-typescript-stdio'],
-      \ 'javascript.jsx': ['javascript-typescript-stdio'],
-      \ 'typescript': ['javascript-typescript-stdio'],
       \ }
+
+
+      " \ 'javascript': ['javascript-typescript-stdio'],
+      " \ 'javascript.jsx': ['javascript-typescript-stdio'],
+      " \ 'typescript': ['javascript-typescript-stdio'],
 
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
@@ -404,14 +406,14 @@ let g:mta_use_matchparen_group = 0
 
 " =========== easymotion/vim-easymotion ============
 
-map <space>l <Plug>(easymotion-lineforward)
-map <space>j <Plug>(easymotion-j)
-map <space>k <Plug>(easymotion-k)
-map <space>h <Plug>(easymotion-linebackward)
-nmap s <Plug>(easymotion-sl2)
+" map <space>l <Plug>(easymotion-lineforward)
+" map <space>j <Plug>(easymotion-j)
+" map <space>k <Plug>(easymotion-k)
+" map <space>h <Plug>(easymotion-linebackward)
+" nmap s <Plug>(easymotion-sl2)
 
-let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-let g:EasyMotion_smartcase = 1
+" let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+" let g:EasyMotion_smartcase = 1
 
 
 " ======== haya14busa/incsearch-fuzzy.vim ==========
@@ -423,22 +425,37 @@ map zg/ <Plug>(incsearch-fuzzy-stay)
 
 " ========= terryma/vim-multiple-cursors ===========
 
-nnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
-vnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
-let g:multi_cursor_exit_from_insert_mode = 0
+" nnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
+" vnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
+" let g:multi_cursor_exit_from_insert_mode = 0
 
-function! Multiple_cursors_before()
-  ALEDisable
-  TSStop
-  cm#disable_for_buffer()
-  LanguageClientStop
-endfunction
+" function! Multiple_cursors_before()
+"   ALEDisable
+"   TSStop
+"   cm#disable_for_buffer()
+"   LanguageClientStop
+" endfunction
 
-function! Multiple_cursors_after()
-  ALEEnable
-  TSStart
-  cm#enable_for_buffer()
-  LanguageClientStart
-endfunction
+" function! Multiple_cursors_after()
+"   ALEEnable
+"   TSStart
+"   cm#enable_for_buffer()
+"   LanguageClientStart
+" endfunction
 
+" =================== ncm2/ncm2 ====================
 
+let g:ncm2#complete_delay = 100
+set completeopt=noinsert,menuone,noselect
+
+augroup ncm2_config
+  autocmd!
+  autocmd BufRead,BufEnter * call ncm2#enable_for_buffer()
+augroup END
+
+set shortmess+=c
+
+" ============= Raimondi/delimitMate ===============
+
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
