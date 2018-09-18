@@ -40,7 +40,7 @@ import React from 'react';
 function ${1:`!v expand('%:t:r')`}(props) {
 	return (
 		<div>
-      {props.children}
+			{props.children}
 		</div>
 	);
 }
@@ -71,4 +71,24 @@ snippet af "arrow function"
 () => ({
 	$0
 })
+endsnippet
+
+snippet rsc "React Styled Component" b
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = {
+	
+};
+
+function ${1:`!v expand('%:t:r')`}(props) {
+	const {classes} = props;
+	return (
+		<div>
+			{props.children}
+		</div>
+	);
+}
+
+export default withStyles(styles)($1);
 endsnippet
