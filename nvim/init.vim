@@ -26,6 +26,29 @@ vnoremap <nowait> <space>d y:Sff <c-r>"<cr>
 
 set modeline
 
+function! ImportJS(path)
+  let l:arr1 = split(expand('%'), '/')
+  let l:arr2 = split(a:path, '/')
+  let size = len(l:arr1) < len(l:arr2) ? len(l:arr1) : len(l:arr2)
+
+  for i in range(size)
+    if l:arr1[0] != l:arr2[0] | break | endif
+    call remove(l:arr1, 0)
+    call remove(l:arr2, 0)
+  endfor
+
+  let l:first_part = repeat('../', len(l:arr1) - 1)
+
+  if l:arr2[-1] == 'index.js'
+    let l:second_part = join(l:arr2[0:-2], '/')
+  else
+    let l:last = substitute(l:arr2[-1], '\v\.js$', '', '')
+    let l:second_part = join(l:arr2[0:-2] + [l:last], '/')
+  end
+  call append(line('.'), ['import  from "' . l:first_part . l:second_part . '";'])
+endfunction
+
+command! ImportJS call fzf#run({'sink': function('ImportJS')})
 
 nnoremap <space>s :Sff 
 vnoremap <space>s y:Sff <c-r>"<cr>

@@ -36,7 +36,7 @@ let g:projects = [
       \   'files': [
       \     ['c', 'src/components'],
       \     ['r', 'src/reducers'],
-      \     ['v', 'src/containers']
+      \     ['v', 'src/views']
       \   ]
       \ }
       \]
