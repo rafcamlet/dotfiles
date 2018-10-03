@@ -10,11 +10,6 @@ Plug 'tomtom/tlib_vim' "plugin library
 Plug 'Raimondi/delimitMate' "Vim plugin, provides insert mode auto-completion for quotes, parens, brackets, etc.
 Plug 'tmhedberg/matchit'
 Plug 'pbrisbin/vim-mkdir'
-
-" Plug 'Yggdroot/indentLine'
-" Plug 'bling/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-
 Plug 'scrooloose/nerdtree'
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
@@ -26,7 +21,6 @@ Plug 'tpope/vim-endwise'
 Plug 'SirVer/ultisnips'
 Plug 'christoomey/vim-tmux-navigator' " Seamless navigation between tmux panes and vim splits
 Plug 'michaeljsmith/vim-indent-object'
-" Plug 'burnettk/vim-angular'
 Plug 'mattn/emmet-vim'
 Plug 'Valloric/MatchTagAlways'
 Plug 'tpope/vim-unimpaired'
@@ -38,7 +32,6 @@ Plug 'airblade/vim-rooter'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " A command-line fuzzy finder written in Go
 Plug 'junegunn/fzf.vim' " More options for fzf in vim
-" Plug 'Shougo/deoplete.nvim' " Dark powered asynchronous completion framework for neovim
 Plug 'tpope/vim-speeddating' " use CTRL-A/CTRL-X to increment dates, times, and more 
 Plug 'thinca/vim-quickrun' " Run current file and show output in new buffer
 Plug 'jeetsukumaran/vim-indentwise' " Indent motion
@@ -49,23 +42,17 @@ Plug 'junegunn/vim-easy-align' " A Vim alignment plugin
 Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
 Plug 'tpope/vim-abolish' "easily search for, substitute, and abbreviate multiple variants of a word
 Plug 'svermeulen/vim-easyclip' "Simplified clipboard functionality for Vim
-Plug 'francoiscabrol/ranger.vim' "Ranger integration in vim and neovim
-Plug 'rbgrouleff/bclose.vim' "dependency for ranger
 Plug 'w0rp/ale' " Asynchronous Lint Engine
-
-" Plug 'roxma/nvim-completion-manager' "Fast, Extensible, Async Completion Framework for Neovim
-" Plug 'roxma/ncm-rct-complete'
-" Plug 'fgrsnau/ncm-otherbuf'
-
 Plug 'mxw/vim-jsx' "React JSX syntax highlighting and indenting for vim.
 Plug 'pangloss/vim-javascript'
-" Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
 Plug 'jelera/vim-javascript-syntax'
-
 Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighting.
-" Plug 'nathanaelkane/vim-indent-guides'
+Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'wsdjeg/FlyGrep.vim'
+
+Plug 'bilalq/lite-dfm'
 Plug 'ternjs/tern_for_vim',  {'do': 'npm install'}
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
@@ -82,13 +69,14 @@ Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
 Plug 'ncm2/ncm2-cssomni'
 
 Plug 'kien/rainbow_parentheses.vim'
-" Plug 'neoclide/vim-jsx-improve'
 Plug 'tpope/vim-markdown'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'maximbaz/lightline-ale'
 Plug 'hail2u/vim-css3-syntax'
+
 Plug 'jreybert/vimagit'
+
 Plug 'ryanoasis/vim-devicons'
 Plug 'bogado/file-line' "Plugin for vim to enabling opening a file in a given line
 Plug 'posva/vim-vue'
@@ -157,11 +145,10 @@ Plug 'alvan/vim-closetag'
 "Plug 'junegunn/vim-ruby-x'
 
 "Plug 'junegunn/vim-after-object'
-"Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 "Plug 'junegunn/gv.vim', { 'on': 'GV' } "A git commit browser
 
 "" Plug 'thaerkh/vim-workspace' " Automated Vim session management and file auto-save
-"" Plug 'thaerkh/vim-indentguides' "Simple indentation guides for your buffers
 
 "" Plug 'Mizuchi/vim-ranger'
 "Plug 'rhysd/vim-grammarous'

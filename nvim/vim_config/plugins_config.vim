@@ -211,13 +211,14 @@ function! ChangeRubyLinters()
 endfunction
 
 let g:ale_fixers = { 'ruby': ['rubocop'], 'typescript': ['eslint', 'prettier', 'tslint'],
-      \ 'javascript': ['prettier', 'eslint']
+      \ 'javascript': ['prettier', 'eslint', 'importjs']
       \ }
 
 command! ChangeRubyLinters call ChangeRubyLinters()
 nnoremap <space>r :ChangeRubyLinters<cr>
 nmap <silent> <tab>k <Plug>(ale_previous_wrap)
 nmap <silent> <tab>j <Plug>(ale_next_wrap)
+nnoremap <tab>a :ALEFix<cr>
 
 
 " ============ ryanoasis/vim-devicons ==============
@@ -335,7 +336,7 @@ function! LightlineFilename()
 endfunction
 
 let &updatetime = 2000
-autocmd CursorHold,BufWritePost * call lightline#update()
+" autocmd CursorHold,BufWritePost * call lightline#update()
 
 
 " ============== alvan/vim-closetag ================
@@ -459,3 +460,24 @@ set shortmess+=c
 
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
+
+" =============== junegunn/goyo.vim ================
+
+function! s:goyo_enter()
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  IndentGuidesDisable
+  call lightline#disable()
+  syntax on
+endfunction
+
+function! s:goyo_leave()
+  set showmode
+  set showcmd
+  call lightline#enable()
+  IndentGuidesEnable
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()

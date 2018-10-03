@@ -1,7 +1,6 @@
 " Use gf to open config files
 
 runtime vim_config/meta.vim
-runtime vim_config/file_types_config.vim
 runtime vim_config/plugins.vim
 runtime vim_config/plugins_config.vim
 runtime vim_config/config.vim
@@ -16,6 +15,9 @@ runtime vim_config/standup.vim
 runtime vim_config/projects.vim
 runtime vim_config/surroud_function.vim
 
+" YAML store:
+" vim_config/yamls/projects.yml
+
 " runtime vim_config/status_line.vim
 
 "====================================
@@ -23,6 +25,43 @@ runtime vim_config/surroud_function.vim
 "====================================
 nnoremap <nowait> <space>d :Sff 
 vnoremap <nowait> <space>d y:Sff <c-r>"<cr>
+
+function! FzyCommand(choice_command, vim_command)
+  let output = system(a:choice_command . " | fzy ")
+  redraw!
+  if v:shell_error == 0 && !empty(output)
+    exec a:vim_command . ' ' . output
+  endif
+endfunction
+
+nnoremap <leader>e :call FzyCommand("find -type f", ":e")<cr>
+nnoremap <leader>v :call FzyCommand("find -type f", ":vs")<cr>
+nnoremap <leader>s :call FzyCommand("find -type f", ":sp")<cr>
+
+
+let s:hidden_all = 0
+function! ToggleHiddenAll()
+  if s:hidden_all  == 0
+    let s:hidden_all = 1
+    set laststatus=0
+    IndentGuidesDisable
+    call lightline#disable()
+    syntax on
+    set splitbelow
+    LiteDFM
+  else
+    let s:hidden_all = 0
+    set laststatus=2
+    LiteDFMClose
+    call lightline#enable()
+    IndentGuidesEnable
+    set splitright
+  endif
+endfunction
+
+nnoremap <silent> <space>p :call ToggleHiddenAll()<CR>
+nnoremap <silent> <space>r :QuickRun<CR>
+
 
 set modeline
 
@@ -40,18 +79,18 @@ function! ImportJS(path)
   let l:first_part = repeat('../', len(l:arr1) - 1)
 
   if l:arr2[-1] == 'index.js'
+    let l:name = '{}'
     let l:second_part = join(l:arr2[0:-2], '/')
   else
     let l:last = substitute(l:arr2[-1], '\v\.js$', '', '')
+    let l:name = l:last
     let l:second_part = join(l:arr2[0:-2] + [l:last], '/')
   end
-  call append(line('.'), ['import  from "' . l:first_part . l:second_part . '";'])
+  call append(line('.'), ["import ". l:name ." from '" . l:first_part . l:second_part . "';"])
 endfunction
 
 command! ImportJS call fzf#run({'sink': function('ImportJS')})
 
-nnoremap <space>s :Sff 
-vnoremap <space>s y:Sff <c-r>"<cr>
 nnoremap \z :exec 'normal vimzf'<cr>
 
 function! GitShow()
@@ -134,10 +173,10 @@ nnoremap <silent> <space>yx :let @x = @"<cr>
 nnoremap <silent> <space>yc :let @c = @"<cr>
 
 
-nnoremap <silent> <space>pa "ap
-nnoremap <silent> <space>pz "zp
-nnoremap <silent> <space>px "xp
-nnoremap <silent> <space>pc "cp
+" nnoremap <silent> <space>pa "ap
+" nnoremap <silent> <space>pz "zp
+" nnoremap <silent> <space>px "xp
+" nnoremap <silent> <space>pc "cp
 
 
 " Like gJ, but always remove spaces
