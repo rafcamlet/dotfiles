@@ -2,6 +2,12 @@
 - name: Blog
   root_path: projects/blog
 
+- name: Notes
+  root_path: Dropbox/notes
+  settings:
+    filetype: my-note
+    syntax: my-note
+
 - name: Talebook
   root_path: projects/talebook/frontend
   settings:

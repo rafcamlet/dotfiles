@@ -37,7 +37,7 @@ nnoremap <space>om  :FZF app/models<cr>
 nnoremap <space>ov  :FZF app/views<cr>
 nnoremap <space>os  :FZF app/services<cr>
 nnoremap <space>of  :FZF app/form_objects<cr>
-nnoremap <space>on  :FZF ~/workdir/notes<cr>
+nnoremap <space>on  :FZF ~/Dropbox/notes<cr>
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
@@ -188,6 +188,7 @@ let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
 let g:ale_sign_column_always = 1
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_ruby_flag = 0
+let g:ale_lint_delay = 500
 
 let g:ale_linters = { 'ruby': ['ruby'] }
 
@@ -213,6 +214,7 @@ endfunction
 let g:ale_fixers = { 'ruby': ['rubocop'], 'typescript': ['eslint', 'prettier', 'tslint'],
       \ 'javascript': ['prettier', 'eslint', 'importjs']
       \ }
+
 
 command! ChangeRubyLinters call ChangeRubyLinters()
 nnoremap <space>r :ChangeRubyLinters<cr>

@@ -8,12 +8,10 @@ runtime vim_config/keybindings.vim
 runtime vim_config/scripts.vim
 runtime vim_config/window_script.vim
 runtime vim_config/ruby_lib.vim
-runtime vim_config/ruby_scripts.vim
 runtime vim_config/custom_start_window.vim
 runtime vim_config/tabline.vim
-runtime vim_config/standup.vim
+" runtime vim_config/standup.vim
 runtime vim_config/projects.vim
-runtime vim_config/surroud_function.vim
 
 " YAML store:
 " vim_config/yamls/projects.yml
@@ -23,21 +21,6 @@ runtime vim_config/surroud_function.vim
 "====================================
 "---------Testing_new_features-------
 "====================================
-nnoremap <nowait> <space>d :Sff 
-vnoremap <nowait> <space>d y:Sff <c-r>"<cr>
-
-function! FzyCommand(choice_command, vim_command)
-  let output = system(a:choice_command . " | fzy ")
-  redraw!
-  if v:shell_error == 0 && !empty(output)
-    exec a:vim_command . ' ' . output
-  endif
-endfunction
-
-nnoremap <leader>e :call FzyCommand("find -type f", ":e")<cr>
-nnoremap <leader>v :call FzyCommand("find -type f", ":vs")<cr>
-nnoremap <leader>s :call FzyCommand("find -type f", ":sp")<cr>
-
 
 let s:hidden_all = 0
 function! ToggleHiddenAll()
@@ -58,12 +41,6 @@ function! ToggleHiddenAll()
     set splitright
   endif
 endfunction
-
-nnoremap <silent> <space>p :call ToggleHiddenAll()<CR>
-nnoremap <silent> <space>r :QuickRun<CR>
-
-
-set modeline
 
 function! ImportJS(path)
   let l:arr1 = split(expand('%'), '/')
@@ -149,10 +126,6 @@ command! Pisz call Pisz()<cr>
 
 nnoremap ,hi :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
 
-nnoremap gd :TSDef<cr>
-
-let g:ale_lint_delay = 500
-
 function! ShowInOtherBranch(branch_name)
   exec 'vnew'
   let l:filename = expand('%:S')
@@ -162,42 +135,8 @@ function! ShowInOtherBranch(branch_name)
   exec 'setf ruby'
 endfunction
 
-
 command! -nargs=1 SB :call ShowInOtherBranch(<f-args>)<cr>
 
-" copy from " to other buffer
-
-nnoremap <silent> <space>ya :let @a = @"<cr>
-nnoremap <silent> <space>yz :let @z = @"<cr>
-nnoremap <silent> <space>yx :let @x = @"<cr>
-nnoremap <silent> <space>yc :let @c = @"<cr>
-
-
-" nnoremap <silent> <space>pa "ap
-" nnoremap <silent> <space>pz "zp
-" nnoremap <silent> <space>px "xp
-" nnoremap <silent> <space>pc "cp
-
-
-" Like gJ, but always remove spaces
-fun! JoinSpaceless()
-    execute 'normal gJ'
-
-    " Character under cursor is whitespace?
-    if matchstr(getline('.'), '\%' . col('.') . 'c.') =~# '\s'
-        " When remove it!
-        execute 'normal dw'
-    endif
-endfun
-
-" Map it to a key
-nnoremap <space>J :call JoinSpaceless()<CR>
-
-
-vnoremap c "_c
-nnoremap <silent> \r :setf ruby<cr>
-
-set iskeyword+=-
 
 function! EditTest()
   let l:path = expand('%')
@@ -229,7 +168,6 @@ function! ResizeMode()
 endfunction
 command! ResizeMode call ResizeMode()
 
-
 augroup leave_window
   autocmd!
   autocmd BufWinLeave * let g:last_buff = bufnr('%')
@@ -238,47 +176,9 @@ augroup END
 command! Restore exec 'vnew | ' . g:last_buff . 'buff'
 nnoremap <tab>t :Restore<cr>
 
-au User CmSetup call cm#register_source({'name' : 'ruby-dict',
-  \ 'priority': 9,
-  \ 'scoping': 1,
-  \ 'scopes': ['ruby'],
-  \ 'abbreviation': 'ruby dict',
-  \ 'word_pattern': '[\w\-]+',
-  \ 'cm_refresh': 'RubyDict'
-  \ })
-
-function! RubyDict(info, ctx)
-  let l:list = readfile(expand('$HOME') . '/.config/nvim/dict/ruby.txt')
-  call cm#complete(a:info, a:ctx, a:ctx['startcol'], l:list)
-endfunction
-
 inoremap <expr> <c-l> fzf#complete("rg --color=never --no-filename --no-line-number -e '^.*?class +([a-zA-Z0-9:]*) ?.*$' app/models -r '$1' \| sed '/^$/d' \| sort")
 
-set cmdheight=2
-
-command! OpenFromCursor exec 'vsplit ' . getline('.')
-nnoremap <tab>o :OpenFromCursor<cr>
-
-command! CopyAbsolutePath let @+ = expand("%:p")
-nnoremap cP :CopyAbsolutePath<cr>
-
-
-command! CopyPath let @+ = expand("%")
-nnoremap cp :CopyPath<cr>
-
-nnoremap : ;
-vnoremap : ;
-vnoremap ; :
-
-command! Reek exec 'T "reek ' . expand('%:p') . '"'
-
 nnoremap <space>sd vip:s/.*//<left><left><left><left>
-
-set path+=**
-
-nmap <space>c q:
-nmap <space>q :copen<cr>
-
 
 "Populate Arglist with shell command
 command! -nargs=1 PA args `=systemlist(<q-args>)` | argdo e | syntax on
@@ -286,25 +186,11 @@ command! -nargs=1 PA args `=systemlist(<q-args>)` | argdo e | syntax on
 " Open help in full window
 command! -nargs=? -complete=help H execute 'help ' . <q-args> . ' | only'
 
-
 " select last pastet text
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 vnoremap <c-g> :<c-u>%s/<c-r>"//<left>
 vnoremap <c-d> :s/<c-r>z//<left>
-
-" repeat last command
-noremap <space>w @:<CR>
-
-" " Switch between buffers
-" noremap <tab> :bn<cr>
-" noremap <S-tab> :bp<cr>
-
-" put current time
-imap <F3> <C-R>=strftime("%Y-%m-%d %I:%M")<CR>
-
-
-" imap <silent> <C-L> <CR><Esc>O
 
 " Show syntax highlighting groups for word under cursor
 nnoremap <silent> M :call SynStack()<cr>

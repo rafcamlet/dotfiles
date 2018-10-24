@@ -5,7 +5,7 @@ set shortmess+=A                               " Always edit file, even when swa
 set diffopt=filler,iwhite                      " In diff mode, ignore whitespace changes and align unchanged lines
 set fileencodings=ucs-bom,utf-8,default,latin1 " encoding
 set termencoding=utf-8                         " terminal encoding
-set nomodeline                                 " turn off modeline for safety
+set modeline                                   " turn on modeline
 set ruler                                      " position info
 set number                                     " show line numbers
 set backspace=indent,eol,start                 " Allow backspace in insert mode
@@ -34,6 +34,8 @@ set laststatus=2                               " allways show statusline
 ":let &winheight = 1
 set foldlevelstart=1                           " start folding from specyfic level
 set guicursor=                                 " reset cursor shape
+set cmdheight=2                                " double command-line height
+set iskeyword+=-                               " add `-` character as part of words
 
 " Display extra whitespace
 set list listchars=tab:»»,trail:·,nbsp:·
