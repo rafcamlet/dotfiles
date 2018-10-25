@@ -1,21 +1,15 @@
 let g:mapleader=','
 nnoremap ; :
 nnoremap ' `
+nnoremap : ;
+vnoremap : ;
+vnoremap ; :
+
 inoremap jk <esc>`^
 cnoremap jk <c-c>
 
 nnoremap <silent> <enter> :put =''<cr>
 cnoremap <silent> <enter> <cr>
-
-
-augroup ECW_au
-  au!
-  au CmdwinEnter * nmap <buffer> <CR> <CR>
-  au CmdwinEnter * nmap <buffer> <space>c :q<CR>
-  au BufReadPost quickfix nnoremap <buffer> <CR> <CR><c-w><c-p>
-  au BufReadPost quickfix nnoremap <buffer> o <CR>
-augroup END
-"}
 
 map <silent> <Down> g<Down>
 map <silent> <Up> g<Up>
@@ -34,12 +28,6 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
 " rails shorts
-nnoremap <leader>ro <esc>:Einitializer<cr>
-nnoremap <leader>gem <esc>:Elib<cr>
-nnoremap <leader>js <esc>:Ejavascript application<cr>
-nnoremap <leader>st <esc>:Estylesheet application<cr>
-nnoremap <leader>la <esc>:Elayout application<cr>
-nnoremap <leader>ap <esc>:Econtroller application<cr>
 nnoremap <leader>i <esc>:Emigration<cr>
 
 nnoremap / /\v
@@ -74,19 +62,10 @@ nmap <Leader>s; <Plug>SRemoveSemicolon
 nnoremap <silent> <Plug>SBrekTags :.s/</\r</<cr>:call repeat#set("\<Plug>SBrekTags")<CR>
 nmap <Leader>st <Plug>SBrekTags
 
-"boost regexp, double dot insert nongreedy any character
-cnoremap .. .{-}
-
 " repeat last action for selected lines
 vnoremap . :normal .<CR>
 " repeat q macro for selected lines
 vnoremap @ :normal! @q<CR>
-
-"open path from system clipboard
-nmap <silent> co :e <c-r>+<cr>
-
-"copy path to current file
-nmap <silent> cp :let @+ = expand("%:p")<cr>
 
 " put last yanked text
 " nnoremap <c-p> "0p
@@ -111,12 +90,6 @@ nnoremap   <silent>  <c-t><c-q> :tabc<cr>
 " Copy to end of line
 nnoremap Y y$
 
-" terminal move
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
-
 tnoremap <esc> <c-\><c-n>
 
 " search for visually highlighted text
@@ -134,3 +107,20 @@ cnoremap <c-a> <home>
 cnoremap <c-0> <end>
 cnoremap <c-x> <del>
 cnoremap <c-v> <c-r>+
+cnoremap <c-n>  <down>
+cnoremap <c-p>  <up>
+
+command! CopyAbsolutePath let @+ = expand("%:p")
+nnoremap cP :CopyAbsolutePath<cr>
+
+command! CopyPath let @+ = expand("%")
+nnoremap cp :CopyPath<cr>
+
+nnoremap <nowait> <space>d :Sff 
+vnoremap <nowait> <space>d y:Sff <c-r>"<cr>
+
+vnoremap c "_c
+nnoremap <silent> \r :setf ruby<cr>
+
+" repeat last command
+noremap <space>w @:<CR>

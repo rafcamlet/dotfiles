@@ -80,7 +80,10 @@ function! SelectionToSearch()
   setlocal hlsearch
 endfunction
 
-let g:mc = "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>"
+function! SetupQGN()
+  set hls
+  nnoremap q q:unmap q<cr>:call repeat#set("\<Plug>QGN", -1)<CR>
+endfunction
 
 nnoremap cn :set hls<cr>*``"_cgn
 nnoremap cN :set hls<cr>*``cgN
@@ -88,23 +91,13 @@ nnoremap cN :set hls<cr>*``cgN
 vnoremap <silent> cn :<c-u>call SelectionToSearch()<cr>"_cgn
 vnoremap <silent> cN :<c-u>call SelectionToSearch()<cr>"_cgN
 
-function! SetupCR()
-  set hlsearch
-  let g:enter = mapcheck('<cr>', 'n')
-  nnoremap <Enter> :nnoremap <lt>Enter> n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z
-  nnoremap <silent> <esc> :call ClearCR()<cr>
-endfunction
-function! ClearCR()
-  set nohlsearch
-  exec 'unmap <esc>'
-  exec 'nnoremap <cr> ' . g:enter
-endfunction
+nnoremap cq :call SetupQGN()<cr>*``qz
+nnoremap cQ :call SetupQGN()<cr>#``qz
 
-nnoremap cq :call SetupCR()<CR>*``qz
-nnoremap cQ :call SetupCR()<CR>#``qz
+vnoremap cq :<c-u>call SelectionToSearch()<CR>qz
+vnoremap cQ :<c-u>call SelectionToSearch()<CR>qz
 
-vnoremap <expr> cq ":\<C-u>call SetupCR()\<CR>" . "gv" . g:mc . "``qz"
-vnoremap <expr> cQ ":\<C-u>call SetupCR()\<CR>" . "gv" . substitute(g:mc, '/', '?', 'g') . "``qz"
+nnoremap <silent> <Plug>QGN n@z:call repeat#set("\<Plug>QGN", -1)<CR>
 
 "}}}
 

@@ -37,7 +37,7 @@ nnoremap <space>om  :FZF app/models<cr>
 nnoremap <space>ov  :FZF app/views<cr>
 nnoremap <space>os  :FZF app/services<cr>
 nnoremap <space>of  :FZF app/form_objects<cr>
-nnoremap <space>on  :FZF ~/workdir/notes<cr>
+nnoremap <space>on  :FZF ~/Dropbox/notes<cr>
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
@@ -188,6 +188,7 @@ let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
 let g:ale_sign_column_always = 1
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_ruby_flag = 0
+let g:ale_lint_delay = 500
 
 let g:ale_linters = { 'ruby': ['ruby'] }
 
@@ -211,13 +212,15 @@ function! ChangeRubyLinters()
 endfunction
 
 let g:ale_fixers = { 'ruby': ['rubocop'], 'typescript': ['eslint', 'prettier', 'tslint'],
-      \ 'javascript': ['prettier', 'eslint']
+      \ 'javascript': ['prettier', 'eslint', 'importjs']
       \ }
+
 
 command! ChangeRubyLinters call ChangeRubyLinters()
 nnoremap <space>r :ChangeRubyLinters<cr>
 nmap <silent> <tab>k <Plug>(ale_previous_wrap)
 nmap <silent> <tab>j <Plug>(ale_next_wrap)
+nnoremap <tab>a :ALEFix<cr>
 
 
 " ============ ryanoasis/vim-devicons ==============
@@ -335,7 +338,7 @@ function! LightlineFilename()
 endfunction
 
 let &updatetime = 2000
-autocmd CursorHold,BufWritePost * call lightline#update()
+" autocmd CursorHold,BufWritePost * call lightline#update()
 
 
 " ============== alvan/vim-closetag ================
@@ -459,3 +462,24 @@ set shortmess+=c
 
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
+
+" =============== junegunn/goyo.vim ================
+
+function! s:goyo_enter()
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  IndentGuidesDisable
+  call lightline#disable()
+  syntax on
+endfunction
+
+function! s:goyo_leave()
+  set showmode
+  set showcmd
+  call lightline#enable()
+  IndentGuidesEnable
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
