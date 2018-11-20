@@ -50,6 +50,8 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'majutsushi/tagbar'
+
 Plug 'wsdjeg/FlyGrep.vim'
 
 Plug 'bilalq/lite-dfm'

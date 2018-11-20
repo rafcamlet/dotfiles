@@ -92,9 +92,6 @@ nnoremap Y y$
 
 tnoremap <esc> <c-\><c-n>
 
-" search for visually highlighted text
-vnoremap <silent> // y/\V<C-R>"<CR>``:set hls<cr>
-
 " highlight current word without search for next
 nnoremap <silent> * :set hls<cr>*``
 

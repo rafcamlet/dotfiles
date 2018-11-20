@@ -26,3 +26,21 @@ it '$0' do
 	expect().to
 end
 endsnippet
+
+snippet rake "Rake task"
+# rake one_use:${1:`!v expand('%:t:r')`}
+
+namespace :one_use do
+	desc ''
+	task ${1:`!v expand('%:t:r')`}: :environment do |t|
+		ActiveRecord::Base.transaction do
+			RakeLogger.call(t) do
+				author "RC"
+				note ""
+
+				${0}
+			end
+		end
+	end
+end
+endsnippet

@@ -60,8 +60,7 @@ endfunction
 command! PrettyXML call DoPrettyXML()
 "}}}
 
-" gn related scripts {{{
-
+" GetVisualSelection {{{
 function! GetVisualSelection()
   " Why is this not a built-in Vim script function?!
   let [l:line_start, l:column_start] = getpos("'<")[1:2]
@@ -74,11 +73,16 @@ function! GetVisualSelection()
   let l:lines[0] = l:lines[0][l:column_start - 1:]
   return join(l:lines, "\n")
 endfunction
+" }}}
+
+" gn related scripts {{{
 
 function! SelectionToSearch()
   let @/ = escape(GetVisualSelection(), '.')
   setlocal hlsearch
 endfunction
+
+vnoremap <silent> // :<c-u>call SelectionToSearch()<cr>
 
 function! SetupQGN()
   set hls
