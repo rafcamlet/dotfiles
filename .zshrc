@@ -4,6 +4,41 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 
+# http://www.math.cmu.edu/~gautam/sj/blog/20140625-zsh-expand-alias.html
+# alias expansion {{{
+typeset -a ealiases
+ealiases=()
+
+function ealias() {
+  alias $1
+  ealiases+=(${1%%\=*})
+}
+
+function egalias() {
+  alias -g $1
+  ealiases+=(${1%%\=*})
+}
+
+function expand-ealias() {
+  arr=$( IFS='|'; echo "${ealiases[*]}" )
+  if [[ $LBUFFER =~ "($arr)\$" ]]; then
+    zle _expand_alias
+    zle expand-word
+  fi
+  zle self-insert
+}
+
+zle -N expand-ealias
+
+bindkey " "        expand-ealias
+bindkey "^[[Z"     magic-space     # control-space to bypass completion
+bindkey -M isearch " "      magic-space     # normal space during searches
+
+
+egalias G='| grep -Pi'
+ealias gs='git status'
+# }}}
+
 setopt RM_STAR_WAIT
 
 export VISUAL=nvim
@@ -89,5 +124,6 @@ alias lc='colorls -r --sd'
 alias gdn='git diff --name-only '
 
 alias v='vifm' # vi file manager
+
 
 eval "$(direnv hook zsh)"

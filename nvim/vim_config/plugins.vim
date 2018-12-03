@@ -50,6 +50,7 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'justinmk/vim-sneak'
 Plug 'majutsushi/tagbar'
 
 Plug 'wsdjeg/FlyGrep.vim'
@@ -139,7 +140,7 @@ Plug 'alvan/vim-closetag'
 
 "Plug 'brettanomyces/nvim-terminus'
 "Plug 'brettanomyces/nvim-editcommand'
-"Plug 'metakirby5/codi.vim'
+" Plug 'metakirby5/codi.vim'
 
 
 "" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
@@ -183,7 +184,7 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 "" Plug 'Shutnik/jshint2.vim'
 "Plug 'mhinz/vim-grepper' " vim wrapper around 'grepprg' and 'grepformat'
 
-"Plug 'kassio/neoterm' " Wrapper of some neovim's :terminal functions.
+" Plug 'kassio/neoterm' " Wrapper of some neovim's :terminal functions.
 "Plug 'tpope/vim-bundler' " Lightweight support for Ruby's Bundler
 
 "" Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }

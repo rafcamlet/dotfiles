@@ -30,13 +30,13 @@ nnoremap <silent> <space>oh :History<cr>
 
 nnoremap <space>ob :Buffers<cr>
 nnoremap <space>og :GFiles?<cr>
-nnoremap <space>ot  :FZF spec<cr>
-nnoremap <space>ojs :FZF app/assets<cr>
-nnoremap <space>oc  :FZF app/controllers<cr>
-nnoremap <space>om  :FZF app/models<cr>
-nnoremap <space>ov  :FZF app/views<cr>
-nnoremap <space>os  :FZF app/services<cr>
-nnoremap <space>of  :FZF app/form_objects<cr>
+nnoremap <space>ot  :F spec<cr>
+nnoremap <space>ojs :F app/assets<cr>
+nnoremap <space>oc  :F app/controllers<cr>
+nnoremap <space>om  :F app/models<cr>
+nnoremap <space>ov  :F app/views<cr>
+nnoremap <space>os  :F app/services<cr>
+nnoremap <space>of  :F app/form_objects<cr>
 nnoremap <space>on  :FZF ~/Dropbox/notes<cr>
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
