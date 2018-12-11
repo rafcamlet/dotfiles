@@ -31,11 +31,11 @@ let $LANG = 'en_US'
 set splitbelow                                 " set panel split position
 set splitright
 set laststatus=2                               " allways show statusline
-":let &winheight = 1
 set foldlevelstart=1                           " start folding from specyfic level
 set guicursor=                                 " reset cursor shape
 set cmdheight=2                                " double command-line height
 set iskeyword+=-                               " add `-` character as part of words
+set wrapmargin=2                               "Wrap 2 characters from the edge of the window
 
 " Display extra whitespace
 set list listchars=tab:»»,trail:·,nbsp:·

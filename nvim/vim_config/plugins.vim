@@ -50,6 +50,8 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'rhysd/committia.vim'
+Plug 'sodapopcan/vim-twiggy', { 'on': 'Twiggy' }
 Plug 'justinmk/vim-sneak'
 Plug 'majutsushi/tagbar'
 

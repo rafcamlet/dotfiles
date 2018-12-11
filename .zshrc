@@ -51,7 +51,8 @@ function amend {
 
 function commit {
   git add .
-  git commit --verbose
+  git commit
+  # git commit --verbose
 }
 
 function gho {
