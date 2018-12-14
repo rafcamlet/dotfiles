@@ -7,7 +7,7 @@ runtime vim_config/config.vim
 runtime vim_config/keybindings.vim
 runtime vim_config/scripts.vim
 runtime vim_config/window_script.vim
-runtime vim_config/ruby_lib.vim
+" runtime vim_config/ruby_lib.vim
 runtime vim_config/custom_start_window.vim
 runtime vim_config/tabline.vim
 " runtime vim_config/standup.vim
@@ -15,6 +15,7 @@ runtime vim_config/projects.vim
 
 " YAML store:
 " vim_config/yamls/projects.yml
+" vim_config/yamls/projects.json
 
 " runtime vim_config/status_line.vim
 

@@ -94,9 +94,9 @@ colorscheme shadowmoth
 set clipboard+=unnamedplus " integrate system clipboard
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
+if executable('rg')
   " Use Ag over Grep
   " set grepprg=ag\ --nogroup\ --nocolor
-  set grepprg=ag\ --vimgrep\ $*
+  set grepprg=rg\ --vimgrep\ $*
   set grepformat=%f:%l:%c:%m
 endif

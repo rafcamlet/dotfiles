@@ -50,6 +50,7 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'tpope/vim-scriptease'
 Plug 'rhysd/committia.vim'
 Plug 'sodapopcan/vim-twiggy', { 'on': 'Twiggy' }
 Plug 'justinmk/vim-sneak'
@@ -167,7 +168,7 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 "Plug 'jceb/vim-orgmode' " Text outlining and task management for Vim based on Emacs' Org-Mode 
 
 "Plug 'lambdalisue/gina.vim' " An awesome git handling plugin for Vim
-"Plug 'brooth/far.vim' "Find And Replace Vim plugin
+Plug 'brooth/far.vim' "Find And Replace Vim plugin
 
 "" Plug 'gabrielelana/vim-markdown'
 

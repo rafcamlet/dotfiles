@@ -1,4 +1,4 @@
-let g:projects = LoadYaml('vim_config/yamls/projects.yml')
+let g:projects = json_decode(readfile(fnamemodify($MYVIMRC, ':p:h') . '/vim_config/json/projects.json'))
 
 function! FindInProject(cmd, path)
   let l:cmd_str = ['ag ', "'", a:cmd ,"' ", a:path , ' -o --color --nogroup --color-match=', "'", '1;34' , "'"]
@@ -23,7 +23,7 @@ function! SetupEnvironment() abort
 
   for l:project in g:projects
     if l:path =~? l:project['root_path']
-      echo 'Start projet ' . l:project['name']
+      echom 'Start projet ' . l:project['name']
       let g:rooter_manual_only = 1
       let l:project_found = 1
       for l:mapping in get(l:project, 'mappings', [])

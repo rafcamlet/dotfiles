@@ -10,6 +10,11 @@ function! OpenRuntime()
     let l:file_name = matchstr(getline('.'), '\v("\s*)@<=(\S*.yml)')
     exec 'edit ' . l:runtime_path . '/' . l:file_name
   endif
+
+  if match(getline('.'), '\v\.json$') > -1
+    let l:file_name = matchstr(getline('.'), '\v("\s*)@<=(\S*.json)')
+    exec 'edit ' . l:runtime_path . '/' . l:file_name
+  endif
 endfunction
 
 function! MyFoldText()
@@ -50,19 +55,19 @@ function! OpenPluginConfig()
   normal! zt
 endfunction
 
-" http://genkisugimoto.com/blog/manage-vim-plugins-via-yaml/
-function! LoadYaml(filename)
-  let l:filename = fnamemodify($MYVIMRC, ':p:h') . '/' . a:filename
+" " http://genkisugimoto.com/blog/manage-vim-plugins-via-yaml/
+" function! LoadYaml(filename)
+"   let l:filename = fnamemodify($MYVIMRC, ':p:h') . '/' . a:filename
 
-ruby << EOF
-  require 'yaml'
-  obj = YAML.load_file(File.expand_path(VIM::evaluate('l:filename')))
-  obj_hash = obj.inspect.gsub('=>', ':').gsub('nil', '{}')
-  VIM::command("let l:ret = #{obj_hash}")
-EOF
+" ruby << EOF
+"   require 'yaml'
+"   obj = YAML.load_file(File.expand_path(VIM::evaluate('l:filename')))
+"   obj_hash = obj.inspect.gsub('=>', ':').gsub('nil', '{}')
+"   VIM::command("let l:ret = #{obj_hash}")
+" EOF
 
-  return l:ret
-endfunction
+"   return l:ret
+" endfunction
 
 augroup nvim_init_group
   autocmd!

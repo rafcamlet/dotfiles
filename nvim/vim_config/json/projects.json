@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Blog",
+    "root_path": "projects/blog"
+  },
+  {
+    "name": "Notes",
+    "root_path": "Dropbox/notes",
+    "settings": {
+      "filetype": "my-note",
+      "syntax": "my-note"
+    }
+  },
+  {
+    "name": "Talebook",
+    "root_path": "projects/talebook/frontend",
+    "settings": {
+      "path": ".,src/**,,",
+      "suffixesadd": ".js,.vue"
+    },
+    "files": {
+      "c": "src/components"
+    }
+  },
+  {
+    "name": "Reactapp",
+    "root_path": "projects/reactapp",
+    "dictionary": "~/.config/nvim/dict/react",
+    "settings": {
+      "path": ".,src/**,,",
+      "suffixesadd": ".js"
+    },
+    "files": {
+      "c": "src/components"
+    }
+  },
+  {
+    "name": "Ixl",
+    "root_path": "projects/ixl-front-end",
+    "dictionary": "~/.config/nvim/dict/react",
+    "settings": {
+      "shiftwidth": 4,
+      "softtabstop": 4,
+      "tabstop": 4,
+      "path": ".,,src/**",
+      "suffixesadd": ".js"
+    },
+    "files": {
+      "c": "src/components",
+      "r": "src/redux",
+      "v": "src/views"
+    }
+  }
+]
