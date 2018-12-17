@@ -168,7 +168,7 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 "Plug 'jceb/vim-orgmode' " Text outlining and task management for Vim based on Emacs' Org-Mode 
 
 "Plug 'lambdalisue/gina.vim' " An awesome git handling plugin for Vim
-Plug 'brooth/far.vim' "Find And Replace Vim plugin
+" Plug 'brooth/far.vim' "Find And Replace Vim plugin
 
 "" Plug 'gabrielelana/vim-markdown'
 

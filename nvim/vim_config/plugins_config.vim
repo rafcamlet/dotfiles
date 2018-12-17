@@ -38,6 +38,7 @@ nnoremap <space>ov  :F app/views<cr>
 nnoremap <space>os  :F app/services<cr>
 nnoremap <space>of  :F app/form_objects<cr>
 nnoremap <space>on  :FZF ~/Dropbox/notes<cr>
+nnoremap <space>o-  :F <C-r>=expand("%:h")<CR>/<CR>
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
@@ -211,10 +212,11 @@ function! ChangeRubyLinters()
   ALELint
 endfunction
 
-let g:ale_fixers = { 'ruby': ['rubocop'], 'typescript': ['eslint', 'prettier', 'tslint'],
-      \ 'javascript': ['prettier', 'eslint', 'importjs']
+let g:ale_fixers = { 'ruby': ['rubocop'],
+      \ 'typescript': ['eslint', 'prettier', 'tslint'],
+      \ 'javascript': ['prettier', 'eslint', 'importjs'],
+      \ 'vue': ['prettier', 'eslint']
       \ }
-
 
 command! ChangeRubyLinters call ChangeRubyLinters()
 nnoremap <space>r :ChangeRubyLinters<cr>
@@ -343,7 +345,7 @@ let &updatetime = 2000
 
 " ============== alvan/vim-closetag ================
 
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.js'
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.js,*.vue'
 
 
 " ============== tpope/vim-markdown ================

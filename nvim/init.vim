@@ -13,9 +13,8 @@ runtime vim_config/tabline.vim
 " runtime vim_config/standup.vim
 runtime vim_config/projects.vim
 
-" YAML store:
-" vim_config/yamls/projects.yml
-" vim_config/yamls/projects.json
+" JSON store:
+" vim_config/json/projects.json
 
 " runtime vim_config/status_line.vim
 
