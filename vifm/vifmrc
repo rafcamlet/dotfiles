@@ -481,5 +481,6 @@ nnoremap yd :!printf %d | xclip -i -selection clipboard %i<cr>
 
 " Yank current file path into the clipboard
 nnoremap yf :!printf %c:p | xclip -i -selection clipboard %i<cr>
+command! nvr :!nvr --nostart --remote-tab-silent %c && tmux kill-pane &
 
 colorscheme molokai

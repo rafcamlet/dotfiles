@@ -87,6 +87,15 @@ function show {
   LESSOPEN="| pygmentize %s" LESS=' -RN' less "$@"
 }
 
+export NNN_TMPFILE="/tmp/nnn"
+function n {
+  nnn "$@"
+  if [ -f $NNN_TMPFILE ]; then
+    . $NNN_TMPFILE
+    rm -f $NNN_TMPFILE
+  fi
+}
+
 export FZF_DEFAULT_OPTS='
   --height 75% --multi
   --bind ctrl-f:page-down,ctrl-b:page-up
@@ -101,6 +110,7 @@ export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
 PATH=$PATH:/usr/local/go/bin
 PATH=$PATH:$HOME/.yarn/bin
 PATH=$PATH:$HOME/bin
+PATH=$PATH:$HOME/.local/bin
 
 export GOBIN=$HOME/go/bin
 
@@ -133,6 +143,7 @@ alias lc='colorls -r --sd'
 alias gdn='git diff --name-only '
 
 alias v='COLORTERM=tmux-256color vifm' # vi file manager
+alias nvr='nvr --servername /tmp/nvimsocket -s'
 
 
 eval "$(direnv hook zsh)"

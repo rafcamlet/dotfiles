@@ -22,6 +22,8 @@ runtime vim_config/projects.vim
 "---------Testing_new_features-------
 "====================================
 
+command! VIFM call system("tmux split-window -h 'COLORTERM=tmux-256color vifm -c " . '"split | view!"' . "  --on-choose " . '"nvr --nostart --remote-tab-silent %c " ' . getcwd() . " && tmux kill-pane'")
+
 set spelllang=pl,en
 
 function! Fzf_dev(cmd)
