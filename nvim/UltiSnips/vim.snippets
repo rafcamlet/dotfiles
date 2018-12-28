@@ -12,9 +12,9 @@ if $0 | return 0 | endif
 endsnippet
 
 snippet f "function" b
-function! ${1:function}($2)
+function! ${1:function}($2) abort "{{{
 	${3:${VISUAL:" code}}
-endfunction
+endfunction "}}}
 endsnippet
 
 snippet st "Status" b

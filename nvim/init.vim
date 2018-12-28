@@ -22,6 +22,8 @@ runtime vim_config/projects.vim
 "---------Testing_new_features-------
 "====================================
 
+set spelllang=pl,en
+
 function! Fzf_dev(cmd)
   let l:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {} | head -'.&lines.'"'
 
