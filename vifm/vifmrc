@@ -357,6 +357,7 @@ filextype */
 "
 " fileviewer *[^/] pygmentize -O style=monokai -f console256 -g
 
+
 " Displaying pictures in terminal
 "
 " fileviewer *.jpg,*.png shellpic %c
@@ -416,12 +417,6 @@ vnoremap w :view<cr>gv
 " Open file in the background using its default program
 nnoremap gb :file &<cr>l
 
-" Yank current directory path into the clipboard
-nnoremap yd :!echo %d | xclip %i<cr>
-
-" Yank current file path into the clipboard
-nnoremap yf :!echo %c:p | xclip %i<cr>
-
 " Mappings for faster renaming
 nnoremap I cw<c-a>
 nnoremap cc cw<c-u>
@@ -465,10 +460,26 @@ nnoremap <f8> :delete<cr>
 nnoremap ; :
 nnoremap q :q<cr>
 nnoremap o :! xdg-open %c &>/dev/null &<cr>
+" nnoremap gp :! bat %c:p %s<cr>
+
+
+nnoremap gp :! tmux split-window -h bat %c:p &<cr>
 
 fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
          \ imgt %px %py %pw %ph %c
+         \ %pc
+         \ imgc %px %py %pw %ph
+
 
 fileview */ tree %c
+fileviewer *[^/] bat -n --color always --theme=OneHalfDark %c
 
 set caseoptions=p "case insensitive autocomplete
+
+" Yank current directory path into the clipboard
+nnoremap yd :!printf %d | xclip -i -selection clipboard %i<cr>
+
+" Yank current file path into the clipboard
+nnoremap yf :!printf %c:p | xclip -i -selection clipboard %i<cr>
+
+colorscheme molokai

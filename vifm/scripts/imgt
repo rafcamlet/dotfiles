@@ -19,7 +19,7 @@ if [ -z "$width" -o -z "$height" ]; then
 fi
 
 x=$((FONTW * X))
-y=$((FONTH * Y))
+y=$((FONTH * Y + 20))
 
 max_width=$((FONTW * COLUMNS))
 max_height=$((FONTH * LINES))

@@ -43,6 +43,7 @@ setopt RM_STAR_WAIT
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+# export PAGER=w3m
 
 function amend {
   git add .
@@ -131,7 +132,7 @@ alias zz='fasd_cd -d -i' # cd with interactive selection
 alias lc='colorls -r --sd'
 alias gdn='git diff --name-only '
 
-alias v='vifm' # vi file manager
+alias v='COLORTERM=tmux-256color vifm' # vi file manager
 
 
 eval "$(direnv hook zsh)"
