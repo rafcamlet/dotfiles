@@ -22,7 +22,10 @@ runtime vim_config/projects.vim
 "---------Testing_new_features-------
 "====================================
 
-command! VIFM call system("tmux split-window -h 'COLORTERM=tmux-256color vifm -c " . '"split | view!"' . "  --on-choose " . '"nvr --nostart --remote-tab-silent %c " ' . getcwd() . " && tmux kill-pane'")
+set foldtext=MyFoldText()
+
+command! VIFM call system("tmux split-window -h 'COLORTERM=tmux-256color vifm -c " . '"split | view!"' . "  --on-choose " . '"nvr --servername ' . v:servername . '  --remote-silent %c " ' . getcwd() . " && tmux kill-pane'")
+nnoremap <silent> <space>v :VIFM<cr>
 
 set spelllang=pl,en
 

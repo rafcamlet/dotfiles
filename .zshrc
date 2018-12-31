@@ -3,9 +3,10 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+setopt RM_STAR_WAIT
 
-# http://www.math.cmu.edu/~gautam/sj/blog/20140625-zsh-expand-alias.html
 # alias expansion {{{
+# http://www.math.cmu.edu/~gautam/sj/blog/20140625-zsh-expand-alias.html
 typeset -a ealiases
 ealiases=()
 
@@ -33,18 +34,22 @@ zle -N expand-ealias
 bindkey " "        expand-ealias
 bindkey "^[[Z"     magic-space     # control-space to bypass completion
 bindkey -M isearch " "      magic-space     # normal space during searches
-
+# }}}
 
 egalias G='| grep -Pi'
 ealias gs='git status'
-# }}}
-
-setopt RM_STAR_WAIT
+ealias gdn='git diff --name-only '
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
-# export PAGER=w3m
+export GOBIN=$HOME/go/bin
 
+PATH=$PATH:/usr/local/go/bin
+PATH=$PATH:$HOME/.yarn/bin
+PATH=$PATH:$HOME/bin
+PATH=$PATH:$HOME/.local/bin
+
+# Functions -> {{{
 function amend {
   git add .
   git commit --amend
@@ -86,7 +91,9 @@ function fco {
 function show {
   LESSOPEN="| pygmentize %s" LESS=' -RN' less "$@"
 }
+# }}}
 
+# nnn exit function {{{
 export NNN_TMPFILE="/tmp/nnn"
 function n {
   nnn "$@"
@@ -94,8 +101,9 @@ function n {
     . $NNN_TMPFILE
     rm -f $NNN_TMPFILE
   fi
-}
+} # }}}
 
+# FZF options {{{
 export FZF_DEFAULT_OPTS='
   --height 75% --multi
   --bind ctrl-f:page-down,ctrl-b:page-up
@@ -106,16 +114,15 @@ export FZF_ALT_C_COMMAND='fd --type d . --color=never'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -100'"
 export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# }}}
 
-PATH=$PATH:/usr/local/go/bin
-PATH=$PATH:$HOME/.yarn/bin
-PATH=$PATH:$HOME/bin
-PATH=$PATH:$HOME/.local/bin
-
-export GOBIN=$HOME/go/bin
-
+# NVM {{{
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+# NVM drastically increas startup time. Move to function.
+start_nvm(){
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+} # }}}
 
 unset rvm_bin_path
 unset rvm_prefix
@@ -140,10 +147,9 @@ alias z='fasd_cd -d'     # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # cd with interactive selection
 
 alias lc='colorls -r --sd'
-alias gdn='git diff --name-only '
 
-alias v='COLORTERM=tmux-256color vifm' # vi file manager
-alias nvr='nvr --servername /tmp/nvimsocket -s'
-
+alias v='COLORTERM=tmux-256color vifm -c "vsplit"' # vi file manager
 
 eval "$(direnv hook zsh)"
+
+# vim: foldmethod=marker:foldlevel=0

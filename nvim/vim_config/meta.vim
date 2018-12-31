@@ -18,10 +18,11 @@ function! OpenRuntime()
 endfunction
 
 function! MyFoldText()
-    let l:txt = substitute(getline(v:foldstart), '\v\{\{\{', '', 'g')
-    let l:txt = substitute(l:txt, '\v"?', '', '')
+  let l:txt = substitute(getline(v:foldstart), '\v\{\{\{', '', 'g')
+  let l:comment = substitute(&commentstring, '\v\s?\%s', '', '')
+  let l:txt = substitute(l:txt, '\v' . l:comment . '\s?', '', '')
 
-    return l:txt . repeat(' ', winwidth(0))
+  return '+- ' . l:txt . repeat(' ', winwidth(0))
 endfunction
 
 function! OpenPluginInGithub()
