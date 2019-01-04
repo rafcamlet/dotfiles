@@ -50,6 +50,11 @@ PATH=$PATH:$HOME/bin
 PATH=$PATH:$HOME/.local/bin
 
 # Functions -> {{{
+
+function vimman {
+  nvim -c "Man $1 $2" -c 'silent only'
+}
+
 function amend {
   git add .
   git commit --amend
@@ -149,6 +154,7 @@ alias zz='fasd_cd -d -i' # cd with interactive selection
 alias lc='colorls -r --sd'
 
 alias v='COLORTERM=tmux-256color vifm -c "vsplit"' # vi file manager
+alias man='vimman'
 
 eval "$(direnv hook zsh)"
 

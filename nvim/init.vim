@@ -22,7 +22,58 @@ runtime vim_config/projects.vim
 "---------Testing_new_features-------
 "====================================
 
+
+func! TranslateRegex(pattern) abort
+    let pattern = a:pattern
+
+    " escape '@' and '%' (plain in perl regex but special in vim regex)
+    let pattern = escape(pattern, '@%')
+
+    " non-capturing group
+    let pattern = substitute(pattern, '\v\(\?:(.{-})\)', '%(\1)', 'g')
+
+    " case sensitive
+    let pattern = substitute(pattern, '\V(?i)', '\c', 'g')
+    let pattern = substitute(pattern, '\V(?-i)', '\C', 'g')
+
+    " minimal matching
+    let pattern = substitute(pattern, '\V*?', '{-}', 'g')
+    let pattern = substitute(pattern, '\V+?', '{-1,}', 'g')
+    let pattern = substitute(pattern, '\V??', '{-0,1}', 'g')
+    let pattern = substitute(pattern, '\m{\(.\{-}\)}?', '{-\1}', 'g')
+
+    " zero-length matching
+    let pattern = substitute(pattern, '\v\(\?\=(.{-})\)', '(\1)@=', 'g')
+    let pattern = substitute(pattern, '\v\(\?!(.{-})\)', '(\1)@!', 'g')
+    let pattern = substitute(pattern, '\v\(\?\<\=(.{-})\)', '(\1)@<=', 'g')
+    let pattern = substitute(pattern, '\v\(\?\<!(.{-})\)', '(\1)@<!', 'g')
+    let pattern = substitute(pattern, '\v\(\?\>(.{-})\)', '(\1)@>', 'g')
+
+    " '\b' word boundary
+    let pattern = substitute(pattern, '\C\\b', '(<|>)', 'g')
+
+    " '\B' non-word boundary (just remove it)
+    let pattern = substitute(pattern, '\C\\B', '', 'g')
+
+    " vim-regex when magic is \v, '=' '&' is no literally, should change to '\=' and '\&'
+    let pattern = escape(pattern, '=&')
+
+    return pattern
+endf
+
 set foldtext=MyFoldText()
+
+function! Vifm() abort "{{{
+  function! OnExit(...) closure
+    bdelete!
+  endfunction
+
+  vnew
+  setlocal bufhidden=wipe
+  call termopen("COLORTERM=tmux-256color vifm -c " . '"vsplit | view!"' . "  --on-choose " . '"nvr --servername ' . v:servername . '  --remote-silent %c " ' . getcwd(), {'on_exit': function('OnExit')})
+  IndentGuidesDisable
+  startinsert
+endfunction "}}}
 
 command! VIFM call system("tmux split-window -h 'COLORTERM=tmux-256color vifm -c " . '"split | view!"' . "  --on-choose " . '"nvr --servername ' . v:servername . '  --remote-silent %c " ' . getcwd() . " && tmux kill-pane'")
 nnoremap <silent> <space>v :VIFM<cr>

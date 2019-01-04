@@ -26,8 +26,6 @@ set scrolloff=3                                " Minimum lines to keep above and
 syntax on                                      " turn on syntax highlighting
 " set backupdir=~/.backup,./.backup,/tmp         " set backup directory
 set directory=~/.vim/swap                      " Directory to use for the swap file
-set langmenu=en_US                             " set language
-let $LANG = 'en_US'
 set splitbelow                                 " set panel split position
 set splitright
 set laststatus=2                               " allways show statusline
