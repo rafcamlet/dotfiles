@@ -33,7 +33,7 @@ set foldlevelstart=1                           " start folding from specyfic lev
 set guicursor=                                 " reset cursor shape
 set cmdheight=2                                " double command-line height
 set iskeyword+=-                               " add `-` character as part of words
-set wrapmargin=2                               "Wrap 2 characters from the edge of the window
+" set wrapmargin=2                               "Wrap 2 characters from the edge of the window
 set spelllang=pl,en
 
 " Display extra whitespace

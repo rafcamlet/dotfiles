@@ -56,3 +56,9 @@ endsnippet
 snippet .find "find" i
 .find {|${1}| $1.$0 }
 endsnippet
+
+snippet class "class"
+class ${1:`!v substitute(substitute(substitute(expand('%:r'), '\v^app/[^/]*/', '', ''), '\v/(.)', '::\U\1', 'g'), '\v^.', '\U\0', '')`}
+	$0
+end
+endsnippet
