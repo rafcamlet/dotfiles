@@ -1,0 +1,32 @@
+[user]
+  email = raf.camlet@gmail.com
+  name = Rafał Camlet
+[alias]
+  co = checkout
+  purr = pull --rebase
+  sth = stash -u
+  alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1 => \\2/' | grep -v 'alias'| awk 'BEGIN { FS = \"=>\" }{ printf(\"%-20s=>%s\\n\", $1,$2)}'|sort
+
+  # Gets the current branch name (not so useful in itself, but used in other aliases)
+  branch-name = "!git rev-parse --abbrev-ref HEAD"
+
+  # Pushes the current branch to the remote "origin" (or the remote passed as the parameter) and set it to track the upstream branch
+  publish = "!sh -c 'git push -u ${1:-origin} $(git branch-name)' -"
+
+# Deletes the remote version of the current branch from the remote "origin" (or the remote passed as the parameter)
+  unpublish = "!sh -c 'set -e; git push ${1:-origin} :$(git branch-name);git branch --unset-upstream $(git branch-name)' -"
+
+  #Deletes all branches that were safely merged into the master. All other are skipped (no worries).
+  #on osx xargs does not have -r argument, so it fail. If you remove -r, it will run at least once, making this not safe operation
+  cleanup = !git branch --merged=master | grep -Ev '^\\* | master$' | xargs -r git branch -d
+
+  #Deletes orphaned remote branches (.git/refs/remotes/origin), clean up reflog and remove all untracked files
+  cleanuplocal = !git remote prune origin && git gc && git clean -df
+
+  #BASIC HISTORY VIEWING
+
+  hist = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset%C(yellow)%d%Creset %Cgreen(%cr)%Creset%n%w(80,8,8)%s' --graph
+  histfull = log --pretty=format:'%Cred%h%Creset %C(bold blue)<%an>%Creset%C(yellow)%d%Creset %Cgreen(%cr)%Creset%n%w(80,8,8)%s%n' --graph --name-status
+  llog = log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=iso
+  changelog = log --pretty=format:'%Cgreen%d %Creset%s' --date=iso
+  ls = log --pretty=format:'%C(yellow)%p..%h %C(white dim)%cd %<|(49,trunc)%an %C(reset)%s' --date=short --abbrev=8 --no-merges
