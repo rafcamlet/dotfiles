@@ -22,6 +22,10 @@ runtime vim_config/projects.vim
 "---------Testing_new_features-------
 "====================================
 
+nnoremap `a `Azt
+nnoremap `j `Jzt
+nnoremap `k `Kzt
+nnoremap `l `Lzt
 
 func! TranslateRegex(pattern) abort
     let pattern = a:pattern
