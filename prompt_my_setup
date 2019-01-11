@@ -21,8 +21,8 @@ function prompt_my_precmd {
 
     _last_commit=$(git log -1 --pretty='%s')
 
-    if [[ "$_last_commit" == "temp" ]]; then
-      _git+="%F{1} TEMP!!! "
+    if [[ "$_last_commit" =~ [Ww][Ii][Pp] ]]; then
+      _git+="%F{1} WIP!!! "
     fi
 
   fi
