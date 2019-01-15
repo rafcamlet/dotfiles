@@ -3,14 +3,9 @@
 
 let g:EasyClipEnableBlackHoleRedirect = 0
 let g:EasyClipUseCutDefaults = 0
-" let g:EasyClipUseSubstituteDefaults = 1
+let g:EasyClipUseSubstituteDefaults = 0
 let g:EasyClipPreserveCursorPositionAfterYank = 1
 let g:EasyClipUsePasteDefaults = 0
-
-nmap p <plug>G_EasyClipPasteAfter
-nmap P <plug>G_EasyClipPasteBefore
-" nmap <c-p> <plug>EasyClipSwapPasteForward
-" nmap <c-n> <plug>EasyClipSwapPasteBackwards
 
 " =========== junegunn/vim-after-object ============
 
@@ -504,3 +499,26 @@ if executable('ripper-tags')
       \ 'ctagsargs'  : ['-f', '-']
       \ }
 endif
+
+" ============= svermeulen/vim-yoink ===============
+
+nmap <c-n> <plug>(YoinkPostPasteSwapBack)
+nmap <c-p> <plug>(YoinkPostPasteSwapForward)
+
+nmap p <plug>(YoinkPaste_p)
+nmap P <plug>(YoinkPaste_P)
+
+let g:yoinkSavePersistentl = 1
+let g:yoinkMoveCursorToEndOfPaste = 1
+
+
+" =========== svermeulen/vim-subversive ============
+
+" s for substitute
+nmap s <plug>(SubversiveSubstitute)
+nmap ss <plug>(SubversiveSubstituteLine)
+nmap S <plug>(SubversiveSubstituteToEndOfLine)
+xmap p <plug>(SubversiveSubstitute)
+xmap P <plug>(SubversiveSubstitute)
+nmap <space>s <plug>(SubversiveSubstituteRange)
+" xmap <space>s <plug>(SubversiveSubstituteRange)

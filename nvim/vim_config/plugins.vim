@@ -50,10 +50,13 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'simeji/winresizer'
+Plug 'svermeulen/vim-subversive'
+Plug 'svermeulen/vim-yoink'
 Plug 'tpope/vim-scriptease'
 Plug 'rhysd/committia.vim'
 Plug 'sodapopcan/vim-twiggy', { 'on': 'Twiggy' }
-Plug 'justinmk/vim-sneak'
+" Plug 'justinmk/vim-sneak'
 Plug 'majutsushi/tagbar'
 
 Plug 'wsdjeg/FlyGrep.vim'

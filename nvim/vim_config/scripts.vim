@@ -141,17 +141,17 @@ function! SendToTmxu(nr) range
 endfunction
 
 
-nnoremap <silent> <space>s1 :call SendToTmxu(1)<cr>
-vnoremap <silent> <space>s1 :call SendToTmxu(1)<cr>
-nnoremap <silent> <space>s2 :call SendToTmxu(2)<cr>
-vnoremap <silent> <space>s2 :call SendToTmxu(2)<cr>
-nnoremap <silent> <space>s3 :call SendToTmxu(3)<cr>
-vnoremap <silent> <space>s3 :call SendToTmxu(3)<cr>
-nnoremap <silent> <space>s4 :call SendToTmxu(4)<cr>
-vnoremap <silent> <space>s4 :call SendToTmxu(4)<cr>
-nnoremap <silent> <space>s5 :call SendToTmxu(5)<cr>
-vnoremap <silent> <space>s5 :call SendToTmxu(5)<cr>
-nnoremap <silent> <space>s0 :call SendToTmxu('0.1')<cr>
+" nnoremap <silent> <space>s1 :call SendToTmxu(1)<cr>
+" vnoremap <silent> <space>s1 :call SendToTmxu(1)<cr>
+" nnoremap <silent> <space>s2 :call SendToTmxu(2)<cr>
+" vnoremap <silent> <space>s2 :call SendToTmxu(2)<cr>
+" nnoremap <silent> <space>s3 :call SendToTmxu(3)<cr>
+" vnoremap <silent> <space>s3 :call SendToTmxu(3)<cr>
+" nnoremap <silent> <space>s4 :call SendToTmxu(4)<cr>
+" vnoremap <silent> <space>s4 :call SendToTmxu(4)<cr>
+" nnoremap <silent> <space>s5 :call SendToTmxu(5)<cr>
+" vnoremap <silent> <space>s5 :call SendToTmxu(5)<cr>
+" nnoremap <silent> <space>s0 :call SendToTmxu('0.1')<cr>
 
 function! SendBufToTmxu(all) range
 

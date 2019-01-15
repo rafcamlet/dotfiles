@@ -22,6 +22,7 @@ runtime vim_config/projects.vim
 "---------Testing_new_features-------
 "====================================
 
+vnoremap  y ygv<esc>
 nnoremap `a `Azt
 nnoremap `j `Jzt
 nnoremap `k `Kzt
@@ -191,7 +192,7 @@ command! STest :silent call STest()<cr>
 
 command! RCursor :set guicursor=n-v-c-i:block
 
-nnoremap s /\%<c-r>=line('.')<cr>l/e<left><left>
+" nnoremap s /\%<c-r>=line('.')<cr>l/e<left><left>
 
 let g:incsearch#magic = '\v' " very magic
 
