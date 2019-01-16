@@ -160,7 +160,7 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 "" Plug 'thaerkh/vim-workspace' " Automated Vim session management and file auto-save
 
 "" Plug 'Mizuchi/vim-ranger'
-"Plug 'rhysd/vim-grammarous'
+Plug 'rhysd/vim-grammarous'
 "Plug 'dpelle/vim-LanguageTool'
 
 "Plug 'dhruvasagar/vim-table-mode' "VIM Table Mode for instant table creation.

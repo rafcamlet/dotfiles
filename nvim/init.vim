@@ -22,7 +22,6 @@ runtime vim_config/projects.vim
 "---------Testing_new_features-------
 "====================================
 
-vnoremap  y ygv<esc>
 nnoremap `a `Azt
 nnoremap `j `Jzt
 nnoremap `k `Kzt
