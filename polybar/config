@@ -49,7 +49,7 @@ font-2 = UbuntuMono Nerd Font:pixelsize=12;3
 
 ; modules-left = bspwm i3
 modules-left = i3
-modules-center =
+; modules-center = info-softwarecounter
 modules-right = filesystem volume memory cpu battery temperature date
 
 tray-position = right
@@ -70,6 +70,11 @@ tray-padding = 2
 cursor-click = pointer
 cursor-scroll = ns-resize
 ; bottom = true
+
+; [module/info-softwarecounter]
+; type = custom/script
+; exec = tail ~/mess
+; interval = 10
 
 
 [bar/example]
@@ -173,6 +178,18 @@ label-empty-foreground = ${colors.foreground-alt}
 label-empty-padding = 2
 
 [module/i3]
+
+ws-icon-0 = 1;1
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;4
+ws-icon-4 = 5;5
+ws-icon-5 = 6;6
+ws-icon-6 = 7;7
+ws-icon-7 = 8;8
+ws-icon-8 = 9;9
+ws-icon-9 = 10;10
+
 type = internal/i3
 format = <label-state> <label-mode>
 index-sort = true
@@ -182,17 +199,17 @@ wrapping-scroll = false
 ;pin-workspaces = true
 
 label-mode-padding = 2
-label-mode-foreground = #000
-label-mode-background = ${colors.primary}
+; label-mode-foreground = ${colors.primary}
+; label-mode-background = ${colors.background}
 
 ; focused = Active workspace on focused monitor
-label-focused = %index%
+label-focused = %icon%
 label-focused-background = ${module/bspwm.label-focused-background}
 label-focused-underline = ${module/bspwm.label-focused-underline}
 label-focused-padding = ${module/bspwm.label-focused-padding}
 
 ; unfocused = Inactive workspace on any monitor
-label-unfocused = %index%
+label-unfocused = %icon%
 label-unfocused-padding = ${module/bspwm.label-occupied-padding}
 
 ; visible = Active workspace on unfocused monitor
@@ -205,6 +222,7 @@ label-visible-padding = ${self.label-focused-padding}
 label-urgent = %index%
 label-urgent-background = ${module/bspwm.label-urgent-background}
 label-urgent-padding = ${module/bspwm.label-urgent-padding}
+
 
 [module/mpd]
 type = internal/mpd

@@ -183,3 +183,21 @@ exec google-chrome
 exec --no-startup-id i3-msg 'workspace 3; exec gnome-terminal; workspace 2'
 
 assign [class="Google-chrome"] 2
+
+
+for_window [instance="scratchpad_*"] floating enable
+for_window [instance="scratchpad_*"] move scratchpad
+for_window [instance="scratchpad_*"] sticky enable
+for_window [instance="scratchpad_st"] resize set 800 600
+for_window [instance="scratchpad_st"] border pixel 3
+
+# for_window [instance="scratchpad_*"] scratchpad show
+# for_window [instance="scratchpad_tmuxdd"] resize set 625 450
+# for_window [instance="scratchpad_dropdowncalc"] resize set 800 300
+# for_window [instance="scratchpad_tmuxdd"] border pixel 3
+# for_window [instance="scratchpad_dropdowncalc"] border pixel 2
+# for_window [instance="scratchpad_*"] move position center
+
+bindsym $mod+u [instance="scratchpad_st"] scratchpad show; [instance="scratchpad_st"] move position center
+
+exec --no-startup-id st -n scratchpad_st -e tmux

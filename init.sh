@@ -21,3 +21,4 @@ function link {
 
 echo 'Start linking files'
 link '.gitconfig'
+link '.newsboat'
