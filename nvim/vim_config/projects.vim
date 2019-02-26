@@ -23,7 +23,7 @@ function! SetupEnvironment() abort
 
   for l:project in g:projects
     if l:path =~? l:project['root_path']
-      echom 'Start projet ' . l:project['name']
+      echom 'Start projet ' . l:project['name'] . ' | ' . expand('%')
       let g:rooter_manual_only = 1
       let l:project_found = 1
       for l:mapping in get(l:project, 'mappings', [])
@@ -36,7 +36,7 @@ function! SetupEnvironment() abort
 
       let l:files = get(l:project, 'files', {})
       for l:file in keys(l:files)
-        exec 'nnoremap <buffer> <space>o' . l:file . ' :FZF ' . l:files[l:file] . '<cr>'
+        exec 'nnoremap <buffer> <space>o' . l:file . ' :F ' . l:files[l:file] . '<cr>'
       endfor
 
       let l:settings = get(l:project, 'settings', {})

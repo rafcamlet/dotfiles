@@ -16,7 +16,7 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'SirVer/ultisnips'
 Plug 'christoomey/vim-tmux-navigator' " Seamless navigation between tmux panes and vim splits
@@ -50,6 +50,12 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'mbbill/undotree'
+Plug 'hecal3/vim-leader-guide'
+" Plug 'terryma/vim-expand-region'
+" Plug 'TaDaa/vimade'
+Plug 'Shougo/context_filetype.vim'
+Plug 'tyru/caw.vim'
 Plug 'simeji/winresizer'
 Plug 'svermeulen/vim-subversive'
 Plug 'svermeulen/vim-yoink'

@@ -21,6 +21,7 @@ runtime vim_config/projects.vim
 "====================================
 "---------Testing_new_features-------
 "====================================
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 nnoremap `a `Azt
 nnoremap `j `Jzt
@@ -83,23 +84,6 @@ command! VIFM call system("tmux split-window -h 'COLORTERM=tmux-256color vifm -c
 nnoremap <silent> <space>v :VIFM<cr>
 
 set spelllang=pl,en
-
-function! Fzf_dev(cmd)
-  let l:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {} | head -'.&lines.'"'
-
-  function! s:edit_file(item)
-    let l:pos = stridx(a:item, ' ')
-    let l:file_path = a:item[pos+1:-1]
-    execute 'silent e' l:file_path
-  endfunction
-
-  call fzf#run({
-        \ 'source': systemlist('fd ' . a:cmd . ' -ptf'),
-        \ 'sink':   function('s:edit_file'),
-        \ 'options': '-m ' . l:fzf_files_options,
-        \ 'down':    '40%' })
-endfunction
-command! -bang -nargs=? -complete=dir F call Fzf_dev(<q-args>)
 
 nnoremap <silent> <space>t :TagbarToggle<cr>
 
@@ -178,8 +162,6 @@ function! FindClass()
   exec 'Ag ' . l:str
 endfunction
 command! FindClass call FindClass()
-
-vnoremap <s-k> <esc>
 
 function! STest()
   let s:path = expand('%')

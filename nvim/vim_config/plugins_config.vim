@@ -522,3 +522,43 @@ xmap p <plug>(SubversiveSubstitute)
 xmap P <plug>(SubversiveSubstitute)
 nmap <space>s <plug>(SubversiveSubstituteRange)
 " xmap <space>s <plug>(SubversiveSubstituteRange)
+
+
+" =========== terryma/vim-expand-region ============
+
+" map K <Plug>(expand_region_expand)
+" map J <Plug>(expand_region_shrink)
+
+let g:expand_region_text_objects = {
+      \ 'a{'  :1,
+      \ }
+
+
+" ============ hecal3/vim-leader-guide =============
+
+let g:lmap = {
+      \' ':
+      \ {
+      \ 'g' : ['Magit', 'Magit'],
+      \ 'h' : ['UndotreeToggle', 'Undotree']
+      \ }
+      \}
+let g:tabmap = {}
+let g:lmap.t = { 'name': 'Tab' }
+let g:lmap.t.t = ['asdf', 'asdf']
+
+call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
+nnoremap <silent> <space> :<c-u>LeaderGuide '<Space>'<CR>
+vnoremap <silent> <space> :<c-u>LeaderGuideVisual '<Space>'<CR>
+
+call leaderGuide#register_prefix_descriptions("<tab>", "g:tabmap")
+nnoremap <silent> <tab> :<c-u>LeaderGuide "<lt>tab>"<CR>
+vnoremap <silent> <tab> :<c-u>LeaderGuideVisual "<lt>tab>"<CR>
+
+" ================ mbbill/undotree =================
+
+nnoremap <space><space>h :UndotreeToggle<cr>
+
+" =============== jreybert/vimagit =================
+
+nnoremap <space><space>g :Magit<cr>

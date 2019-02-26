@@ -16,7 +16,8 @@
     "root_path": "projects/talebook/frontend",
     "settings": {
       "path": ".,src/**,,",
-      "suffixesadd": ".js,.vue"
+      "suffixesadd": ".js,.vue",
+      "commentstring": "// %s"
     },
     "files": {
       "c": "src/components"
