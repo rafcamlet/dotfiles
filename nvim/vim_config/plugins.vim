@@ -50,6 +50,10 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'rbong/vim-flog' "A lightweight and powerful git branch viewer for vim.
+Plug 'michaeljsmith/vim-indent-object' "Vim plugin that defines a new text object representing lines of code at the same indent level.
+Plug 'wellle/targets.vim' " Vim plugin that provides additional text objects
+Plug 'tommcdo/vim-lion' "A simple alignment operator for Vim text editor - gl gL
 Plug 'mbbill/undotree'
 Plug 'hecal3/vim-leader-guide'
 " Plug 'terryma/vim-expand-region'

@@ -10,7 +10,7 @@ runtime vim_config/window_script.vim
 " runtime vim_config/ruby_lib.vim
 runtime vim_config/custom_start_window.vim
 runtime vim_config/tabline.vim
-" runtime vim_config/standup.vim
+runtime vim_config/standup.vim
 runtime vim_config/projects.vim
 
 " JSON store:
@@ -21,6 +21,10 @@ runtime vim_config/projects.vim
 "====================================
 "---------Testing_new_features-------
 "====================================
+
+nnoremap <space>n <esc>ngn
+vnoremap <space>n <esc>ngn
+
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 nnoremap `a `Azt

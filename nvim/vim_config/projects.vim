@@ -10,7 +10,7 @@ endfunction
 
 function! SetupEnvironment() abort
 
-  if exists('b:setup_environmcnt_ready') | return | endif
+  if exists('b:setup_environmcnt_ready') || !&l:modifiable  | return | endif
   let b:setup_environmcnt_ready = 1
 
   let l:project_found = 0
