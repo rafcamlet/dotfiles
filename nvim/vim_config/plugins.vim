@@ -50,6 +50,7 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 Plug 'rbong/vim-flog' "A lightweight and powerful git branch viewer for vim.
 Plug 'michaeljsmith/vim-indent-object' "Vim plugin that defines a new text object representing lines of code at the same indent level.
 Plug 'wellle/targets.vim' " Vim plugin that provides additional text objects
@@ -73,19 +74,20 @@ Plug 'wsdjeg/FlyGrep.vim'
 
 Plug 'bilalq/lite-dfm'
 Plug 'ternjs/tern_for_vim',  {'do': 'npm install'}
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-html-subscope'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'yuki-ycino/ncm2-dictionary'
-Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
-Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-Plug 'wellle/tmux-complete.vim'
-Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
-Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-Plug 'ncm2/ncm2-cssomni'
+
+" Plug 'ncm2/ncm2'
+" Plug 'roxma/nvim-yarp'
+" Plug 'ncm2/ncm2-html-subscope'
+" Plug 'ncm2/ncm2-ultisnips'
+" Plug 'ncm2/ncm2-bufword'
+" Plug 'ncm2/ncm2-path'
+" Plug 'yuki-ycino/ncm2-dictionary'
+" Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
+" Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+" Plug 'wellle/tmux-complete.vim'
+" Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
+" Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+" Plug 'ncm2/ncm2-cssomni'
 
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'tpope/vim-markdown'
