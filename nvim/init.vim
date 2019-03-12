@@ -22,6 +22,8 @@ runtime vim_config/projects.vim
 "---------Testing_new_features-------
 "====================================
 
+nnoremap <space>ro :%! ruby -p -a -F'nil' -e ''
+vnoremap <space>ro :
 nnoremap <space>n <esc>ngn
 vnoremap <space>n <esc>ngn
 
