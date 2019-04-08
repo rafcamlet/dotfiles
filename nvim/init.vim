@@ -8,9 +8,9 @@ runtime vim_config/keybindings.vim
 runtime vim_config/scripts.vim
 runtime vim_config/window_script.vim
 " runtime vim_config/ruby_lib.vim
-runtime vim_config/custom_start_window.vim
+" runtime vim_config/custom_start_window.vim
 runtime vim_config/tabline.vim
-" runtime vim_config/standup.vim
+runtime vim_config/standup.vim
 runtime vim_config/projects.vim
 
 " JSON store:
@@ -22,8 +22,39 @@ runtime vim_config/projects.vim
 "---------Testing_new_features-------
 "====================================
 
-
 autocmd CmdwinEnter * map <buffer> <cr> <CR>q:
+
+function! OnBranch()
+  let l:file_path = expand('%')
+
+  function! SplitOnBranch(path, branch)
+    exec 'Gvsplit ' . a:branch . ':' . a:path
+  endfunction
+
+  let l:buffers = map(range(1, bufnr('$')), 'bufname(v:val)')
+
+  call fzf#run ({
+        \ 'source':  'git branch',
+        \ 'sink': function('SplitOnBranch',[l:file_path])
+        \})
+endfunction
+command! OnBranch call OnBranch()
+
+
+autocmd! CmdwinEnter * nnoremap <buffer> <CR> <CR>
+
+function! Test()
+  call system('tmux split-window -h -d -p 40 ' . "' source '$HOME/.rvm/scripts/rvm' ; rvm use 2.4.2; rspec " . expand('%')  .  "'")
+endfunction
+nnoremap <silent> <space><c-t> :call Test()<cr>
+
+nnoremap <space>ro :%! ruby -p -a -F'nil' -e ''
+vnoremap <space>ro :
+nnoremap <space>n <esc>ngn
+vnoremap <space>n <esc>ngn
+
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.css.javascript
+autocmd FileType vue syntax sync fromstart
 
 nnoremap `a `Azt
 nnoremap `j `Jzt
@@ -86,23 +117,6 @@ command! VIFM call system("tmux split-window -h 'COLORTERM=tmux-256color vifm -c
 nnoremap <silent> <space>v :VIFM<cr>
 
 set spelllang=pl,en
-
-function! Fzf_dev(cmd)
-  let l:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {} | head -'.&lines.'"'
-
-  function! s:edit_file(item)
-    let l:pos = stridx(a:item, ' ')
-    let l:file_path = a:item[pos+1:-1]
-    execute 'silent e' l:file_path
-  endfunction
-
-  call fzf#run({
-        \ 'source': systemlist('fd ' . a:cmd . ' -ptf'),
-        \ 'sink':   function('s:edit_file'),
-        \ 'options': '-m ' . l:fzf_files_options,
-        \ 'down':    '40%' })
-endfunction
-command! -bang -nargs=? -complete=dir F call Fzf_dev(<q-args>)
 
 nnoremap <silent> <space>t :TagbarToggle<cr>
 
@@ -181,8 +195,6 @@ function! FindClass()
   exec 'Ag ' . l:str
 endfunction
 command! FindClass call FindClass()
-
-vnoremap <s-k> <esc>
 
 function! STest()
   let s:path = expand('%')
@@ -306,16 +318,14 @@ endfunction
 
 command! DeleteEmptyBuffers call DeleteEmptyBuffers()
 
-function! AddToArgsList()
-  let l:buffers = map(range(1, bufnr('$')), 'bufname(v:val)')
-  call filter(l:buffers, '!empty(v:val)')
-
+function! AddArgs(cmd)
   call fzf#run ({
-        \ 'source':  (l:buffers),
+        \ 'source': systemlist('fd ' . a:cmd . ' -ptf'),
         \ 'sink':   'argadd',
         \ 'options': '-m'
         \})
 endfunction
+command! -bang -nargs=? -complete=dir AddArgs call AddArgs(<q-args>)
 
 function! Args()
   call fzf#run({

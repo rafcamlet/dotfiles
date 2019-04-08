@@ -1,9 +1,9 @@
 snippet if "javascript if"
-if ($1){$0}
+if ($1) {$0}
 endsnippet
 
 snippet log "console.log(...)" b
-console.log(${0:${VISUAL}})
+console.log(${0:${VISUAL}});
 endsnippet
 
 snippet fun "js function" i
@@ -67,10 +67,10 @@ snippet d "debugger"
 debugger
 endsnippet
 
-snippet af "arrow function"
-() => ({
+snippet af "arrow function" w
+(${1:event}) => {
 	$0
-})
+}
 endsnippet
 
 snippet rsc "React Styled Component" b

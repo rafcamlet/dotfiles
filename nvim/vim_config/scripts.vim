@@ -220,3 +220,22 @@ command! TestThis call TestThis()
 " nnoremap <space>i :call ScratchWindow(0)<cr>
 " vnoremap <space>i :call ScratchWindow(1)<cr>
 "}}}
+
+" FzfPreview {{{
+function! FzfPreview(cmd)
+  let l:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {} | head -'.&lines.'"'
+
+  function! s:edit_file(item)
+    let l:pos = stridx(a:item, ' ')
+    let l:file_path = a:item[pos+1:-1]
+    execute 'silent e' l:file_path
+  endfunction
+
+  call fzf#run({
+        \ 'source': systemlist('fd ' . a:cmd . ' -ptf'),
+        \ 'sink':   function('s:edit_file'),
+        \ 'options': '-m ' . l:fzf_files_options,
+        \ 'down':    '40%' })
+endfunction
+command! -bang -nargs=? -complete=dir F call FzfPreview(<q-args>)
+" }}}

@@ -287,7 +287,7 @@ let g:lightline = {
       \   'left': [
       \     [ 'mode', 'paste' ],
       \     [ 'gitbranch', 'readonly'],
-      \     ['file_name']
+      \     [ 'cocstatus', 'file_name']
       \   ],
       \ 'right': [
       \   ['linter_errors', 'linter_warnings', 'linter_ok'],
@@ -297,7 +297,8 @@ let g:lightline = {
       \ },
       \ 'component_function': {
       \   'gitbranch': 'gitbranch#name',
-      \   'file_name': 'LightlineFilename'
+      \   'file_name': 'LightlineFilename',
+      \   'cocstatus': 'coc#status'
       \ },
       \ }
 
@@ -445,15 +446,15 @@ map zg/ <Plug>(incsearch-fuzzy-stay)
 
 " =================== ncm2/ncm2 ====================
 
-let g:ncm2#complete_delay = 100
-set completeopt=noinsert,menuone,noselect
-
-augroup ncm2_config
-  autocmd!
-  autocmd BufRead,BufEnter * call ncm2#enable_for_buffer()
-augroup END
-
-set shortmess+=c
+" let g:ncm2#complete_delay = 100
+" set completeopt=noinsert,menuone,noselect
+"
+" augroup ncm2_config
+"   autocmd!
+"   " autocmd BufRead,BufEnter * call ncm2#enable_for_buffer()
+" augroup END
+"
+" set shortmess+=c
 
 " ============= Raimondi/delimitMate ===============
 
@@ -502,14 +503,14 @@ endif
 
 " ============= svermeulen/vim-yoink ===============
 
-nmap <c-n> <plug>(YoinkPostPasteSwapBack)
-nmap <c-p> <plug>(YoinkPostPasteSwapForward)
+" nmap <c-n> <plug>(YoinkPostPasteSwapBack)
+" nmap <c-p> <plug>(YoinkPostPasteSwapForward)
 
-nmap p <plug>(YoinkPaste_p)
-nmap P <plug>(YoinkPaste_P)
+" nmap p <plug>(YoinkPaste_p)
+" nmap P <plug>(YoinkPaste_P)
 
-let g:yoinkSavePersistentl = 1
-let g:yoinkMoveCursorToEndOfPaste = 1
+" let g:yoinkSavePersistentl = 1
+" let g:yoinkMoveCursorToEndOfPaste = 1
 
 
 " =========== svermeulen/vim-subversive ============
@@ -518,7 +519,134 @@ let g:yoinkMoveCursorToEndOfPaste = 1
 nmap s <plug>(SubversiveSubstitute)
 nmap ss <plug>(SubversiveSubstituteLine)
 nmap S <plug>(SubversiveSubstituteToEndOfLine)
-xmap p <plug>(SubversiveSubstitute)
-xmap P <plug>(SubversiveSubstitute)
+" xmap p ygv<plug>(SubversiveSubstitute)<c-n>
+" xmap P ygv<plug>(SubversiveSubstitute)<c-n>
 nmap <space>s <plug>(SubversiveSubstituteRange)
 " xmap <space>s <plug>(SubversiveSubstituteRange)
+
+
+" =========== terryma/vim-expand-region ============
+
+" map K <Plug>(expand_region_expand)
+" map J <Plug>(expand_region_shrink)
+
+let g:expand_region_text_objects = {
+      \ 'a{'  :1,
+      \ }
+
+
+" ============ hecal3/vim-leader-guide =============
+
+" let g:lmap = {
+"       \' ':
+"       \ {
+"       \ 'g' : ['Magit', 'Magit'],
+"       \ 'h' : ['UndotreeToggle', 'Undotree']
+"       \ }
+"       \}
+" let g:tabmap = {}
+" let g:lmap.t = { 'name': 'Tab' }
+" let g:lmap.t.t = ['asdf', 'asdf']
+
+" call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
+" nnoremap <silent> <space> :<c-u>LeaderGuide '<Space>'<CR>
+" vnoremap <silent> <space> :<c-u>LeaderGuideVisual '<Space>'<CR>
+
+" call leaderGuide#register_prefix_descriptions("<tab>", "g:tabmap")
+" nnoremap <silent> <tab> :<c-u>LeaderGuide "<lt>tab>"<CR>
+" vnoremap <silent> <tab> :<c-u>LeaderGuideVisual "<lt>tab>"<CR>
+
+" ================ mbbill/undotree =================
+
+nnoremap <space><space>h :UndotreeToggle<cr>
+
+" =============== jreybert/vimagit =================
+
+nnoremap <space><space>g :Magit<cr>
+
+
+" =============== neoclide/coc.nvim ================
+
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+
+" Highlight symbol under cursor on CursorHold
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+vmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Use `:Format` for format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` for fold current buffer
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
+
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>ca  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>ce  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>cc  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>co  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>cs  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>cj  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>ck  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>cp  :<C-u>CocListResume<CR>
+
+
+" ================= posva/vim-vue ==================
+
+let g:vue_disable_pre_processors=1
+
+" ============= Arkham/nvim-miniyank ===============
+
+map p <Plug>(miniyank-autoput)
+map P <Plug>(miniyank-autoPut)
+map <silent><c-p> <Plug>(miniyank-cycle)
+map <silent><c-n> <Plug>(miniyank-cycleback)

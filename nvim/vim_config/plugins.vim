@@ -50,10 +50,20 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'rbong/vim-flog' "A lightweight and powerful git branch viewer for vim.
+Plug 'michaeljsmith/vim-indent-object' "Vim plugin that defines a new text object representing lines of code at the same indent level.
+Plug 'wellle/targets.vim' " Vim plugin that provides additional text objects
+Plug 'tommcdo/vim-lion' "A simple alignment operator for Vim text editor - gl gL
+Plug 'mbbill/undotree'
+Plug 'hecal3/vim-leader-guide'
+" Plug 'terryma/vim-expand-region'
+" Plug 'TaDaa/vimade'
+Plug 'Shougo/context_filetype.vim'
+" Plug 'tyru/caw.vim'
 Plug 'simeji/winresizer'
 Plug 'svermeulen/vim-subversive'
-Plug 'svermeulen/vim-yoink'
-Plug 'tpope/vim-scriptease'
+Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no default mappings, forked
 Plug 'rhysd/committia.vim'
 Plug 'sodapopcan/vim-twiggy', { 'on': 'Twiggy' }
 " Plug 'justinmk/vim-sneak'
@@ -63,19 +73,20 @@ Plug 'wsdjeg/FlyGrep.vim'
 
 Plug 'bilalq/lite-dfm'
 Plug 'ternjs/tern_for_vim',  {'do': 'npm install'}
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-html-subscope'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'yuki-ycino/ncm2-dictionary'
-Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
-Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-Plug 'wellle/tmux-complete.vim'
-Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
-Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-Plug 'ncm2/ncm2-cssomni'
+
+" Plug 'ncm2/ncm2'
+" Plug 'roxma/nvim-yarp'
+" Plug 'ncm2/ncm2-html-subscope'
+" Plug 'ncm2/ncm2-ultisnips'
+" Plug 'ncm2/ncm2-bufword'
+" Plug 'ncm2/ncm2-path'
+" Plug 'yuki-ycino/ncm2-dictionary'
+" Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
+" Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+" Plug 'wellle/tmux-complete.vim'
+" Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
+" Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+" Plug 'ncm2/ncm2-cssomni'
 
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'tpope/vim-markdown'

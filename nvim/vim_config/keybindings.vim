@@ -39,6 +39,9 @@ nnoremap <silent> <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
 " Replace macro for all lines in paragraph
 nnoremap <silent> <Leader>@ vip:normal @q<cr>
 
+" Rerun substitution for all lines in selection
+vnoremap & :<c-u>silent! execute "'<,'> normal! &"<cr>
+
 " Format paragraph
 nnoremap Q mp=ip`p
 vnoremap Q =

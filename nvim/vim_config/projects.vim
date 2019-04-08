@@ -8,10 +8,26 @@ function! FindInProject(cmd, path)
         \ 'options': '--ansi'})
 endfunction
 
-function! SetupEnvironment() abort
+function! SetupEnvironment() 
+  let l:debug = 0
 
-  if exists('b:setup_environmcnt_ready') | return | endif
-  let b:setup_environmcnt_ready = 1
+  if l:debug
+    echom repeat('=', 20)
+    echom 'b:setup_environment_ready: ' . (exists('b:setup_environment_ready') && b:setup_environment_ready == 1)
+    echom 'modifiable: ' . !&l:modifiable
+    echom 'path: ' . expand('%')
+    echom 'buf name: ' . bufname(0)
+  endif
+
+  let l:skip = (exists('b:setup_environment_ready') && b:setup_environment_ready == 1) ||
+        \ !&l:modifiable ||
+        \ expand('%') =~? '^fugitive://'
+
+  if l:debug && l:skip | echom 'skipping...' | endif
+  if l:skip   | return | endif
+
+  let b:setup_environment_ready = 1
+  if l:debug | echom 'setting env ready' | endif
 
   let l:project_found = 0
 
@@ -23,7 +39,6 @@ function! SetupEnvironment() abort
 
   for l:project in g:projects
     if l:path =~? l:project['root_path']
-      echom 'Start projet ' . l:project['name']
       let g:rooter_manual_only = 1
       let l:project_found = 1
       for l:mapping in get(l:project, 'mappings', [])
@@ -36,11 +51,12 @@ function! SetupEnvironment() abort
 
       let l:files = get(l:project, 'files', {})
       for l:file in keys(l:files)
-        exec 'nnoremap <buffer> <space>o' . l:file . ' :FZF ' . l:files[l:file] . '<cr>'
+        exec 'nnoremap <buffer> <space>o' . l:file . ' :F ' . l:files[l:file] . '<cr>'
       endfor
 
       let l:settings = get(l:project, 'settings', {})
       for l:setting in keys(l:settings)
+        if l:debug | echom 'let &l:' . l:setting . " = '" . l:settings[l:setting] . "'" | endif
         exec 'let &l:' . l:setting . " = '" . l:settings[l:setting] . "'"
       endfor
 
@@ -53,4 +69,4 @@ function! SetupEnvironment() abort
   endif
 endfunction
 
-autocmd! VimEnter,BufReadPost,BufNewFile,BufCreate,BufEnter * call SetupEnvironment()
+autocmd! BufEnter * call SetupEnvironment()
