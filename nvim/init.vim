@@ -22,6 +22,9 @@ runtime vim_config/projects.vim
 "---------Testing_new_features-------
 "====================================
 
+
+autocmd CmdwinEnter * map <buffer> <cr> <CR>q:
+
 nnoremap `a `Azt
 nnoremap `j `Jzt
 nnoremap `k `Kzt
