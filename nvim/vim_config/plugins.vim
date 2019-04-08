@@ -16,7 +16,7 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-" Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'SirVer/ultisnips'
 Plug 'christoomey/vim-tmux-navigator' " Seamless navigation between tmux panes and vim splits
@@ -60,11 +60,10 @@ Plug 'hecal3/vim-leader-guide'
 " Plug 'terryma/vim-expand-region'
 " Plug 'TaDaa/vimade'
 Plug 'Shougo/context_filetype.vim'
-Plug 'tyru/caw.vim'
+" Plug 'tyru/caw.vim'
 Plug 'simeji/winresizer'
 Plug 'svermeulen/vim-subversive'
-Plug 'svermeulen/vim-yoink'
-Plug 'tpope/vim-scriptease'
+Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no default mappings, forked
 Plug 'rhysd/committia.vim'
 Plug 'sodapopcan/vim-twiggy', { 'on': 'Twiggy' }
 " Plug 'justinmk/vim-sneak'

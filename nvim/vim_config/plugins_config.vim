@@ -503,14 +503,14 @@ endif
 
 " ============= svermeulen/vim-yoink ===============
 
-nmap <c-n> <plug>(YoinkPostPasteSwapBack)
-nmap <c-p> <plug>(YoinkPostPasteSwapForward)
+" nmap <c-n> <plug>(YoinkPostPasteSwapBack)
+" nmap <c-p> <plug>(YoinkPostPasteSwapForward)
 
-nmap p <plug>(YoinkPaste_p)
-nmap P <plug>(YoinkPaste_P)
+" nmap p <plug>(YoinkPaste_p)
+" nmap P <plug>(YoinkPaste_P)
 
-let g:yoinkSavePersistentl = 1
-let g:yoinkMoveCursorToEndOfPaste = 1
+" let g:yoinkSavePersistentl = 1
+" let g:yoinkMoveCursorToEndOfPaste = 1
 
 
 " =========== svermeulen/vim-subversive ============
@@ -519,8 +519,8 @@ let g:yoinkMoveCursorToEndOfPaste = 1
 nmap s <plug>(SubversiveSubstitute)
 nmap ss <plug>(SubversiveSubstituteLine)
 nmap S <plug>(SubversiveSubstituteToEndOfLine)
-xmap p <plug>(SubversiveSubstitute)
-xmap P <plug>(SubversiveSubstitute)
+" xmap p ygv<plug>(SubversiveSubstitute)<c-n>
+" xmap P ygv<plug>(SubversiveSubstitute)<c-n>
 nmap <space>s <plug>(SubversiveSubstituteRange)
 " xmap <space>s <plug>(SubversiveSubstituteRange)
 
@@ -537,24 +537,24 @@ let g:expand_region_text_objects = {
 
 " ============ hecal3/vim-leader-guide =============
 
-let g:lmap = {
-      \' ':
-      \ {
-      \ 'g' : ['Magit', 'Magit'],
-      \ 'h' : ['UndotreeToggle', 'Undotree']
-      \ }
-      \}
-let g:tabmap = {}
-let g:lmap.t = { 'name': 'Tab' }
-let g:lmap.t.t = ['asdf', 'asdf']
+" let g:lmap = {
+"       \' ':
+"       \ {
+"       \ 'g' : ['Magit', 'Magit'],
+"       \ 'h' : ['UndotreeToggle', 'Undotree']
+"       \ }
+"       \}
+" let g:tabmap = {}
+" let g:lmap.t = { 'name': 'Tab' }
+" let g:lmap.t.t = ['asdf', 'asdf']
 
-call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
-nnoremap <silent> <space> :<c-u>LeaderGuide '<Space>'<CR>
-vnoremap <silent> <space> :<c-u>LeaderGuideVisual '<Space>'<CR>
+" call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
+" nnoremap <silent> <space> :<c-u>LeaderGuide '<Space>'<CR>
+" vnoremap <silent> <space> :<c-u>LeaderGuideVisual '<Space>'<CR>
 
-call leaderGuide#register_prefix_descriptions("<tab>", "g:tabmap")
-nnoremap <silent> <tab> :<c-u>LeaderGuide "<lt>tab>"<CR>
-vnoremap <silent> <tab> :<c-u>LeaderGuideVisual "<lt>tab>"<CR>
+" call leaderGuide#register_prefix_descriptions("<tab>", "g:tabmap")
+" nnoremap <silent> <tab> :<c-u>LeaderGuide "<lt>tab>"<CR>
+" vnoremap <silent> <tab> :<c-u>LeaderGuideVisual "<lt>tab>"<CR>
 
 " ================ mbbill/undotree =================
 
@@ -638,3 +638,15 @@ nnoremap <silent> <space>cj  :<C-u>CocNext<CR>
 nnoremap <silent> <space>ck  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>cp  :<C-u>CocListResume<CR>
+
+
+" ================= posva/vim-vue ==================
+
+let g:vue_disable_pre_processors=1
+
+" ============= Arkham/nvim-miniyank ===============
+
+map p <Plug>(miniyank-autoput)
+map P <Plug>(miniyank-autoPut)
+map <silent><c-p> <Plug>(miniyank-cycle)
+map <silent><c-n> <Plug>(miniyank-cycleback)

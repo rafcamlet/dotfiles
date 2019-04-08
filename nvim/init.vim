@@ -22,12 +22,37 @@ runtime vim_config/projects.vim
 "---------Testing_new_features-------
 "====================================
 
+function! OnBranch()
+  let l:file_path = expand('%')
+
+  function! SplitOnBranch(path, branch)
+    exec 'Gvsplit ' . a:branch . ':' . a:path
+  endfunction
+
+  let l:buffers = map(range(1, bufnr('$')), 'bufname(v:val)')
+
+  call fzf#run ({
+        \ 'source':  'git branch',
+        \ 'sink': function('SplitOnBranch',[l:file_path])
+        \})
+endfunction
+command! OnBranch call OnBranch()
+
+
+autocmd! CmdwinEnter * nnoremap <buffer> <CR> <CR>
+
+function! Test()
+  call system('tmux split-window -h -d -p 40 ' . "' source '$HOME/.rvm/scripts/rvm' ; rvm use 2.4.2; rspec " . expand('%')  .  "'")
+endfunction
+nnoremap <silent> <space><c-t> :call Test()<cr>
+
 nnoremap <space>ro :%! ruby -p -a -F'nil' -e ''
 vnoremap <space>ro :
 nnoremap <space>n <esc>ngn
 vnoremap <space>n <esc>ngn
 
-autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.css.javascript
+autocmd FileType vue syntax sync fromstart
 
 nnoremap `a `Azt
 nnoremap `j `Jzt
@@ -291,16 +316,14 @@ endfunction
 
 command! DeleteEmptyBuffers call DeleteEmptyBuffers()
 
-function! AddToArgsList()
-  let l:buffers = map(range(1, bufnr('$')), 'bufname(v:val)')
-  call filter(l:buffers, '!empty(v:val)')
-
+function! AddArgs(cmd)
   call fzf#run ({
-        \ 'source':  (l:buffers),
+        \ 'source': systemlist('fd ' . a:cmd . ' -ptf'),
         \ 'sink':   'argadd',
         \ 'options': '-m'
         \})
 endfunction
+command! -bang -nargs=? -complete=dir AddArgs call AddArgs(<q-args>)
 
 function! Args()
   call fzf#run({

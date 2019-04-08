@@ -62,3 +62,11 @@ class ${1:`!v substitute(substitute(substitute(expand('%:r'), '\v^app/[^/]*/', '
 	$0
 end
 endsnippet
+
+snippet factory "FactoryBot"
+FactoryBot.define do
+  factory :${1:`!v substitute(expand('%:t:r'), '_factory', '', '')`} do
+		$0
+  end
+end
+endsnippet
