@@ -178,7 +178,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -10
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 bindsym $mod+m move workspace to output left
 
-bindsym Insert exec --no-startup-id take_screenshot
+# bindsym Insert exec --no-startup-id take_screenshot
 
 exec google-chrome
 exec --no-startup-id i3-msg 'workspace 3; exec gnome-terminal; workspace 2'
@@ -202,3 +202,6 @@ for_window [instance="scratchpad_st"] border pixel 3
 bindsym $mod+u [instance="scratchpad_st"] scratchpad show; [instance="scratchpad_st"] move position center
 
 exec --no-startup-id st -n scratchpad_st -e tmux
+
+exec --no-startup-id flameshot
+bindsym Insert exec "flameshot gui"

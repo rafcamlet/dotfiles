@@ -3,7 +3,7 @@
 "============================
 
 " JSONFormat {{{
-command! JSONFormat normal :%!python -m json.tool<cr>
+command! JSONFormat exec '%!python -m json.tool'
 " }}}
 
 " IndentToLine {{{
