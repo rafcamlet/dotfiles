@@ -15,7 +15,7 @@ set nobackup                                   " prevent backup
 set noswapfile                                 " prevent swapfile
 set nowritebackup                              " prevent backup
 " set display+=lastline                          " show whole lines
-set virtualedit=onemore                        " Allow for cursor beyond last character
+" set virtualedit=onemore                        " Allow for cursor beyond last character
 set scrolljump=5                               " Lines to scroll when cursor leaves screen
 set scrolloff=3                                " Minimum lines to keep above and below cursor
 syntax on                                      " turn on syntax highlighting

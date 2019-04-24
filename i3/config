@@ -202,6 +202,7 @@ for_window [instance="scratchpad_st"] border pixel 3
 bindsym $mod+u [instance="scratchpad_st"] scratchpad show; [instance="scratchpad_st"] move position center
 
 exec --no-startup-id st -n scratchpad_st -e tmux
+exec --no-startup-id dropbox start &>/dev/null &
 
 exec --no-startup-id flameshot
 bindsym Insert exec "flameshot gui"

@@ -22,6 +22,7 @@ runtime vim_config/projects.vim
 "---------Testing_new_features-------
 "====================================
 
+set pastetoggle=
 autocmd CmdwinEnter * map <buffer> <cr> <CR>q:
 
 function! OnBranch()
