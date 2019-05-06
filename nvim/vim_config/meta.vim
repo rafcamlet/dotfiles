@@ -1,5 +1,5 @@
 function! OpenRuntime()
-  let l:runtime_path =  fnamemodify($MYVIMRC, ':p:h')
+  let l:runtime_path = stdpath('config')
 
   if match(getline('.'), '^\s*runtime') > -1
     let l:file_name = substitute(getline('.'), '\v.*runtime\s+(.*)$' , '\1', '')

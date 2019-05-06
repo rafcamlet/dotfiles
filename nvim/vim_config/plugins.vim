@@ -50,7 +50,9 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+if executable('node')
+  Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+endif
 Plug 'rbong/vim-flog' "A lightweight and powerful git branch viewer for vim.
 Plug 'michaeljsmith/vim-indent-object' "Vim plugin that defines a new text object representing lines of code at the same indent level.
 Plug 'wellle/targets.vim' " Vim plugin that provides additional text objects
@@ -172,7 +174,7 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 
 "" Plug 'Mizuchi/vim-ranger'
 Plug 'rhysd/vim-grammarous'
-"Plug 'dpelle/vim-LanguageTool'
+" Plug 'dpelle/vim-LanguageTool'
 
 "Plug 'dhruvasagar/vim-table-mode' "VIM Table Mode for instant table creation.
 

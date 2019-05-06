@@ -239,3 +239,14 @@ function! FzfPreview(cmd)
 endfunction
 command! -bang -nargs=? -complete=dir F call FzfPreview(<q-args>)
 " }}}
+
+" Save macro {{{
+function! SaveMacro(name)
+  let l:path = stdpath('config')  . '/vim_config/saved_commands.vim'
+  let l:cmd = ['command! ' . a:name . ' normal ' . @q]
+
+  call writefile(l:cmd, l:path, 'a')
+  exec 'source ' . l:path
+endfunction
+command! -nargs=1  SaveMacro call SaveMacro(<q-args>)
+" }}}

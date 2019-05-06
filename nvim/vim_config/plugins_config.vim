@@ -6,6 +6,7 @@ let g:EasyClipUseCutDefaults = 0
 let g:EasyClipUseSubstituteDefaults = 0
 let g:EasyClipPreserveCursorPositionAfterYank = 1
 let g:EasyClipUsePasteDefaults = 0
+let g:EasyClipUseGlobalPasteToggle = 0
 
 " =========== junegunn/vim-after-object ============
 

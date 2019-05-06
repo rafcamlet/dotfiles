@@ -45,6 +45,7 @@ export EDITOR="$VISUAL"
 export GOBIN=$HOME/go/bin
 
 PATH=$PATH:/usr/local/go/bin
+PATH=$PATH:$GOBIN
 PATH=$PATH:$HOME/.yarn/bin
 PATH=$PATH:$HOME/bin
 PATH=$PATH:$HOME/.local/bin
@@ -52,7 +53,11 @@ PATH=$PATH:$HOME/.local/bin
 # Functions -> {{{
 
 function vimman {
-  nvim -c "Man $1 $2" -c 'silent only'
+  if $(command man $1 &> /dev/null); then
+    nvim -c "Man $1 $2" -c 'silent only'
+  else
+    echo 'No man page'
+  fi
 }
 
 function amend {
@@ -126,8 +131,19 @@ export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 # NVM drastically increas startup time. Move to function.
 start_nvm(){
+  unalias nvm node npm 
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-} # }}}
+}
+
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+  alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
+  alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
+  alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
+fi
+
+# }}}
 
 unset rvm_bin_path
 unset rvm_prefix
