@@ -6,12 +6,13 @@ runtime vim_config/plugins_config.vim
 runtime vim_config/config.vim
 runtime vim_config/keybindings.vim
 runtime vim_config/scripts.vim
-runtime vim_config/window_script.vim
+" runtime vim_config/window_script.vim
 " runtime vim_config/ruby_lib.vim
 " runtime vim_config/custom_start_window.vim
 runtime vim_config/tabline.vim
 runtime vim_config/standup.vim
 runtime vim_config/projects.vim
+runtime vim_config/saved_commands.vim
 
 " JSON store:
 " vim_config/json/projects.json
@@ -23,7 +24,12 @@ runtime vim_config/projects.vim
 "====================================
 
 set pastetoggle=
-autocmd CmdwinEnter * map <buffer> <cr> <CR>q:
+
+augroup myCmdwinEnter
+  autocmd!
+  autocmd CmdwinEnter * nnoremap <buffer> <CR> <CR>
+  autocmd CmdwinEnter * nnoremap <buffer> q :q<cr> 
+augroup END
 
 function! OnBranch()
   let l:file_path = expand('%')
@@ -41,18 +47,10 @@ function! OnBranch()
 endfunction
 command! OnBranch call OnBranch()
 
-
-autocmd! CmdwinEnter * nnoremap <buffer> <CR> <CR>
-
 function! Test()
   call system('tmux split-window -h -d -p 40 ' . "' source '$HOME/.rvm/scripts/rvm' ; rvm use 2.4.2; rspec " . expand('%')  .  "'")
 endfunction
 nnoremap <silent> <space><c-t> :call Test()<cr>
-
-nnoremap <space>ro :%! ruby -p -a -F'nil' -e ''
-vnoremap <space>ro :
-nnoremap <space>n <esc>ngn
-vnoremap <space>n <esc>ngn
 
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.css.javascript
 autocmd FileType vue syntax sync fromstart
