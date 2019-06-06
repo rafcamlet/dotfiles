@@ -19,8 +19,15 @@
       "suffixesadd": ".js,.vue",
       "commentstring": "// %s"
     },
+    "regex_jump": {
+      "T": {
+        "from": "src/(.*)\\.(js|vue)",
+        "to": "test/unit/{}.js"
+      }
+    },
     "files": {
-      "c": "src/components"
+      "c": "src/components",
+      "s": "src/services"
     }
   },
   {

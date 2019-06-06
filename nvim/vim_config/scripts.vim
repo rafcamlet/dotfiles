@@ -250,3 +250,19 @@ function! SaveMacro(name)
 endfunction
 command! -nargs=1  SaveMacro call SaveMacro(<q-args>)
 " }}}
+
+" Abolish case functions {{{
+" from https://github.com/tpope/vim-abolish/blob/master/plugin/abolish.vim
+function! Mixedcase(word)
+  return substitute(Camelcase(a:word),'^.','\u&','')
+endfunction
+
+function! Camelcase(word)
+  let word = substitute(a:word, '-', '_', 'g')
+  if word !~# '_' && word =~# '\l'
+    return substitute(word,'^.','\l&','')
+  else
+    return substitute(word,'\C\(_\)\=\(.\)','\=submatch(1)==""?tolower(submatch(2)) : toupper(submatch(2))','g')
+  endif
+endfunction
+" }}}

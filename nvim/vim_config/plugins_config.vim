@@ -162,8 +162,11 @@ let g:airline_powerline_fonts = 1
 
 nnoremap <c-g><c-g> :NERDTreeToggle<cr>
 nnoremap <c-g><c-f> :NERDTreeFind<cr>
-" autocmd vimrc VimEnter * NERDTree
-" autocmd vimrc VimEnter * wincmd p
+augroup NERDTreeGroup
+  autocmd BufEnter NERD_tree* setlocal cursorline 
+  autocmd BufEnter NERD_tree* nnoremap <buffer> j <down>:echo '   ' . matchstr(getline('.'), '\v\w.*')<cr> 
+  autocmd BufEnter NERD_tree* nnoremap <buffer> k <up>:echo '   ' . matchstr(getline('.'), '\v\w.*')<cr> 
+augroup END
 
 
 " =============== SirVer/ultisnips =================
@@ -412,10 +415,12 @@ let g:mta_use_matchparen_group = 0
 " map <space>j <Plug>(easymotion-j)
 " map <space>k <Plug>(easymotion-k)
 " map <space>h <Plug>(easymotion-linebackward)
-" nmap s <Plug>(easymotion-sl2)
+map sf <Plug>(easymotion-bd-f)
+map s <Plug>(easymotion-prefix)
+nmap sd <Plug>(easymotion-overwin-f2)
 
 " let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-" let g:EasyMotion_smartcase = 1
+let g:EasyMotion_smartcase = 1
 
 
 " ======== haya14busa/incsearch-fuzzy.vim ==========
@@ -444,7 +449,8 @@ map zg/ <Plug>(incsearch-fuzzy-stay)
 "   cm#enable_for_buffer()
 "   LanguageClientStart
 " endfunction
-
+let g:multi_cursor_start_word_key = '<c-n>'
+let g:multi_cursor_select_all_word_key = ''
 " =================== ncm2/ncm2 ====================
 
 " let g:ncm2#complete_delay = 100
@@ -517,9 +523,9 @@ endif
 " =========== svermeulen/vim-subversive ============
 
 " s for substitute
-nmap s <plug>(SubversiveSubstitute)
-nmap ss <plug>(SubversiveSubstituteLine)
-nmap S <plug>(SubversiveSubstituteToEndOfLine)
+" nmap s <plug>(SubversiveSubstitute)
+" nmap ss <plug>(SubversiveSubstituteLine)
+" nmap S <plug>(SubversiveSubstituteToEndOfLine)
 " xmap p ygv<plug>(SubversiveSubstitute)<c-n>
 " xmap P ygv<plug>(SubversiveSubstitute)<c-n>
 nmap <space>s <plug>(SubversiveSubstituteRange)
@@ -651,3 +657,20 @@ map p <Plug>(miniyank-autoput)
 map P <Plug>(miniyank-autoPut)
 map <silent><c-p> <Plug>(miniyank-cycle)
 map <silent><c-n> <Plug>(miniyank-cycleback)
+
+" ============== tpope/vim-fugitive ================
+
+nnoremap <space>gw :Gwrite<cr> 
+nnoremap <space>gs :Gstatus<cr> 
+nnoremap <space>gv :Gvsplit :%<left><left>
+nnoremap <space>gp :Gvsplit production:%<cr>
+nnoremap <space>gb :Gblame<cr>
+
+" ============ rhysd/git-messenger.vim =============
+
+nnoremap <space>gm :GitMessenger<cr>
+
+" ============ airblade/vim-gitgutter ==============
+
+nmap <tab>l <Plug>GitGutterNextHunk
+nmap <tab>h <Plug>GitGutterPrevHunk

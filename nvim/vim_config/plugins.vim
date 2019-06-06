@@ -49,7 +49,7 @@ Plug 'jelera/vim-javascript-syntax'
 Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighting.
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
-
+Plug 'tomtom/tinykeymap_vim'
 Plug 'rhysd/git-messenger.vim'
 if executable('node')
   Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
@@ -108,11 +108,11 @@ Plug 'alvan/vim-closetag'
 "Plug 'editorconfig/editorconfig-vim'
 "Plug 'sodapopcan/vim-twiggy' "Git branch management for Vim <- test this
 
-"Plug 'terryma/vim-multiple-cursors' <- You never use it!
+Plug 'terryma/vim-multiple-cursors' "<- You never use it!
 "Plug 'haya14busa/incsearch.vim' "Improved incremental searching for Vim
 "Plug 'haya14busa/incsearch-fuzzy.vim'
 
-"Plug 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 "Plug 'pelodelfuego/vim-swoop' " Test this!
 
 

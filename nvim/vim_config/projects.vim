@@ -8,6 +8,15 @@ function! FindInProject(cmd, path)
         \ 'options': '--ansi'})
 endfunction
 
+function! RegexJump(regex, path)
+  let l:path = expand('%')
+  let l:result = matchlist(l:path, '\v' . a:regex) 
+  if empty(l:result) | return 0 | endif
+
+  let l:path = substitute(a:path, '\v\{\}', l:result[1], 'g')
+  exec 'edit ' . l:path
+endfunction
+
 function! SetupEnvironment() 
   let l:debug = 0
 
@@ -47,6 +56,8 @@ function! SetupEnvironment()
 
       if has_key(l:project, 'dictionary') && filereadable(expand(l:project['dictionary']))
         let &l:dictionary = expand(l:project['dictionary'])
+      else
+        let &l:dictionary = stdpath('config') . '/dict/' . &filetype
       endif
 
       let l:files = get(l:project, 'files', {})
@@ -59,6 +70,14 @@ function! SetupEnvironment()
         if l:debug | echom 'let &l:' . l:setting . " = '" . l:settings[l:setting] . "'" | endif
         exec 'let &l:' . l:setting . " = '" . l:settings[l:setting] . "'"
       endfor
+
+      let l:regex_jump = get(l:project, 'regex_jump', {})
+      for l:command_name in keys(l:regex_jump)
+        let l:command  = 'command! ' . l:command_name . ' call RegexJump("' . l:regex_jump[l:command_name]['from'] . '", "' . l:regex_jump[l:command_name]['to'] . '")'
+        if l:debug | echom l:command | endif
+        exec l:command
+      endfor
+
 
       exec 'cd ' . matchstr(l:path, '.*' . l:project['root_path'])
     endif

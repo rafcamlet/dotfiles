@@ -58,7 +58,7 @@ snippet .find "find" i
 endsnippet
 
 snippet class "class"
-class ${1:`!v substitute(substitute(substitute(expand('%:r'), '\v^app/[^/]*/', '', ''), '\v/(.)', '::\U\1', 'g'), '\v^.', '\U\0', '')`}
+class ${1:`!v Mixedcase(expand('%:t:r'))`}
 	$0
 end
 endsnippet
@@ -79,5 +79,30 @@ end
 endsnippet
 
 snippet let "let"
-let(:$1) { $0 }
+let(:$1) { create :$1$0 }
+endsnippet
+
+snippet do "do"
+do
+	$0
+end
+endsnippet
+
+snippet rspec "rspec"
+require 'rails_helper'
+describe ${1:`!v Mixedcase(substitute(expand('%:t:r'), '_spec', '', ''))`} do
+  subject { described_class }
+
+	context 'example context' do
+		let() {  }
+
+		it 'do something' do
+			$0
+		end
+	end
+end
+endsnippet
+
+snippet sql "raw sql query"
+ActiveRecord::Base.connection.execute("${0:${VISUAL}}")
 endsnippet

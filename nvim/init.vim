@@ -22,14 +22,33 @@ runtime vim_config/saved_commands.vim
 "====================================
 "---------Testing_new_features-------
 "====================================
+"
+
+nnoremap <space>w <esc>:w<cr>
+function! HlThis()
+  highlight LineMatch term=bold cterm=bold gui=bold ctermfg=red
+  if exists('b:line_hl_match')
+    call matchdelete(b:line_hl_match)
+  end
+  let b:line_hl_match = matchadd('LineMatch', '\%' . line('.') . 'l')
+endfunction
+nnoremap <space>h :call HlThis()<cr>
+
+nnoremap <nowait> <space>s <esc>:syntax sync fromstart<cr>
+inoremap kj <esc>`^
+nnoremap <c-]> g<c-]>
 
 set pastetoggle=
+" autocmd TermOpen,BufEnter term://* startinsert
+" autocmd TermOpen,BufEnter FZF* startinsert
 
 augroup myCmdwinEnter
   autocmd!
   autocmd CmdwinEnter * nnoremap <buffer> <CR> <CR>
   autocmd CmdwinEnter * nnoremap <buffer> q :q<cr> 
 augroup END
+
+command! OpenDict exec 'edit ' . ( !empty(&l:dictionary) ? &l:dictionary : stdpath('config') . '/dict/' . &filetype)
 
 function! OnBranch()
   let l:file_path = expand('%')
@@ -52,8 +71,8 @@ function! Test()
 endfunction
 nnoremap <silent> <space><c-t> :call Test()<cr>
 
-autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.css.javascript
-autocmd FileType vue syntax sync fromstart
+autocmd BufRead,BufNewFile,BufEnter *.vue setlocal filetype=vue
+autocmd BufRead,BufNewFile,BufEnter *.vue syntax sync fromstart
 
 nnoremap `a `Azt
 nnoremap `j `Jzt
@@ -167,19 +186,19 @@ command! ImportJS call fzf#run({'sink': function('ImportJS')})
 
 nnoremap \z :exec 'normal vimzf'<cr>
 
-function! GitShow()
-  normal! zz
-  let l:filetype = &filetype
-  let l:path = expand('%')
-  let l:line = line('.')
-  exec 'vnew'
-  call append(0, systemlist('git show origin/production:' . l:path))
-  exec 'setf ' . l:filetype
-  exec 'normal! ' . l:line . 'G'
-  normal! zz
-endfunction
-command! GitShow call GitShow()
-nnoremap <silent> <space>gs :GitShow<cr>
+" function! GitShow()
+"   normal! zz
+"   let l:filetype = &filetype
+"   let l:path = expand('%')
+"   let l:line = line('.')
+"   exec 'vnew'
+"   call append(0, systemlist('git show origin/production:' . l:path))
+"   exec 'setf ' . l:filetype
+"   exec 'normal! ' . l:line . 'G'
+"   normal! zz
+" endfunction
+" command! GitShow call GitShow()
+" nnoremap <silent> <space>gs :GitShow<cr>
 
 function! TestColor()
   for i in range(1, 255)
