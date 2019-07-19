@@ -17,7 +17,7 @@ secondary = #e60053
 alert = #bd2c40
 
 [bar/my]
-;monitor = ${env:MONITOR:HDMI-1}
+monitor = ${env:MONITOR:VGA-1}
 width = 100%
 height = 25
 ;offset-x = 1%
@@ -49,7 +49,7 @@ font-2 = UbuntuMono Nerd Font:pixelsize=12;3
 
 ; modules-left = bspwm i3
 modules-left = i3
-; modules-center = info-softwarecounter
+modules-center = spotify
 modules-right = filesystem volume memory cpu battery temperature date
 
 tray-position = right
@@ -127,6 +127,14 @@ tray-padding = 2
 
 cursor-click = pointer
 cursor-scroll = ns-resize
+
+[module/spotify]
+type = custom/script
+interval = 1
+format-prefix = " "
+format = <label>
+exec = python ${HOME}/.config/polybar/scripts/spotify_status.py -f '{artist}: {song}'
+format-underline = #1db954
 
 [module/xwindow]
 type = internal/xwindow

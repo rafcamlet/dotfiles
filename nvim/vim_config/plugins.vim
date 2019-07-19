@@ -49,10 +49,16 @@ Plug 'jelera/vim-javascript-syntax'
 Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighting.
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
+
+Plug 'mg979/vim-visual-multi', {'branch': 'test'}
+" Plug 'kkoomen/vim-doge'
+" Plug 'philip-karlsson/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'nikvdp/neomux'
+Plug 'HiPhish/awk-ward.nvim'
 Plug 'tomtom/tinykeymap_vim'
 Plug 'rhysd/git-messenger.vim'
 if executable('node')
-  Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
 Plug 'rbong/vim-flog' "A lightweight and powerful git branch viewer for vim.
 Plug 'michaeljsmith/vim-indent-object' "Vim plugin that defines a new text object representing lines of code at the same indent level.
@@ -108,7 +114,7 @@ Plug 'alvan/vim-closetag'
 "Plug 'editorconfig/editorconfig-vim'
 "Plug 'sodapopcan/vim-twiggy' "Git branch management for Vim <- test this
 
-Plug 'terryma/vim-multiple-cursors' "<- You never use it!
+" Plug 'terryma/vim-multiple-cursors' "<- You never use it!
 "Plug 'haya14busa/incsearch.vim' "Improved incremental searching for Vim
 "Plug 'haya14busa/incsearch-fuzzy.vim'
 
