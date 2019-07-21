@@ -153,6 +153,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 bindsym $mod+p exec i3-sensible-terminal -e "vifm"
+bindsym $mod+shift+p exec nautilus
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
