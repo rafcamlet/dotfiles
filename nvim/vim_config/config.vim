@@ -26,11 +26,12 @@ set foldlevelstart=1                           " start folding from specyfic lev
 set guicursor=                                 " reset cursor shape
 set cmdheight=2                                " double command-line height
 set iskeyword+=-                               " add `-` character as part of words
-" set wrapmargin=2                               "Wrap 2 characters from the edge of the window
+" set wrapmargin=2                             " Wrap 2 characters from the edge of the window
+set fileignorecase                             " case is ignored when using file names and directories
 set spelllang=pl,en
 
 " Display extra whitespace
-" set list listchars=tab:»»,trail:·,nbsp:·
+set list listchars=tab:»»,trail:·,nbsp:·
 
 " This makes vim act like all other editors, buffers can
 " exist in the background without being in a window.
@@ -50,8 +51,9 @@ filetype plugin on
 filetype indent on
 
 " vim commands autocomplet
-set wildmode=list:longest,full
+" set wildmode=list:longest,full
 set wildignorecase " case insensitive filename completion
+set wildoptions=pum
 
 "no error
 set noerrorbells

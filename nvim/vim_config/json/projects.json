@@ -17,10 +17,19 @@
     "settings": {
       "path": ".,src/**,,",
       "suffixesadd": ".js,.vue",
-      "commentstring": "// %s"
+      "commentstring": "// %s",
+      "includeexpr": "tolower(v:fname)"
+    },
+    "regex_jump": {
+      "T": {
+        "from": "src/(.*)\\.(js|vue)",
+        "to": "test/unit/{}.js"
+      }
     },
     "files": {
-      "c": "src/components"
+      "c": "src/components",
+      "s": "src/services",
+      "t": "src/stores"
     }
   },
   {

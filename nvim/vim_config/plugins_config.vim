@@ -35,6 +35,8 @@ nnoremap <space>os  :F app/services<cr>
 nnoremap <space>of  :F app/form_objects<cr>
 nnoremap <space>on  :FZF ~/Dropbox/notes<cr>
 nnoremap <space>o-  :F <C-r>=expand("%:h")<CR>/<CR>
+nnoremap <space>ol  :BLines<cr>
+nnoremap <space>oL  :Lines<cr>
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
@@ -149,21 +151,14 @@ let g:indentLine_color_term = 240
 let g:deoplete#enable_at_startup = 1
 " let g:monster#completion#rcodetools#backend = 'async_rct_complete'
 
-
-" =============== bling/vim-airline ================
-
-let g:airline_theme='serene' " Theme
-let g:airline#extensions#whitespace#enabled = 0
-"let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-
-
 " ============== scrooloose/nerdtree ===============
 
 nnoremap <c-g><c-g> :NERDTreeToggle<cr>
 nnoremap <c-g><c-f> :NERDTreeFind<cr>
-" autocmd vimrc VimEnter * NERDTree
-" autocmd vimrc VimEnter * wincmd p
+augroup NERDTreeGroup
+  autocmd BufEnter NERD_tree* setlocal cursorline 
+  autocmd CursorMoved NERD_tree* redraw | echo '   ' . matchstr(getline('.'), '\v\w.*')
+augroup END
 
 
 " =============== SirVer/ultisnips =================
@@ -187,7 +182,7 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_ruby_flag = 0
 let g:ale_lint_delay = 500
 
-let g:ale_linters = { 'ruby': ['ruby'] }
+let g:ale_linters = { 'ruby': ['ruby'], 'vue': ['eslint'] }
 
 function! ChangeRubyLinters()
   if g:ale_ruby_flag
@@ -211,7 +206,8 @@ endfunction
 let g:ale_fixers = { 'ruby': ['rubocop'],
       \ 'typescript': ['eslint', 'prettier', 'tslint'],
       \ 'javascript': ['prettier', 'eslint', 'importjs'],
-      \ 'vue': ['prettier', 'eslint']
+      \ 'vue': ['prettier', 'eslint'],
+      \ 'vim': ['trim_whitespace'],
       \ }
 
 command! ChangeRubyLinters call ChangeRubyLinters()
@@ -246,7 +242,6 @@ let g:LanguageClient_serverCommands = {
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <tab>s :call LanguageClient_textDocument_documentSymbol()<cr>
-nnoremap <silent> <space>lr :call LanguageClient_textDocument_references()<cr>
 nnoremap <silent> <space>ld :call LanguageClient_textDocument_definition()<CR>
 
 
@@ -336,7 +331,7 @@ function! LightlineFilename()
   return l:result
 endfunction
 
-let &updatetime = 2000
+let &updatetime = 300
 " autocmd CursorHold,BufWritePost * call lightline#update()
 
 
@@ -412,10 +407,12 @@ let g:mta_use_matchparen_group = 0
 " map <space>j <Plug>(easymotion-j)
 " map <space>k <Plug>(easymotion-k)
 " map <space>h <Plug>(easymotion-linebackward)
-" nmap s <Plug>(easymotion-sl2)
+map sf <Plug>(easymotion-bd-f)
+map s <Plug>(easymotion-prefix)
+nmap sd <Plug>(easymotion-overwin-f2)
 
 " let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-" let g:EasyMotion_smartcase = 1
+let g:EasyMotion_smartcase = 1
 
 
 " ======== haya14busa/incsearch-fuzzy.vim ==========
@@ -444,7 +441,8 @@ map zg/ <Plug>(incsearch-fuzzy-stay)
 "   cm#enable_for_buffer()
 "   LanguageClientStart
 " endfunction
-
+let g:multi_cursor_start_word_key = '<c-n>'
+let g:multi_cursor_select_all_word_key = ''
 " =================== ncm2/ncm2 ====================
 
 " let g:ncm2#complete_delay = 100
@@ -502,6 +500,30 @@ if executable('ripper-tags')
       \ }
 endif
 
+let g:tagbar_type_vue = {
+      \ 'ctagstype': 'vue',
+      \ 'kinds': [
+      \ 'c:computed',
+      \ 'm:methods',
+      \ 'r:props',
+      \ 'd:data',
+      \ 'a:arrays',
+      \ 'p:properties',
+      \ 'o:elements',
+      \ 'g:generator functions',
+      \ 'f:functions',
+      \ 'v:variables',
+      \ 'i:imports',
+      \ 'e:exports',
+      \ 't:tags',
+      \ 's:style classes',
+      \ 'S:style',
+      \ ],
+      \'sro': '.',
+      \ 'kind2scope' : { 's' : 'styleclass', 'S': 'style'},
+      \ 'scope2kind' : { 'styleclass' : 's', 'style': 'S' },
+      \}
+
 " ============= svermeulen/vim-yoink ===============
 
 " nmap <c-n> <plug>(YoinkPostPasteSwapBack)
@@ -517,9 +539,9 @@ endif
 " =========== svermeulen/vim-subversive ============
 
 " s for substitute
-nmap s <plug>(SubversiveSubstitute)
-nmap ss <plug>(SubversiveSubstituteLine)
-nmap S <plug>(SubversiveSubstituteToEndOfLine)
+" nmap s <plug>(SubversiveSubstitute)
+" nmap ss <plug>(SubversiveSubstituteLine)
+" nmap S <plug>(SubversiveSubstituteToEndOfLine)
 " xmap p ygv<plug>(SubversiveSubstitute)<c-n>
 " xmap P ygv<plug>(SubversiveSubstitute)<c-n>
 nmap <space>s <plug>(SubversiveSubstituteRange)
@@ -592,14 +614,12 @@ endfunction
 " Highlight symbol under cursor on CursorHold
 " autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
 vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
-augroup mygroup
+augroup cocgroup
   autocmd!
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
@@ -639,7 +659,9 @@ nnoremap <silent> <space>cj  :<C-u>CocNext<CR>
 nnoremap <silent> <space>ck  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>cp  :<C-u>CocListResume<CR>
-
+nnoremap <silent> <space>cl  :<C-u>CocList<CR>
+" Remap for rename current word
+nmap <space>cr <Plug>(coc-rename)
 
 " ================= posva/vim-vue ==================
 
@@ -651,3 +673,49 @@ map p <Plug>(miniyank-autoput)
 map P <Plug>(miniyank-autoPut)
 map <silent><c-p> <Plug>(miniyank-cycle)
 map <silent><c-n> <Plug>(miniyank-cycleback)
+
+" ============== tpope/vim-fugitive ================
+
+nnoremap <space>gw :Gwrite<cr> 
+nnoremap <space>gs :Gstatus<cr> 
+nnoremap <space>gv :Gvsplit :%<left><left>
+nnoremap <space>gp :Gvsplit production:%<cr>
+nnoremap <space>gb :Gblame<cr>
+nnoremap <space>gd :Gvdiff
+nnoremap <space>gdh :diffget //2<CR>
+nnoremap <space>gdl :diffget //3<CR>
+
+" ============ rhysd/git-messenger.vim =============
+
+nnoremap <space>gm :GitMessenger<cr>
+
+" ============ airblade/vim-gitgutter ==============
+
+nmap <tab>l <Plug>GitGutterNextHunk
+nmap <tab>h <Plug>GitGutterPrevHunk
+
+
+" ======== ~/projects/vim-what-i-have-done =========
+
+nnoremap <space>g :Whid<cr>
+
+
+" ========= philip-karlsson/aerojump.nvim ==========
+
+" nmap <space>s <Plug>(AerojumpSpace)
+" nmap <leader>ab <Plug>(AerojumpBolt)
+" nmap <leader>aa <Plug>(AerojumpFromCursorBolt)
+" nmap <leader>ad <Plug>(AerojumpDefault)
+
+
+" ============ mg979/vim-visual-multi ==============
+
+" let g:VM_Selection_hl     = 'Cursor'
+let g:VM_Mono_Cursor_hl   = 'Cursor'
+" let g:VM_Ins_Mode_hl      = 'Cursor'
+" let g:VM_Normal_Cursor_hl = 'Cursor'
+let g:VM_highlight_matches = 'red'
+let g:VM_leader = '<space>l'
+let g:VM_maps = {}
+let g:VM_maps["Add Cursor Down"]             = '<C-U>'
+let g:VM_maps["Add Cursor Up"]               = '<C-I>'
