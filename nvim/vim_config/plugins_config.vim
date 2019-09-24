@@ -20,8 +20,8 @@ let g:EasyClipUseGlobalPasteToggle = 0
 
 let $FZF_DEFAULT_COMMAND = 'ag -l -p ~/.agignore -g ""'
 
-nnoremap <silent> <space>oo :FZF<cr>
-nnoremap <silent> <space>o :FZF<cr>
+nnoremap <silent> <space>oo :F<cr>
+nnoremap <silent> <space>o :F<cr>
 nnoremap <silent> <space>oh :History<cr>
 
 nnoremap <space>ob :Buffers<cr>
@@ -262,6 +262,7 @@ map <space>k <Plug>(signjk-k)
 
 let g:splitjoin_ruby_curly_braces = 0
 let g:splitjoin_ruby_hanging_args = 0
+let g:splitjoin_html_attributes_bracket_on_new_line = 1
 
 
 " ======== nathanaelkane/vim-indent-guides =========
@@ -717,5 +718,21 @@ let g:VM_Mono_Cursor_hl   = 'Cursor'
 let g:VM_highlight_matches = 'red'
 let g:VM_leader = '<space>l'
 let g:VM_maps = {}
+let g:VM_maps['Find Under']         = '<C-d>'
+let g:VM_maps['Find Subword Under'] = '<C-d>'
+" let g:VM_maps["Select l"]           = '<c-l>'       " start selecting left
+" let g:VM_maps["Select h"]           = '<c-h>'        " start selecting right
+
 let g:VM_maps["Add Cursor Down"]             = '<C-U>'
-let g:VM_maps["Add Cursor Up"]               = '<C-I>'
+" let g:VM_maps["Add Cursor Up"]               = '<C-I>'
+
+
+" =========== leafOfTree/vim-vue-plugin ============
+
+let g:vim_vue_plugin_use_sass = 1
+let g:vim_vue_plugin_highlight_vue_attr = 1
+
+
+" =========== vigoux/LanguageTool.nvim =============
+
+let g:languagetool = { '.' : { 'language' : 'pl-PL' } }

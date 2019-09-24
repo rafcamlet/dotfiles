@@ -34,7 +34,7 @@
  
 [shortcuts]
     history = mod4+space
-    close = ctrl+mod4+space
+    close = mod4+space
  
 [urgency_low]
     background = "#fba922"
