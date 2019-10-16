@@ -155,6 +155,21 @@ endfunction
 
 function! SendBufToTmxu(all) range
 
+  let l:number_of_panes = system("tmux display-message -p '#{window_panes}'")
+
+  if l:number_of_panes =~# '1'
+    if winnr('$') < 2 | return | end
+
+    let t:sbtt_start_buf = bufnr('%')
+
+    let l:lines = getline(a:firstline, a:lastline)
+    wincmd w
+    call append(line('$'), [''])
+    call append(line('$'), l:lines)
+    exec bufwinnr(t:sbtt_start_buf) . 'wincmd w'
+    return
+  end
+
   let l:current_pane = system("tmux display-message -p '#{pane_index}'")
   let l:pane = (l:current_pane =~# '0') ? '.1' : '.0'
 
@@ -174,8 +189,8 @@ function! SendBufToTmxu(all) range
 endfunction
 
 nnoremap <silent> <space>a :call SendBufToTmxu(1)<cr>
-nnoremap <silent> <space>f :call SendBufToTmxu(0)<cr>
-vnoremap <silent> <space>f :call SendBufToTmxu(0)<cr>
+nnoremap <silent><nowait> <space>f :call SendBufToTmxu(0)<cr>
+vnoremap <silent><nowait> <space>f :call SendBufToTmxu(0)<cr>
 
 function! TestThis()
   call system('tmux send-keys -t 3 "rspec ' . escape((expand('%:p') . ':' . line('.')), '"') .  '" c-m')

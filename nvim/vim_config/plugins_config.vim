@@ -282,7 +282,7 @@ let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ 'active': {
       \   'left': [
-      \     [ 'mode', 'paste' ],
+      \     [ 'buf_nr', 'mode', 'paste' ],
       \     [ 'gitbranch', 'readonly'],
       \     [ 'cocstatus', 'file_name']
       \   ],
@@ -293,6 +293,7 @@ let g:lightline = {
       \ ],
       \ },
       \ 'component_function': {
+      \   'buf_nr': 'bufnr',
       \   'gitbranch': 'gitbranch#name',
       \   'file_name': 'LightlineFilename',
       \   'cocstatus': 'coc#status'
@@ -408,7 +409,7 @@ let g:mta_use_matchparen_group = 0
 " map <space>j <Plug>(easymotion-j)
 " map <space>k <Plug>(easymotion-k)
 " map <space>h <Plug>(easymotion-linebackward)
-map sf <Plug>(easymotion-bd-f)
+map sf <Plug>(easymotion-f2)
 map s <Plug>(easymotion-prefix)
 nmap sd <Plug>(easymotion-overwin-f2)
 
@@ -736,3 +737,12 @@ let g:vim_vue_plugin_highlight_vue_attr = 1
 " =========== vigoux/LanguageTool.nvim =============
 
 let g:languagetool = { '.' : { 'language' : 'pl-PL' } }
+
+
+" =============== rhysd/devdocs.vim ================
+
+let g:devdocs_filetype_map = {
+    \   'ruby': 'rails',
+    \   'javascript.jsx': 'javascript',
+    \   'javascript.test': 'chai',
+    \ }

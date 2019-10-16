@@ -50,9 +50,12 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'rhysd/devdocs.vim'
+Plug 'liuchengxu/vista.vim'
+Plug 'liuchengxu/vim-clap'
 Plug 'sk1418/HowMuch'
 Plug 'vigoux/LanguageTool.nvim'
-Plug 'mg979/vim-visual-multi', {'branch': 'test'}
+Plug 'mg979/vim-visual-multi', {'branch': 'test'} "Multiple cursors project for vim/neovim (wip)
 " Plug 'kkoomen/vim-doge'
 " Plug 'philip-karlsson/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'nikvdp/neomux'
