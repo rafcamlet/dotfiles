@@ -1,15 +1,35 @@
 extends html, javascript, css
 
-snippet vbase
+snippet vue
 <template>
-	<div>
+	<div class="`!v expand("%:t:r")`">
+		<div class="`!v expand("%:t:r")`__container">
+		</div>
 	</div>
 </template>
 
 <script>
+export default {
+  name: '`!v expand("%:t:r")`',
+  components: {
+  },
+	props: {},
+  data() {
+    return {
+    };
+  },
+  computed: {
+  },
+  methods: {
+  }
+};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.`!v expand("%:t:r")` {
+	&__container {
+	}
+}
 </style>
 endsnippet
 

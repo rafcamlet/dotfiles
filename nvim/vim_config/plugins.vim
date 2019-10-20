@@ -50,7 +50,12 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
-Plug 'mg979/vim-visual-multi', {'branch': 'test'}
+Plug 'rhysd/devdocs.vim'
+Plug 'liuchengxu/vista.vim'
+Plug 'liuchengxu/vim-clap'
+Plug 'sk1418/HowMuch'
+Plug 'vigoux/LanguageTool.nvim'
+Plug 'mg979/vim-visual-multi', {'branch': 'test'} "Multiple cursors project for vim/neovim (wip)
 " Plug 'kkoomen/vim-doge'
 " Plug 'philip-karlsson/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'nikvdp/neomux'
@@ -60,6 +65,7 @@ Plug 'rhysd/git-messenger.vim'
 if executable('node')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
+Plug 'wellle/tmux-complete.vim'
 Plug 'rbong/vim-flog' "A lightweight and powerful git branch viewer for vim.
 Plug 'michaeljsmith/vim-indent-object' "Vim plugin that defines a new text object representing lines of code at the same indent level.
 Plug 'wellle/targets.vim' " Vim plugin that provides additional text objects
@@ -92,7 +98,6 @@ Plug 'ternjs/tern_for_vim',  {'do': 'npm install'}
 " Plug 'yuki-ycino/ncm2-dictionary'
 " Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
 " Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-" Plug 'wellle/tmux-complete.vim'
 " Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
 " Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
 " Plug 'ncm2/ncm2-cssomni'
@@ -108,7 +113,9 @@ Plug 'jreybert/vimagit'
 
 Plug 'ryanoasis/vim-devicons'
 Plug 'bogado/file-line' "Plugin for vim to enabling opening a file in a given line
-Plug 'posva/vim-vue'
+" Plug 'posva/vim-vue'
+Plug 'leafOfTree/vim-vue-plugin'
+Plug 'groenewege/vim-less'
 Plug 'alvan/vim-closetag'
 
 "Plug 'editorconfig/editorconfig-vim'

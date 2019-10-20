@@ -152,6 +152,9 @@ unset rvm_path
 
 [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
 
+# [ -s "$HOME/.asdf/asdf.sh" ] && source $HOME/.asdf/asdf.sh
+# [ -s "$HOME/.asdf/completions/asdf.bash" ] && source $HOME/.asdf/completions/asdf.bash
+
 # source ~/.zplug/init.zsh
 
 # # zplug "b4b4r07/enhancd", use:init.sh

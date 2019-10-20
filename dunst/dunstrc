@@ -1,6 +1,6 @@
 [global]
     shrink = true
-    font = UbuntuMono Nerd Font 10
+    font = UbuntuMono Nerd Font 13
     allow_markup = yes
     format = "%s\n%b"
     sort = yes
@@ -24,6 +24,7 @@
     startup_notification = false
     show_indicators = no
     dmenu = /usr/bin/dmenu -p dunst
+    max_icon_size = 32
 #    browser = /usr/bin/google-chrome-beta -new-tab
     icon_position = left
 # icon_folders = /usr/share/icons/Notifications
@@ -33,8 +34,8 @@
     width = 1
  
 [shortcuts]
-    history = mod4+space
-    close = ctrl+mod4+space
+    history = mod4+n
+    close = mod4+m
  
 [urgency_low]
     background = "#fba922"
