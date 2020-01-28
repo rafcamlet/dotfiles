@@ -8,7 +8,7 @@ Plug 'vim-scripts/L9' " Vim-script library
 Plug 'MarcWeber/vim-addon-mw-utils' "plugin library
 Plug 'tomtom/tlib_vim' "plugin library
 Plug 'Raimondi/delimitMate' "Vim plugin, provides insert mode auto-completion for quotes, parens, brackets, etc.
-Plug 'tmhedberg/matchit'
+" Plug 'tmhedberg/matchit'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -50,13 +50,21 @@ Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighti
 Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
+Plug 'tbastos/vim-lua'
+Plug 'andymass/vim-matchup'
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+" Plug 'neovim/nvim-lsp'
+Plug 'Asheq/close-buffers.vim' "Quickly close (bdelete) several buffers at once closed_book
+Plug 'tpope/vim-ragtag'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'michaeljsmith/vim-indent-object'
 Plug 'rhysd/devdocs.vim'
-Plug 'liuchengxu/vista.vim'
+" Plug 'liuchengxu/vista.vim'
 Plug 'liuchengxu/vim-clap'
 Plug 'sk1418/HowMuch'
 Plug 'vigoux/LanguageTool.nvim'
 Plug 'mg979/vim-visual-multi', {'branch': 'test'} "Multiple cursors project for vim/neovim (wip)
-" Plug 'kkoomen/vim-doge'
+Plug 'kkoomen/vim-doge' "(Do)cumentation (Ge)nerator - <leader>d
 " Plug 'philip-karlsson/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'nikvdp/neomux'
 Plug 'HiPhish/awk-ward.nvim'

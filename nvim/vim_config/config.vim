@@ -4,7 +4,7 @@ set shell=/bin/zsh                             " Set zsh as default shell
 " set shortmess+=A                               " Always edit file, even when swap file is found
 set diffopt=filler,iwhite                      " In diff mode, ignore whitespace changes and align unchanged lines
 set fileencodings=ucs-bom,utf-8,default,latin1 " encoding
-set termencoding=utf-8                         " terminal encoding
+" set termencoding=utf-8                         " terminal encoding
 set modeline                                   " turn on modeline
 set number                                     " show line numbers
 set showmode                                   " Show current mode down the bottom

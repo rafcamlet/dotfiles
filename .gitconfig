@@ -33,3 +33,6 @@
 
 
   br = for-each-ref --format='%(color:cyan)%(authordate:format:%m/%d/%Y %I:%M %p)    %(align:25,left)%(color:yellow)%(authorname)%(end) %(color:reset)%(refname:strip=2)' --sort=authordate refs/heads
+
+  arch = "!sh -c 'BRANCH=$(git branch-name); git tag archive/$BRANCH $BRANCH; git checkout master; git branch -D $BRANCH'"
+

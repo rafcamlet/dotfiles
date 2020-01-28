@@ -193,9 +193,11 @@ nnoremap <silent><nowait> <space>f :call SendBufToTmxu(0)<cr>
 vnoremap <silent><nowait> <space>f :call SendBufToTmxu(0)<cr>
 
 function! TestThis()
-  call system('tmux send-keys -t 3 "rspec ' . escape((expand('%:p') . ':' . line('.')), '"') .  '" c-m')
+  call system('tmux send-keys -t 3 "zeus test ' . escape((expand('%:p') . ':' . line('.')), '"') .  '" c-m')
+  call system('tmux select-window -t 3')
 endfunction
 command! TestThis call TestThis()
+nnoremap <space>t :TestThis<cr>
 "}}}
 
 " ScratchWindow {{{
@@ -236,6 +238,30 @@ command! TestThis call TestThis()
 " vnoremap <space>i :call ScratchWindow(1)<cr>
 "}}}
 
+"CreateCenteredFloatingWindow {{{
+function! CreateCenteredFloatingWindow()
+    let width = min([&columns - 4, max([80, &columns - 20])])
+    let height = min([&lines - 4, max([20, &lines - 10])])
+    let top = ((&lines - height) / 2) - 1
+    let left = (&columns - width) / 2
+    let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
+
+    let top = "╭" . repeat("─", width - 2) . "╮"
+    let mid = "│" . repeat(" ", width - 2) . "│"
+    let bot = "╰" . repeat("─", width - 2) . "╯"
+    let lines = [top] + repeat([mid], height - 2) + [bot]
+    let s:buf = nvim_create_buf(v:false, v:true)
+    call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
+    call nvim_open_win(s:buf, v:true, opts)
+    set winhl=Normal:Floating
+    let opts.row += 1
+    let opts.height -= 2
+    let opts.col += 2
+    let opts.width -= 4
+    call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+    au BufWipeout <buffer> exe 'bw '.s:buf
+endfunction "}}}
+
 " FzfPreview {{{
 function! FzfPreview(cmd)
   let l:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {} | head -'.&lines.'"'
@@ -249,8 +275,9 @@ function! FzfPreview(cmd)
   call fzf#run({
         \ 'source': systemlist('fd ' . a:cmd . ' -ptf'),
         \ 'sink':   function('s:edit_file'),
-        \ 'options': '-m ' . l:fzf_files_options,
-        \ 'down':    '40%' })
+        \ 'options': '-m --reverse ' . l:fzf_files_options,
+        \ 'down':    '40%',
+        \ 'window': 'call CreateCenteredFloatingWindow()'})
 endfunction
 command! -bang -nargs=? -complete=dir F call FzfPreview(<q-args>)
 " }}}

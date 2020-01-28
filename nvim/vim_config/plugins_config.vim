@@ -32,7 +32,7 @@ nnoremap <space>oc  :F app/controllers<cr>
 nnoremap <space>om  :F app/models<cr>
 nnoremap <space>ov  :F app/views<cr>
 nnoremap <space>os  :F app/services<cr>
-nnoremap <space>of  :F app/form_objects<cr>
+nnoremap <space>of  :F spec/factories<cr>
 nnoremap <space>on  :FZF ~/Dropbox/notes<cr>
 nnoremap <space>o-  :F <C-r>=expand("%:h")<CR>/<CR>
 nnoremap <space>ol  :BLines<cr>
@@ -208,6 +208,7 @@ let g:ale_fixers = { 'ruby': ['rubocop'],
       \ 'javascript': ['prettier', 'eslint', 'importjs'],
       \ 'vue': ['prettier', 'eslint'],
       \ 'vim': ['trim_whitespace'],
+      \ 'sql': ['pgformatter'],
       \ }
 
 command! ChangeRubyLinters call ChangeRubyLinters()
@@ -282,7 +283,7 @@ let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ 'active': {
       \   'left': [
-      \     [ 'buf_nr', 'mode', 'paste' ],
+      \     [ 'mode', 'paste' ],
       \     [ 'gitbranch', 'readonly'],
       \     [ 'cocstatus', 'file_name']
       \   ],
@@ -293,7 +294,6 @@ let g:lightline = {
       \ ],
       \ },
       \ 'component_function': {
-      \   'buf_nr': 'bufnr',
       \   'gitbranch': 'gitbranch#name',
       \   'file_name': 'LightlineFilename',
       \   'cocstatus': 'coc#status'
@@ -330,7 +330,7 @@ function! LightlineFilename()
 
   if &modified == 1 | let l:result .= ' +' | endif
 
-  return l:result
+  return bufnr() . ' | ' . l:result
 endfunction
 
 let &updatetime = 300
@@ -409,9 +409,8 @@ let g:mta_use_matchparen_group = 0
 " map <space>j <Plug>(easymotion-j)
 " map <space>k <Plug>(easymotion-k)
 " map <space>h <Plug>(easymotion-linebackward)
-map sf <Plug>(easymotion-f2)
 map s <Plug>(easymotion-prefix)
-nmap sd <Plug>(easymotion-overwin-f2)
+nmap sf <Plug>(easymotion-overwin-f2)
 
 " let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 let g:EasyMotion_smartcase = 1
@@ -746,3 +745,18 @@ let g:devdocs_filetype_map = {
     \   'javascript.jsx': 'javascript',
     \   'javascript.test': 'chai',
     \ }
+
+
+" =============== kkoomen/vim-doge =================
+
+let g:doge_mapping = "<leader>d"
+
+
+" ============= andymass/vim-matchup ===============
+
+augroup vim-matchup-custom
+  autocmd!
+  autocmd FileType ruby let b:match_words = '\<\%(if\|unless\|case\|while\|until\|for\|do\|class\|module\|def\|begin\)\>=\@!:\<\%(else\|elsif\|ensure\|when\|rescue\|break\|redo\|next\|retry\)\>:\%(^\|[^.\:@$]\)\@<=\<end\:\@!\>,{:},\[:\],(:)'
+augroup END
+
+
