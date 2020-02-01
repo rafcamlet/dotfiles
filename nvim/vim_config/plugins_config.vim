@@ -208,6 +208,7 @@ let g:ale_fixers = { 'ruby': ['rubocop'],
       \ 'javascript': ['prettier', 'eslint', 'importjs'],
       \ 'vue': ['prettier', 'eslint'],
       \ 'vim': ['trim_whitespace'],
+      \ 'c': ['clang-format'],
       \ }
 
 command! ChangeRubyLinters call ChangeRubyLinters()
