@@ -24,3 +24,5 @@ rofi.kb-remove-to-eol:               Control+Shift+k
 rofi.kb-row-down:                    Down,Control+n,Control+j
 
 rofi.modi: run,drun
+
+rofi.show-icons: true

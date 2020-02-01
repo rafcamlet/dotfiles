@@ -106,3 +106,19 @@ endsnippet
 snippet sql "raw sql query"
 ActiveRecord::Base.connection.execute("${0:${VISUAL}}")
 endsnippet
+
+snippet archive 
+module Archive
+  class ${1:`!v Mixedcase(expand('%:t:r'))`} < BaseStrategy
+    def archive
+      @obj.$0.update_all(archived_at: Time.current)
+			super
+    end
+
+    def unarchive
+      @obj..unarchived.update_all(archived_at: nil)
+			super
+    end
+  end
+end
+endsnippet

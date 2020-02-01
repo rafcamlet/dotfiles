@@ -178,3 +178,6 @@ alias man='vimman'
 eval "$(direnv hook zsh)"
 
 # vim: foldmethod=marker:foldlevel=0
+
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=/home/r2d2/.cache/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;

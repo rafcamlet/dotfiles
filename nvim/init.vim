@@ -14,9 +14,6 @@ runtime vim_config/standup.vim
 runtime vim_config/projects.vim
 runtime vim_config/saved_commands.vim
 
-nnoremap <c-t><c-n> :vnew<cr>
-nnoremap yob :set scb!<cr>
-
 " JSON store:
 " vim_config/json/projects.json
 
@@ -26,6 +23,45 @@ nnoremap yob :set scb!<cr>
 "---------Testing_new_features-------
 "====================================
 "
+
+function Inc()
+  let @x = @x + 1
+  return @z . @x
+endfunction
+
+nnoremap ge :CocCommand explorer<CR>
+
+" Another FZF float
+" let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+" let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
+" let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+" function! FloatingFZF()
+"   let buf = nvim_create_buf(v:false, v:true)
+"   call setbufvar(buf, '&signcolumn', 'no')
+
+"   let height = float2nr(10)
+"   let width = float2nr(80)
+"   let horizontal = float2nr((&columns - width) / 2)
+"   let vertical = 1
+
+"   let opts = {
+"         \ 'relative': 'editor',
+"         \ 'row': vertical,
+"         \ 'col': horizontal,
+"         \ 'width': width,
+"         \ 'height': height,
+"         \ 'style': 'minimal'
+"         \ }
+
+"   call nvim_open_win(buf, v:true, opts)
+" endfunction
+" nnoremap <silent> <space>p :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
+
+" nnoremap <c-t><c-n> :vnew<cr>
+
+" scrollbind
+nnoremap yob :set scb!<cr>
 
 " let $FZF_DEFAULT_OPTS='--layout=reverse'
 " let g:fzf_layout = { 'window': 'call FloatingFZF()' }
@@ -89,7 +125,7 @@ function! FloatTerm()
   " Close border window when terminal window close
   autocmd CursorMoved * ++once call nvim_win_close(s:float_term_border_win, v:true)
 endfunction
-command FloatTerm call FloatTerm()
+command! FloatTerm call FloatTerm()
 
 
 augroup VIMRC
