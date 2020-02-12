@@ -1,6 +1,16 @@
 function! OpenRuntime()
   let l:runtime_path = stdpath('config')
 
+  if match(getline('.'), '\v\.lua$') > -1
+    let l:file_name = matchstr(getline('.'), '\v("\s*)@<=(\S*\.lua)')
+    exec 'edit ' . l:runtime_path . '/' . l:file_name
+  endif
+
+  if match(getline('.'), '\v^\s*lua require') > -1
+    let l:file_name = matchstr(getline('.'), '\v(lua require '."'".')@<=\S*'."(')@=")
+    exec 'edit ' . l:runtime_path . '/lua/' . l:file_name . '.lua'
+  endif
+
   if match(getline('.'), '^\s*runtime') > -1
     let l:file_name = substitute(getline('.'), '\v.*runtime\s+(.*)$' , '\1', '')
     exec 'edit ' . l:runtime_path . '/' . l:file_name

@@ -14,6 +14,11 @@ runtime vim_config/standup.vim
 runtime vim_config/projects.vim
 runtime vim_config/saved_commands.vim
 
+" Lua
+
+" lua/tools.lua
+" lua require 'projects'
+
 " JSON store:
 " vim_config/json/projects.json
 
@@ -23,6 +28,7 @@ runtime vim_config/saved_commands.vim
 "---------Testing_new_features-------
 "====================================
 "
+
 
 function Inc()
   let @x = @x + 1

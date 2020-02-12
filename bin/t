@@ -1,0 +1,25 @@
+#!/bin/bash
+
+FILE=$HOME/Dropbox/notes/task
+
+case "$1" in
+  edit|e)
+    $VISUAL $FILE
+    ;;
+  rm|d)
+    sed -i "$2d" $FILE
+    shift 2
+    ;;
+  add|a)
+    shift
+    echo "- $@" >> $FILE
+    ;;
+esac
+
+
+count=1
+cat $FILE | while read line
+do
+  echo "$count $line"
+  ((count++))
+done

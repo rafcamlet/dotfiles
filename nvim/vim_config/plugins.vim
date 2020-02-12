@@ -234,7 +234,7 @@ Plug 'rhysd/vim-grammarous'
 
 Plug '~/projects/show-me-db'
 Plug '~/projects/vim-sff'
-Plug '~/projects/vim-what-i-have-done'
+Plug '~/projects/nvim-whid'
 Plug '~/projects/vim-filelist'
 Plug '~/projects/vim-my-note'
 
