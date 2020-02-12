@@ -47,7 +47,7 @@ Plug 'mxw/vim-jsx' "React JSX syntax highlighting and indenting for vim.
 Plug 'pangloss/vim-javascript'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighting.
-Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'nathanaelkane/vim-indent-guides'
 " TEST plugin
 
 Plug 'tbastos/vim-lua'
@@ -63,7 +63,7 @@ Plug 'rhysd/devdocs.vim'
 Plug 'liuchengxu/vim-clap'
 Plug 'sk1418/HowMuch'
 Plug 'vigoux/LanguageTool.nvim'
-Plug 'mg979/vim-visual-multi', {'branch': 'test'} "Multiple cursors project for vim/neovim (wip)
+Plug 'mg979/vim-visual-multi', {'branch': 'master'} "Multiple cursors project for vim/neovim (wip)
 Plug 'kkoomen/vim-doge' "(Do)cumentation (Ge)nerator - <leader>d
 " Plug 'philip-karlsson/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'nikvdp/neomux'
@@ -234,6 +234,7 @@ Plug 'rhysd/vim-grammarous'
 
 Plug '~/projects/show-me-db'
 Plug '~/projects/vim-sff'
+" Plug '~/projects/vim-what-i-have-done'
 Plug '~/projects/nvim-whid'
 Plug '~/projects/vim-filelist'
 Plug '~/projects/vim-my-note'

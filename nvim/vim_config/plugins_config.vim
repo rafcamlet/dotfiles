@@ -410,8 +410,8 @@ let g:mta_use_matchparen_group = 0
 " map <space>j <Plug>(easymotion-j)
 " map <space>k <Plug>(easymotion-k)
 " map <space>h <Plug>(easymotion-linebackward)
-map s <Plug>(easymotion-prefix)
-nmap sf <Plug>(easymotion-overwin-f2)
+" map s <Plug>(easymotion-prefix)
+nmap s <Plug>(easymotion-overwin-f2)
 
 " let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 let g:EasyMotion_smartcase = 1
@@ -712,12 +712,15 @@ nnoremap <space>g :Whid<cr>
 
 " ============ mg979/vim-visual-multi ==============
 
-" let g:VM_Selection_hl     = 'Cursor'
-let g:VM_Mono_Cursor_hl   = 'Cursor'
-" let g:VM_Ins_Mode_hl      = 'Cursor'
-" let g:VM_Normal_Cursor_hl = 'Cursor'
+
+" let g:VM_theme = 'iceblue'
+let g:VM_Mono_hl   = 'Visual'
+let g:VM_Extend_hl = 'Visual'
+let g:VM_Cursor_hl = 'Visual'
+let g:VM_Insert_hl = 'Visual'
+
 let g:VM_highlight_matches = 'red'
-let g:VM_leader = '<space>l'
+let g:VM_leader = '<space>'
 let g:VM_maps = {}
 let g:VM_maps['Find Under']         = '<C-d>'
 let g:VM_maps['Find Subword Under'] = '<C-d>'
@@ -726,6 +729,8 @@ let g:VM_maps['Find Subword Under'] = '<C-d>'
 
 let g:VM_maps["Add Cursor Down"]             = '<C-U>'
 " let g:VM_maps["Add Cursor Up"]               = '<C-I>'
+let g:VM_maps["Visual Cursors"]              = '<space>'
+let g:VM_maps["Switch Mode"]                 = 'v'
 
 
 " =========== leafOfTree/vim-vue-plugin ============
