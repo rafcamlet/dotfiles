@@ -14,6 +14,12 @@ runtime vim_config/standup.vim
 runtime vim_config/projects.vim
 runtime vim_config/saved_commands.vim
 
+" Lua
+
+" lua/tools.lua
+" lua require 'projects'
+lua require 'regex_jump'
+
 " JSON store:
 " vim_config/json/projects.json
 
