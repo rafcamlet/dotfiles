@@ -145,12 +145,12 @@ fi
 
 # }}}
 
-unset rvm_bin_path
-unset rvm_prefix
-unset rvm_version
-unset rvm_path
+# unset rvm_bin_path
+# unset rvm_prefix
+# unset rvm_version
+# unset rvm_path
 
-[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+# [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
 
 # [ -s "$HOME/.asdf/asdf.sh" ] && source $HOME/.asdf/asdf.sh
 # [ -s "$HOME/.asdf/completions/asdf.bash" ] && source $HOME/.asdf/completions/asdf.bash
@@ -182,5 +182,5 @@ eval "$(direnv hook zsh)"
 # heroku autocomplete setup
 HEROKU_AC_ZSH_SETUP_PATH=/home/r2d2/.cache/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
-# . $HOME/.asdf/asdf.sh
-# . $HOME/.asdf/completions/asdf.bash
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash

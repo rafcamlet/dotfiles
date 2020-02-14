@@ -17,7 +17,7 @@ function! RegexJump(regex, path)
   exec 'edit ' . l:path
 endfunction
 
-function! SetupEnvironment() 
+function! SetupEnvironment()
   let l:debug = 0
 
   if l:debug

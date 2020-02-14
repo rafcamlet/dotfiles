@@ -24,6 +24,8 @@ runtime vim_config/saved_commands.vim
 "====================================
 "
 
+nnoremap <space>oa :F '' app/concepts<cr>
+
 function Inc()
   let @x = @x + 1
   return @z . @x

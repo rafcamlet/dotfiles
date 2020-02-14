@@ -122,3 +122,11 @@ module Archive
   end
 end
 endsnippet
+
+snippet cell
+module ${1:`!v Mixedcase(expand('%:h:h:t'))`}::Cell
+	class ${2:`!v Mixedcase(expand('%:t:r'))`} < Shared::Cell::Base
+		alias $0 model
+	end
+end
+endsnippet

@@ -263,7 +263,9 @@ function! CreateCenteredFloatingWindow()
 endfunction "}}}
 
 " FzfPreview {{{
-function! FzfPreview(cmd)
+function! FzfPreview(bang, ...)
+  let l:cmd = a:0 > 0 ? a:1 : ''
+  let l:path = a:0 > 1 ? a:2 : ''
   let l:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {} | head -'.&lines.'"'
 
   function! s:edit_file(item)
@@ -273,13 +275,13 @@ function! FzfPreview(cmd)
   endfunction
 
   call fzf#run({
-        \ 'source': systemlist('fd ' . a:cmd . ' -ptf'),
+        \ 'source': systemlist('fd ' . l:cmd . ' -ptf '. l:path),
         \ 'sink':   function('s:edit_file'),
         \ 'options': '-m --reverse ' . l:fzf_files_options,
         \ 'down':    '40%',
         \ 'window': 'call CreateCenteredFloatingWindow()'})
 endfunction
-command! -bang -nargs=? -complete=dir F call FzfPreview(<q-args>)
+command! -bang -nargs=* -complete=dir F call FzfPreview(<q-bang>, <f-args>)
 " }}}
 
 " Save macro {{{

@@ -1,5 +1,9 @@
 [
   {
+    "name": "Customeasy",
+    "root_path": "projects/customease"
+  },
+  {
     "name": "Blog",
     "root_path": "projects/blog"
   },

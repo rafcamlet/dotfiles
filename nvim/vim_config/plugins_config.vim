@@ -26,13 +26,13 @@ nnoremap <silent> <space>oh :History<cr>
 
 nnoremap <space>ob :Buffers<cr>
 nnoremap <space>og :GFiles?<cr>
-nnoremap <space>ot  :F spec<cr>
-nnoremap <space>ojs :F app/assets<cr>
-nnoremap <space>oc  :F app/controllers<cr>
-nnoremap <space>om  :F app/models<cr>
-nnoremap <space>ov  :F app/views<cr>
-nnoremap <space>os  :F app/services<cr>
-nnoremap <space>of  :F spec/factories<cr>
+nnoremap <space>ot  :F '' spec<cr>
+nnoremap <space>ojs :F '' app/assets<cr>
+nnoremap <space>oc  :F '' app/controllers<cr>
+nnoremap <space>om  :F '' app/models<cr>
+nnoremap <space>ov  :F '' app/views<cr>
+nnoremap <space>os  :F '' app/services<cr>
+nnoremap <space>of  :F '' spec/factories<cr>
 nnoremap <space>on  :FZF ~/Dropbox/notes<cr>
 nnoremap <space>o-  :F <C-r>=expand("%:h")<CR>/<CR>
 nnoremap <space>ol  :BLines<cr>
