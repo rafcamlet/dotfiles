@@ -3,9 +3,14 @@ function prompt_my_precmd {
 
   # ruby info
   _ruby='%F{1}Ruby:%F{9}'
-  _ruby+=$(asdf current ruby | sed 's/ .*$//')
 
-  _ruby_gemset=''
+  if [[ "$USER" == "r" ]]; then
+    _ruby+=$(rvm-prompt v p)
+    _ruby_gemset=$(rvm-prompt g | sed 's/@//')
+  else
+    _ruby+=$(asdf current ruby | sed 's/ .*$//')
+    _ruby_gemset=''
+  fi
 
   if [ -n "${_ruby_gemset// }" ]; then
     _ruby+='%F{1}@%F{9}'

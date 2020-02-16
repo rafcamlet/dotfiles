@@ -1,3 +1,5 @@
+# vim:fdm=marker
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -68,7 +70,6 @@ function amend {
 function commit {
   git add .
   git commit
-  # git commit --verbose
 }
 
 function gho {
@@ -145,21 +146,12 @@ fi
 
 # }}}
 
-# unset rvm_bin_path
-# unset rvm_prefix
-# unset rvm_version
-# unset rvm_path
-
-# [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
-
-# [ -s "$HOME/.asdf/asdf.sh" ] && source $HOME/.asdf/asdf.sh
-# [ -s "$HOME/.asdf/completions/asdf.bash" ] && source $HOME/.asdf/completions/asdf.bash
-
 # source ~/.zplug/init.zsh
-
 # # zplug "b4b4r07/enhancd", use:init.sh
-
 # zplug load
+
+
+# fasd {{{
 
 alias a='fasd -a'        # any
 alias s='fasd -si'       # show / search / select
@@ -169,6 +161,7 @@ alias sd='fasd -sid'     # interactive directory selection
 alias sf='fasd -sif'     # interactive file selection
 alias z='fasd_cd -d'     # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # cd with interactive selection
+# }}}
 
 alias lc='colorls -r --sd'
 
@@ -182,5 +175,16 @@ eval "$(direnv hook zsh)"
 # heroku autocomplete setup
 HEROKU_AC_ZSH_SETUP_PATH=/home/r2d2/.cache/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
+# asdf & rvm {{{
+if [[ "$USER" == "r" ]]; then
+  unset rvm_bin_path
+  unset rvm_prefix
+  unset rvm_version
+  unset rvm_path
+
+  [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+else
+  . $HOME/.asdf/asdf.sh
+  . $HOME/.asdf/completions/asdf.bash
+fi
+# }}}
