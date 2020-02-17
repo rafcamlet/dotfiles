@@ -32,12 +32,11 @@ Plug 'airblade/vim-rooter'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " A command-line fuzzy finder written in Go
 Plug 'junegunn/fzf.vim' " More options for fzf in vim
-Plug 'tpope/vim-speeddating' " use CTRL-A/CTRL-X to increment dates, times, and more 
+" Plug 'tpope/vim-speeddating' " use CTRL-A/CTRL-X to increment dates, times, and more 
 Plug 'thinca/vim-quickrun' " Run current file and show output in new buffer
 Plug 'jeetsukumaran/vim-indentwise' " Indent motion
 Plug 'rafcamlet/shadowmoth' " best colorscheme ever!
 Plug 'coderifous/textobj-word-column.vim' " Select column of text example: vic
-Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'junegunn/vim-easy-align' " A Vim alignment plugin
 Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
 Plug 'tpope/vim-abolish' "easily search for, substitute, and abbreviate multiple variants of a word
@@ -47,11 +46,21 @@ Plug 'mxw/vim-jsx' "React JSX syntax highlighting and indenting for vim.
 Plug 'pangloss/vim-javascript'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighting.
-" Plug 'nathanaelkane/vim-indent-guides'
-" TEST plugin
-
-Plug 'tbastos/vim-lua'
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'andymass/vim-matchup'
+Plug 'tbastos/vim-lua'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'} "Multiple cursors project for vim/neovim (wip)
+if executable('node')
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'wellle/tmux-complete.vim'
+endif
+Plug 'simeji/winresizer'
+Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no default mappings
+
+" TEST plugin ==================
+
+Plug 'simnalamburt/vim-mundo'
+Plug 'bfredl/nvim-luadev'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " Plug 'neovim/nvim-lsp'
 Plug 'Asheq/close-buffers.vim' "Quickly close (bdelete) several buffers at once closed_book
@@ -63,52 +72,24 @@ Plug 'rhysd/devdocs.vim'
 Plug 'liuchengxu/vim-clap'
 Plug 'sk1418/HowMuch'
 Plug 'vigoux/LanguageTool.nvim'
-Plug 'mg979/vim-visual-multi', {'branch': 'master'} "Multiple cursors project for vim/neovim (wip)
 Plug 'kkoomen/vim-doge' "(Do)cumentation (Ge)nerator - <leader>d
 " Plug 'philip-karlsson/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'nikvdp/neomux'
 Plug 'HiPhish/awk-ward.nvim'
-Plug 'tomtom/tinykeymap_vim'
 Plug 'rhysd/git-messenger.vim'
-if executable('node')
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-endif
-Plug 'wellle/tmux-complete.vim'
 Plug 'rbong/vim-flog' "A lightweight and powerful git branch viewer for vim.
 Plug 'michaeljsmith/vim-indent-object' "Vim plugin that defines a new text object representing lines of code at the same indent level.
 Plug 'wellle/targets.vim' " Vim plugin that provides additional text objects
 Plug 'tommcdo/vim-lion' "A simple alignment operator for Vim text editor - gl gL
-Plug 'mbbill/undotree'
-Plug 'hecal3/vim-leader-guide'
 " Plug 'terryma/vim-expand-region'
 " Plug 'TaDaa/vimade'
-Plug 'Shougo/context_filetype.vim'
 " Plug 'tyru/caw.vim'
-Plug 'simeji/winresizer'
-Plug 'svermeulen/vim-subversive'
-Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no default mappings, forked
 Plug 'rhysd/committia.vim'
 Plug 'sodapopcan/vim-twiggy', { 'on': 'Twiggy' }
 " Plug 'justinmk/vim-sneak'
 Plug 'majutsushi/tagbar'
 
 Plug 'wsdjeg/FlyGrep.vim'
-
-Plug 'bilalq/lite-dfm'
-Plug 'ternjs/tern_for_vim',  {'do': 'npm install'}
-
-" Plug 'ncm2/ncm2'
-" Plug 'roxma/nvim-yarp'
-" Plug 'ncm2/ncm2-html-subscope'
-" Plug 'ncm2/ncm2-ultisnips'
-" Plug 'ncm2/ncm2-bufword'
-" Plug 'ncm2/ncm2-path'
-" Plug 'yuki-ycino/ncm2-dictionary'
-" Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
-" Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-" Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
-" Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-" Plug 'ncm2/ncm2-cssomni'
 
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'tpope/vim-markdown'

@@ -423,28 +423,6 @@ map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)
 
-
-" ========= terryma/vim-multiple-cursors ===========
-
-" nnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
-" vnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
-" let g:multi_cursor_exit_from_insert_mode = 0
-
-" function! Multiple_cursors_before()
-"   ALEDisable
-"   TSStop
-"   cm#disable_for_buffer()
-"   LanguageClientStop
-" endfunction
-
-" function! Multiple_cursors_after()
-"   ALEEnable
-"   TSStart
-"   cm#enable_for_buffer()
-"   LanguageClientStart
-" endfunction
-let g:multi_cursor_start_word_key = '<c-n>'
-let g:multi_cursor_select_all_word_key = ''
 " =================== ncm2/ncm2 ====================
 
 " let g:ncm2#complete_delay = 100
@@ -559,28 +537,6 @@ let g:expand_region_text_objects = {
       \ 'a{'  :1,
       \ }
 
-
-" ============ hecal3/vim-leader-guide =============
-
-" let g:lmap = {
-"       \' ':
-"       \ {
-"       \ 'g' : ['Magit', 'Magit'],
-"       \ 'h' : ['UndotreeToggle', 'Undotree']
-"       \ }
-"       \}
-" let g:tabmap = {}
-" let g:lmap.t = { 'name': 'Tab' }
-" let g:lmap.t.t = ['asdf', 'asdf']
-
-" call leaderGuide#register_prefix_descriptions("<Space>", "g:lmap")
-" nnoremap <silent> <space> :<c-u>LeaderGuide '<Space>'<CR>
-" vnoremap <silent> <space> :<c-u>LeaderGuideVisual '<Space>'<CR>
-
-" call leaderGuide#register_prefix_descriptions("<tab>", "g:tabmap")
-" nnoremap <silent> <tab> :<c-u>LeaderGuide "<lt>tab>"<CR>
-" vnoremap <silent> <tab> :<c-u>LeaderGuideVisual "<lt>tab>"<CR>
-
 " ================ mbbill/undotree =================
 
 nnoremap <space><space>h :UndotreeToggle<cr>
@@ -669,7 +625,7 @@ nmap <space>cr <Plug>(coc-rename)
 
 let g:vue_disable_pre_processors=1
 
-" ============= Arkham/nvim-miniyank ===============
+" ============= bfredl/nvim-miniyank ===============
 
 map p <Plug>(miniyank-autoput)
 map P <Plug>(miniyank-autoPut)
@@ -712,12 +668,11 @@ nnoremap <space>g :Whid<cr>
 
 " ============ mg979/vim-visual-multi ==============
 
-
 " let g:VM_theme = 'iceblue'
 let g:VM_Mono_hl   = 'Visual'
-let g:VM_Extend_hl = 'Visual'
+let g:VM_Extend_hl = 'Keyword'
 let g:VM_Cursor_hl = 'Visual'
-let g:VM_Insert_hl = 'Visual'
+let g:VM_Insert_hl = 'IncSearch'
 
 let g:VM_highlight_matches = 'red'
 let g:VM_leader = '<space>'
@@ -727,10 +682,11 @@ let g:VM_maps['Find Subword Under'] = '<C-d>'
 " let g:VM_maps["Select l"]           = '<c-l>'       " start selecting left
 " let g:VM_maps["Select h"]           = '<c-h>'        " start selecting right
 
-let g:VM_maps["Add Cursor Down"]             = '<C-U>'
+let g:VM_maps['Add Cursor Down']             = '<C-U>'
 " let g:VM_maps["Add Cursor Up"]               = '<C-I>'
-let g:VM_maps["Visual Cursors"]              = '<space>'
-let g:VM_maps["Switch Mode"]                 = 'v'
+let g:VM_maps['Visual Cursors']              = '<space>'
+let g:VM_maps['Switch Mode']                 = 'v'
+let g:VM_maps['Visual Regex']                = '/'
 
 
 " =========== leafOfTree/vim-vue-plugin ============
@@ -764,5 +720,3 @@ augroup vim-matchup-custom
   autocmd!
   autocmd FileType ruby let b:match_words = '\<\%(if\|unless\|case\|while\|until\|for\|do\|class\|module\|def\|begin\)\>=\@!:\<\%(else\|elsif\|ensure\|when\|rescue\|break\|redo\|next\|retry\)\>:\%(^\|[^.\:@$]\)\@<=\<end\:\@!\>,{:},\[:\],(:)'
 augroup END
-
-
