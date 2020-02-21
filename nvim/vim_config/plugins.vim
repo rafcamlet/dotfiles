@@ -59,6 +59,7 @@ Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no 
 
 " TEST plugin ==================
 
+" Plug 'voldikss/vim-floaterm'
 Plug 'simnalamburt/vim-mundo'
 Plug 'bfredl/nvim-luadev'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }

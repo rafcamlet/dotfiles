@@ -3,6 +3,7 @@ function prompt_my_precmd {
 
   # ruby info
   _ruby='%F{1}Ruby:%F{9}'
+  _node='%F{3}NodeJS:%F{11}'
 
   if [[ "$USER" == "r" ]]; then
     _ruby+=$(rvm-prompt v p)
@@ -10,6 +11,7 @@ function prompt_my_precmd {
   else
     _ruby+=$(asdf current ruby | sed 's/ .*$//')
     _ruby_gemset=''
+    _node+=$(asdf current nodejs | sed 's/ .*$//')
   fi
 
   if [ -n "${_ruby_gemset// }" ]; then
@@ -17,6 +19,7 @@ function prompt_my_precmd {
     _ruby+=${_ruby_gemset}
   fi
   _ruby+='%f'
+  _node+='%f'
 
   # last commit
 
@@ -76,7 +79,7 @@ function prompt_my_setup {
 
   # Define prompts.
   PROMPT='
-%F{15}In ${_colors[3]}%~%f${(e)git_info[prompt]} $_ruby $_git
+%F{15}In ${_colors[3]}%~%f${(e)git_info[prompt]} $_ruby $_git $_node
 %B%F{1}❯%F{3}❯%F{2}❯%f%b  '
 
   RPROMPT=''
