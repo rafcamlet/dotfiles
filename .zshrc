@@ -138,21 +138,21 @@ export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
 # }}}
 
 # NVM {{{
-export NVM_DIR="$HOME/.nvm"
+# export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 # NVM drastically increas startup time. Move to function.
-start_nvm(){
-  unalias nvm node npm 
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-}
+# start_nvm(){
+#   unalias nvm node npm 
+#   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+# }
 
-if [ -s "$HOME/.nvm/nvm.sh" ]; then
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-  alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
-  alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
-  alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
-fi
+# if [ -s "$HOME/.nvm/nvm.sh" ]; then
+#   export NVM_DIR="$HOME/.nvm"
+#   [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+#   alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
+#   alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
+#   alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
+# fi
 
 # }}}
 

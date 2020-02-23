@@ -670,7 +670,7 @@ nnoremap <space>g :Whid<cr>
 
 " let g:VM_theme = 'iceblue'
 let g:VM_Mono_hl   = 'Visual'
-let g:VM_Extend_hl = 'Keyword'
+let g:VM_Extend_hl = 'WildMenu'
 let g:VM_Cursor_hl = 'Visual'
 let g:VM_Insert_hl = 'IncSearch'
 
@@ -720,3 +720,9 @@ augroup vim-matchup-custom
   autocmd!
   autocmd FileType ruby let b:match_words = '\<\%(if\|unless\|case\|while\|until\|for\|do\|class\|module\|def\|begin\)\>=\@!:\<\%(else\|elsif\|ensure\|when\|rescue\|break\|redo\|next\|retry\)\>:\%(^\|[^.\:@$]\)\@<=\<end\:\@!\>,{:},\[:\],(:)'
 augroup END
+
+
+" ============= voldikss/vim-floaterm ==============
+
+let g:floaterm_position = 'center'
+let g:floaterm_keymap_new = '<space>t'
