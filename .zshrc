@@ -51,6 +51,7 @@ PATH=$PATH:$GOBIN
 PATH=$PATH:$HOME/.yarn/bin
 PATH=$PATH:$HOME/bin
 PATH=$PATH:$HOME/.local/bin
+PATH=$PATH:$HOME/.luarocks/bin
 
 # Functions -> {{{
 
@@ -114,6 +115,15 @@ function n {
   fi
 } # }}}
 
+# fff exit function and settings {{{
+f() {
+    fff "$@"
+    cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
+}
+
+export FFF_FAV9=~/projects
+#}}}
+
 # FZF options {{{
 export FZF_DEFAULT_OPTS='
   --height 75% --multi
@@ -156,7 +166,7 @@ fi
 alias a='fasd -a'        # any
 alias s='fasd -si'       # show / search / select
 alias d='fasd -d'        # directory
-alias f='fasd -f'        # file
+# alias f='fasd -f'        # file
 alias sd='fasd -sid'     # interactive directory selection
 alias sf='fasd -sif'     # interactive file selection
 alias z='fasd_cd -d'     # cd, same functionality as j in autojump

@@ -6,7 +6,7 @@ function tb_jump(type)
     query = '.rb'
   }
 
-  local path = vim.fn.expand('%')
+        local path = vim.fn.expand('%')
   local concept = path:match('concepts/([^/]*)/')
   local path = path:gsub('app/concepts/'..concept .. '/([^/]*)/', '')
   local file = path:match('([^\.]*)\.')
