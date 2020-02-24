@@ -8,7 +8,6 @@ Plug 'vim-scripts/L9' " Vim-script library
 Plug 'MarcWeber/vim-addon-mw-utils' "plugin library
 Plug 'tomtom/tlib_vim' "plugin library
 Plug 'Raimondi/delimitMate' "Vim plugin, provides insert mode auto-completion for quotes, parens, brackets, etc.
-" Plug 'tmhedberg/matchit'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -32,7 +31,6 @@ Plug 'airblade/vim-rooter'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " A command-line fuzzy finder written in Go
 Plug 'junegunn/fzf.vim' " More options for fzf in vim
-" Plug 'tpope/vim-speeddating' " use CTRL-A/CTRL-X to increment dates, times, and more 
 Plug 'thinca/vim-quickrun' " Run current file and show output in new buffer
 Plug 'jeetsukumaran/vim-indentwise' " Indent motion
 Plug 'rafcamlet/shadowmoth' " best colorscheme ever!
@@ -59,6 +57,8 @@ Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no 
 
 " TEST plugin ==================
 
+" Plug 'kyazdani42/nvim-tree.lua'
+Plug 'vimwiki/vimwiki'
 Plug 'sbdchd/neoformat'
 Plug 'voldikss/vim-floaterm'
 Plug 'simnalamburt/vim-mundo'
@@ -83,7 +83,6 @@ Plug 'rbong/vim-flog' "A lightweight and powerful git branch viewer for vim.
 Plug 'michaeljsmith/vim-indent-object' "Vim plugin that defines a new text object representing lines of code at the same indent level.
 Plug 'wellle/targets.vim' " Vim plugin that provides additional text objects
 Plug 'tommcdo/vim-lion' "A simple alignment operator for Vim text editor - gl gL
-" Plug 'terryma/vim-expand-region'
 " Plug 'TaDaa/vimade'
 " Plug 'tyru/caw.vim'
 Plug 'rhysd/committia.vim'
@@ -114,19 +113,10 @@ Plug 'alvan/vim-closetag'
 
 " Plug 'terryma/vim-multiple-cursors' "<- You never use it!
 "Plug 'haya14busa/incsearch.vim' "Improved incremental searching for Vim
-"Plug 'haya14busa/incsearch-fuzzy.vim'
-
 Plug 'easymotion/vim-easymotion'
 "Plug 'pelodelfuego/vim-swoop' " Test this!
 
-
-"Plug 'autozimu/LanguageClient-neovim', {
-"      \ 'branch': 'next',
-"      \ 'do': 'bash install.sh',
-"      \ }
-
 "Plug 'reedes/vim-lexical'
-"Plug 'reedes/vim-wheel'
 
 " Plug 'mhartington/nvim-typescript'
 " Plug 'leafgarland/typescript-vim'
@@ -134,25 +124,17 @@ Plug 'easymotion/vim-easymotion'
 
 "Plug 'reedes/vim-pencil'
 "" Plug 'martingms/vipsql'
-"Plug 'vimwiki/vimwiki'
 "" Plug 'https://github.com/rhysd/clever-f.vim' "Extended f, F, t and T key mappings for Vim.
 
 
 "" Plug 'othree/csscomplete.vim' " Update the bult-in CSS complete function to latest CSS standard.
 "Plug 'calebeby/ncm-css'
 
-"" Plug 'plasticboy/vim-markdown'
-"" Plug 'gabrielelana/vim-markdown'
-
-
 "" Plug 'joshdick/onedark.vim'
 ""hauleth/sad.vim do testu!!!
 
 "" Plug 'machakann/vim-highlightedyank'
 "Plug 'AndrewRadev/switch.vim'
-
-"Plug 'haya14busa/vim-signjk-motion'
-
 
 "Plug 'mhinz/vim-janah' "colorscheme
 "" Plug 'mhinz/vim-startify'
@@ -171,7 +153,6 @@ Plug 'easymotion/vim-easymotion'
 
 "Plug 'junegunn/vim-ruby-x'
 
-"Plug 'junegunn/vim-after-object'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 "Plug 'junegunn/gv.vim', { 'on': 'GV' } "A git commit browser
 
@@ -193,22 +174,16 @@ Plug 'rhysd/vim-grammarous'
 
 "" Plug 'gabrielelana/vim-markdown'
 
-"" Plug 'fishbullet/deoplete-ruby' "Deoplete sources for ruby language
-"" Plug 'Shougo/deoplete-rct' "deoplete rcodetools source for Ruby
 "" Plug 'syngan/vim-vimlint'
 "Plug 'Shougo/denite.nvim' " Unite and create user interfaces
 "Plug 'othree/xml.vim' " A plugin for editing xml
 "" Plug 'christoomey/vim-tmux-runner' "A simple, vimscript only, command runner for sending commands from vim to tmux.
-"Plug 'janko-m/vim-test' "A Vim wrapper for running tests on different granularities.
-"" Plug 'junegunn/vim-lengthmatters'
 "" Plug 'junegunn/vim-peekaboo' "show the contents of the registers
 "Plug 'ecomba/vim-ruby-refactoring'
 "Plug 'xolox/vim-misc'
 "Plug 'chrisbra/vim-diff-enhanced'
 "" Plug 'Shutnik/jshint2.vim'
-"Plug 'mhinz/vim-grepper' " vim wrapper around 'grepprg' and 'grepformat'
 
-" Plug 'kassio/neoterm' " Wrapper of some neovim's :terminal functions.
 "Plug 'tpope/vim-bundler' " Lightweight support for Ruby's Bundler
 
 "" Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
@@ -221,5 +196,6 @@ Plug '~/projects/vim-what-i-have-done'
 " Plug '~/projects/nvim-whid'
 Plug '~/projects/vim-filelist'
 Plug '~/projects/vim-my-note'
+Plug '~/projects/nvim-sf'
 
 call plug#end()

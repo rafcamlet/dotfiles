@@ -18,6 +18,7 @@ runtime vim_config/saved_commands.vim
 
 " lua/tools.lua
 " lua require 'projects'
+lua require 'helper'
 lua require 'regex_jump'
 
 " JSON store:
@@ -30,6 +31,7 @@ lua require 'regex_jump'
 "====================================
 "
 
+nnoremap <leader>zsh :e ~/.zshrc<cr>
 nnoremap <space>oa :F '' app/concepts<cr>
 
 function Inc()

@@ -1,4 +1,4 @@
-# vim:fdm=marker
+# vim:fdm=marker:fdl=0
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -138,22 +138,22 @@ export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
 # }}}
 
 # NVM {{{
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-# NVM drastically increas startup time. Move to function.
-# start_nvm(){
-#   unalias nvm node npm 
-#   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-# }
+if [[ "$USER" == "r" ]]; then
+  # NVM drastically increas startup time. Move to function.
 
-# if [ -s "$HOME/.nvm/nvm.sh" ]; then
-#   export NVM_DIR="$HOME/.nvm"
-#   [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-#   alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
-#   alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
-#   alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
-# fi
+  start_nvm(){
+    unalias nvm node npm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  }
 
+  if [ -s "$HOME/.nvm/nvm.sh" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+    alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
+    alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
+    alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
+  fi
+fi
 # }}}
 
 # source ~/.zplug/init.zsh
@@ -173,17 +173,14 @@ alias z='fasd_cd -d'     # cd, same functionality as j in autojump
 alias zz='fasd_cd -d -i' # cd with interactive selection
 # }}}
 
-alias lc='colorls -r --sd'
-
 alias v='COLORTERM=tmux-256color vifm -c "vsplit"' # vi file manager
 alias man='vimman'
 
 eval "$(direnv hook zsh)"
 
-# vim: foldmethod=marker:foldlevel=0
-
-# heroku autocomplete setup
+# heroku autocomplete setup {{{
 HEROKU_AC_ZSH_SETUP_PATH=/home/r2d2/.cache/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+# }}}
 
 # asdf & rvm {{{
 if [[ "$USER" == "r" ]]; then

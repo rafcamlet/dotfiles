@@ -1,5 +1,9 @@
 [
   {
+    "name": "NvimSF",
+    "root_path": "projects/nvim-sf"
+  },
+  {
     "name": "Customeasy",
     "root_path": "projects/customease"
   },

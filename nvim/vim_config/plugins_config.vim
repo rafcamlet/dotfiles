@@ -1,4 +1,3 @@
-
 " ============ svermeulen/vim-easyclip =============
 
 let g:EasyClipEnableBlackHoleRedirect = 0
@@ -8,17 +7,7 @@ let g:EasyClipPreserveCursorPositionAfterYank = 1
 let g:EasyClipUsePasteDefaults = 0
 let g:EasyClipUseGlobalPasteToggle = 0
 
-" =========== junegunn/vim-after-object ============
-
-" augroup vim_after_object
-"   autocmd!
-"   autocmd VimEnter * call after_object#enable(']', '[', '=', ':', ',', '-')
-" augroup END
-
-
 " ================= junegunn/fzf ===================
-
-let $FZF_DEFAULT_COMMAND = 'ag -l -p ~/.agignore -g ""'
 
 nnoremap <silent> <space>oo :F<cr>
 nnoremap <silent> <space>o :F<cr>
@@ -27,12 +16,13 @@ nnoremap <silent> <space>oh :History<cr>
 nnoremap <space>ob :Buffers<cr>
 nnoremap <space>og :GFiles?<cr>
 nnoremap <space>ot  :F '' spec<cr>
-nnoremap <space>ojs :F '' app/assets<cr>
+nnoremap <space>oas :F '' app/assets<cr>
 nnoremap <space>oc  :F '' app/controllers<cr>
 nnoremap <space>om  :F '' app/models<cr>
 nnoremap <space>ov  :F '' app/views<cr>
 nnoremap <space>os  :F '' app/services<cr>
 nnoremap <space>of  :F '' spec/factories<cr>
+nnoremap <space>oa  :F '' app/concepts<cr>
 nnoremap <space>on  :FZF ~/Dropbox/notes<cr>
 nnoremap <space>o-  :F <C-r>=expand("%:h")<CR>/<CR>
 nnoremap <space>ol  :BLines<cr>
@@ -40,30 +30,12 @@ nnoremap <space>oL  :Lines<cr>
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-
 " ================ dyng/ctrlsf.vim =================
 
 "By default CtrlSF window will be opened at left, change it to right by
 let g:ctrlsf_position = 'right'
 nnoremap <space>f :CtrlSF -I -R 
 nnoremap <silent> <space>F :CtrlSFOpen<cr>
-
-
-" ================ kassio/neoterm ==================
-
-" let g:neoterm_position = 'vertical'
-" hide/close terminal
-nnoremap <silent> ,th :call neoterm#close()<cr>
-" clear terminal
-nnoremap <silent> ,tl :call neoterm#clear()<cr>
-" kills the current job (send a <c-c>)
-nnoremap <silent> ,tc :call neoterm#kill()<cr>
-nnoremap <leader>tt :Topen<cr>
-nnoremap <silent> <leader>ts :TREPLSendLine<cr>
-vnoremap <silent> <leader>ts :TREPLSendSelection<cr>
-
-" tnoremap <silent> <tab>c <c-\><c-n>:call neoterm#close()<cr>
- nnoremap <silent> <f10> :TREPLSendFile<cr>
 
 " ================ tpope/vim-rails =================
 
@@ -75,7 +47,6 @@ command! Tmigrate :T rake db:migrate
 set viminfo^=!
 let g:rails_default_file='config/database.yml'
 
-
 " ============ junegunn/vim-easy-align =============
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -85,71 +56,15 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 "]
 
-
-" ========== vim-ctrlspace/vim-ctrlspace ===========
-
-if executable('ag')
-  let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
-endif
-
-let g:CtrlSpaceSearchTiming = 500
-let g:CtrlSpaceSetDefaultMapping = 1
-let g:CtrlSpaceDefaultMappingKey = '<C-D>'
-let g:airline_exclude_preview = 1
-
-
-" =============== janko-m/vim-test =================
-
-nnoremap <leader>tf :TestFile<cr>
-nnoremap <leader>tn :TestNearest<cr>
-
-let g:test#strategy = 'neoterm'
-" let g:test#strategy = 'vimux'
-" let g:test#strategy = 'vtr'
-" let g:test#strategy = 'neovim'
-
-
-" ========== junegunn/vim-lengthmatters ============
-
-let g:lengthmatters_start_at_column = 120
-
-
 " ================== mxw/vim-jsx ===================
 
 let g:jsx_ext_required = 0
-
 
 " ============= ~/projekty/show-me-db ==============
 
 let g:ShowMeDB_default_mapping = 0
 nmap <space>db <plug>show_me_db_fzf_force
 nmap <space>gdb <plug>show_me_db_word_under_cursor_force
-
-
-" =============== mhinz/vim-grepper ================
-
-let g:grepper = {
-    \ 'tools': ['x', 'git', 'ag'],
-    \ 'x': {
-    \   'grepprg':    'ag --nogroup --nocolor --column',
-    \   'grepformat': '%f:%l:%m',
-    \   'escape':     '\+*^$()[]',
-    \ }}
-
-nnoremap <leader>ag  :Grepper -tool ag  -open -switch -grepprg ag<cr>
-nmap gs <plug>(GrepperOperator)
-xmap gs <plug>(GrepperOperator)
-
-
-" ============== Yggdroot/indentLine ===============
-
-let g:indentLine_color_term = 240
-
-
-" ============= Shougo/deoplete.nvim ===============
-
-let g:deoplete#enable_at_startup = 1
-" let g:monster#completion#rcodetools#backend = 'async_rct_complete'
 
 " ============== scrooloose/nerdtree ===============
 
@@ -160,20 +75,12 @@ augroup NERDTreeGroup
   autocmd CursorMoved NERD_tree* redraw | echo '   ' . matchstr(getline('.'), '\v\w.*')
 augroup END
 
-
 " =============== SirVer/ultisnips =================
 
 let g:UltiSnipsExpandTrigger='<C-j>'
 let g:UltiSnipsJumpForwardTrigger='<C-j>'
 let g:UltiSnipsJumpBackwardTrigger='<C-k>'
 let g:UltiSnipsEditSplit='vertical'
-
-
-" ==== othree/javascript-libraries-syntax.vim ======
-
-let g:used_javascript_libs = 'underscore,jquery,angularjs,angularui'
-
-
 
 " =================== w0rp/ale =====================
 
@@ -218,34 +125,9 @@ nmap <silent> <tab>k <Plug>(ale_previous_wrap)
 nmap <silent> <tab>j <Plug>(ale_next_wrap)
 nnoremap <tab>a :ALEFix<cr>
 
-
 " ============ ryanoasis/vim-devicons ==============
 
 autocmd FileType nerdtree setlocal nolist
-
-" ============ plasticboy/vim-markdown =============
-
-" let g:vim_markdown_folding_disabled = 1
-
-
-
-" ======== autozimu/LanguageClient-neovim ==========
-
-let g:LanguageClient_serverCommands = {
-      \ 'ruby': ['tcp://localhost:7658'],
-      \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-      \ }
-
-
-      " \ 'javascript': ['javascript-typescript-stdio'],
-      " \ 'javascript.jsx': ['javascript-typescript-stdio'],
-      " \ 'typescript': ['javascript-typescript-stdio'],
-
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <tab>s :call LanguageClient_textDocument_documentSymbol()<cr>
-nnoremap <silent> <space>ld :call LanguageClient_textDocument_definition()<CR>
-
 
 " =============== vim-ruby/vim-ruby ================
 
@@ -253,19 +135,11 @@ let g:ruby_indent_assignment_style = 'variable'
 let g:ruby_indent_block_style = 'do'
 let g:ruby_operators = 1
 
-
-" ========= haya14busa/vim-signjk-motion ===========
-
-map <space>j <Plug>(signjk-j)
-map <space>k <Plug>(signjk-k)
-
-
 " =========== AndrewRadev/splitjoin.vim ============
 
 let g:splitjoin_ruby_curly_braces = 0
 let g:splitjoin_ruby_hanging_args = 0
 let g:splitjoin_html_attributes_bracket_on_new_line = 1
-
 
 " ======== nathanaelkane/vim-indent-guides =========
 
@@ -274,7 +148,6 @@ let g:indent_guides_auto_colors = 0
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'my-note', '', 'whid']
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=233
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=234
-
 
 " ============= itchyny/lightline.vim ==============
 
@@ -342,13 +215,10 @@ let &updatetime = 300
 
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.js,*.vue'
 
-
 " ============== tpope/vim-markdown ================
 
 hi markdownBold ctermfg=203 cterm=bold
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ruby']
-
-
 
 " ======= thiagoalessio/rainbow_levels.vim =========
 
@@ -378,13 +248,7 @@ let g:rainbow_levels = [
 
 " ================ vimwiki/vimwiki =================
 
-let g:vimwiki_list = [{'path': '~/workdir/vim_wiki'}]
-
-" =============== reedes/vim-wheel =================
-
-let g:wheel#map#up   = '<c-y>'
-let g:wheel#map#down = '<c-e>'
-
+let g:vimwiki_list = [{'path': '~/Dropbox/vim_wiki'}]
 
 " ============ Valloric/MatchTagAlways =============
 
@@ -403,7 +267,6 @@ let g:mta_use_matchparen_group = 0
 
 " let g:rooter_manual_only = 1
 
-
 " =========== easymotion/vim-easymotion ============
 
 " map <space>l <Plug>(easymotion-lineforward)
@@ -415,25 +278,6 @@ nmap s <Plug>(easymotion-overwin-f2)
 
 " let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
 let g:EasyMotion_smartcase = 1
-
-
-" ======== haya14busa/incsearch-fuzzy.vim ==========
-
-map z/ <Plug>(incsearch-fuzzy-/)
-map z? <Plug>(incsearch-fuzzy-?)
-map zg/ <Plug>(incsearch-fuzzy-stay)
-
-" =================== ncm2/ncm2 ====================
-
-" let g:ncm2#complete_delay = 100
-" set completeopt=noinsert,menuone,noselect
-"
-" augroup ncm2_config
-"   autocmd!
-"   " autocmd BufRead,BufEnter * call ncm2#enable_for_buffer()
-" augroup END
-"
-" set shortmess+=c
 
 " ============= Raimondi/delimitMate ===============
 
@@ -460,7 +304,6 @@ endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
 
 " =============== majutsushi/tagbar ================
 
@@ -503,43 +346,6 @@ let g:tagbar_type_vue = {
       \ 'kind2scope' : { 's' : 'styleclass', 'S': 'style'},
       \ 'scope2kind' : { 'styleclass' : 's', 'style': 'S' },
       \}
-
-" ============= svermeulen/vim-yoink ===============
-
-" nmap <c-n> <plug>(YoinkPostPasteSwapBack)
-" nmap <c-p> <plug>(YoinkPostPasteSwapForward)
-
-" nmap p <plug>(YoinkPaste_p)
-" nmap P <plug>(YoinkPaste_P)
-
-" let g:yoinkSavePersistentl = 1
-" let g:yoinkMoveCursorToEndOfPaste = 1
-
-
-" =========== svermeulen/vim-subversive ============
-
-" s for substitute
-" nmap s <plug>(SubversiveSubstitute)
-" nmap ss <plug>(SubversiveSubstituteLine)
-" nmap S <plug>(SubversiveSubstituteToEndOfLine)
-" xmap p ygv<plug>(SubversiveSubstitute)<c-n>
-" xmap P ygv<plug>(SubversiveSubstitute)<c-n>
-nmap <space>s <plug>(SubversiveSubstituteRange)
-" xmap <space>s <plug>(SubversiveSubstituteRange)
-
-
-" =========== terryma/vim-expand-region ============
-
-" map K <Plug>(expand_region_expand)
-" map J <Plug>(expand_region_shrink)
-
-let g:expand_region_text_objects = {
-      \ 'a{'  :1,
-      \ }
-
-" ================ mbbill/undotree =================
-
-nnoremap <space><space>h :UndotreeToggle<cr>
 
 " =============== jreybert/vimagit =================
 
@@ -657,15 +463,6 @@ nmap <tab>h <Plug>GitGutterPrevHunk
 
 nnoremap <space>g :Whid<cr>
 
-
-" ========= philip-karlsson/aerojump.nvim ==========
-
-" nmap <space>s <Plug>(AerojumpSpace)
-" nmap <leader>ab <Plug>(AerojumpBolt)
-" nmap <leader>aa <Plug>(AerojumpFromCursorBolt)
-" nmap <leader>ad <Plug>(AerojumpDefault)
-
-
 " ============ mg979/vim-visual-multi ==============
 
 " let g:VM_theme = 'iceblue'
@@ -708,11 +505,9 @@ let g:devdocs_filetype_map = {
     \   'javascript.test': 'chai',
     \ }
 
-
 " =============== kkoomen/vim-doge =================
 
 let g:doge_mapping = "<leader>d"
-
 
 " ============= andymass/vim-matchup ===============
 
@@ -720,7 +515,6 @@ augroup vim-matchup-custom
   autocmd!
   autocmd FileType ruby let b:match_words = '\<\%(if\|unless\|case\|while\|until\|for\|do\|class\|module\|def\|begin\)\>=\@!:\<\%(else\|elsif\|ensure\|when\|rescue\|break\|redo\|next\|retry\)\>:\%(^\|[^.\:@$]\)\@<=\<end\:\@!\>,{:},\[:\],(:)'
 augroup END
-
 
 " ============= voldikss/vim-floaterm ==============
 
