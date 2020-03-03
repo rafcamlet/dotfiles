@@ -16,7 +16,7 @@ nnoremap <silent> <space>oh :History<cr>
 nnoremap <space>ob :Buffers<cr>
 nnoremap <space>og :GFiles?<cr>
 nnoremap <space>ot  :F '' spec<cr>
-nnoremap <space>oas :F '' app/assets<cr>
+" nnoremap <space>oas :F '' app/assets<cr>
 nnoremap <space>oc  :F '' app/controllers<cr>
 nnoremap <space>om  :F '' app/models<cr>
 nnoremap <space>ov  :F '' app/views<cr>

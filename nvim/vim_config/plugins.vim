@@ -57,6 +57,7 @@ Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no 
 
 " TEST plugin ==================
 
+Plug 'pechorin/any-jump.nvim'
 " Plug 'kyazdani42/nvim-tree.lua'
 Plug 'vimwiki/vimwiki'
 Plug 'sbdchd/neoformat'
