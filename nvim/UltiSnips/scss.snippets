@@ -1,0 +1,12 @@
+snippet imedia
+@include media("<tablet") {
+	width: 100vw;
+	margin: 20px;
+}
+endsnippet
+
+snippet media
+@media only screen and (max-width: $1) {
+	$0
+}
+endsnippet

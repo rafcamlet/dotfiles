@@ -136,9 +136,10 @@ mode "resize" {
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
         bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym l resize grow height 10 px or 10 ppt
+        bindsym h resize shrink height 10 px or 10 ppt
+        bindsym k resize grow width 10 px or 10 ppt
+        # bindsym semicolon resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -167,6 +168,7 @@ bindsym $mod+shift+p exec nautilus
 bindsym $mod+Shift+e exec i3-msg exit
 
 new_window none
+# default_border none
 
 exec --no-startup-id nm-applet
 exec_always --no-startup-id killall polybar ; polybar my &
@@ -202,8 +204,14 @@ for_window [instance="scratchpad_st"] border pixel 3
 
 bindsym $mod+u [instance="scratchpad_st"] scratchpad show; [instance="scratchpad_st"] move position center
 
+# Make the currently focused window a scratchpad
+bindsym $mod+minus move scratchpad
+
 exec --no-startup-id st -n scratchpad_st -e tmux
 exec --no-startup-id dropbox start &>/dev/null &
 
 exec --no-startup-id flameshot
 bindsym Insert exec "flameshot gui"
+
+bindsym $mod+Shift+Mod4+0 mark "alpha", move scratchpad
+bindsym $mod+Mod4+0 [con_mark="alpha"] scratchpad show

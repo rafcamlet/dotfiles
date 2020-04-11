@@ -5,7 +5,11 @@
   },
   {
     "name": "Customeasy",
-    "root_path": "projects/customease"
+    "root_path": "projects/customease",
+    "settings": {
+    "path": ".,app/**,app/javascript,,",
+    "suffixesadd": ".js,.vue"
+    }
   },
   {
     "name": "Blog",

@@ -309,4 +309,17 @@ function! Camelcase(word)
     return substitute(word,'\C\(_\)\=\(.\)','\=submatch(1)==""?tolower(submatch(2)) : toupper(submatch(2))','g')
   endif
 endfunction
+
+function! Snakecase(word)
+  let word = substitute(a:word,'::','/','g')
+  let word = substitute(word,'\(\u\+\)\(\u\l\)','\1_\2','g')
+  let word = substitute(word,'\(\l\|\d\)\(\u\)','\1_\2','g')
+  let word = substitute(word,'[.-]','_','g')
+  let word = tolower(word)
+  return word
+endfunction
+
+function! Kebabcase(word)
+  return substitute(Snakecase(a:word),'_','-','g')
+endfunction
 " }}}

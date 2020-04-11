@@ -1,3 +1,7 @@
+snippet asdf
+${0:`!v luaeval('p("asdf")')`}
+endsnippet
+
 snippet def "wrap funciont definition" b
 def $1
 	${0:${VISUAL}}
@@ -130,4 +134,8 @@ module ${1:`!v Mixedcase(expand('%:h:h:t'))`}::Cell
 		alias $0 model
 	end
 end
+endsnippet
+
+snippet m
+$1: $1$0
 endsnippet

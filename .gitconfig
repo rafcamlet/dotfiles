@@ -2,6 +2,7 @@
   email = raf.camlet@gmail.com
   name = Rafał Camlet
 [alias]
+  pop = stash pop
   co = checkout
   purr = pull --rebase
   sth = stash -u

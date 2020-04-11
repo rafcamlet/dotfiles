@@ -46,8 +46,13 @@ function! SetupEnvironment()
     let l:path = expand('%:p')
   endif
 
+  if l:debug | echom 'l:path: ' . l:path  | endif
+
   for l:project in g:projects
     if l:path =~? l:project['root_path']
+
+      if l:debug | echom 'Project ' . get(l:project, 'name', 'name not provided')  | endif
+
       let g:rooter_manual_only = 1
       let l:project_found = 1
       for l:mapping in get(l:project, 'mappings', [])

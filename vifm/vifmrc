@@ -59,11 +59,11 @@ set novimhelp
 " If you would like to run an executable file when you
 " press return on the file name set this.
 
-set norunexec
+set runexec
 
 " Selected color scheme
 
-colorscheme Default
+" colorscheme Default
 
 " Format for displaying time in file list. For example:
 " TIME_STAMP_FORMAT=%m/%d-%H:%M
@@ -92,7 +92,7 @@ set smartcase
 
 " Don't highlight search results automatically
 
-set nohlsearch
+set hlsearch
 
 " Use increment searching (search while typing)
 set incsearch
@@ -400,10 +400,10 @@ set vifminfo=dhistory,savedirs,chistory,state,tui,shistory,
 " Sample mappings
 
 " Start shell in current directory
-nnoremap s :shell<cr>
+" nnoremap s :shell<cr>
 
 " Display sorting dialog
-nnoremap S :sort<cr>
+nnoremap s :sort<cr>
 
 " Toggle visibility of preview window
 nnoremap w :view<cr>
@@ -423,7 +423,7 @@ nnoremap cc cw<c-u>
 nnoremap A cw
 
 " Open console in current directory
-nnoremap ,t :!xterm &<cr>
+nnoremap ,t :!gnome-terminal &<cr>
 
 " Open editor to edit vifmrc and apply settings after returning to vifm
 nnoremap ,c :write | edit $MYVIFMRC | restart<cr>
@@ -482,6 +482,7 @@ nnoremap yd :!printf %d | xclip -i -selection clipboard %i<cr>
 
 " Yank current file path into the clipboard
 nnoremap yf :!printf %c:p | xclip -i -selection clipboard %i<cr>
-command! nvr :!nvr --nostart --remote-tab-silent %c && tmux kill-pane &
 
 colorscheme molokai
+
+vsplit

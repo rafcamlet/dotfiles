@@ -52,18 +52,23 @@ if executable('node')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'wellle/tmux-complete.vim'
 endif
-Plug 'simeji/winresizer'
+" Plug 'simeji/winresizer'
 Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no default mappings
 
 " TEST plugin ==================
-
+Plug 'vifm/vifm.vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-colorscheme-switcher'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'skywind3000/vim-quickui'
 Plug 'pechorin/any-jump.nvim'
 " Plug 'kyazdani42/nvim-tree.lua'
 Plug 'vimwiki/vimwiki'
 Plug 'sbdchd/neoformat'
 Plug 'voldikss/vim-floaterm'
 Plug 'simnalamburt/vim-mundo'
-Plug 'bfredl/nvim-luadev'
+" Plug 'bfredl/nvim-luadev'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " Plug 'neovim/nvim-lsp'
 Plug 'Asheq/close-buffers.vim' "Quickly close (bdelete) several buffers at once closed_book
@@ -147,7 +152,7 @@ Plug 'easymotion/vim-easymotion'
 
 "Plug 'brettanomyces/nvim-terminus'
 "Plug 'brettanomyces/nvim-editcommand'
-" Plug 'metakirby5/codi.vim'
+Plug 'metakirby5/codi.vim'
 
 
 "" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
@@ -198,5 +203,7 @@ Plug '~/projects/vim-what-i-have-done'
 Plug '~/projects/vim-filelist'
 Plug '~/projects/vim-my-note'
 Plug '~/projects/nvim-sf'
+Plug '~/projects/nvim-luapad'
+Plug '~/projects/nvim-languagetool'
 
 call plug#end()

@@ -34,7 +34,7 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 "By default CtrlSF window will be opened at left, change it to right by
 let g:ctrlsf_position = 'right'
-nnoremap <space>f :CtrlSF -I -R 
+nnoremap <space>f :CtrlSF -I -R
 nnoremap <silent> <space>F :CtrlSFOpen<cr>
 
 " ================ tpope/vim-rails =================
@@ -71,7 +71,7 @@ nmap <space>gdb <plug>show_me_db_word_under_cursor_force
 nnoremap <c-g><c-g> :NERDTreeToggle<cr>
 nnoremap <c-g><c-f> :NERDTreeFind<cr>
 augroup NERDTreeGroup
-  autocmd BufEnter NERD_tree* setlocal cursorline 
+  autocmd BufEnter NERD_tree* setlocal cursorline
   autocmd CursorMoved NERD_tree* redraw | echo '   ' . matchstr(getline('.'), '\v\w.*')
 augroup END
 
@@ -89,7 +89,7 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_ruby_flag = 0
 let g:ale_lint_delay = 500
 
-let g:ale_linters = { 'ruby': ['ruby'], 'vue': ['eslint'] }
+let g:ale_linters = { 'ruby': ['ruby'], 'vue': ['eslint'], 'vimwiki': [] }
 
 function! ChangeRubyLinters()
   if g:ale_ruby_flag
@@ -146,8 +146,8 @@ let g:splitjoin_html_attributes_bracket_on_new_line = 1
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'my-note', '', 'whid']
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=233
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=234
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=233
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=234
 
 " ============= itchyny/lightline.vim ==============
 
@@ -224,31 +224,46 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ruby']
 
 nnoremap <silent> <tab>r :RainbowLevelsToggle<cr>
 
-let g:rainbow_levels = [
-    \{'ctermfg': 84,  'guifg': '#50fa7b'},
-    \{'ctermfg': 117, 'guifg': '#8be9fd'},
-    \{'ctermfg': 61,  'guifg': '#6272a4'},
-    \{'ctermfg': 212, 'guifg': '#ff79c6'},
-    \{'ctermfg': 203, 'guifg': '#ffb86c'},
-    \{'ctermfg': 228, 'guifg': '#f1fa8c'},
-    \{'ctermfg': 15,  'guifg': '#f8f8f2'},
-    \{'ctermfg': 59,  'guifg': '#6b4e32'}]
-    " \{'ctermfg': 231, 'guifg': '#525563'}]
-
 " let g:rainbow_levels = [
-"     \{'ctermfg': 185, 'guifg': '#d9d762'},
-"     \{'ctermfg': 109, 'guifg': '#86b4bb'},
-"     \{'ctermfg': 67,  'guifg': '#6c99bb'},
-"     \{'ctermfg': 98,  'guifg': '#8856d2'},
-"     \{'ctermfg': 203, 'guifg': '#ef5d32'},
-"     \{'ctermfg': 215, 'guifg': '#efac32'},
-"     \{'ctermfg': 188, 'guifg': '#e6e1c4'},
+"     \{'ctermfg': 84,  'guifg': '#50fa7b'},
+"     \{'ctermfg': 117, 'guifg': '#8be9fd'},
+"     \{'ctermfg': 61,  'guifg': '#6272a4'},
+"     \{'ctermfg': 212, 'guifg': '#ff79c6'},
+"     \{'ctermfg': 203, 'guifg': '#ffb86c'},
+"     \{'ctermfg': 228, 'guifg': '#f1fa8c'},
+"     \{'ctermfg': 15,  'guifg': '#f8f8f2'},
 "     \{'ctermfg': 59,  'guifg': '#6b4e32'}]
+"     " \{'ctermfg': 231, 'guifg': '#525563'}]
+
+let g:rainbow_levels = [
+    \{'ctermfg': 185, 'guifg': '#d9d762'},
+    \{'ctermfg': 109, 'guifg': '#86b4bb'},
+    \{'ctermfg': 67,  'guifg': '#6c99bb'},
+    \{'ctermfg': 98,  'guifg': '#8856d2'},
+    \{'ctermfg': 203, 'guifg': '#ef5d32'},
+    \{'ctermfg': 215, 'guifg': '#efac32'},
+    \{'ctermfg': 188, 'guifg': '#e6e1c4'},
+    \{'ctermfg': 59,  'guifg': '#6b4e32'}]
 
 
 " ================ vimwiki/vimwiki =================
 
-let g:vimwiki_list = [{'path': '~/Dropbox/vim_wiki'}]
+let g:vimwiki_list = [{'path': '~/Dropbox/vim_wiki',
+      \ 'syntax': 'markdown', 'ext': '.md'}]
+
+nmap ) <Plug>VimwikiToggleListItem
+vmap ) <Plug>VimwikiToggleListItem
+
+nnoremap <plug>MyVimwikiIncreaseLvlWholeItem :VimwikiListChangeLvl increase 1<CR>:call repeat#set("\<Plug>MyVimwikiIncreaseLvlWholeItem")<CR>
+map gl <Plug>MyVimwikiIncreaseLvlWholeItem
+
+nnoremap <plug>MyVimwikidecreaseLvlWholeItem :VimwikiListChangeLvl decrease 1<CR>:call repeat#set("\<Plug>MyVimwikidecreaseLvlWholeItem")<CR>
+map gh <Plug>MyVimwikidecreaseLvlWholeItem
+
+" map <c-enter> <Plug>VimwikiFollowLink
+
+" autocmd BufEnter */*.md echom '5wow!'
+" autocmd BufEnter *vim_wiki* lua print('asdf')
 
 " ============ Valloric/MatchTagAlways =============
 
@@ -349,8 +364,7 @@ let g:tagbar_type_vue = {
 
 " =============== jreybert/vimagit =================
 
-nnoremap <space><space>g :Magit<cr>
-
+" nnoremap <space><space>g :Magit<cr>
 
 " =============== neoclide/coc.nvim ================
 
@@ -400,6 +414,11 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
 " Use `:Format` for format current buffer
 command! -nargs=0 Format :call CocAction('format')
 
@@ -440,8 +459,8 @@ map <silent><c-n> <Plug>(miniyank-cycleback)
 
 " ============== tpope/vim-fugitive ================
 
-nnoremap <space>gw :Gwrite<cr> 
-nnoremap <space>gs :Gstatus<cr> 
+nnoremap <space>gw :Gwrite<cr>
+nnoremap <space>gs :Gstatus<cr>
 nnoremap <space>gv :Gvsplit :%<left><left>
 nnoremap <space>gp :Gvsplit production:%<cr>
 nnoremap <space>gb :Gblame<cr>
@@ -485,6 +504,10 @@ let g:VM_maps['Visual Cursors']              = '<space>'
 let g:VM_maps['Switch Mode']                 = 'v'
 let g:VM_maps['Visual Regex']                = '/'
 
+autocmd User visual_multi_start nnoremap <c-l> l
+autocmd User visual_multi_start nnoremap <c-h> h
+autocmd User visual_multi_exit nnoremap  <c-l> :TmuxNavigateRight<CR>
+autocmd User visual_multi_exit nnoremap  <c-h> :TmuxNavigateLeft<CR>
 
 " =========== leafOfTree/vim-vue-plugin ============
 
@@ -520,3 +543,42 @@ augroup END
 
 let g:floaterm_position = 'center'
 let g:floaterm_keymap_new = '<space>t'
+
+
+" ============ skywind3000/vim-quickui =============
+
+" clear all the menus
+call quickui#menu#reset()
+
+" script inside %{...} will be evaluated and expanded in the string
+call quickui#menu#install("&Option", [
+			\ ['Set &Spell %{&spell? "Off":"On"}', 'set spell!'],
+			\ ['Set &Cursor Line %{&cursorline? "Off":"On"}', 'set cursorline!'],
+			\ ['Set &Paste %{&paste? "Off":"On"}', 'set paste!'],
+			\ ])
+
+call quickui#menu#install('&Wiki', [
+			\ ["Index", 'VimwikiIndex', ''],
+			\ ['T&ips', 'help tips', ''],
+			\ ['--',''],
+			\ ["&Tutorial", 'help tutor', ''],
+			\ ['&Quick Reference', 'help quickref', ''],
+			\ ['&Summary', 'help summary', ''],
+			\ ])
+
+
+call quickui#menu#install('&Plugins', [
+			\ ["&Magit", 'Magit', 'S-tage'],
+			\ ], 10000)
+
+" enable to display tips in the cmdline
+let g:quickui_show_tip = 1
+let g:quickui_color_scheme = 'papercol dark'
+let g:quickui_border_style = 2
+" hit space twice to open menu
+noremap <space><space> :call quickui#menu#open()<cr>
+
+
+
+" ================ xolox/vim-misc ==================
+

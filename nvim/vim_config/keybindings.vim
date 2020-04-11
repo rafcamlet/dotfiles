@@ -70,11 +70,6 @@ vnoremap . :normal .<CR>
 " repeat q macro for selected lines
 vnoremap @ :normal! @q<CR>
 
-" put last yanked text
-" nnoremap <c-p> "0p
-" vnoremap <c-p> "0p
-" inoremap <c-p> <c-r>0
-
 " tab mappings
 nnoremap   <space>1      1gt
 nnoremap   <space>2      2gt
@@ -100,8 +95,9 @@ nnoremap <silent> * :set hls<cr>*``
 
 " moving aroung in command mode
 cnoremap <c-h> <left>
-cnoremap <c-j> <down>
-cnoremap <c-k> <up>
+cnoremap <expr> <c-j> pumvisible() ? "<right>" : "<down>"
+cnoremap <expr> <c-k> pumvisible() ? "<left>" : "<up>"
+" set wildcharm=<c-n>
 cnoremap <c-l> <right>
 cnoremap <c-a> <home>
 cnoremap <c-0> <end>
@@ -116,11 +112,4 @@ nnoremap cP :CopyAbsolutePath<cr>
 command! CopyPath let @+ = expand("%")
 nnoremap cp :CopyPath<cr>
 
-nnoremap <nowait> <space>d :Sff 
-vnoremap <nowait> <space>d y:Sff <c-r>"<cr>
-
 vnoremap c "_c
-nnoremap <silent> \r :setf ruby<cr>
-
-" repeat last command
-noremap <space>w @:<CR>

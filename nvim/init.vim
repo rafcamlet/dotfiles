@@ -10,9 +10,9 @@ runtime vim_config/scripts.vim
 " runtime vim_config/ruby_lib.vim
 " runtime vim_config/custom_start_window.vim
 runtime vim_config/tabline.vim
-runtime vim_config/standup.vim
+" runtime vim_config/standup.vim
 runtime vim_config/projects.vim
-runtime vim_config/saved_commands.vim
+" runtime vim_config/saved_commands.vim
 
 " Lua
 
@@ -31,8 +31,34 @@ lua require 'regex_jump'
 "====================================
 "
 
+" :e ~/.config/nvim/bundle/shadowmoth/colors/shadowmoth.vim
+" colorscheme sierra
+" colorscheme gruvbox
+" colorscheme seoul256
+
+hi Normal ctermfg=137 ctermbg=235 guifg=#dadada guibg=#121212
+
+nnoremap <nowait> <space>b :e app/assets/stylesheets/base.scss<cr>
+
+nnoremap <space>oj :F '' app/javascript<cr>
+nnoremap <nowait> <space>d :SF 
 nnoremap <leader>zsh :e ~/.zshrc<cr>
 nnoremap <space>oa :F '' app/concepts<cr>
+
+lua << EOF
+ncolor = 0
+
+function nextc(nr)
+  ncolor = ncolor + nr
+  local command = 'hi Normal ctermfg=137 ctermbg='.. ncolor .. ' guifg=#dadada guibg=#121212'
+  vim.api.nvim_command(command)
+  p(command)
+end
+EOF
+
+nnoremap <nowait> <f2> :lua nextc(1)<cr>
+nnoremap <nowait> <f1> :lua nextc(-1)<cr>
+
 
 function Inc()
   let @x = @x + 1
@@ -40,35 +66,6 @@ function Inc()
 endfunction
 
 nnoremap ge :CocCommand explorer<CR>
-
-" Another FZF float
-" let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
-" let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
-" let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-
-" function! FloatingFZF()
-"   let buf = nvim_create_buf(v:false, v:true)
-"   call setbufvar(buf, '&signcolumn', 'no')
-
-"   let height = float2nr(10)
-"   let width = float2nr(80)
-"   let horizontal = float2nr((&columns - width) / 2)
-"   let vertical = 1
-
-"   let opts = {
-"         \ 'relative': 'editor',
-"         \ 'row': vertical,
-"         \ 'col': horizontal,
-"         \ 'width': width,
-"         \ 'height': height,
-"         \ 'style': 'minimal'
-"         \ }
-
-"   call nvim_open_win(buf, v:true, opts)
-" endfunction
-" nnoremap <silent> <space>p :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
-
-" nnoremap <c-t><c-n> :vnew<cr>
 
 " scrollbind
 nnoremap yob :set scb!<cr>
@@ -95,49 +92,6 @@ nnoremap yob :set scb!<cr>
 "   call nvim_open_win(buf, v:true, opts)
 " endfunction
 
-" Floating Term
-let s:float_term_border_win = 0
-let s:float_term_win = 0
-function! FloatTerm()
-  " Configuration
-  let height = float2nr((&lines - 2) * 0.6)
-  let row = float2nr((&lines - height) / 2)
-  let width = float2nr(&columns * 0.6)
-  let col = float2nr((&columns - width) / 2)
-  " Border Window
-  let border_opts = {
-        \ 'relative': 'editor',
-        \ 'row': row - 1,
-        \ 'col': col - 2,
-        \ 'width': width + 4,
-        \ 'height': height + 2,
-        \ 'style': 'minimal'
-        \ }
-  let border_buf = nvim_create_buf(v:false, v:true)
-  let s:float_term_border_win = nvim_open_win(border_buf, v:true, border_opts)
-  " Terminal Window
-  let opts = {
-        \ 'relative': 'editor',
-        \ 'row': row,
-        \ 'col': col,
-        \ 'width': width,
-        \ 'height': height,
-        \ 'style': 'minimal'
-        \ }
-  let buf = nvim_create_buf(v:false, v:true)
-  let s:float_term_win = nvim_open_win(buf, v:true, opts)
-  " Styling
-  hi FloatTermNormal term=None guibg=#2d3d45
-  call setwinvar(s:float_term_border_win, '&winhl', 'Normal:FloatTermNormal')
-  call setwinvar(s:float_term_win, '&winhl', 'Normal:FloatTermNormal')
-  terminal
-  startinsert
-  " Close border window when terminal window close
-  autocmd CursorMoved * ++once call nvim_win_close(s:float_term_border_win, v:true)
-endfunction
-command! FloatTerm call FloatTerm()
-
-
 augroup VIMRC
     autocmd!
     autocmd BufLeave *.css,*.scss normal! mC
@@ -147,21 +101,10 @@ augroup VIMRC
     autocmd BufLeave *.yml,*.yaml normal! mY
     autocmd BufLeave *.vue        normal! mV
     autocmd BufLeave .env*        normal! mE
+    autocmd BufLeave *.rb         normal! mR
 augroup END
 
-nnoremap <silent> <space>ob :call fzf#vim#grep('rg --column --line-number --no-heading --color=always ' . "\"^\\s+name: '[a-zA-Z-]+?'\"" . ' src/components', 0)<cr>
 
-nnoremap <space>w <esc>:w<cr>
-function! HlThis()
-  highlight LineMatch term=bold cterm=bold gui=bold ctermfg=red
-  if exists('b:line_hl_match')
-    call matchdelete(b:line_hl_match)
-  end
-  let b:line_hl_match = matchadd('LineMatch', '\%' . line('.') . 'l')
-endfunction
-nnoremap <space>h :call HlThis()<cr>
-
-nnoremap <nowait> <space>s <esc>:syntax sync fromstart<cr>
 inoremap kj <esc>`^
 nnoremap <c-]> g<c-]>
 
@@ -355,16 +298,6 @@ command! RCursor :set guicursor=n-v-c-i:block
 
 let g:incsearch#magic = '\v' " very magic
 
-function! Pisz()
-  set textwidth=100
-  call lexical#init()
-  call pencil#init({'wrap': 'hard'})
-  set whichwrap=
-  set spelllang=pl,en
-endfunction
-
-command! Pisz call Pisz()<cr>
-
 nnoremap ,hi :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">" . " FG:" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
 
 function! ShowInOtherBranch(branch_name)
@@ -378,7 +311,6 @@ endfunction
 
 command! -nargs=1 SB :call ShowInOtherBranch(<f-args>)<cr>
 
-
 function! EditTest()
   let l:path = expand('%')
   let l:path = substitute(l:path, '^app', 'spec', '')
@@ -387,11 +319,6 @@ function! EditTest()
 endfunction
 
 command! EditTest call EditTest()
-
-"   function! Insert(str)
-"     let l:line =  getline('.')
-"     call setline(line('.'), l:line[0:col('.')-2] . a:str . l:line[col('.')-1:])
-"   endfunction
 
 function! ResizeMode()
   redraw!
