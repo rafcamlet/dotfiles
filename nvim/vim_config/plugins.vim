@@ -56,6 +56,8 @@ endif
 Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no default mappings
 
 " TEST plugin ==================
+Plug 'ripxorip/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'tomtom/tcomment_vim'
 Plug 'vifm/vifm.vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-colorscheme-switcher'

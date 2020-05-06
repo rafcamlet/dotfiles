@@ -61,3 +61,38 @@ ${1:${VISUAL}}($2) {
 	$0
 },
 endsnippet
+
+snippet class
+class="`!v Kebabcase(expand("%:t:r"))`__$0"
+endsnippet
+
+snippet .class "" i
+.`!v Kebabcase(expand("%:t:r"))`$0
+endsnippet
+
+snippet vmodal
+<template>
+	<transition name="modal">
+		<div class="`!v Kebabcase(expand("%:t:r"))` modal mmodal">
+			<div class="modal-mask">
+				<div class="modal-wrapper" @click.self="$emit('close')">
+					<div class="`!v Kebabcase(expand("%:t:r"))`__container modal-container">
+						<div class="`!v Kebabcase(expand("%:t:r"))`__header modal-header space-between acenter flex">
+							<h2>Modal name</h2>
+							<cXbutton @click.native="$emit('close')" />
+						</div>
+						<div class="`!v Kebabcase(expand("%:t:r"))`__body modal-body">
+							Modal content
+						</div>
+						<div class="`!v Kebabcase(expand("%:t:r"))`__footer modal-footer flex jcenter mt25">
+							<cButton >
+								Button
+							</cButton>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</transition>
+</template>
+endsnippet

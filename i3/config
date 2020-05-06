@@ -94,7 +94,7 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+shift+a focus child
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -188,6 +188,7 @@ exec --no-startup-id i3-msg 'workspace 3; exec gnome-terminal; workspace 2'
 
 assign [class="Google-chrome"] 2
 
+for_window [instance="simplescreenrecorder"] floating enable
 
 for_window [instance="scratchpad_*"] floating enable
 for_window [instance="scratchpad_*"] move scratchpad
@@ -215,3 +216,12 @@ bindsym Insert exec "flameshot gui"
 
 bindsym $mod+Shift+Mod4+0 mark "alpha", move scratchpad
 bindsym $mod+Mod4+0 [con_mark="alpha"] scratchpad show
+
+
+# read 1 character and mark the current window with this character
+bindsym $mod+n exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
+# read 1 character and go to the window with the character
+bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
+
+bindsym $mod+shift+m exec google-chrome --profile-directory="Profile 1" https://music.youtube.com/watch?v=RuOz0eczaMQ&list=LM
+for_window [title="YouTube Music"] move container to workspace 10

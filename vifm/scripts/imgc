@@ -2,7 +2,7 @@
 
 W3MIMGDISPLAY="/usr/libexec/w3m/w3mimgdisplay"
 FONTH=15 # Size of one terminal row
-FONTW=7 # Size of one terminal column
+FONTW=11 # Size of one terminal column
 
 X=$1
 Y=$2

@@ -92,7 +92,7 @@ set smartcase
 
 " Don't highlight search results automatically
 
-set hlsearch
+set nohlsearch
 
 " Use increment searching (search while typing)
 set incsearch
@@ -470,7 +470,6 @@ fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
          \ imgt %px %py %pw %ph %c
          \ %pc
          \ imgc %px %py %pw %ph
-
 
 fileview */ tree %c
 fileviewer *[^/] bat -n --color always --theme=OneHalfDark %c

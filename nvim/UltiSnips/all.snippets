@@ -15,3 +15,25 @@ snippet rwhere "regexp where"
 where('$1 ~* ?', '$0')
 endsnippet
 
+
+snippet wow
+${1:Text}`!p snip.rv = (75-2*len(t[1]))*' '+t[1].upper()`
+endsnippet
+
+
+snippet "be(gin)?( (\S+))?" "begin{} / end{}" br
+\begin{${1:`!p
+snip.rv = match.group(3) if match.group(2) is not None else "something"`}}
+    ${2:${VISUAL}}
+\end{$1}$0
+endsnippet
+
+
+snippet "(\w+).par" "Parenthesis (postfix)" r
+(`!p snip.rv = match.group(1)`$1)$0
+endsnippet
+
+snippet asdf 
+${1|a,b|}
+${2|c,d|}
+endsnippet

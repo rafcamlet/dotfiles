@@ -4,7 +4,7 @@
 
 W3MIMGDISPLAY="/usr/lib/w3m/w3mimgdisplay"
 FONTH=15 # Size of one terminal row
-FONTW=9 # Size of one terminal column
+FONTW=11 # Size of one terminal column
 
 X=$1
 Y=$2
@@ -19,7 +19,7 @@ if [ -z "$width" -o -z "$height" ]; then
 fi
 
 x=$((FONTW * X))
-y=$((FONTH * Y + 20))
+y=$((FONTH * Y))
 
 max_width=$((FONTW * COLUMNS))
 max_height=$((FONTH * LINES))

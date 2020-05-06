@@ -20,6 +20,7 @@ runtime vim_config/projects.vim
 " lua require 'projects'
 lua require 'helper'
 lua require 'regex_jump'
+lua require 'jumper'
 
 " JSON store:
 " vim_config/json/projects.json
@@ -30,6 +31,18 @@ lua require 'regex_jump'
 "---------Testing_new_features-------
 "====================================
 "
+
+nnoremap <tab>1 /\v\<template\><cr>nzt
+nnoremap <tab>2 /\v\<script\><cr>nzt
+nnoremap <tab>3 /\v\<style<cr>nzt
+
+vmap <c-e> <c-y>,
+imap <c-e> <c-y>,
+
+nnoremap <space>l :ls<cr>:b<space>
+
+set jumpoptions=stack
+nnoremap <tab>t :TagbarToggle<cr>
 
 " :e ~/.config/nvim/bundle/shadowmoth/colors/shadowmoth.vim
 " colorscheme sierra
@@ -341,8 +354,8 @@ augroup leave_window
   autocmd BufWinLeave * let g:last_buff = bufnr('%')
 augroup END
 
-command! Restore exec 'vnew | ' . g:last_buff . 'buff'
-nnoremap <tab>t :Restore<cr>
+" command! Restore exec 'vnew | ' . g:last_buff . 'buff'
+" nnoremap <tab>t :Restore<cr>
 
 inoremap <expr> <c-l> fzf#complete("rg --color=never --no-filename --no-line-number -e '^.*?class +([a-zA-Z0-9:]*) ?.*$' app/models -r '$1' \| sed '/^$/d' \| sort")
 
