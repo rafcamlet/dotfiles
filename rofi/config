@@ -23,6 +23,6 @@ rofi.kb-remove-to-eol:               Control+Shift+k
 ! "Select next entry" Set from: Default
 rofi.kb-row-down:                    Down,Control+n,Control+j
 
-rofi.modi: run,drun
+rofi.modi: drun,run
 
 rofi.show-icons: true

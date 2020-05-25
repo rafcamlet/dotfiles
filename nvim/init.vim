@@ -18,6 +18,7 @@ runtime vim_config/projects.vim
 
 " lua/tools.lua
 " lua require 'projects'
+lua require 'init'
 lua require 'helper'
 lua require 'regex_jump'
 lua require 'jumper'
@@ -32,14 +33,18 @@ lua require 'jumper'
 "====================================
 "
 
-nnoremap <tab>1 /\v\<template\><cr>nzt
-nnoremap <tab>2 /\v\<script\><cr>nzt
-nnoremap <tab>3 /\v\<style<cr>nzt
+augroup highlight_yank
+    autocmd!
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank("Comment", 1000)
+augroup END
+
+nnoremap <tab>fs :FLShow<cr>
+nnoremap <tab>fa :FLShow<cr>
 
 vmap <c-e> <c-y>,
 imap <c-e> <c-y>,
 
-nnoremap <space>l :ls<cr>:b<space>
+nnoremap <space>l :luafile spec/base.lua<cr>
 
 set jumpoptions=stack
 nnoremap <tab>t :TagbarToggle<cr>

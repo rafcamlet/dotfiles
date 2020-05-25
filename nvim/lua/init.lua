@@ -1,0 +1,23 @@
+-- require'nvim-treesitter.configs'.setup {
+--   highlight = {
+--     enable = true,                 -- false will disable the whole extension
+--     disable = { 'c', 'rust' },     -- list of language that will be disabled
+--   },
+--   incremental_selection = {             -- this enables incremental selection
+--     enable = true,
+--     keymaps = {                       -- mappings for incremental selection (visual mappings)
+--       node_incremental = "<space>c", -- "grn" by default,
+--       scope_incremental = "<space>x" -- "grc" by default
+--     }
+--   },
+--   node_movement = {                           -- this cursor movement in node hierachy
+--     enable = true,
+--     keymaps = {                       -- mappings for node movement (normal mappings)
+--       move_up = "<up>",              -- default is to move with alt key hold
+--       move_down = "<down>",
+--       move_left = "<left>",
+--       move_right = "<right>",
+--     }
+--   },
+--   ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
+-- }

@@ -56,6 +56,9 @@ endif
 Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no default mappings
 
 " TEST plugin ==================
+" Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'Galooshi/vim-import-js'
+Plug 'antoinemadec/coc-fzf'
 Plug 'ripxorip/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tomtom/tcomment_vim'
 Plug 'vifm/vifm.vim'
@@ -207,5 +210,6 @@ Plug '~/projects/vim-my-note'
 Plug '~/projects/nvim-sf'
 Plug '~/projects/nvim-luapad'
 Plug '~/projects/nvim-languagetool'
+Plug '~/projects/nvim-file-list'
 
 call plug#end()

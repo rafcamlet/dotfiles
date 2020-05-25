@@ -49,7 +49,7 @@ font-2 = UbuntuMono Nerd Font:pixelsize=12;3
 
 ; modules-left = bspwm i3
 modules-left = i3
-modules-center = spotify
+modules-center = player-mpris-tail
 modules-right = filesystem volume memory cpu battery temperature date
 
 tray-position = right
@@ -450,5 +450,13 @@ screenchange-reload = true
 [global/wm]
 margin-top = 5
 margin-bottom = 5
+
+[module/player-mpris-tail]
+type = custom/script
+exec = ${HOME}/.config/polybar/scripts/player-mpris-tail.py -f '{icon} {artist} - {title}'
+tail = true
+click-left = ~/polybar-scripts/player-mpris-tail.py previous &
+click-right = ~/polybar-scripts/player-mpris-tail.py next &
+click-middle = ~/polybar-scripts/player-mpris-tail.py play-pause &
 
 ; vim:ft=dosini

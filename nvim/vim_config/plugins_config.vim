@@ -143,13 +143,13 @@ let g:splitjoin_html_attributes_bracket_on_new_line = 1
 
 " ======== nathanaelkane/vim-indent-guides =========
 
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors = 0
-let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'my-note', '', 'whid']
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=233
-" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=234
-
-" ============= itchyny/lightline.vim ==============
+" let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_auto_colors = 0
+" let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'my-note', '', 'whid']
+" " autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=233
+" " autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=234
+"
+" " ============= itchyny/lightline.vim ==============
 
 set noshowmode
 
@@ -159,9 +159,10 @@ let g:lightline = {
       \   'left': [
       \     [ 'mode', 'paste' ],
       \     [ 'gitbranch', 'readonly'],
-      \     [ 'cocstatus', 'file_name']
+      \     [ 'cocstatus', 'file_name', 'luapad_info']
       \   ],
       \ 'right': [
+      \   ['luapad_error'],
       \   ['linter_errors', 'linter_warnings', 'linter_ok'],
       \   ['lineinfo'],
       \   ['percent'],
@@ -170,7 +171,9 @@ let g:lightline = {
       \ 'component_function': {
       \   'gitbranch': 'gitbranch#name',
       \   'file_name': 'LightlineFilename',
-      \   'cocstatus': 'coc#status'
+      \   'cocstatus': 'coc#status',
+      \   'luapad_info': 'luapad#lightline_info',
+      \   'luapad_error': 'luapad#lightline_error',
       \ },
       \ }
 
@@ -182,7 +185,6 @@ let g:lightline.component_expand = {
 
 let g:lightline.component_type = {
       \     'linter_warnings': 'warning',
-      \     'linter_errors': 'error',
       \ }
 
 let g:lightline.enable = {
@@ -208,7 +210,28 @@ function! LightlineFilename()
 endfunction
 
 let &updatetime = 300
-" autocmd CursorHold,BufWritePost * call lightline#update()
+autocmd CursorHold,BufWritePost * call lightline#update()
+
+
+" let g:lightline = {
+"       \ 'active': {
+"       \   'left': [
+"       \     [ 'mode', 'paste' ],
+"       \     [ 'readonly', 'filename', 'modified' ],
+"       \     [ 'luapad_msg']
+"       \   ],
+"       \ 'right': [
+"       \   ['luapad_status'],
+"       \   ['lineinfo'],
+"       \   ['percent'],
+"       \ ],
+"       \ },
+"       \ 'component_function': {
+"       \   'luapad_msg': 'luapad#lightline_msg',
+"       \   'luapad_status': 'luapad#lightline_status',
+"       \ },
+"       \ }
+
 
 
 " ============== alvan/vim-closetag ================
@@ -571,6 +594,10 @@ call quickui#menu#install('&Plugins', [
 			\ ["&Magit", 'Magit', 'S-tage'],
 			\ ], 10000)
 
+call quickui#menu#install('&Session', [
+      \ ["&Save", ':mks! ~/Session.vim'],
+			\ ])
+
 " enable to display tips in the cmdline
 let g:quickui_show_tip = 1
 let g:quickui_color_scheme = 'papercol dark'
@@ -587,10 +614,22 @@ noremap <space><space> :call quickui#menu#open()<cr>
 " ============ ripxorip/aerojump.nvim ==============
 nmap <space>k <Plug>(AerojumpSpace)
 
-augroup AerojumpBufSettings
+augroup MyAerojumpBufSettings
   au!
   " au Filetype AerojumpFilter setlocal nosplitbelow nosplitright
   au Filetype *.aerojump setlocal signcolumn=yes
   " au Filetype *.aerojump setlocal nolist
   au Filetype AerojumpFilter setlocal nonumber
+
+  au BufLeave AerojumpFilter setlocal splitright splitbelow
 augroup END
+
+
+" ============== jpalardy/vim-slime ================
+
+let g:slime_target = "tmux"
+
+
+" ============= antoinemadec/coc-fzf ===============
+
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }

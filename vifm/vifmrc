@@ -460,7 +460,7 @@ nnoremap <f8> :delete<cr>
 nnoremap ; :
 nnoremap q :q<cr>
 nnoremap o :! xdg-open %c &>/dev/null &<cr>
-nnoremap cd :cd<space>
+nnoremap cd :cd ~/
 " nnoremap gp :! bat %c:p %s<cr>
 
 

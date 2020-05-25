@@ -9,6 +9,7 @@ snippet vue
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: '`!v Kebabcase(expand("%:t:r"))`',
   components: {
@@ -19,6 +20,7 @@ export default {
     };
   },
   computed: {
+		...mapGetters([])
   },
   methods: {
   }
@@ -95,4 +97,36 @@ snippet vmodal
 		</div>
 	</transition>
 </template>
+endsnippet
+
+snippet delete
+delete(id) {
+	confirmation("Are you sure?", success => {
+		if (!success) return;
+		this.$http.delete(Routes.$1(id)).then(
+			() => {
+				this.flashMessage.success({
+					title: "Service",
+					message: "Was removed"
+				});
+			},
+			response => {
+				this.flashMessage.error({
+					title: "Failure in removing the service",
+					message: response.body.toString()
+				});
+			}
+		);
+	});
+}
+endsnippet
+
+
+snippet cinput
+<cInput
+	v-model="$0"
+	name=""
+	:submit-path=""
+	submit-model=""
+/>
 endsnippet
