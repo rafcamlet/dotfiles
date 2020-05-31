@@ -56,7 +56,9 @@ endif
 Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no default mappings
 
 " TEST plugin ==================
+Plug 'cespare/vim-toml'
 " Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'Galooshi/vim-import-js'
 Plug 'antoinemadec/coc-fzf'
 Plug 'ripxorip/aerojump.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -105,6 +107,10 @@ Plug 'wsdjeg/FlyGrep.vim'
 
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'tpope/vim-markdown'
+
+" Plug 'plasticboy/vim-markdown'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
+
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'maximbaz/lightline-ale'

@@ -453,10 +453,11 @@ margin-bottom = 5
 
 [module/player-mpris-tail]
 type = custom/script
-exec = ${HOME}/.config/polybar/scripts/player-mpris-tail.py -f '{icon} {artist} - {title}'
+exec = player-mpris-tail -f '{icon}  {artist} - {title}' --icon-playing  --icon-paused  
 tail = true
-click-left = ~/polybar-scripts/player-mpris-tail.py previous &
-click-right = ~/polybar-scripts/player-mpris-tail.py next &
-click-middle = ~/polybar-scripts/player-mpris-tail.py play-pause &
+
+click-middle = player-mpris-tail previous &
+click-right = player-mpris-tail next &
+click-left = player-mpris-tail play-pause &
 
 ; vim:ft=dosini

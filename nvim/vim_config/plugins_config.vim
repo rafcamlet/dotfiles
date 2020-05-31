@@ -159,10 +159,10 @@ let g:lightline = {
       \   'left': [
       \     [ 'mode', 'paste' ],
       \     [ 'gitbranch', 'readonly'],
-      \     [ 'cocstatus', 'file_name', 'luapad_info']
+      \     [ 'cocstatus', 'file_name', 'luapad_msg']
       \   ],
       \ 'right': [
-      \   ['luapad_error'],
+      \   ['luapad_status'],
       \   ['linter_errors', 'linter_warnings', 'linter_ok'],
       \   ['lineinfo'],
       \   ['percent'],
@@ -172,8 +172,8 @@ let g:lightline = {
       \   'gitbranch': 'gitbranch#name',
       \   'file_name': 'LightlineFilename',
       \   'cocstatus': 'coc#status',
-      \   'luapad_info': 'luapad#lightline_info',
-      \   'luapad_error': 'luapad#lightline_error',
+      \   'luapad_msg': 'luapad#lightline_msg',
+      \   'luapad_status': 'luapad#lightline_status',
       \ },
       \ }
 
@@ -240,8 +240,14 @@ let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.js,*.vue'
 
 " ============== tpope/vim-markdown ================
 
-hi markdownBold ctermfg=203 cterm=bold
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ruby']
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ruby', 'lua']
+
+augroup VimMarkdown
+  autocmd!
+  autocmd FileType md,markdown hi markdownBold ctermfg=105 cterm=bold
+  autocmd FileType md,markdown hi markdownCode ctermfg=73
+augroup end
+
 
 " ======= thiagoalessio/rainbow_levels.vim =========
 
@@ -273,6 +279,8 @@ let g:rainbow_levels = [
 
 let g:vimwiki_list = [{'path': '~/Dropbox/vim_wiki',
       \ 'syntax': 'markdown', 'ext': '.md'}]
+
+let g:vimwiki_global_ext = 0
 
 nmap ) <Plug>VimwikiToggleListItem
 vmap ) <Plug>VimwikiToggleListItem
@@ -633,3 +641,32 @@ let g:slime_target = "tmux"
 " ============= antoinemadec/coc-fzf ===============
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+
+
+" ========= iamcco/markdown-preview.nvim ===========
+
+let g:mkdp_auto_close = 0
+
+
+" " ============ plasticboy/vim-markdown =============
+" " disable header folding
+" let g:vim_markdown_folding_disabled = 1
+"
+" " do not use conceal feature, the implementation is not so good
+" let g:vim_markdown_conceal = 0
+"
+" " disable math tex conceal feature
+" let g:tex_conceal = ""
+" let g:vim_markdown_math = 1
+"
+" " support front matter of various format
+" let g:vim_markdown_frontmatter = 1  " for YAML format
+" let g:vim_markdown_toml_frontmatter = 1  " for TOML format
+" let g:vim_markdown_json_frontmatter = 1  " for JSON format
+"
+"
+" " ========= vim-pandoc/vim-pandoc-syntax ===========
+" "
+" augroup pandoc_syntax
+"     au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+" augroup END

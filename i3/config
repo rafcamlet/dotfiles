@@ -225,3 +225,7 @@ bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: 
 
 bindsym $mod+shift+m exec google-chrome --profile-directory="Profile 1" https://music.youtube.com/watch?v=RuOz0eczaMQ&list=LM
 for_window [title="YouTube Music"] move container to workspace 10
+
+bindsym $mod+bracketright exec "player-mpris-tail next &"
+bindsym $mod+bracketleft exec "player-mpris-tail previous &"
+bindsym $mod+bar exec "player-mpris-tail play-pause &"
