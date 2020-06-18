@@ -56,6 +56,12 @@ endif
 Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no default mappings
 
 " TEST plugin ==================
+
+" Plug 'kamykn/popup-menu.nvim'
+" Plug 'kamykn/spelunker.vim'
+Plug 'tweekmonster/startuptime.vim'
+Plug 'jamessan/vim-gnupg'
+Plug 'AndrewRadev/undoquit.vim'
 Plug 'cespare/vim-toml'
 " Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
@@ -130,7 +136,7 @@ Plug 'alvan/vim-closetag'
 
 " Plug 'terryma/vim-multiple-cursors' "<- You never use it!
 "Plug 'haya14busa/incsearch.vim' "Improved incremental searching for Vim
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
 "Plug 'pelodelfuego/vim-swoop' " Test this!
 
 "Plug 'reedes/vim-lexical'
@@ -217,5 +223,6 @@ Plug '~/projects/nvim-sf'
 Plug '~/projects/nvim-luapad'
 Plug '~/projects/nvim-languagetool'
 Plug '~/projects/nvim-file-list'
+" Plug '~/projects/coc-nvim-lua'
 
 call plug#end()

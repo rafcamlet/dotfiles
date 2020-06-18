@@ -1,33 +1,38 @@
 [
   {
     "name": "NvimSF",
-    "root_path": "projects/nvim-sf"
+    "path": "projects/nvim-sf"
   },
   {
-    "name": "Customeasy",
-    "root_path": "projects/customease",
-    "settings": {
-    "path": ".,app/**,app/javascript,,",
-    "suffixesadd": ".js,.vue",
-    "includeexpr": "Snakecase(v:fname)"
+    "name": "Customease",
+    "path": "projects/customease",
+    "options": {
+      "path": ".,app/**,app/javascript,,",
+      "suffixesadd": ".js,.vue",
+      "includeexpr": "Snakecase(v:fname)"
+    },
+    "fzf": {
+      "o": "app/",
+      "a": "app/concepts",
+      "j": "app/javascript"
     }
   },
   {
     "name": "Blog",
-    "root_path": "projects/blog"
+    "path": "projects/blog"
   },
   {
     "name": "Notes",
-    "root_path": "Dropbox/notes",
-    "settings": {
+    "path": "Dropbox/notes",
+    "options": {
       "filetype": "my-note",
       "syntax": "my-note"
     }
   },
   {
     "name": "Talebook",
-    "root_path": "projects/talebook/frontend",
-    "settings": {
+    "path": "projects/talebook/frontend",
+    "options": {
       "path": ".,src/**,,",
       "suffixesadd": ".js,.vue",
       "commentstring": "// %s",
@@ -39,7 +44,7 @@
         "to": "test/unit/{}.js"
       }
     },
-    "files": {
+    "fzf": {
       "c": "src/components",
       "s": "src/services",
       "t": "src/stores"
@@ -47,28 +52,28 @@
   },
   {
     "name": "Reactapp",
-    "root_path": "projects/reactapp",
+    "path": "projects/reactapp",
     "dictionary": "~/.config/nvim/dict/react",
-    "settings": {
+    "options": {
       "path": ".,src/**,,",
       "suffixesadd": ".js"
     },
-    "files": {
+    "fzf": {
       "c": "src/components"
     }
   },
   {
     "name": "Ixl",
-    "root_path": "projects/ixl-front-end",
+    "path": "projects/ixl-front-end",
     "dictionary": "~/.config/nvim/dict/react",
-    "settings": {
+    "options": {
       "shiftwidth": 4,
       "softtabstop": 4,
       "tabstop": 4,
       "path": ".,,src/**",
       "suffixesadd": ".js"
     },
-    "files": {
+    "fzf": {
       "c": "src/components",
       "r": "src/redux",
       "v": "src/views"

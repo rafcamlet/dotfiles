@@ -103,6 +103,11 @@ function fco {
 function show {
   LESSOPEN="| pygmentize %s" LESS=' -RN' less "$@"
 }
+
+function ff {
+  command fd -p "${PWD}.*$1" ${@:2}
+}
+
 # }}}
 
 # nnn exit function {{{
@@ -126,6 +131,7 @@ export FFF_FAV9=~/projects
 
 # FZF options {{{
 export FZF_DEFAULT_OPTS='
+  --reverse
   --height 75% --multi
   --bind ctrl-f:page-down,ctrl-b:page-up
 '

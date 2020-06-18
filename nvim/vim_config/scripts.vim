@@ -268,18 +268,10 @@ function! FzfPreview(bang, ...)
   let l:path = a:0 > 1 ? a:2 : ''
   let l:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {} | head -'.&lines.'"'
 
-  function! s:edit_file(item)
-    let l:pos = stridx(a:item, ' ')
-    let l:file_path = a:item[pos+1:-1]
-    execute 'silent e' l:file_path
-  endfunction
-
-  call fzf#run({
+  call fzf#run(fzf#wrap({
         \ 'source': systemlist('fd ' . l:cmd . ' -ptf '. l:path),
-        \ 'sink':   function('s:edit_file'),
         \ 'options': '-m --reverse ' . l:fzf_files_options,
-        \ 'down':    '40%',
-        \ 'window': 'call CreateCenteredFloatingWindow()'})
+        \ }))
 endfunction
 command! -bang -nargs=* -complete=dir F call FzfPreview(<q-bang>, <f-args>)
 " }}}
@@ -322,4 +314,24 @@ endfunction
 function! Kebabcase(word)
   return substitute(Snakecase(a:word),'_','-','g')
 endfunction
+" }}}
+
+" Show syntax highlighting groups for word under cursor {{{
+function! SynStack()
+  if !exists('*synstack')
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+nnoremap <silent> M :call SynStack()<cr>
+" }}}
+
+" select last pastet text {{{
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+"}}}
+
+" VIFM {{{
+command! VIFM call system("tmux split-window -h 'COLORTERM=tmux-256color vifm -c " . '"split | view!"' . "  --on-choose " . '"nvr --servername ' . v:servername . '  --remote-silent %c " ' . getcwd() . " && tmux kill-pane'")
+nnoremap <silent> <space>v :VIFM<cr>
 " }}}

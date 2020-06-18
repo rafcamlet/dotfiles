@@ -1,23 +1,43 @@
--- require'nvim-treesitter.configs'.setup {
---   highlight = {
---     enable = true,                 -- false will disable the whole extension
---     disable = { 'c', 'rust' },     -- list of language that will be disabled
---   },
---   incremental_selection = {             -- this enables incremental selection
---     enable = true,
---     keymaps = {                       -- mappings for incremental selection (visual mappings)
---       node_incremental = "<space>c", -- "grn" by default,
---       scope_incremental = "<space>x" -- "grc" by default
---     }
---   },
---   node_movement = {                           -- this cursor movement in node hierachy
---     enable = true,
---     keymaps = {                       -- mappings for node movement (normal mappings)
---       move_up = "<up>",              -- default is to move with alt key hold
---       move_down = "<down>",
---       move_left = "<left>",
---       move_right = "<right>",
---     }
---   },
---   ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
--- }
+function tabline()
+  local result = ''
+
+  for i, v in ipairs(vim.api.nvim_list_tabpages()) do
+    local is_current = vim.api.nvim_get_current_tabpage() == v
+
+    local wins = vim.api.nvim_tabpage_list_wins(v)
+    local names = {}
+
+    for j, win in ipairs(wins) do
+      local buf = vim.api.nvim_win_get_buf(win)
+      local name = vim.api.nvim_buf_get_name(buf)
+      name = vim.fn.fnamemodify(name, ':t')
+
+      is_nerdtree = name:match('NERD_tree')
+      if name ~= '' and not is_nerdtree then table.insert(names, name) end
+    end
+
+    local names_str
+
+    if #names == 0 then
+      names_str = '[-]'
+    elseif is_current then
+      name = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+      names_str = vim.fn.fnamemodify(name, ':t')
+    else
+      names_str = table.concat(names, ' | ')
+    end
+
+    local prefix
+    if is_current then
+      prefix = '%#TabLineSel#'
+    else
+      prefix = '%#TabLine#'
+    end
+
+    local tab = ([[%s %s %s ]]):format(prefix, i, names_str)
+    result = result .. tab 
+  end
+  return '%#TabLine#' .. result .. '%#TabLineFill#'
+end
+
+vim.api.nvim_command('set tabline=%!v:lua.tabline()')

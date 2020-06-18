@@ -19,6 +19,25 @@
       "command": "efm-langserver",
       "args": [],
       "filetypes": []
+    },
+    "lua": {
+      "cwd": "/home/r2d2/src/lua-language-server",
+      "command": "/home/r2d2/src/lua-language-server/bin/Linux/lua-language-server",
+      "args": ["-E", "-e", "LANG=en", "/home/r2d2/src/lua-language-server/main.lua"],
+      "filetypes": ["lua"],
+      "rootPatterns": [".git/"],
+      "settings": {
+        "Lua": {
+          "diagnostics": {
+            "globals": ["vim"]
+          }
+        }
+      }
     }
-  }
+  },
+  "Lua.diagnostics.enable": true,
+  "Lua.diagnostics.globals": ["vim"],
+  "Lua.runtime.globals": "LuaJIT"
 }
+
+

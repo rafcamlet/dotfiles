@@ -34,8 +34,8 @@
     width = 1
  
 [shortcuts]
-    history = mod4+n
-    close = mod4+m
+    history = mod4+bracketleft
+    close = mod4+bracketright
  
 [urgency_low]
     background = "#fba922"

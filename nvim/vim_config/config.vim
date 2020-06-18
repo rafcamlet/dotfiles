@@ -82,6 +82,8 @@ colorscheme shadowmoth
 
 set clipboard+=unnamedplus " integrate system clipboard
 
+set jumpoptions=stack
+
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('rg')
   " Use Ag over Grep

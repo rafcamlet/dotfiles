@@ -5,8 +5,9 @@ nnoremap : ;
 vnoremap : ;
 vnoremap ; :
 
-" inoremap jk <esc>`^
-" cnoremap jk <c-c>
+inoremap kj <esc>`^
+
+nnoremap <c-]> g<c-]>
 
 nnoremap <silent> <enter> :put =''<cr>
 cnoremap <silent> <enter> <cr>

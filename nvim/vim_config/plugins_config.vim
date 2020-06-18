@@ -9,6 +9,11 @@ let g:EasyClipUseGlobalPasteToggle = 0
 
 " ================= junegunn/fzf ===================
 
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
 nnoremap <silent> <space>oo :F<cr>
 nnoremap <silent> <space>o :F<cr>
 nnoremap <silent> <space>oh :History<cr>
@@ -27,6 +32,7 @@ nnoremap <space>on  :FZF ~/Dropbox/notes<cr>
 nnoremap <space>o-  :F <C-r>=expand("%:h")<CR>/<CR>
 nnoremap <space>ol  :BLines<cr>
 nnoremap <space>oL  :Lines<cr>
+nnoremap <space>ow  :Windows<cr>
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
@@ -329,6 +335,8 @@ let g:EasyMotion_smartcase = 1
 
 let g:delimitMate_expand_cr = 1
 let g:delimitMate_expand_space = 1
+au FileType html let b:delimitMate_matchpairs = "(:),[:],{:}"
+au FileType vue let b:delimitMate_matchpairs = "(:),[:],{:}"
 
 " =============== junegunn/goyo.vim ================
 
@@ -477,6 +485,9 @@ nnoremap <silent> <space>cl  :<C-u>CocList<CR>
 " Remap for rename current word
 nmap <space>cr <Plug>(coc-rename)
 
+
+nnoremap <space>cc :CocFzfList<cr>
+
 " ================= posva/vim-vue ==================
 
 let g:vue_disable_pre_processors=1
@@ -493,7 +504,7 @@ map <silent><c-n> <Plug>(miniyank-cycleback)
 nnoremap <space>gw :Gwrite<cr>
 nnoremap <space>gs :Gstatus<cr>
 nnoremap <space>gv :Gvsplit :%<left><left>
-nnoremap <space>gp :Gvsplit production:%<cr>
+nnoremap <space>gp :Gvsplit master:%<cr>
 nnoremap <space>gb :Gblame<cr>
 nnoremap <space>gd :Gvdiff
 nnoremap <space>gdh :diffget //2<CR>
@@ -604,6 +615,7 @@ call quickui#menu#install('&Plugins', [
 
 call quickui#menu#install('&Session', [
       \ ["&Save", ':mks! ~/Session.vim'],
+      \ ["L&oad", ':source ~/Session.vim'],
 			\ ])
 
 " enable to display tips in the cmdline
@@ -613,11 +625,20 @@ let g:quickui_border_style = 2
 " hit space twice to open menu
 noremap <space><space> :call quickui#menu#open()<cr>
 
+function ColorQuickUi()
+  hi! QuickDefaultBackground ctermfg=251 ctermbg=236 guifg=#c6c6c6 guibg=#303030
+  hi! QuickDefaultSel ctermfg=236 ctermbg=251 guifg=#303030 guibg=#c6c6c6
+  hi! QuickDefaultKey term=bold ctermfg=179 gui=bold guifg=#d7af5f
+  hi! QuickDefaultDisable ctermfg=11 guifg=#808080
+  hi! QuickDefaultHelp ctermfg=7 ctermbg=8 guifg=#585858 guibg=#1c1c1c
+  hi! QuickDefaultBorder ctermfg=66 ctermbg=236 guifg=#5f8787 guibg=#303030
+  hi! QuickDefaultTermBorder ctermfg=66 ctermbg=236 guifg=#5f8787 guibg=#303030
+endfunction
 
-
-" ================ xolox/vim-misc ==================
-
-
+augroup QuickUiGroup
+  autocmd!
+  autocmd User InitVimLoaded call ColorQuickUi()
+augroup end
 
 " ============ ripxorip/aerojump.nvim ==============
 nmap <space>k <Plug>(AerojumpSpace)
@@ -641,6 +662,7 @@ let g:slime_target = "tmux"
 " ============= antoinemadec/coc-fzf ===============
 
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+let g:coc_fzf_opts = ['--reverse']
 
 
 " ========= iamcco/markdown-preview.nvim ===========
@@ -670,3 +692,15 @@ let g:mkdp_auto_close = 0
 " augroup pandoc_syntax
 "     au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 " augroup END
+
+
+" ================ mattn/emmet-vim =================
+
+vmap <c-e> <c-y>,
+imap <c-e> <c-y>,
+
+
+" ============ kamykn/popup-menu.nvim ==============
+"
+hi Pmenu ctermfg=204 ctermbg=207
+hi PmenuSel ctermfg=135 ctermbg=200
