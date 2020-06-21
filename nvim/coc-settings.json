@@ -29,15 +29,14 @@
       "settings": {
         "Lua": {
           "diagnostics": {
-            "globals": ["vim"]
+            "globals": ["vim"],
+            "disable": ["lowercase-global"]
+          },
+          "runtime": {
+            "version": "LuaJIT"
           }
         }
       }
     }
-  },
-  "Lua.diagnostics.enable": true,
-  "Lua.diagnostics.globals": ["vim"],
-  "Lua.runtime.globals": "LuaJIT"
+  }
 }
-
-

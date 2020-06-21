@@ -223,6 +223,6 @@ Plug '~/projects/nvim-sf'
 Plug '~/projects/nvim-luapad'
 Plug '~/projects/nvim-languagetool'
 Plug '~/projects/nvim-file-list'
-" Plug '~/projects/coc-nvim-lua'
+Plug '~/projects/coc-nvim-lua'
 
 call plug#end()
