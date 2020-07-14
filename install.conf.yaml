@@ -1,0 +1,40 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~/bin', '~/.config', '~']
+
+- create:
+    - ~/bin
+
+- link:
+    ~/bin/colors: bin/colors
+    ~/bin/key: bin/key
+    ~/bin/player-mpris-tail.py: bin/player-mpris-tail.py
+    ~/bin/t: bin/t
+    ~/bin/tm: bin/tm
+
+    ~/.config/bat: bat
+    ~/.config/conky: conky
+    ~/.config/dunst: dunst
+    ~/.config/i3: i3
+    ~/.config/nvim: nvim
+    ~/.config/polybar: polybar
+    ~/.config/ranger: ranger
+    ~/.config/rofi: rofi
+    ~/.config/terminator: terminator
+    ~/.config/vifm: vifm
+
+    ~/.gitconfig: .gitconfig
+    ~/.profile: .profile
+    ~/.newsboat: .newsboat
+    ~/.taskrc: .taskrc
+    ~/.tmux.conf: .tmux.conf
+    ~/.zpreztorc: .zpreztorc
+    ~/.zshrc: .zshrc
+
+    ~/.zprezto/modules/prompt/functions/prompt_my_setup: prompt_my_setup
+
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
