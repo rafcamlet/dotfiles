@@ -332,6 +332,6 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 "}}}
 
 " VIFM {{{
-command! VIFM call system("tmux split-window -h 'COLORTERM=tmux-256color vifm -c " . '"split | view!"' . "  --on-choose " . '"nvr --servername ' . v:servername . '  --remote-silent %c " ' . getcwd() . " && tmux kill-pane'")
-nnoremap <silent> <space>v :VIFM<cr>
+" command! VIFM call system("tmux split-window -h 'COLORTERM=tmux-256color vifm -c " . '"split | view!"' . "  --on-choose " . '"nvr --servername ' . v:servername . '  --remote-silent %c " ' . getcwd() . " && tmux kill-pane'")
+" nnoremap <silent> <space>v :VIFM<cr>
 " }}}

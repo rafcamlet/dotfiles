@@ -1,41 +1,29 @@
 function tabline()
+  local get_name = function(win)
+    local buf = vim.api.nvim_win_get_buf(win)
+    local name = vim.api.nvim_buf_get_name(buf)
+    name = vim.fn.fnamemodify(name, ':t')
+    if name == '' then name = '[-]' end
+    return name
+  end
+
   local result = ''
 
   for i, v in ipairs(vim.api.nvim_list_tabpages()) do
     local is_current = vim.api.nvim_get_current_tabpage() == v
 
-    local wins = vim.api.nvim_tabpage_list_wins(v)
-    local names = {}
-
-    for j, win in ipairs(wins) do
-      local buf = vim.api.nvim_win_get_buf(win)
-      local name = vim.api.nvim_buf_get_name(buf)
-      name = vim.fn.fnamemodify(name, ':t')
-
-      is_nerdtree = name:match('NERD_tree')
-      if name ~= '' and not is_nerdtree then table.insert(names, name) end
-    end
-
-    local names_str
-
-    if #names == 0 then
-      names_str = '[-]'
-    elseif is_current then
-      name = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
-      names_str = vim.fn.fnamemodify(name, ':t')
-    else
-      names_str = table.concat(names, ' | ')
-    end
-
-    local prefix
     if is_current then
-      prefix = '%#TabLineSel#'
+      local name = get_name(vim.api.nvim_get_current_win())
+      result = result .. ([[%s %s %s ]]):format('%#TabLineSel#', i, name)
     else
-      prefix = '%#TabLine#'
+      local wins = vim.api.nvim_tabpage_list_wins(v)
+      for _, win in ipairs(wins) do
+        local name = get_name(win)
+        if not name:match('NERD_tree') then
+          result = result .. ([[%s %s %s ]]):format('%#TabLine#', i, name)
+        end
+      end
     end
-
-    local tab = ([[%s %s %s ]]):format(prefix, i, names_str)
-    result = result .. tab 
   end
   return '%#TabLine#' .. result .. '%#TabLineFill#'
 end

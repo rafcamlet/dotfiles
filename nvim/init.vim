@@ -33,7 +33,7 @@ lua require 'tui'
 
 augroup help_autogroup
     autocmd!
-    autocmd FileType help silent! wincmd L
+    autocmd BufEnter * if &ft == 'help' | silent! wincmd L | end
 augroup END
 
 command! VueFind exec 'silent grep "<' . Mixedcase(expand('%:t:r')) . '" -g "*.vue"'

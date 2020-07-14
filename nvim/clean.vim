@@ -9,7 +9,12 @@ Plug 'rafcamlet/shadowmoth'
 Plug 'scrooloose/nerdtree'
 Plug 'thinca/vim-quickrun' " Run current file and show output in new buffer
 
-Plug 'skywind3000/vim-quickui'
+Plug '~/projects/nvim-luapad'
+" Plug 'kyazdani42/nvim-web-devicons' " for file icons
+" Plug 'kyazdani42/nvim-tree.lua'
+
+" Plug 'kyazdani42/nvim-web-devicons' " for file icons
+" Plug 'kyazdani42/nvim-tree.lua'
 call plug#end()
 
 colorscheme shadowmoth

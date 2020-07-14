@@ -472,7 +472,7 @@ fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
          \ imgc %px %py %pw %ph
 
 fileview */ tree %c
-fileviewer *[^/] bat -n --color always --theme=OneHalfDark %c
+fileviewer *[^/] env -uCOLORTERM bat -n --color always --wrap never --pager never --theme=OneHalfDark %c -p
 
 set caseoptions=p "case insensitive autocomplete
 

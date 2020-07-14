@@ -9,7 +9,8 @@
     "options": {
       "path": ".,app/**,app/javascript,,",
       "suffixesadd": ".js,.vue",
-      "includeexpr": "Snakecase(v:fname)"
+      "includeexpr": "Snakecase(v:fname)",
+      "include": "import "
     },
     "fzf": {
       "o": "app/",

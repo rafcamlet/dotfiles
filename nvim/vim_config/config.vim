@@ -70,13 +70,6 @@ set guioptions-=L
 
 set inccommand=nosplit "Shows the effects of a substitution incrementally, as you type
 
-augroup vimrc
-  autocmd!
-  " auto remove columns and rows highlighting
-  autocmd vimrc WinLeave * set nocursorline nocursorcolumn
-  autocmd vimrc WinEnter * set nocursorline nocursorcolumn
-augroup END
-
 colorscheme shadowmoth
 " colorscheme janah
 

@@ -149,7 +149,7 @@ let g:splitjoin_html_attributes_bracket_on_new_line = 1
 
 " ======== nathanaelkane/vim-indent-guides =========
 
-" let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_enable_on_vim_startup = 1
 " let g:indent_guides_auto_colors = 0
 " let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'my-note', '', 'whid']
 " " autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=233
@@ -407,6 +407,22 @@ let g:tagbar_type_vue = {
 
 " =============== neoclide/coc.nvim ================
 
+inoremap <silent><expr> <c-n> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+" if exists('*complete_info')
+"   inoremap <expr> <c-f> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+" else
+"   inoremap <expr> <c-f> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" endif
+
+let g:endwise_no_mappings = v:true
+inoremap <expr> <Plug>CustomCocCR pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
+
+
 " Use `[c` and `]c` for navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
@@ -420,7 +436,7 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if &filetype == 'vim'
+  if &filetype == 'vim' || &filetype == 'lua' || &filetype == 'lua.luapad'
     execute 'h '.expand('<cword>')
   else
     call CocAction('doHover')
@@ -486,7 +502,12 @@ nnoremap <silent> <space>cl  :<C-u>CocList<CR>
 nmap <space>cr <Plug>(coc-rename)
 
 
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
 nnoremap <space>cc :CocFzfList<cr>
+
 
 " ================= posva/vim-vue ==================
 
@@ -585,6 +606,7 @@ augroup END
 
 let g:floaterm_position = 'center'
 let g:floaterm_keymap_new = '<space>t'
+nnoremap <space>v :FloatermNew --height=1.00 --width=1.00  vifm<cr>
 
 
 " ============ skywind3000/vim-quickui =============
@@ -618,6 +640,10 @@ call quickui#menu#install('&Session', [
       \ ["L&oad", ':source ~/Session.vim'],
 			\ ])
 
+call quickui#menu#install('&FloatTerm', [
+      \ ["&VIFM", 'FloatermNew vifm'],
+			\ ])
+
 " enable to display tips in the cmdline
 let g:quickui_show_tip = 1
 let g:quickui_color_scheme = 'papercol dark'
@@ -641,17 +667,17 @@ augroup QuickUiGroup
 augroup end
 
 " ============ ripxorip/aerojump.nvim ==============
-nmap <space>k <Plug>(AerojumpSpace)
-
-augroup MyAerojumpBufSettings
-  au!
-  " au Filetype AerojumpFilter setlocal nosplitbelow nosplitright
-  au Filetype *.aerojump setlocal signcolumn=yes
-  " au Filetype *.aerojump setlocal nolist
-  au Filetype AerojumpFilter setlocal nonumber
-
-  au BufLeave AerojumpFilter setlocal splitright splitbelow
-augroup END
+" nmap <space>k <Plug>(AerojumpSpace)
+"
+" augroup MyAerojumpBufSettings
+"   au!
+"   " au Filetype AerojumpFilter setlocal nosplitbelow nosplitright
+"   au Filetype *.aerojump setlocal signcolumn=yes
+"   " au Filetype *.aerojump setlocal nolist
+"   au Filetype AerojumpFilter setlocal nonumber
+"
+"   au BufLeave AerojumpFilter setlocal splitright splitbelow
+" augroup END
 
 
 " ============== jpalardy/vim-slime ================
@@ -704,3 +730,22 @@ imap <c-e> <c-y>,
 "
 hi Pmenu ctermfg=204 ctermbg=207
 hi PmenuSel ctermfg=135 ctermbg=200
+
+
+" ============== tomtom/tcomment_vim ===============
+
+
+
+" ========== Xuyuanp/nerdtree-git-plugin ===========
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }

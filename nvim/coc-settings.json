@@ -1,13 +1,5 @@
 {
-  "vetur.experimental.templateInterpolationService": false,
-  "vetur.format.defaultFormatter.html": "prettyhtml",
-  "vetur.format.defaultFormatter.css": "prettier",
-  "vetur.format.defaultFormatter.postcss": "prettier",
-  "vetur.format.defaultFormatter.scss": "prettier",
-  "vetur.format.defaultFormatter.less": "prettier",
-  "vetur.format.defaultFormatter.stylus": "stylus-supremacy",
-  "vetur.format.defaultFormatter.js": "prettier",
-  "vetur.format.defaultFormatter.ts": "prettier",
+  "vetur.trace.server": "verbose",
   "languageserver": {
     "bash": {
       "command": "bash-language-server",
@@ -29,7 +21,7 @@
       "settings": {
         "Lua": {
           "diagnostics": {
-            "globals": ["vim"],
+            "globals": ["vim", "describe", "it"],
             "disable": ["lowercase-global"]
           },
           "runtime": {
