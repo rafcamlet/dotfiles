@@ -24,6 +24,7 @@
     ~/.config/rofi: rofi
     ~/.config/terminator: terminator
     ~/.config/vifm: vifm
+    ~/.config/tmuxinator: tmuxinator
 
     ~/.gitconfig: .gitconfig
     ~/.profile: .profile

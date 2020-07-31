@@ -1,0 +1,58 @@
+# /home/r2d2/.config/tmuxinator/nau.yml
+
+name: nau
+root: ~/projects/talebook/api
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+# pre: rvm use 2.3.5
+
+# Project hooks
+# Runs on project start, always
+# on_project_start: rvm use 2.3.5
+# Run on project start, the first time
+# on_project_first_start: command
+# Run on project start, after the first time
+# on_project_restart: command
+# Run on project exit ( detaching from tmux session )
+# on_project_exit: command
+# Run on project stop
+# on_project_stop: command
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+pre_window: rvm use 2.4.2
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: editor
+
+# Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+# startup_pane: 1
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t nau
+
+windows:
+  - vim: nvim
+  - server:
+      layout: even-horizontal
+      panes:
+        - rails s
+        - tail -f log/development.log | screemer
+  - editor:
+      layout: even-horizontal
+      panes:
+        - rails c
+        - nvim
+  - cmd: clear & echo Hello!
