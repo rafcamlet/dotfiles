@@ -10,7 +10,7 @@
 - link:
     ~/bin/colors: bin/colors
     ~/bin/key: bin/key
-    ~/bin/player-mpris-tail.py: bin/player-mpris-tail.py
+    ~/bin/player-mpris-tail: bin/player-mpris-tail.py
     ~/bin/t: bin/t
     ~/bin/tm: bin/tm
 

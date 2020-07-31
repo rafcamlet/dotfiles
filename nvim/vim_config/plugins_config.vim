@@ -283,10 +283,19 @@ let g:rainbow_levels = [
 
 " ================ vimwiki/vimwiki =================
 
-let g:vimwiki_list = [{'path': '~/Dropbox/vim_wiki',
-      \ 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [
+      \ {'path': '~/Dropbox/vim_wiki', 'syntax': 'markdown', 'ext': '.md', 'nested_syntaxes': {'lua': 'lua', 'bash': 'sh'}},
+      \ {'path': '~/Dropbox/vim_wiki', 'syntax': 'markdown', 'ext': '.md', 'index': 'lua', 'nested_syntaxes': {'lua': 'lua', 'bash': 'sh'}}
+      \]
 
 let g:vimwiki_global_ext = 0
+
+augroup VimwikiColorGroup
+  autocmd!
+  autocmd User InitVimLoaded highlight Conceal ctermfg=24 ctermbg=NONE
+  autocmd User InitVimLoaded highlight VimwikiWeblink1 ctermfg=13
+  autocmd User InitVimLoaded highlight VimwikiLink ctermfg=9
+augroup END
 
 nmap ) <Plug>VimwikiToggleListItem
 vmap ) <Plug>VimwikiToggleListItem
@@ -430,7 +439,7 @@ nmap <silent> ]c <Plug>(coc-diagnostic-next)
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -537,9 +546,22 @@ nnoremap <space>gm :GitMessenger<cr>
 
 " ============ airblade/vim-gitgutter ==============
 
-nmap <tab>l <Plug>GitGutterNextHunk
-nmap <tab>h <Plug>GitGutterPrevHunk
+nmap <tab>l <Plug>(GitGutterNextHunk)
+nmap <tab>h <Plug>(GitGutterPrevHunk)
 
+let g:gitgutter_sign_removed = '_'
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+
+let g:gitgutter_set_sign_backgrounds = 1
+
+augroup GitGutterGroup
+  autocmd!
+  autocmd User InitVimLoaded highlight GitGutterChange ctermfg=5
+  autocmd User InitVimLoaded highlight GitGutterDelete ctermfg=1
+  autocmd User InitVimLoaded highlight GitGutterChangeDelete ctermfg=5
+  autocmd User InitVimLoaded highlight GitGutterAdd ctermfg=2
+augroup end
 
 " ======== ~/projects/vim-what-i-have-done =========
 
@@ -614,16 +636,10 @@ nnoremap <space>v :FloatermNew --height=1.00 --width=1.00  vifm<cr>
 " clear all the menus
 call quickui#menu#reset()
 
-" script inside %{...} will be evaluated and expanded in the string
-call quickui#menu#install("&Option", [
-			\ ['Set &Spell %{&spell? "Off":"On"}', 'set spell!'],
-			\ ['Set &Cursor Line %{&cursorline? "Off":"On"}', 'set cursorline!'],
-			\ ['Set &Paste %{&paste? "Off":"On"}', 'set paste!'],
-			\ ])
 
 call quickui#menu#install('&Wiki', [
-			\ ["Index", 'VimwikiIndex', ''],
-			\ ['T&ips', 'help tips', ''],
+			\ ["&Index", 'VimwikiIndex', ''],
+			\ ['L&ua', 'VimwikiIndex 2', ''],
 			\ ['--',''],
 			\ ["&Tutorial", 'help tutor', ''],
 			\ ['&Quick Reference', 'help quickref', ''],
@@ -749,3 +765,15 @@ let g:NERDTreeIndicatorMapCustom = {
     \ 'Ignored'   : '☒',
     \ "Unknown"   : "?"
     \ }
+
+
+" ========== vim-ctrlspace/vim-ctrlspace ===========
+let g:CtrlSpaceDefaultMappingKey = "<space>op "
+
+
+" =============== mhinz/vim-signify ================
+
+" highlight SignifySignAdd ctermfg=2 ctermbg=none
+" highlight SignifySignChange ctermfg=7  ctermbg=none
+" highlight SignifySignDelete ctermfg=1 ctermbg=none
+" highlight SignifySignDeleteFirstLine ctermfg=1 

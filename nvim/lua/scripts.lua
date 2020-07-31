@@ -1,4 +1,4 @@
--- vim: foldmethod=marker:foldlevel=0
+-- vim: foldmethod=marker:foldlevel=1
 
 -- {{{ copy_ruby_class
 function copy_ruby_class(s, e)
@@ -83,6 +83,7 @@ function vertical_main()
   vim.api.nvim_win_set_height(0, math.ceil(width * 0.5))
 end
 -- }}}
+
 
 vim.api.nvim_command('command! RubyClassFromPath lua ruby_class_from_path()')
 vim.api.nvim_command('command! -range RubyCopyClass lua copy_ruby_class(<line1>, <line2>)')

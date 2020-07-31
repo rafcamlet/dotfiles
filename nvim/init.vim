@@ -26,10 +26,20 @@ lua require 'tui'
 
 " runtime vim_config/status_line.vim
 
+" asdfasdf
 "====================================
 "---------Testing_new_features-------
 "====================================
-"
+
+" augroup lua_autogroup
+"   autocmd!
+"   autocmd FileType lua set errorformat=%*[^:]:%*[^:]:\ %f:%l:\ %m,%f:%l:\ %m
+" augroup END
+
+function! EditMigration()
+  exec 'edit ' . system("ls -td1 db/migrate/* | head -1")
+endfunction
+command! EditMigration call EditMigration()
 
 augroup help_autogroup
     autocmd!
@@ -51,11 +61,6 @@ nnoremap <tab>fa :FLShow<cr>
 nnoremap <space>l :luafile spec/base.lua<cr>
 
 nnoremap <tab>t :TagbarToggle<cr>
-
-" :e ~/.config/nvim/bundle/shadowmoth/colors/shadowmoth.vim
-" colorscheme sierra
-" colorscheme gruvbox
-" colorscheme seoul256
 
 nnoremap <nowait> <space>b :e app/assets/stylesheets/base.scss<cr>
 

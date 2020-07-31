@@ -24,3 +24,13 @@ end
 function kebab_case(s)
   return ({s:gsub('_', '-')})[1]
 end
+
+function hl_color(group, fg, bg)
+  local cmd = ('highlight %s ctermfg=%s ctermbg=%s'):format(
+    group,
+    fg,
+    bg or 'NONE'
+    )
+  vim.api.nvim_command(cmd)
+  return cmd
+end

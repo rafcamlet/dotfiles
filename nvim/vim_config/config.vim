@@ -71,7 +71,6 @@ set guioptions-=L
 set inccommand=nosplit "Shows the effects of a substitution incrementally, as you type
 
 colorscheme shadowmoth
-" colorscheme janah
 
 set clipboard+=unnamedplus " integrate system clipboard
 

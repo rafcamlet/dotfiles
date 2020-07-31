@@ -34,9 +34,8 @@ Plug 'junegunn/fzf.vim' " More options for fzf in vim
 Plug 'thinca/vim-quickrun' " Run current file and show output in new buffer
 Plug 'jeetsukumaran/vim-indentwise' " Indent motion
 Plug 'rafcamlet/shadowmoth' " best colorscheme ever!
-" Plug 'coderifous/textobj-word-column.vim' " Select column of text example: vic
-" Plug 'junegunn/vim-easy-align' " A Vim alignment plugin
-Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
+Plug 'coderifous/textobj-word-column.vim' " Select column of text example: vic
+Plug 'junegunn/vim-easy-align' " A Vim alignment plugin
 Plug 'tpope/vim-abolish' "easily search for, substitute, and abbreviate multiple variants of a word
 Plug 'svermeulen/vim-easyclip' "Simplified clipboard functionality for Vim
 Plug 'w0rp/ale' " Asynchronous Lint Engine
@@ -65,8 +64,12 @@ Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-markdown'
 Plug 'itchyny/lightline.vim' | Plug 'itchyny/vim-gitbranch' | Plug 'maximbaz/lightline-ale'
 Plug 'hail2u/vim-css3-syntax'
+Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
+" Plug 'mhinz/vim-signify' "vim-gitgutter alternative
 
 " TEST plugin ==================
+" Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
+Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'el-iot/buffer-tree'
 Plug 'skywind3000/vim-quickui'
 Plug 'pechorin/any-jump.nvim'
@@ -219,5 +222,6 @@ Plug '~/projects/nvim-luapad'
 " Plug '~/projects/nvim-languagetool'
 Plug '~/projects/nvim-file-list'
 Plug '~/projects/coc-nvim-lua'
+Plug '~/projects/nvim-oldfiles'
 
 call plug#end()

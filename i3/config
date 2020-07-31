@@ -184,7 +184,7 @@ bindsym $mod+m move workspace to output left
 # bindsym Insert exec --no-startup-id take_screenshot
 
 exec google-chrome
-exec --no-startup-id i3-msg 'workspace 3; exec gnome-terminal; workspace 2'
+exec --no-startup-id i3-msg 'workspace 3; exec i3-sensible-terminal; workspace 2'
 
 assign [class="Google-chrome"] 2
 
