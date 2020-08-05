@@ -69,6 +69,9 @@ Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
 
 " TEST plugin ==================
 " Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
+" Plug 'kyazdani42/nvim-web-devicons' " for file icons
+" Plug 'kyazdani42/nvim-tree.lua'
+Plug 'markonm/traces.vim'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'el-iot/buffer-tree'
 Plug 'skywind3000/vim-quickui'
@@ -77,6 +80,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'voldikss/vim-floaterm'
 Plug 'jreybert/vimagit'
 Plug 'ryanoasis/vim-devicons'
+" Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 Plug 'bogado/file-line' "Plugin for vim to enabling opening a file in a given line
 Plug 'leafOfTree/vim-vue-plugin'
 Plug 'groenewege/vim-less'

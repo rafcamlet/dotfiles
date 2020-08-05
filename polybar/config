@@ -453,11 +453,11 @@ margin-bottom = 5
 
 [module/player-mpris-tail]
 type = custom/script
-exec = player-mpris-tail -f '{icon}  {artist} - {title}' --icon-playing  --icon-paused  
+exec =ASDF_PYTHON_VERSION=3.6.11 player-mpris-tail -f '{icon}  {artist} - {title}' --icon-playing  --icon-paused  
 tail = true
 
-click-middle = player-mpris-tail previous &
-click-right = player-mpris-tail next &
-click-left = player-mpris-tail play-pause &
+click-middle =ASDF_PYTHON_VERSION=3.6.11 player-mpris-tail previous &
+click-right =ASDF_PYTHON_VERSION=3.6.11 player-mpris-tail next &
+click-left =ASDF_PYTHON_VERSION=3.6.11 player-mpris-tail play-pause &
 
 ; vim:ft=dosini

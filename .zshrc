@@ -201,5 +201,3 @@ else
   . $HOME/.asdf/completions/asdf.bash
 fi
 # }}}
-
-source /home/r2d2/.config/broot/launcher/bash/br

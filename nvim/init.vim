@@ -20,6 +20,7 @@ lua require 'regex_jump'
 lua require 'jumper'
 lua require 'components_tree'
 lua require 'tui'
+lua require 'colors'
 
 " JSON store:
 " vim_config/json/projects.json
@@ -30,6 +31,8 @@ lua require 'tui'
 "====================================
 "---------Testing_new_features-------
 "====================================
+
+autocmd FileType qf nnoremap <buffer> <cr> <cr> 
 
 " augroup lua_autogroup
 "   autocmd!
@@ -51,8 +54,9 @@ nnoremap <space>u :VueFind<cr>
 
 hi YankHighlighta ctermbg=238
 augroup highlight_yank
-    autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank("YankHighlighta", 300)
+  autocmd!
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup = "YankHighlighta", timeout = 300 }
+
 augroup END
 
 nnoremap <tab>fs :FLShow<cr>

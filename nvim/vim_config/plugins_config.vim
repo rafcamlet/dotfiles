@@ -777,3 +777,42 @@ let g:CtrlSpaceDefaultMappingKey = "<space>op "
 " highlight SignifySignChange ctermfg=7  ctermbg=none
 " highlight SignifySignDelete ctermfg=1 ctermbg=none
 " highlight SignifySignDeleteFirstLine ctermfg=1 
+
+
+" ================ ms-jpq/chadtree =================
+
+function OpenChadtreeHelp()
+  call quickui#textbox#open( [
+      \ "q         - close chad window",
+      \ "<c-r>     - trigger refresh",
+      \ "c         - re-center root at folder",
+      \ "C         - re-center root at root's parent",
+      \ "~         - refocus root at vim cwd",
+      \ "J         - set cursor row to currently active file",
+      \ "<enter>   - open / close folders & open file",
+      \ "<tab>     - open / close folders & preview file",
+      \ "<m-enter> - open / close folders & open file in new tab",
+      \ "w         - open / close folders & open file in vertical split",
+      \ "W         - open / close folders & open file in horizontal split",
+      \ "o         - open file using open / xdg-open",
+      \ ".         - toggle showing hidden items (you need to set your own ignore list)",
+      \ "<s-tab>   - collapse all sub folders",
+      \ "y         - copy file path of items under cursor / visual selection / selection",
+      \ "f         - set glob filter for visible items",
+      \ "F         - clear filtering",
+      \ "s         - select item under cursor / visual selection",
+      \ "S         - clear selection",
+      \ "a         - create new folder / file at location under cursor (name ending with os specific / will be folders)",
+      \ "r         - rename file under cursor",
+      \ "d         - delete item under cursor / visual selection / selection",
+      \ "t         - trash item under cursor / visual selection / selection",
+      \ "p         - copy selected items to location under cursor",
+      \ "x         - move selected items to location under cursor",
+      \ "K         - print ls -l stat to status line",
+      \ "+, =      - increase chad size",
+      \ "-, _      - decrease chad size"
+      \ ]
+      \ , {})
+endfunction
+
+autocmd FileType chadtree nnoremap <silent><buffer> ? :call OpenChadtreeHelp()<cr>
