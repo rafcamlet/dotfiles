@@ -62,7 +62,7 @@ snippet .find "find" i
 endsnippet
 
 snippet class "class"
-class ${1:`!v Mixedcase(expand('%:t:r'))`}
+class ${1:`!v luaeval("ruby_class()")`}
 	$0
 end
 endsnippet

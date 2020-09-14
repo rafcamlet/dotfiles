@@ -1,7 +1,11 @@
 -- vim: foldmethod=marker:foldlevel=0
 
-function p(obj)
-  print(vim.inspect(obj))
+function p(...)
+  if #{...} > 1 then
+    print(vim.inspect({...}))
+  else
+    print(vim.inspect(...))
+  end
 end
 
 function pascal_case(str)
@@ -28,9 +32,18 @@ end
 function hl_color(group, fg, bg)
   local cmd = ('highlight %s ctermfg=%s ctermbg=%s'):format(
     group,
-    fg,
+    fg or 'NONE',
     bg or 'NONE'
     )
   vim.api.nvim_command(cmd)
   return cmd
 end
+
+return {
+  p = p,
+  pascal_case = pascal_case,
+  camel_case = camel_case,
+  snake_case = snake_case,
+  kebab_case = kebab_case,
+  hl_color = hl_color
+}

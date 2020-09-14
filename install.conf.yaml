@@ -33,6 +33,7 @@
     ~/.tmux.conf: .tmux.conf
     ~/.zpreztorc: .zpreztorc
     ~/.zshrc: .zshrc
+    ~/.luacheckrc: .luacheckrc
 
     ~/.zprezto/modules/prompt/functions/prompt_my_setup: prompt_my_setup
 

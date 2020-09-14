@@ -1,6 +1,6 @@
 local api = vim.api
 
-function jumper()
+local function jumper()
   local pos = api.nvim_win_get_cursor(0)
 
   while true do
@@ -36,4 +36,11 @@ function jumper()
   end
 end
 
-api.nvim_set_keymap('n', '<tab><tab>', ':lua jumper()<cr>', { noremap=true, silent=true })
+local function setup()
+  api.nvim_set_keymap('n', '<tab><tab>', ':lua require("jumper").jumper()<cr>', { noremap=true, silent=true })
+end
+
+return {
+  jumper = jumper,
+  setup = setup
+}

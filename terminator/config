@@ -11,7 +11,7 @@
 [plugins]
 [profiles]
   [[default]]
-    background_color = "#2a2d2e"
+    background_color = "#2e3436"
     cursor_color = "#aaaaaa"
     font = UbuntuMono Nerd Font Mono 15
     foreground_color = "#75afc0"

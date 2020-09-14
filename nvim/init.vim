@@ -12,32 +12,32 @@ runtime vim_config/custom_colors.vim
 
 " Lua
 
-lua require 'projects'
+" lua require 'old_projects'
+" lua require 'projects'
+" lua require 'tui'
+lua require 'helpers'
 lua require 'init'
-lua require 'helper'
 lua require 'scripts'
-lua require 'regex_jump'
-lua require 'jumper'
-lua require 'components_tree'
-lua require 'tui'
-lua require 'colors'
+lua require 'ruby_helpers'
 
 " JSON store:
 " vim_config/json/projects.json
 
 " runtime vim_config/status_line.vim
 
-" asdfasdf
 "====================================
 "---------Testing_new_features-------
 "====================================
 
-autocmd FileType qf nnoremap <buffer> <cr> <cr> 
+autocmd BufEnter * inoremap <expr><silent> <c-j> 
+      \ luaeval('(({require"snippets".lookup_snippet_at_cursor()})[2]
+      \ or require"snippets".has_active_snippet())
+      \ and [[<cmd>lua return snippets_or_what()<cr>]]
+      \ or [[<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>]]')
+inoremap <c-k> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
 
-" augroup lua_autogroup
-"   autocmd!
-"   autocmd FileType lua set errorformat=%*[^:]:%*[^:]:\ %f:%l:\ %m,%f:%l:\ %m
-" augroup END
+"
+autocmd FileType qf nnoremap <buffer> <cr> <cr> 
 
 function! EditMigration()
   exec 'edit ' . system("ls -td1 db/migrate/* | head -1")
@@ -47,6 +47,7 @@ command! EditMigration call EditMigration()
 augroup help_autogroup
     autocmd!
     autocmd BufEnter * if &ft == 'help' | silent! wincmd L | end
+    autocmd BufEnter * if &ft == 'help' | silent! vertical resize 80 | end
 augroup END
 
 command! VueFind exec 'silent grep "<' . Mixedcase(expand('%:t:r')) . '" -g "*.vue"'
@@ -62,10 +63,6 @@ augroup END
 nnoremap <tab>fs :FLShow<cr>
 nnoremap <tab>fa :FLShow<cr>
 
-nnoremap <space>l :luafile spec/base.lua<cr>
-
-nnoremap <tab>t :TagbarToggle<cr>
-
 nnoremap <nowait> <space>b :e app/assets/stylesheets/base.scss<cr>
 
 nnoremap <nowait> <space>d :SF 
@@ -75,7 +72,6 @@ nnoremap ge :CocCommand explorer<CR>
 
 " scrollbind
 nnoremap yob :set scb!<cr>
-
 
 augroup myCmdwinEnter
   autocmd!
@@ -90,18 +86,6 @@ autocmd BufRead,BufNewFile,BufEnter *.vue syntax sync fromstart
 
 set foldtext=MyFoldText()
 
-function! Vifm() abort "{{{
-  function! OnExit(...) closure
-    bdelete!
-  endfunction
-  vnew
-  setlocal bufhidden=wipe
-  call termopen("COLORTERM=tmux-256color vifm -c " . '"vsplit | view!"' . "  --on-choose " . '"nvr --servername ' . v:servername . '  --remote-silent %c " ' . getcwd(), {'on_exit': function('OnExit')})
-  IndentGuidesDisable
-  startinsert
-endfunction "}}}
-
-
 nnoremap <silent> <space>t :TagbarToggle<cr>
 
 function! TestColor()
@@ -111,7 +95,6 @@ function! TestColor()
     call matchadd('MyGroup' . i, '\%'. i . 'l')
   endfor
 endfunction
-
 
 " Where is it from?
 let g:incsearch#magic = '\v' " very magic

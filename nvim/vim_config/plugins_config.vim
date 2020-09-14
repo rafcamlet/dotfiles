@@ -95,7 +95,7 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_ruby_flag = 0
 let g:ale_lint_delay = 500
 
-let g:ale_linters = { 'ruby': ['ruby'], 'vue': ['eslint'], 'vimwiki': [] }
+let g:ale_linters = { 'ruby': ['ruby'], 'vue': ['eslint'], 'vimwiki': [], 'lua': [] }
 
 function! ChangeRubyLinters()
   if g:ale_ruby_flag
@@ -123,6 +123,7 @@ let g:ale_fixers = { 'ruby': ['rubocop'],
       \ 'vim': ['trim_whitespace'],
       \ 'c': ['clang-format'],
       \ 'sql': ['pgformatter'],
+      \ 'lua': ['remove_trailing_lines', 'trim_whitespace'],
       \ }
 
 command! ChangeRubyLinters call ChangeRubyLinters()
@@ -314,6 +315,7 @@ map gh <Plug>MyVimwikidecreaseLvlWholeItem
 " ============ Valloric/MatchTagAlways =============
 
 let g:mta_filetypes = {
+    \ 'vue' : 1,
     \ 'html' : 1,
     \ 'xhtml' : 1,
     \ 'xml' : 1,
@@ -478,10 +480,10 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
+" xmap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap if <Plug>(coc-funcobj-i)
+" omap af <Plug>(coc-funcobj-a)
 
 " Use `:Format` for format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -629,6 +631,7 @@ augroup END
 let g:floaterm_position = 'center'
 let g:floaterm_keymap_new = '<space>t'
 nnoremap <space>v :FloatermNew --height=1.00 --width=1.00  vifm<cr>
+nnoremap <space>V :exec 'FloatermNew --height=1.00 --width=1.00  vifm ' .. getcwd()<cr>
 
 
 " ============ skywind3000/vim-quickui =============
@@ -816,3 +819,18 @@ function OpenChadtreeHelp()
 endfunction
 
 autocmd FileType chadtree nnoremap <silent><buffer> ? :call OpenChadtreeHelp()<cr>
+
+
+" ============ AndrewRadev/switch.vim ==============
+
+let g:speeddating_no_mappings = 1
+
+" Avoid issues because of us remapping <c-a> and <c-x> below
+nnoremap <Plug>SpeedDatingFallbackUp <c-a>
+nnoremap <Plug>SpeedDatingFallbackDown <c-x>
+
+" Manually invoke speeddating in case switch didn't work
+nnoremap <silent><c-a> :if !switch#Switch() <bar>
+      \ call speeddating#increment(v:count1) <bar> endif<cr>
+nnoremap <silent><c-x> :if !switch#Switch({'reverse': 1}) <bar>
+      \ call speeddating#increment(-v:count1) <bar> endif<cr>

@@ -171,9 +171,11 @@ new_window none
 # default_border none
 
 exec --no-startup-id nm-applet
-exec_always --no-startup-id killall polybar ; polybar my &
 exec --no-startup-id compton --config ~/.config/compton/compton.conf -b
 exec --no-startup-id feh --bg-fill ~/.config/wallpaper.jpg
+
+exec --no-startup-id ~/.config/i3/once.sh
+exec_always --no-startup-id ~/.config/i3/always.sh
 
 # set $sink `pactl list short sinks | grep RUNNING | cut -f1`
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +10%
@@ -181,10 +183,12 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -10
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 bindsym $mod+m move workspace to output left
 
-# bindsym Insert exec --no-startup-id take_screenshot
 
 exec google-chrome
 exec --no-startup-id i3-msg 'workspace 3; exec i3-sensible-terminal; workspace 2'
+
+exec --no-startup-id spotify
+for_window [class="Spotify"] move to workspace 10
 
 assign [class="Google-chrome"] 2
 
@@ -223,8 +227,8 @@ bindsym $mod+n exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
 # read 1 character and go to the window with the character
 bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 
-bindsym $mod+shift+m exec google-chrome --profile-directory="Profile 1" https://music.youtube.com/watch?v=RuOz0eczaMQ&list=LM
-for_window [title="YouTube Music"] move container to workspace 10
+# bindsym $mod+shift+m exec google-chrome --profile-directory="Profile 1" https://music.youtube.com/watch?v=RuOz0eczaMQ&list=LM
+# for_window [title="YouTube Music"] move container to workspace 10
 
 bindsym $mod+bracketright exec "player-mpris-tail next &"
 bindsym $mod+bracketleft exec "player-mpris-tail previous &"

@@ -43,7 +43,7 @@ Plug 'mxw/vim-jsx' "React JSX syntax highlighting and indenting for vim.
 Plug 'pangloss/vim-javascript'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighting.
-Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'nathanaelkane/vim-indent-guides'
 " Plug 'andymass/vim-matchup'
 Plug 'tbastos/vim-lua'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'} "Multiple cursors project for vim/neovim (wip)
@@ -68,15 +68,22 @@ Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
 " Plug 'mhinz/vim-signify' "vim-gitgutter alternative
 
 " TEST plugin ==================
+" Plug 'mhinz/vim-startify'
+Plug 'nvim-lua/popup.nvim' | Plug 'nvim-lua/plenary.nvim' | Plug 'nvim-lua/telescope.nvim'
+Plug 'AndrewRadev/switch.vim' | Plug 'tpope/vim-speeddating'
+" Plug 'tjdevries/colorbuddy.vim'
 " Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
 " Plug 'kyazdani42/nvim-web-devicons' " for file icons
 " Plug 'kyazdani42/nvim-tree.lua'
+Plug 'norcalli/snippets.nvim'
+Plug 'Yggdroot/indentLine'
 Plug 'markonm/traces.vim'
-Plug 'vim-ctrlspace/vim-ctrlspace'
+" Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'el-iot/buffer-tree'
 Plug 'skywind3000/vim-quickui'
 Plug 'pechorin/any-jump.nvim'
 Plug 'vimwiki/vimwiki'
+Plug 'voldikss/fzf-floaterm'
 Plug 'voldikss/vim-floaterm'
 Plug 'jreybert/vimagit'
 Plug 'ryanoasis/vim-devicons'
@@ -88,7 +95,8 @@ Plug 'alvan/vim-closetag'
 
 " Plug 'kamykn/popup-menu.nvim' | Plug 'kamykn/spelunker.vim'
 Plug 'tweekmonster/startuptime.vim'
-" Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/playground'
 "
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'Galooshi/vim-import-js'
@@ -159,7 +167,6 @@ Plug 'HiPhish/awk-ward.nvim'
 ""hauleth/sad.vim do testu!!!
 
 "" Plug 'machakann/vim-highlightedyank'
-"Plug 'AndrewRadev/switch.vim'
 
 "Plug 'mhinz/vim-janah' "colorscheme
 "" Plug 'mhinz/vim-startify'
@@ -227,5 +234,6 @@ Plug '~/projects/nvim-luapad'
 Plug '~/projects/nvim-file-list'
 Plug '~/projects/coc-nvim-lua'
 Plug '~/projects/nvim-oldfiles'
+" Plug '~/projects/nvim-magic-snips'
 
 call plug#end()

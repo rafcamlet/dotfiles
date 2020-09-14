@@ -3,8 +3,6 @@ extends html, javascript, css, scss
 snippet vue
 <template>
 	<div class="`!v Kebabcase(expand("%:t:r"))`">
-		<div class="`!v Kebabcase(expand("%:t:r"))`__container">
-		</div>
 	</div>
 </template>
 
@@ -29,8 +27,6 @@ export default {
 
 <style scoped lang="scss">
 .`!v Kebabcase(expand("%:t:r"))` {
-	&__container {
-	}
 }
 </style>
 endsnippet
@@ -129,4 +125,11 @@ snippet cinput
 	:submit-path=""
 	submit-model=""
 />
+endsnippet
+
+snippet success
+this.flashMessage.success({
+	title: "$1",
+	message: "$0"
+});
 endsnippet
