@@ -100,7 +100,7 @@ let g:ale_linters = { 'ruby': ['ruby'], 'vue': ['eslint'], 'vimwiki': [], 'lua':
 function! ChangeRubyLinters()
   if g:ale_ruby_flag
     echo 'simple'
-    let g:ale_linters = { 'ruby': ['ruby'] }
+    let g:ale_linters = { 'ruby': ['ruby', 'rubocop'] }
     let g:ale_ruby_flag = 0
   else
     echo 'full'
@@ -118,12 +118,13 @@ endfunction
 
 let g:ale_fixers = { 'ruby': ['rubocop'],
       \ 'typescript': ['eslint', 'prettier', 'tslint'],
-      \ 'javascript': ['prettier', 'eslint', 'importjs'],
+      \ 'javascript': ['eslint', 'importjs'],
       \ 'vue': ['prettier', 'eslint'],
       \ 'vim': ['trim_whitespace'],
       \ 'c': ['clang-format'],
       \ 'sql': ['pgformatter'],
       \ 'lua': ['remove_trailing_lines', 'trim_whitespace'],
+      \ 'scss': [  'prettier', 'remove_trailing_lines', 'stylelint', 'trim_whitespace'],
       \ }
 
 command! ChangeRubyLinters call ChangeRubyLinters()
@@ -135,6 +136,34 @@ nnoremap <tab>a :ALEFix<cr>
 " ============ ryanoasis/vim-devicons ==============
 
 autocmd FileType nerdtree setlocal nolist
+autocmd User InitVimLoaded autocmd filetype nerdtree highlight CursorLIne cterm=none ctermbg=236
+
+autocmd User InitVimLoaded autocmd filetype nerdtree highlight NERDTreeFlags cterm=none ctermfg=255
+
+" autocmd User InitVimLoaded autocmd filetype nerdtree highlight NERDTreeFile cterm=none ctermfg=7 ctermbg=none
+
+autocmd User InitVimLoaded autocmd filetype nerdtree highlight NERDTreeOpenable cterm=none ctermfg=14 ctermbg=none
+autocmd User InitVimLoaded autocmd filetype nerdtree highlight NERDTreeClosable cterm=none ctermfg=14 ctermbg=none
+
+
+
+function! NERDIcon(name, icon, fg)
+  exec 'autocmd filetype nerdtree highlight ' . a:name . '_icon ctermbg=none ctermfg=' . a:fg
+  exec 'autocmd filetype nerdtree syn match '. a:name . '_icon #' . a:icon . '# containedin=NERDTreeFlags'
+endfunction
+
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '−'
+
+autocmd User InitVimLoaded call NERDIcon('ruby', '', 9)
+autocmd User InitVimLoaded call NERDIcon('vue', '﵂', 113)
+autocmd User InitVimLoaded call NERDIcon('folder', '', 5)
+autocmd User InitVimLoaded call NERDIcon('js', '', 184)
+autocmd User InitVimLoaded call NERDIcon('json', '', 184)
+autocmd User InitVimLoaded call NERDIcon('text', '', 255)
+
+
+
 
 " =============== vim-ruby/vim-ruby ================
 
@@ -166,7 +195,7 @@ let g:lightline = {
       \   'left': [
       \     [ 'mode', 'paste' ],
       \     [ 'gitbranch', 'readonly'],
-      \     [ 'cocstatus', 'file_name', 'luapad_msg']
+      \     [ 'file_name', 'luapad_msg']
       \   ],
       \ 'right': [
       \   ['luapad_status'],
@@ -178,7 +207,6 @@ let g:lightline = {
       \ 'component_function': {
       \   'gitbranch': 'gitbranch#name',
       \   'file_name': 'LightlineFilename',
-      \   'cocstatus': 'coc#status',
       \   'luapad_msg': 'luapad#lightline_msg',
       \   'luapad_status': 'luapad#lightline_status',
       \ },
@@ -260,27 +288,15 @@ augroup end
 
 nnoremap <silent> <tab>r :RainbowLevelsToggle<cr>
 
-" let g:rainbow_levels = [
-"     \{'ctermfg': 84,  'guifg': '#50fa7b'},
-"     \{'ctermfg': 117, 'guifg': '#8be9fd'},
-"     \{'ctermfg': 61,  'guifg': '#6272a4'},
-"     \{'ctermfg': 212, 'guifg': '#ff79c6'},
-"     \{'ctermfg': 203, 'guifg': '#ffb86c'},
-"     \{'ctermfg': 228, 'guifg': '#f1fa8c'},
-"     \{'ctermfg': 15,  'guifg': '#f8f8f2'},
-"     \{'ctermfg': 59,  'guifg': '#6b4e32'}]
-"     " \{'ctermfg': 231, 'guifg': '#525563'}]
-
-let g:rainbow_levels = [
-    \{'ctermfg': 185, 'guifg': '#d9d762'},
-    \{'ctermfg': 109, 'guifg': '#86b4bb'},
-    \{'ctermfg': 67,  'guifg': '#6c99bb'},
-    \{'ctermfg': 98,  'guifg': '#8856d2'},
-    \{'ctermfg': 203, 'guifg': '#ef5d32'},
-    \{'ctermfg': 215, 'guifg': '#efac32'},
-    \{'ctermfg': 188, 'guifg': '#e6e1c4'},
-    \{'ctermfg': 59,  'guifg': '#6b4e32'}]
-
+hi! link RainbowLevel0 Constant
+hi! link RainbowLevel1 Type
+hi! link RainbowLevel2 Function
+hi! link RainbowLevel3 String
+hi! link RainbowLevel4 PreProc
+hi! link RainbowLevel5 Statement
+hi! link RainbowLevel6 Identifier
+hi! link RainbowLevel7 Normal
+hi! link RainbowLevel8 Comment
 
 " ================ vimwiki/vimwiki =================
 
@@ -418,7 +434,6 @@ let g:tagbar_type_vue = {
 
 " =============== neoclide/coc.nvim ================
 
-inoremap <silent><expr> <c-n> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
@@ -430,29 +445,29 @@ inoremap <silent><expr> <c-n> coc#refresh()
 " endif
 
 let g:endwise_no_mappings = v:true
-inoremap <expr> <Plug>CustomCocCR pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
+" inoremap <expr> <Plug>CustomCocCR pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
 
 
 " Use `[c` and `]c` for navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" nmap <silent> [c <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
 
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-function! s:show_documentation()
-  if &filetype == 'vim' || &filetype == 'lua' || &filetype == 'lua.luapad'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+" function! s:show_documentation()
+"   if &filetype == 'vim' || &filetype == 'lua' || &filetype == 'lua.luapad'
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
 
 
 " Highlight symbol under cursor on CursorHold
@@ -460,25 +475,25 @@ endfunction
 
 
 " Remap for format selected region
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+" vmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
 
-augroup cocgroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+" augroup cocgroup
+"   autocmd!
+"   " Setup formatexpr specified filetype(s).
+"   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+"   " Update signature help on jump placeholder
+"   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+" augroup end
 
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-vmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+" " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+" vmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
+" nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+" nmap <leader>qf  <Plug>(coc-fix-current)
 
 " xmap if <Plug>(coc-funcobj-i)
 " xmap af <Plug>(coc-funcobj-a)
@@ -486,38 +501,38 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 " omap af <Plug>(coc-funcobj-a)
 
 " Use `:Format` for format current buffer
-command! -nargs=0 Format :call CocAction('format')
+" command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` for fold current buffer
-command! -nargs=? Fold :call CocAction('fold', <f-args>)
+" command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>ca  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>ce  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>cc  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>co  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>cs  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>cj  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>ck  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>cp  :<C-u>CocListResume<CR>
-nnoremap <silent> <space>cl  :<C-u>CocList<CR>
-" Remap for rename current word
-nmap <space>cr <Plug>(coc-rename)
+" " Using CocList
+" " Show all diagnostics
+" nnoremap <silent> <space>ca  :<C-u>CocList diagnostics<cr>
+" " Manage extensions
+" nnoremap <silent> <space>ce  :<C-u>CocList extensions<cr>
+" " Show commands
+" nnoremap <silent> <space>cc  :<C-u>CocList commands<cr>
+" " Find symbol of current document
+" nnoremap <silent> <space>co  :<C-u>CocList outline<cr>
+" " Search workspace symbols
+" nnoremap <silent> <space>cs  :<C-u>CocList -I symbols<cr>
+" " Do default action for next item.
+" nnoremap <silent> <space>cj  :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" nnoremap <silent> <space>ck  :<C-u>CocPrev<CR>
+" " Resume latest coc list
+" nnoremap <silent> <space>cp  :<C-u>CocListResume<CR>
+" nnoremap <silent> <space>cl  :<C-u>CocList<CR>
+" " Remap for rename current word
+" nmap <space>cr <Plug>(coc-rename)
 
 
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+" nmap <silent> <C-s> <Plug>(coc-range-select)
+" xmap <silent> <C-s> <Plug>(coc-range-select)
+" command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
-nnoremap <space>cc :CocFzfList<cr>
+" nnoremap <space>cc :CocFzfList<cr>
 
 
 " ================= posva/vim-vue ==================
@@ -756,7 +771,7 @@ hi PmenuSel ctermfg=135 ctermbg=200
 
 
 " ========== Xuyuanp/nerdtree-git-plugin ===========
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",
     \ "Untracked" : "✭",
@@ -834,3 +849,60 @@ nnoremap <silent><c-a> :if !switch#Switch() <bar>
       \ call speeddating#increment(v:count1) <bar> endif<cr>
 nnoremap <silent><c-x> :if !switch#Switch({'reverse': 1}) <bar>
       \ call speeddating#increment(-v:count1) <bar> endif<cr>
+
+
+" ============== Yggdroot/indentLine ===============
+let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
+
+" ============== luochen1990/rainbow ===============
+
+let g:rainbow_conf = {
+      \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+      \	'ctermfgs': ['1', '2', '3', '4'],
+      \	'guis': [''],
+      \	'cterms': [''],
+      \	'operators': '_,_',
+      \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+      \	'separately': {
+      \		'*': {},
+      \		'vue': {
+      \			'parentheses_options': 'containedin=javascriptVueScript',
+      \		},
+      \		'markdown': {
+      \			'parentheses_options': 'containedin=markdownCode contained', 
+      \		},
+      \		'lisp': {
+      \			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'], 
+      \		},
+      \		'haskell': {
+      \			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'], 
+      \		},
+      \		'vim': {
+      \			'parentheses_options': 'containedin=vimFuncBody', 
+      \		},
+      \		'perl': {
+      \			'syn_name_prefix': 'perlBlockFoldRainbow', 
+      \		},
+      \		'stylus': {
+      \			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'], 
+      \		},
+      \		'css': 0, 
+      \	}
+      \}
+
+
+" ============= neovim/nvim-lspconfig ==============
+
+
+
+" =========== nvim-lua/completion-nvim =============
+
+let g:completion_enable_snippet = 'UltiSnips'
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+imap <silent> <c-n> <Plug>(completion_trigger)
+let g:completion_trigger_character = ['.', '::']
+let g:completion_enable_auto_popup = 1
+imap <c-h> <Plug>(completion_next_source)
+" imap <c-k> <Plug>(completion_prev_source) "use <c-k> to switch to next completion
+

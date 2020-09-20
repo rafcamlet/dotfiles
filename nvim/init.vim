@@ -15,10 +15,13 @@ runtime vim_config/custom_colors.vim
 " lua require 'old_projects'
 " lua require 'projects'
 " lua require 'tui'
+lua require 'colors'
 lua require 'helpers'
 lua require 'init'
 lua require 'scripts'
 lua require 'ruby_helpers'
+lua require 'ts_highlights'
+lua require 'ale_highlights'
 
 " JSON store:
 " vim_config/json/projects.json
@@ -28,6 +31,32 @@ lua require 'ruby_helpers'
 "====================================
 "---------Testing_new_features-------
 "====================================
+"
+"
+nnoremap <space>of <cmd>TelescopeLiveGrep<cr>
+
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <c-q> <cmd>lua vim.lsp.buf.formatting()<cr>
+nnoremap <silent> [g <cmd>PrevDiagnosticCycle<CR>
+nnoremap <silent> ]g <cmd>NextDiagnosticCycle<CR>
+command! Rename lua vim.lsp.buf.rename()
+
+augroup dynamic_smartcase
+    autocmd!
+    autocmd CmdLineEnter : set ignorecase
+    autocmd CmdLineLeave : set smartcase
+augroup END
+
+nnoremap <space>j :AnyJump<cr>
+cnoremap <nowait><expr> <c-r> luaeval('vim.cmd("History:") and vim.fn.getcmdline()')
 
 autocmd BufEnter * inoremap <expr><silent> <c-j> 
       \ luaeval('(({require"snippets".lookup_snippet_at_cursor()})[2]
@@ -53,10 +82,9 @@ augroup END
 command! VueFind exec 'silent grep "<' . Mixedcase(expand('%:t:r')) . '" -g "*.vue"'
 nnoremap <space>u :VueFind<cr>
 
-hi YankHighlighta ctermbg=238
 augroup highlight_yank
   autocmd!
-  autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup = "YankHighlighta", timeout = 300 }
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup = "YankHighlight", timeout = 300 }
 
 augroup END
 
@@ -91,7 +119,7 @@ nnoremap <silent> <space>t :TagbarToggle<cr>
 function! TestColor()
   for i in range(1, 255)
     exec 'highlight MyGroup' . i . ' ctermfg=' . i
-    call append(line('$'), 'Test TEST test')
+    call append(line('$'), 'Test TEST test ' . i)
     call matchadd('MyGroup' . i, '\%'. i . 'l')
   endfor
 endfunction

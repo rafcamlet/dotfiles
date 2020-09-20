@@ -133,3 +133,10 @@ this.flashMessage.success({
 	message: "$0"
 });
 endsnippet
+
+snippet error
+this.flashMessage.error({
+	title: "${1:Something went wrong}",
+	message: response.body.error.message
+});
+endsnippet

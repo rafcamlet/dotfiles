@@ -1,5 +1,6 @@
 scriptencoding utf-8
 
+" set termguicolors
 set shell=/bin/zsh                             " Set zsh as default shell
 " set shortmess+=A                               " Always edit file, even when swap file is found
 set diffopt=filler,iwhite                      " In diff mode, ignore whitespace changes and align unchanged lines
@@ -75,6 +76,7 @@ colorscheme shadowmoth
 set clipboard+=unnamedplus " integrate system clipboard
 
 set jumpoptions=stack
+set signcolumn=yes
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('rg')

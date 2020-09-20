@@ -23,11 +23,6 @@ vnoremap k gk
 nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
 nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
 
-nnoremap <c-k> <c-w>k
-nnoremap <c-j> <c-w>j
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
-
 " rails shorts
 nnoremap <leader>i <esc>:Emigration<cr>
 

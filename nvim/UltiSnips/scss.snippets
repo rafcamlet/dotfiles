@@ -1,5 +1,5 @@
 snippet imedia
-@include media("<tablet") {
+@include media("<=tablet") {
 	$0
 }
 endsnippet
@@ -20,4 +20,22 @@ padding: 10px 15px;
 
 & >:nth-child(2) {
 }
+endsnippet
+
+snippet imgb
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+endsnippet
+
+
+snippet center
+display: flex;
+align-items: center;
+endsnippet
+
+snippet c
+&__$1 {
+	$2
+}$0
 endsnippet

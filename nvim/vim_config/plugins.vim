@@ -7,7 +7,7 @@ Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'vim-scripts/L9' " Vim-script library
 Plug 'MarcWeber/vim-addon-mw-utils' "plugin library
 Plug 'tomtom/tlib_vim' "plugin library
-Plug 'Raimondi/delimitMate' "Vim plugin, provides insert mode auto-completion for quotes, parens, brackets, etc.
+" Plug 'Raimondi/delimitMate' "Vim plugin, provides insert mode auto-completion for quotes, parens, brackets, etc.
 " Plug 'pbrisbin/vim-mkdir'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -16,7 +16,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
+" Plug 'tpope/vim-endwise'
 Plug 'SirVer/ultisnips'
 Plug 'christoomey/vim-tmux-navigator' " Seamless navigation between tmux panes and vim splits
 Plug 'michaeljsmith/vim-indent-object'
@@ -40,18 +40,18 @@ Plug 'tpope/vim-abolish' "easily search for, substitute, and abbreviate multiple
 Plug 'svermeulen/vim-easyclip' "Simplified clipboard functionality for Vim
 Plug 'w0rp/ale' " Asynchronous Lint Engine
 Plug 'mxw/vim-jsx' "React JSX syntax highlighting and indenting for vim.
-Plug 'pangloss/vim-javascript'
-Plug 'jelera/vim-javascript-syntax'
+" Plug 'pangloss/vim-javascript'
+" Plug 'jelera/vim-javascript-syntax'
 Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighting.
 " Plug 'nathanaelkane/vim-indent-guides'
 " Plug 'andymass/vim-matchup'
-Plug 'tbastos/vim-lua'
+" Plug 'tbastos/vim-lua'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'} "Multiple cursors project for vim/neovim (wip)
-if executable('node')
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'wellle/tmux-complete.vim'
-  Plug 'antoinemadec/coc-fzf'
-endif
+" if executable('node')
+  " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " Plug 'wellle/tmux-complete.vim'
+  " Plug 'antoinemadec/coc-fzf'
+" endif
 " Plug 'simeji/winresizer'
 Plug 'Arkham/nvim-miniyank' "killring-alike plugin for neovim and vim 8 with no default mappings
 " Plug 'jamessan/vim-gnupg' " This script implements transparent editing of gpg encrypted files. 
@@ -61,14 +61,27 @@ Plug 'michaeljsmith/vim-indent-object' "Vim plugin that defines a new text objec
 Plug 'wellle/targets.vim' " Vim plugin that provides additional text objects
 " Plug 'rhysd/committia.vim'
 Plug 'majutsushi/tagbar'
-Plug 'tpope/vim-markdown'
+" Plug 'tpope/vim-markdown'
 Plug 'itchyny/lightline.vim' | Plug 'itchyny/vim-gitbranch' | Plug 'maximbaz/lightline-ale'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
 " Plug 'mhinz/vim-signify' "vim-gitgutter alternative
 
 " TEST plugin ==================
+" Plug 'tjdevries/colorbuddy.nvim'
+" Plug 'norcalli/nvim-colorizer.lua'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'cohama/lexima.vim'
+Plug 'sbdchd/neoformat'
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-lua/completion-nvim'
+Plug 'steelsojka/completion-buffers'
+Plug 'nvim-treesitter/completion-treesitter'
+Plug 'nvim-lua/diagnostic-nvim'
 " Plug 'mhinz/vim-startify'
+Plug 'luochen1990/rainbow'
 Plug 'nvim-lua/popup.nvim' | Plug 'nvim-lua/plenary.nvim' | Plug 'nvim-lua/telescope.nvim'
 Plug 'AndrewRadev/switch.vim' | Plug 'tpope/vim-speeddating'
 " Plug 'tjdevries/colorbuddy.vim'
@@ -86,7 +99,10 @@ Plug 'vimwiki/vimwiki'
 Plug 'voldikss/fzf-floaterm'
 Plug 'voldikss/vim-floaterm'
 Plug 'jreybert/vimagit'
+
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
+
 " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 Plug 'bogado/file-line' "Plugin for vim to enabling opening a file in a given line
 Plug 'leafOfTree/vim-vue-plugin'
@@ -114,7 +130,6 @@ Plug 'simnalamburt/vim-mundo'
 " Plug 'neovim/nvim-lsp'
 Plug 'Asheq/close-buffers.vim' "Quickly close (bdelete) several buffers at once closed_book
 " Plug 'tpope/vim-ragtag'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'rhysd/devdocs.vim'
 " Plug 'liuchengxu/vista.vim'
 " Plug 'liuchengxu/vim-clap'

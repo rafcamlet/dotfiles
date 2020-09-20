@@ -34,9 +34,16 @@ function hl_color(group, fg, bg)
     group,
     fg or 'NONE',
     bg or 'NONE'
-    )
+  )
   vim.api.nvim_command(cmd)
   return cmd
+end
+
+local function after_init(name, cmd)
+  vim.cmd('augroup ' .. name)
+  vim.cmd('autocmd!')
+  vim.cmd('autocmd User InitVimLoaded ' .. cmd)
+  vim.cmd('augroup end')
 end
 
 return {
@@ -45,5 +52,6 @@ return {
   camel_case = camel_case,
   snake_case = snake_case,
   kebab_case = kebab_case,
-  hl_color = hl_color
+  hl_color = hl_color,
+  after_init = after_init
 }

@@ -209,9 +209,6 @@ for_window [instance="scratchpad_st"] border pixel 3
 
 bindsym $mod+u [instance="scratchpad_st"] scratchpad show; [instance="scratchpad_st"] move position center
 
-# Make the currently focused window a scratchpad
-bindsym $mod+minus move scratchpad
-
 exec --no-startup-id st -n scratchpad_st -e tmux
 exec --no-startup-id dropbox start &>/dev/null &
 
@@ -233,3 +230,10 @@ bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: 
 bindsym $mod+bracketright exec "player-mpris-tail next &"
 bindsym $mod+bracketleft exec "player-mpris-tail previous &"
 bindsym $mod+bar exec "player-mpris-tail play-pause &"
+
+
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+# Show the first scratchpad window
+bindsym $mod+grave scratchpad show

@@ -9,3 +9,17 @@ endsnippet
 snippet model
 'v-model': '$0'
 endsnippet
+
+snippet data "data" i
+'data-$1': '$2'
+endsnippet
+
+snippet c "class" i
+`!v luaeval("require'ruby_helpers'.haml_class()")`$0
+endsnippet
+
+snippet layout "layout"
+.l-container
+	.l-content.`!v luaeval("require'ruby_helpers'.haml_class():gsub('__', '')")`
+		$0
+endsnippet

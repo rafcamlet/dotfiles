@@ -11,6 +11,7 @@ Plug 'thinca/vim-quickrun' " Run current file and show output in new buffer
 
 " Plug 'norcalli/snippets.nvim'
 Plug '~/projects/nvim-luapad'
+Plug 'nvim-lua/popup.nvim' | Plug 'nvim-lua/plenary.nvim' | Plug 'nvim-lua/telescope.nvim'
 " Plug 'kyazdani42/nvim-web-devicons' " for file icons
 " Plug 'kyazdani42/nvim-tree.lua'
 

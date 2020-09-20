@@ -143,6 +143,10 @@ export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # }}}
 
+export BAT_THEME=Nord
+
+WORDCHARS='*?_-[]~&;!#$%^(){}<>'
+
 # NVM {{{
 if [[ "$USER" == "r" ]]; then
   # NVM drastically increas startup time. Move to function.
