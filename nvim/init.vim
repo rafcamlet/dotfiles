@@ -12,12 +12,12 @@ runtime vim_config/custom_colors.vim
 
 " Lua
 
-" lua require 'old_projects'
-" lua require 'projects'
-" lua require 'tui'
+lua require 'old_projects'
+lua require 'projects'
+lua require 'tui'
 lua require 'colors'
 lua require 'helpers'
-lua require 'init'
+" lua require 'init'
 lua require 'scripts'
 lua require 'ruby_helpers'
 lua require 'ts_highlights'

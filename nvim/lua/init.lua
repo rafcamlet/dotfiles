@@ -53,6 +53,7 @@ projects.add('Milabo', 'projects/milabo', {
     vim.cmd [[nnoremap <buffer> <space>ov :F '.*\.haml$' app<cr>]]
   end,
   options = {
+    makeprg = [[{stylelint app/javascript/styles -f unix; eslint app/javascript -f unix}]],
     path = ".,app/**,app/javascript,,",
     suffixesadd = ".js,.vue",
     includeexpr = "Snakecase(v:fname)",
@@ -81,7 +82,7 @@ require "nvim-treesitter.configs".setup {
     custom_captures = {},
   },
   incremental_selection = {
-    enable = true,
+    enable = false,
     keymaps = {
       init_selection = "gn",
       node_incremental = "<c-k>",
@@ -111,9 +112,9 @@ vim.fn.sign_define("LspDiagnosticsHintSign", {text = "H", texthl = "LspDiagnosti
 vim.g.completion_confirm_key = "<c-k>"
 
 local css_var_dict = require'comp'.dict('var', {
-  '$primary', '$secondary', '$secondary-bright', '$secondary4', '$tertriary',
-  '$gray6', '$gray5', '$gray4', '$gray3', '$gray2', '$gray1', '$white', '$white3',
-  '$black', '$black2', '$disabled', '$disabled-light', '$font-color'
+  'primary', 'secondary', 'secondary-bright', 'secondary4', 'tertriary',
+  'gray6', 'gray5', 'gray4', 'gray3', 'gray2', 'gray1', 'white', 'white3',
+  'black', 'disabled', 'disabled-light', 'font-color'
 })
 
 require'completion'.addCompletionSource(
@@ -127,12 +128,12 @@ vim.g.completion_sorting = "length"
 
 vim.g.completion_chain_complete_list = {
   default = {
-    { complete_items = { 'dict', 'path', 'lsp', 'buffers', 'snippet' } },
+    { complete_items = { 'dict', 'path', 'lsp', 'buffers', 'snippet', 'tabnine' } },
     { mode = { '<c-n>' } },
     { mode = { '<c-p>' } }
   },
   scss = {
-    { complete_items = { 'css_var_dict', 'path', 'lsp', } },
+    { complete_items = { 'css_var_dict', 'path', 'lsp', 'tabnine' } },
     { complete_items = { 'buffers', 'snippet' } }
   }
 }
@@ -164,15 +165,15 @@ nvim_lsp.tsserver.setup{
 
 -- https://github.com/tjdevries/nlua.nvim/blob/master/lua/nlua/lsp/nvim.lua:23
 local function get_lua_runtime()
-    local result = {};
-    for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-        local lua_path = path .. "/lua/";
-        if vim.fn.isdirectory(lua_path) then
-            result[lua_path] = true
-        end
+  local result = {};
+  for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+    local lua_path = path .. "/lua/";
+    if vim.fn.isdirectory(lua_path) then
+      result[lua_path] = true
     end
-    result[vim.fn.expand("$VIMRUNTIME/lua")] = true
-    return result;
+  end
+  result[vim.fn.expand("$VIMRUNTIME/lua")] = true
+  return result;
 end
 
 nvim_lsp.sumneko_lua.setup{

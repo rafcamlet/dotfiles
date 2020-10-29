@@ -70,6 +70,7 @@ Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
 " TEST plugin ==================
 " Plug 'tjdevries/colorbuddy.nvim'
 " Plug 'norcalli/nvim-colorizer.lua'
+Plug 'aca/completion-tabnine', { 'do': './install.sh' }
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'cohama/lexima.vim'
 Plug 'sbdchd/neoformat'
