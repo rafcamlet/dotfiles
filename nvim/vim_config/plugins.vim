@@ -17,7 +17,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-commentary'
 " Plug 'tpope/vim-endwise'
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'christoomey/vim-tmux-navigator' " Seamless navigation between tmux panes and vim splits
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'mattn/emmet-vim'

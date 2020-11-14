@@ -92,29 +92,14 @@ let g:UltiSnipsEditSplit='vertical'
 
 let g:ale_sign_column_always = 1
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:ale_ruby_flag = 0
 let g:ale_lint_delay = 500
 
-let g:ale_linters = { 'ruby': ['ruby'], 'vue': ['eslint'], 'vimwiki': [], 'lua': [] }
-
-function! ChangeRubyLinters()
-  if g:ale_ruby_flag
-    echo 'simple'
-    let g:ale_linters = { 'ruby': ['ruby', 'rubocop'] }
-    let g:ale_ruby_flag = 0
-  else
-    echo 'full'
-    let g:ale_linters = { 'ruby': [
-          \ 'rubocop',
-          \ 'rails_best_practices',
-          \ 'reek',
-          \ 'brakeman',
-          \ 'ruby'
-          \ ] }
-    let g:ale_ruby_flag = 1
-  end
-  ALELint
-endfunction
+let g:ale_linters = { 'ruby': ['ruby'],
+      \ 'vue': ['eslint'],
+      \ 'markdown': ['eslint'],
+      \ 'vimwiki': [],
+      \ 'md': [],
+      \ 'lua': [] }
 
 let g:ale_fixers = { 'ruby': ['rubocop'],
       \ 'typescript': ['eslint', 'prettier', 'tslint'],
@@ -275,7 +260,7 @@ let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.js,*.vue'
 
 " ============== tpope/vim-markdown ================
 
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ruby', 'lua']
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ruby', 'lua', 'javascript']
 
 augroup VimMarkdown
   autocmd!
@@ -312,6 +297,9 @@ augroup VimwikiColorGroup
   autocmd User InitVimLoaded highlight Conceal ctermfg=24 ctermbg=NONE
   autocmd User InitVimLoaded highlight VimwikiWeblink1 ctermfg=13
   autocmd User InitVimLoaded highlight VimwikiLink ctermfg=9
+  autocmd User InitVimLoaded highlight VimwikiPre ctermfg=241
+  autocmd User InitVimLoaded highlight VimwikiCode ctermfg=12
+  autocmd User InitVimLoaded highlight link VimwikiBold Special
 augroup END
 
 nmap ) <Plug>VimwikiToggleListItem
@@ -324,9 +312,6 @@ nnoremap <plug>MyVimwikidecreaseLvlWholeItem :VimwikiListChangeLvl decrease 1<CR
 map gh <Plug>MyVimwikidecreaseLvlWholeItem
 
 " map <c-enter> <Plug>VimwikiFollowLink
-
-" autocmd BufEnter */*.md echom '5wow!'
-" autocmd BufEnter *vim_wiki* lua print('asdf')
 
 " ============ Valloric/MatchTagAlways =============
 
@@ -852,7 +837,8 @@ nnoremap <silent><c-x> :if !switch#Switch({'reverse': 1}) <bar>
 
 
 " ============== Yggdroot/indentLine ===============
-let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*']
+let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*', 'md', 'json']
+let g:markdown_syntax_conceal = 0
 
 " ============== luochen1990/rainbow ===============
 
