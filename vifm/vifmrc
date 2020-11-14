@@ -484,4 +484,8 @@ nnoremap yf :!printf %c:p | xclip -i -selection clipboard %i<cr>
 
 colorscheme molokai
 
+command! FZFfind :set noquickview | :execute 'goto' fnameescape(term('fd | fzf --height 230 --preview "bat --style=numbers,changes --color always {}" --preview-window down 2>/dev/tty'))
+
+nnoremap <space>oo :FZFfind<cr>
+
 vsplit

@@ -1,7 +1,8 @@
 local pickers = require('telescope.pickers')
 local finders = require('telescope.finders')
 local previewers = require('telescope.previewers')
-local conf = require('telescope.config').values
+local sorters = require('telescope.sorters')
+-- local conf = require('telescope.config').values
 
 local function porcelain(opts)
 
@@ -23,7 +24,7 @@ local function porcelain(opts)
       opts
     ),
     previewer = previewers.cat.new(opts),
-    sorter = conf.file_sorter(opts),
+    sorter = sorters.get_fzy_sorter(),
   }):find()
 end
 

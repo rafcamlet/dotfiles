@@ -69,7 +69,7 @@ set synmaxcol=1000 " max search in columns
 set guioptions-=T
 set guioptions-=L
 
-" set inccommand=nosplit "Shows the effects of a substitution incrementally, as you type
+set inccommand=nosplit "Shows the effects of a substitution incrementally, as you type
 
 colorscheme shadowmoth
 

@@ -12,12 +12,12 @@ runtime vim_config/custom_colors.vim
 
 " Lua
 
-lua require 'old_projects'
-lua require 'projects'
-lua require 'tui'
+" lua require 'old_projects'
+" lua require 'projects'
+" lua require 'tui'
 lua require 'colors'
 lua require 'helpers'
-" lua require 'init'
+lua require 'init'
 lua require 'scripts'
 lua require 'ruby_helpers'
 lua require 'ts_highlights'
@@ -32,21 +32,31 @@ lua require 'ale_highlights'
 "---------Testing_new_features-------
 "====================================
 "
-"
-nnoremap <space>of <cmd>TelescopeLiveGrep<cr>
+
+nnoremap <space>s <cmd>RubyOpenStyle<cr>
+nnoremap <expr> 8 luaeval('require("scripts").if_qf_open(":cp\<cr>", "8")')
+nnoremap <expr> 9 luaeval('require("scripts").if_qf_open(":cn\<cr>", "9")')
+
+inoremap <c-a> <home>
+inoremap <c-e> <end>
+
+nnoremap <space>of <cmd>lua require('telescope.builtin').live_grep()<cr>
 
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gd    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> <c-q> <cmd>lua vim.lsp.buf.formatting()<cr>
-nnoremap <silent> [g <cmd>PrevDiagnosticCycle<CR>
-nnoremap <silent> ]g <cmd>NextDiagnosticCycle<CR>
+nnoremap <silent> [g    <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> ]g    <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<cr>
+vnoremap <silent> ga    <cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>
+nnoremap <silent> ge    <cmd>lua vim.lsp.util.show_line_diagnostics()<cr>
 command! Rename lua vim.lsp.buf.rename()
 
 augroup dynamic_smartcase
@@ -56,7 +66,6 @@ augroup dynamic_smartcase
 augroup END
 
 nnoremap <space>j :AnyJump<cr>
-cnoremap <nowait><expr> <c-r> luaeval('vim.cmd("History:") and vim.fn.getcmdline()')
 
 autocmd BufEnter * inoremap <expr><silent> <c-j> 
       \ luaeval('(({require"snippets".lookup_snippet_at_cursor()})[2]
@@ -65,7 +74,6 @@ autocmd BufEnter * inoremap <expr><silent> <c-j>
       \ or [[<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>]]')
 inoremap <c-k> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
 
-"
 autocmd FileType qf nnoremap <buffer> <cr> <cr> 
 
 function! EditMigration()
@@ -95,8 +103,6 @@ nnoremap <nowait> <space>b :e app/assets/stylesheets/base.scss<cr>
 
 nnoremap <nowait> <space>d :SF 
 nnoremap <leader>zsh :e ~/.zshrc<cr>
-
-nnoremap ge :CocCommand explorer<CR>
 
 " scrollbind
 nnoremap yob :set scb!<cr>

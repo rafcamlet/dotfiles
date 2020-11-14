@@ -5,7 +5,7 @@ local function close_all_bufs()
   bufs = vim.api.nvim_list_bufs()
   for _, v in ipairs(bufs) do
     if v ~= start_buf and vim.api.nvim_buf_is_valid(v) then
-      vim.cmd(v .. 'bd!')
+      vim.api.nvim_buf_delete(v, {force = true})
     end
   end
 end

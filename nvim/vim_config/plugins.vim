@@ -39,7 +39,7 @@ Plug 'junegunn/vim-easy-align' " A Vim alignment plugin
 Plug 'tpope/vim-abolish' "easily search for, substitute, and abbreviate multiple variants of a word
 Plug 'svermeulen/vim-easyclip' "Simplified clipboard functionality for Vim
 Plug 'w0rp/ale' " Asynchronous Lint Engine
-Plug 'mxw/vim-jsx' "React JSX syntax highlighting and indenting for vim.
+" Plug 'mxw/vim-jsx' "React JSX syntax highlighting and indenting for vim.
 " Plug 'pangloss/vim-javascript'
 " Plug 'jelera/vim-javascript-syntax'
 Plug 'thiagoalessio/rainbow_levels.vim' "A different approach to code highlighting.
@@ -68,19 +68,21 @@ Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
 " Plug 'mhinz/vim-signify' "vim-gitgutter alternative
 
 " TEST plugin ==================
-" Plug 'tjdevries/colorbuddy.nvim'
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'tjdevries/colorbuddy.nvim'
 " Plug 'norcalli/nvim-colorizer.lua'
-Plug 'aca/completion-tabnine', { 'do': './install.sh' }
+" Plug 'aca/completion-tabnine', { 'do': './install.sh' }
+Plug 'jiangmiao/auto-pairs'
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'cohama/lexima.vim'
+" Plug 'cohama/lexima.vim'
 Plug 'sbdchd/neoformat'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'nvim-lua/completion-nvim'
 Plug 'steelsojka/completion-buffers'
 Plug 'nvim-treesitter/completion-treesitter'
-Plug 'nvim-lua/diagnostic-nvim'
 " Plug 'mhinz/vim-startify'
 Plug 'luochen1990/rainbow'
 Plug 'nvim-lua/popup.nvim' | Plug 'nvim-lua/plenary.nvim' | Plug 'nvim-lua/telescope.nvim'
@@ -91,7 +93,7 @@ Plug 'AndrewRadev/switch.vim' | Plug 'tpope/vim-speeddating'
 " Plug 'kyazdani42/nvim-tree.lua'
 Plug 'norcalli/snippets.nvim'
 Plug 'Yggdroot/indentLine'
-Plug 'markonm/traces.vim'
+" Plug 'markonm/traces.vim'
 " Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'el-iot/buffer-tree'
 Plug 'skywind3000/vim-quickui'

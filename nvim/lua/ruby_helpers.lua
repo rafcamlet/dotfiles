@@ -39,8 +39,9 @@ end
 local function identify_file(path)
   local result = {
     path = path,
+    filename = vim.fn.fnamemodify(path, ':t'),
     ext = vim.fn.fnamemodify(path, ':e:e'),
-    head = vim.fn.fnamemodify(path, ':t')
+    file =  vim.fn.fnamemodify(path, ':t:r:r')
   }
 
   path = vim.fn.fnamemodify(path, ':r:r')
@@ -165,6 +166,15 @@ local function haml_class()
   return kebab_case(str:gsub('_component', '')) .. '__'
 end
 
+local function open_style()
+  local file = identify_file(vim.fn.expand('%'))
+  local fragments = split_path(file.path)
+  local tail = table.remove(fragments, #fragments)
+  local result = {'app/javascript/styles/components', fragments, file.file:gsub('_component', '') .. '.scss'}
+  result = table.concat(vim.tbl_flatten(result), '/')
+
+  vim.cmd('vsplit ' .. result)
+end
 
 local function cmd(name, str)
   vim.cmd(([[command! %s lua require("ruby_helpers").%s]]):format( name, str))
@@ -173,6 +183,7 @@ end
 cmd('RubyOpenLoyalties', 'open_loyalty()')
 cmd('RubyCopyClass', 'copy_class()')
 cmd('RubyComponent', 'open_component()')
+cmd('RubyOpenStyle', 'open_style()')
 
 return {
   split_path = split_path,
@@ -180,5 +191,7 @@ return {
   copy_class = copy_class,
   ruby_class = ruby_class,
   haml_class = haml_class,
-  open_component = open_component
+  open_component = open_component,
+  identify_file = identify_file,
+  open_style = open_style
 }

@@ -41,6 +41,9 @@ bindkey -M isearch " "      magic-space     # normal space during searches
 egalias G='| grep -Pi'
 ealias gs='git status'
 ealias gdn='git diff --name-only '
+alias mv="mv -v"
+alias cp="cp -v"
+alias mkdir="cp -vp"
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
@@ -191,6 +194,8 @@ eval "$(direnv hook zsh)"
 # heroku autocomplete setup {{{
 HEROKU_AC_ZSH_SETUP_PATH=/home/r2d2/.cache/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 # }}}
+
+. "$HOME/.local/share/lscolors.sh"
 
 # asdf & rvm {{{
 if [[ "$USER" == "r" ]]; then

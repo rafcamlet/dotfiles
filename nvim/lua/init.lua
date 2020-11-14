@@ -5,6 +5,7 @@ require('tabline').setup()
 require('jumper').setup()
 
 vim.api.nvim_set_keymap('n', '<space>op', '<cmd>lua require("porcelain"){}<cr>', {noremap = true})
+-- vim.api.nvim_set_keymap('n', '<space>oo', '<cmd>lua require("tele_fzf"){}<cr>', {noremap = true})
 
 require 'luapad'.config{
   context = {
@@ -51,17 +52,17 @@ projects.add('Customease', 'projects/customease', {
 projects.add('Milabo', 'projects/milabo', {
   init = function()
     vim.cmd [[nnoremap <buffer> <space>ov :F '.*\.haml$' app<cr>]]
+    vim.cmd [[nnoremap <buffer> <space>oj :F '.*\.js$' app/javascript<cr>]]
   end,
   options = {
-    makeprg = [[{stylelint app/javascript/styles -f unix; eslint app/javascript -f unix}]],
+    makeprg = [[{stylelint app/javascript/styles -f unix; eslint app/javascript -f unix ; rg --vimgrep "(<<<<<<<\|=======\|>>>>>>>\|console.log\|binding.pry\|jard)" app/}]],
     path = ".,app/**,app/javascript,,",
     suffixesadd = ".js,.vue",
     includeexpr = "Snakecase(v:fname)",
     include = "import "
   },
   fzf = {
-    s = "app/javascript/styles",
-    j = "app/javascript"
+    s = "app/javascript/styles"
   }
 })
 
@@ -72,6 +73,20 @@ hl_color('MatchTag', nil, 53)
 
 
 require "nvim-treesitter.configs".setup {
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["ab"] = "@block.outer",
+        ["ib"] = "@black.inner",
+      },
+    },
+  },
   playground = {
     enable = true,
     updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
@@ -82,31 +97,16 @@ require "nvim-treesitter.configs".setup {
     custom_captures = {},
   },
   incremental_selection = {
-    enable = false,
+    enable = true,
     keymaps = {
       init_selection = "gn",
-      node_incremental = "<c-k>",
-      node_decremental = "<c-j>",
+      node_incremental = "<c-j>",
+      node_decremental = "<c-k>",
       scope_incremental = "<c-l>",
     },
-  },
+  }
 }
 
--- diagnostic
-
-vim.g.diagnostic_insert_delay = 1
-vim.g.diagnostic_enable_virtual_text = 1
-vim.g.diagnostic_virtual_text_prefix = '← '
--- vim.g.space_before_virtual_text = 5
-
-hl_color('DiagnosticErrorHl', 13)
-hl_color('LspDiagnosticsError', 209)
-hl_color('LspDiagnosticsWarning', 221)
-
-vim.fn.sign_define("LspDiagnosticsErrorSign", {text = "->", texthl = "DiagnosticErrorHl"})
-vim.fn.sign_define("LspDiagnosticsWarningSign", {text = "W", texthl = "LspDiagnosticsWarning"})
-vim.fn.sign_define("LspDiagnosticsInformationSign", {text = "I", texthl = "LspDiagnosticsInformation"})
-vim.fn.sign_define("LspDiagnosticsHintSign", {text = "H", texthl = "LspDiagnosticsHint"})
 
 -- completion-nvim
 vim.g.completion_confirm_key = "<c-k>"
@@ -121,6 +121,10 @@ require'completion'.addCompletionSource(
   'css_var_dict', { item = css_var_dict }
 )
 
+require'completion'.addCompletionSource(
+  'view_components', { item = require'comp'.components }
+)
+
 vim.g.completion_enable_auto_signature = 0
 vim.g.completion_enable_auto_hover = 0
 vim.g.completion_sorting = "length"
@@ -128,39 +132,78 @@ vim.g.completion_sorting = "length"
 
 vim.g.completion_chain_complete_list = {
   default = {
-    { complete_items = { 'dict', 'path', 'lsp', 'buffers', 'snippet', 'tabnine' } },
+    { complete_items = { 'dict', 'path', 'lsp', 'buffers', 'snippet'} },
+    { mode = { '<c-n>' } },
+    { mode = { '<c-p>' } }
+  },
+  haml = {
+    { complete_items = { 'path', 'lsp', 'buffers', 'snippet', 'view_components'} },
     { mode = { '<c-n>' } },
     { mode = { '<c-p>' } }
   },
   scss = {
-    { complete_items = { 'css_var_dict', 'path', 'lsp', 'tabnine' } },
+    { complete_items = { 'css_var_dict', 'lsp' } },
     { complete_items = { 'buffers', 'snippet' } }
   }
 }
 
 -- nvim-lspconfig
+hl_color('DiagnosticErrorHl', 13)
+hl_color('LspDiagnosticsError', 209)
+hl_color('LspDiagnosticsWarning', 221)
+
+vim.fn.sign_define("LspDiagnosticsSignError", {text = "->", texthl = "DiagnosticErrorHl"})
+vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "W", texthl = "LspDiagnosticsWarning"})
+vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "I", texthl = "LspDiagnosticsInformation"})
+vim.fn.sign_define("LspDiagnosticsSignHint", {text = "H", texthl = "LspDiagnosticsHint"})
+
 local nvim_lsp = require'nvim_lsp'
-local diagnostic_on_attach = require'diagnostic'.on_attach
+local nvim_lsp_util = require "nvim_lsp/util"
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    virtual_text = {
+      spacing = 4,
+      prefix = '←',
+    },
+    signs = true,
+    update_in_insert = false,
+  }
+)
 
 local on_attach = function(client)
-  diagnostic_on_attach(client)
+  require'completion'.on_attach(client)
 end
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 nvim_lsp.vuels.setup{
-  on_attach = on_attach()
+  on_attach = on_attach
 }
 
 nvim_lsp.cssls.setup{
-  on_attach = on_attach()
+  on_attach = on_attach,
+  capabilities = capabilities,
 }
 
 nvim_lsp.solargraph.setup{
-  on_attach = on_attach()
+  on_attach = on_attach
 }
 
 nvim_lsp.tsserver.setup{
-  on_attach = on_attach()
+  on_attach = on_attach,
+  -- cmd = {"typescript-language-server", "--stdio"},
+  root_dir = nvim_lsp_util.root_pattern("package.json", "tsconfig.json", ".git"),
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx"
+  },
 }
 
 -- https://github.com/tjdevries/nlua.nvim/blob/master/lua/nlua/lsp/nvim.lua:23

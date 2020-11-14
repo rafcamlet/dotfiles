@@ -84,7 +84,7 @@ nnoremap   <silent>  <c-t><c-q> :tabc<cr>
 " Copy to end of line
 nnoremap Y y$
 
-tnoremap <esc> <c-\><c-n>
+" tnoremap <esc> <c-\><c-n>
 
 " highlight current word without search for next
 nnoremap <silent> * :set hls<cr>*``

@@ -33,11 +33,14 @@ bind-key -n C-h if-shell "$is_vim" "send-keys C-h"  "select-pane -L"
 bind-key -n C-j if-shell "$is_vim" "send-keys C-j"  "select-pane -D"
 bind-key -n C-k if-shell "$is_vim" "send-keys C-k"  "select-pane -U"
 bind-key -n C-l if-shell "$is_vim" "send-keys C-l"  "select-pane -R"
+bind-key -n C-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
 bind-key -T copy-mode-vi C-h select-pane -L
 bind-key -T copy-mode-vi C-j select-pane -D
 bind-key -T copy-mode-vi C-k select-pane -U
 bind-key -T copy-mode-vi C-l select-pane -R
-# bind-key -T copy-mode-vi C-\ select-pane -l
+bind-key -T copy-mode-vi C-\ select-pane -l
+
+bind c-s source ~/.tmux.conf\; display "~/.tmux.conf sourced!"
 
 unbind-key -T copy-mode-vi v
 
@@ -83,8 +86,8 @@ set -g status-left ' #{s/root//:client_key_table} '
 
 
 # visual bell
-set -g visual-bell on
-set -g bell-action any
+set-window-option -g visual-bell on
+set-window-option -g bell-action any
 
 # # smarter past
 # bind -n C-] paste-buffer
@@ -121,7 +124,7 @@ bind m break-pane
 bind n split-window -h -p 30
 
 # Allow difrent window size
-set -g aggressive-resize on
+set-window-option -g aggressive-resize on
 
 set -g mouse on
 
@@ -145,62 +148,37 @@ set -g mouse on
 
 set-option -g word-separators " .,"
 
-#### COLOUR
+#### COLOUR (Solarized 256)
 
-## set status bar
-set -g status-style bg="#000000"
-setw -g window-status-current-style bg="#2a2a2a"
-setw -g window-status-current-style fg="#7aa6da"
+# default statusbar colors
+set-option -g status-bg colour235 #base02
+set-option -g status-fg colour136 #yellow
+set-option -g status-attr default
 
-## highlight active window
-setw -g pane-active-border-style ''
+# default window title colors
+set-window-option -g window-status-fg colour244 #base0
+set-window-option -g window-status-bg default
+#set-window-option -g window-status-attr dim
 
-## highlight activity in status bar
-setw -g window-status-activity-style fg="#70c0b1"
-setw -g window-status-activity-style bg="#000000"
+# active window title colors
+set-window-option -g window-status-current-fg colour166 #orange
+set-window-option -g window-status-current-bg default
+#set-window-option -g window-status-current-attr bright
 
-## pane border and colors
-set -g pane-active-border-style bg=default
-set -g pane-active-border-style fg="#424242"
-set -g pane-border-style bg=default
-set -g pane-border-style fg="#424242"
+# pane border
+set-option -g pane-border-fg colour235 #base02
+set-option -g pane-active-border-fg colour240 #base01
 
-set -g clock-mode-colour "#7aa6da"
-set -g clock-mode-style 24
+# message text
+set-option -g message-bg colour235 #base02
+set-option -g message-fg colour166 #orange
 
-set -g message-style bg="#70c0b1"
-set -g message-style fg="#000000"
+# pane number display
+set-option -g display-panes-active-colour colour33 #blue
+set-option -g display-panes-colour colour166 #orange
 
-set -g message-command-style bg="#70c0b1"
-set -g message-command-style fg="#000000"
-
-# message bar or "prompt"
-set -g message-style bg="#2d2d2d"
-set -g message-style fg="#cc99cc"
-
-set -g mode-style bg="#000000"
-set -g mode-style fg="#e78c45"
-
-# right side of status bar holds "[host name] (date time)"
-set -g status-right-length 100
-set -g status-right-style fg=black
-set -g status-right-style bold
-set -g status-right '#[fg=#f99157,bg=#2d2d2d] %H:%M |#[fg=#6699cc] %y.%m.%d '
-
-# make background window look like white tab
-set-window-option -g window-status-style bg=default
-set-window-option -g window-status-style fg=white
-set-window-option -g window-status-style none
-set-window-option -g window-status-format '#[fg=#6699cc,bg=colour235] #I #[fg=#999999,bg=#2d2d2d] #W #[default]'
-
-# make foreground window look like bold yellow foreground tab
-set-window-option -g window-status-current-style none
-set-window-option -g window-status-current-format '#[fg=#f99157,bg=#2d2d2d] #I #[fg=#cccccc,bg=#393939] #W #[default]'
-
-# active terminal yellow border, non-active white
-set -g pane-border-style bg=default
-set -g pane-border-style fg="#999999"
-set -g pane-active-border-style fg="#f99157"
+set-window-option -g mode-fg colour236
+set-window-option -g mode-bg colour5
 
 # LIST OF PLUGINS
 # git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -215,8 +193,6 @@ set -g pane-active-border-style fg="#f99157"
 # set -g @plugin 'tmux-plugins/tmux-yank'
 # set -g @plugin 'Morantron/tmux-fingers'
 
-set -g @plugin 'woodstok/tmux-butler'
-
 set -g @plugin 'tmux-plugins/tmux-copycat'
 set -g @plugin 'Morantron/tmux-fingers'
 set -g @plugin 'tmux-plugins/tmux-yank'
@@ -225,10 +201,12 @@ set -g @plugin 'fcsonline/tmux-thumbs'
 set -g @thumbs-key f
 set -g @thumbs-contrast 1
 
-# set -g @plugin 'laktak/extrakto'
-# set -g @extrakto_fzf_tool "/home/r2d2/.fzf/bin/fzf"
+set -g @plugin 'laktak/extrakto'
+set -g @extrakto_fzf_tool "/home/r2d2/.fzf/bin/fzf"
 
 set -g @plugin 'schasse/tmux-jump'
+
+set -g @plugin 'laktak/extrakto'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'

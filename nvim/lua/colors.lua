@@ -81,4 +81,7 @@ Colors.background = Colors.gray5
 hl_color('Normal', Colors.brown, Colors.background)
 hl_color('YankHighlight', nil, Colors.gray8)
 
+hl_color('TelescopeBorder', Colors.paradiso)
+hl_color('TelescopeMatching', 1)
+
 return Colors

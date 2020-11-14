@@ -74,24 +74,48 @@ end
 endsnippet
 
 
-snippet init "def initialize"
+snippet inita "def initialize"
+`!p import re
+def prepare(str):
+  str = str.strip()
+  return re.sub(':', '', str)
+
+snip.rv = 'attr_accessor ' + ', '.join(map(lambda x: ':' + prepare(x), t[1].split(',')))
+`
+
 def initialize($1)
 `!p import re
 def ass_attr(str):
-  str = str.strip()
+  str = prepare(str)
   return "  @%s = %s" % (str, str)
 
-if(len(t[1]) * 2 + len(re.findall('\,', t[1])) * 3 > 40):
-  arr = list(map(ass_attr, t[1].split(',')))
-  snip.rv = arr.pop(0)
-  for x in arr:
-    snip += x
-else:
-  snip.rv = '  ' + ", ".join(map(lambda x: '@' + x.strip(), t[1].split(','))) + ' = ' + t[1]
-
+arr = list(map(ass_attr, t[1].split(',')))
+snip.rv = arr.pop(0)
+for x in arr:
+ snip += x
 `
 end
 endsnippet
+
+snippet init "def initialize"
+def initialize($1)
+`!p import re
+def prepare(str):
+  str = str.strip()
+  return re.sub(':', '', str)
+
+def ass_attr(str):
+  str = prepare(str)
+  return "  @%s = %s" % (str, str)
+
+arr = list(map(ass_attr, t[1].split(',')))
+snip.rv = arr.pop(0)
+for x in arr:
+ snip += x
+`
+end
+endsnippet
+
 
 snippet d "double"
 $1: $1$0
