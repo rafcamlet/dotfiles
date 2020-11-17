@@ -172,6 +172,11 @@ command! reload :write | restart
 " Pdf
 "filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c
 
+fileviewer *.svg rsvg-convert %c -o /tmp/exported_svg.png &>/dev/null ;
+         \ imgt %px %py %pw %ph /tmp/exported_svg.png
+         \ %pc
+         \ imgc %px %py %pw %ph
+
 filextype *.pdf xdg-open %c
 fileviewer *.pdf pdftotext -nopgbrk %c -
 
@@ -481,6 +486,8 @@ nnoremap yd :!printf %d | xclip -i -selection clipboard %i<cr>
 
 " Yank current file path into the clipboard
 nnoremap yf :!printf %c:p | xclip -i -selection clipboard %i<cr>
+
+
 
 colorscheme molokai
 

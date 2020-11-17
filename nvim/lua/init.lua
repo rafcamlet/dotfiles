@@ -157,8 +157,8 @@ vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "W", texthl = "LspDiagno
 vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "I", texthl = "LspDiagnosticsInformation"})
 vim.fn.sign_define("LspDiagnosticsSignHint", {text = "H", texthl = "LspDiagnosticsHint"})
 
-local nvim_lsp = require'nvim_lsp'
-local nvim_lsp_util = require "nvim_lsp/util"
+local nvim_lsp = require'lspconfig'
+-- local nvim_lsp_util = require "nvim_lsp/util"
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -195,7 +195,7 @@ nvim_lsp.solargraph.setup{
 nvim_lsp.tsserver.setup{
   on_attach = on_attach,
   -- cmd = {"typescript-language-server", "--stdio"},
-  root_dir = nvim_lsp_util.root_pattern("package.json", "tsconfig.json", ".git"),
+  -- root_dir = nvim_lsp_util.root_pattern("package.json", "tsconfig.json", ".git"),
   filetypes = {
     "javascript",
     "javascriptreact",
