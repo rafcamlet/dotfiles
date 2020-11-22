@@ -158,7 +158,6 @@ vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "I", texthl = "LspDi
 vim.fn.sign_define("LspDiagnosticsSignHint", {text = "H", texthl = "LspDiagnosticsHint"})
 
 local nvim_lsp = require'lspconfig'
--- local nvim_lsp_util = require "nvim_lsp/util"
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -225,7 +224,7 @@ nvim_lsp.sumneko_lua.setup{
   settings = {
     Lua = {
       runtime = {
-        version = "Lua 5.1/LuaJIT"
+        version = "LuaJIT"
       },
       diagnostics = {
         globals = { "vim", "describe", "it" },

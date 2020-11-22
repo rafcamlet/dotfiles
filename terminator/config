@@ -1,4 +1,5 @@
 [global_config]
+  inactive_color_offset = 1.0
 [keybindings]
 [layouts]
   [[default]]

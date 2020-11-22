@@ -1,42 +1,35 @@
+local after_init = require('helpers').after_init
+after_init('unload_tabline', 'lua package.loaded.tabline = nil')
+
 local hl_color = require 'helpers'.hl_color
 local get_icon = require'nvim-web-devicons'.get_icon
+local Colors = require'colors'
 
--- hl_color('TabLineBack', 0, 232)
--- hl_color('TabLineNr', 111, 234)
--- hl_color('TabItem', 245, 235)
--- hl_color('TabLineSel', 250, 236)
--- hl_color('TabLineNrSel', 208, 235)
+hl_color('TabLine', nil, Colors.gray1)
 
-hl_color('TabLineBack', 0, 0)
-hl_color('TabLineNr', 111, 232)
-hl_color('TabItem', 245, 234)
-hl_color('TabLineSel', 250, 234)
-hl_color('TabLineNrSel', 208, 232)
+local num_background = Colors.gray4
+hl_color('TabLineNr', Colors.very_light_blue, num_background)
+hl_color('TabItem', Colors.gray18)
+hl_color('TabLineSel', Colors.gray22)
+hl_color('TabLineNrSel', Colors.special, num_background)
 
 
-hl_color('TabLineDevIconRb', 1, 234)
-hl_color('TabLineDevIconRake', 1, 234)
+-- local highlights = {}
+--
+-- local function getHl(color)
+--   if not color then return 'TabItem' end
+--   if highlights[color] then return highlights[color] end
+--
+--   local guifg = string.format('#%06x', vim.api.nvim_get_hl_by_name(color, true)['foreground'])
+--
+--   vim.cmd(
+--   'hi! TabIcon' .. color ..
+--   ' guifg=' .. guifg ..
+--   ' guibg=' .. '#ff0000'
+--   )
+--   return 'TabIcon' .. color
+-- end
 
-hl_color('TabLineDevIconJs', 3, 234)
-hl_color('TabLineDevIconJson', 3, 234)
-
-hl_color('TabLineDevIconHtml', 208, 234)
-hl_color('TabLineDevIconMd', 22, 234)
-hl_color('TabLineDevIconScss', 5, 234)
-hl_color('TabLineDevIconVim', 34, 234)
-hl_color('TabLineDevIconLua', 111, 234)
-
-local colors = {
-  DevIconRb = true,
-  DevIconRake = true,
-  DevIconJs = true,
-  DevIconJson = true,
-  DevIconHtml = true,
-  DevIconMd = true,
-  DevIconScss = true,
-  DevIconVim = true,
-  DevIconLua = true,
-}
 
 function tabline()
   local result = ''
@@ -55,12 +48,9 @@ function tabline()
       is_nerdtree = name:match('NERD_tree')
       if name ~= '' and not is_nerdtree then
         local icon, color = get_icon(name, vim.fn.fnamemodify(name, ':e'), {})
-        if colors[color] then
-          color = ('%%#TabLine%s#'):format(color)
-        else
-          color = '%#TabItem#'
-        end
-        table.insert(names, ('%s%s %s%s'):format(color, icon, '%#TabItem#', name))
+        -- color = getHl(color)
+        color = ('%%#%s#'):format(color)
+        table.insert(names, (' %s%s %s%s'):format(color, icon, '%#TabItem#', name))
       end
     end
 
@@ -88,10 +78,10 @@ function tabline()
       nr = '%#TabLineNr#'
     end
 
-    local tab = ([[%s %s %s %s %s ]]):format(nr, i, prefix, names_str, '%#TabLineBack#')
+    local tab = ([[%s %s %s%s %s ]]):format(nr, i, prefix, names_str, '%#TabLine#')
     result = result .. tab
   end
-  return '%#TabLineBack#' .. result .. '%#TabLineBack#'
+  return '%#TabLine#' .. result .. '%#TabLine#'
 end
 
 local function setup()

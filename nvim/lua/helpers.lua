@@ -29,11 +29,12 @@ function kebab_case(s)
   return ({s:gsub('_', '-')})[1]
 end
 
-function hl_color(group, fg, bg)
-  local cmd = ('highlight %s ctermfg=%s ctermbg=%s'):format(
+function hl_color(group, fg, bg, gui)
+  local cmd = ('highlight %s guifg=%s guibg=%s gui=%s'):format(
     group,
     fg or 'NONE',
-    bg or 'NONE'
+    bg or 'NONE',
+    gui or 'NONE'
   )
   vim.api.nvim_command(cmd)
   return cmd

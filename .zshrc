@@ -143,7 +143,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d . --color=never'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -100'"
 export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # }}}
 
 export BAT_THEME=Nord
@@ -210,3 +209,5 @@ else
   . $HOME/.asdf/completions/asdf.bash
 fi
 # }}}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

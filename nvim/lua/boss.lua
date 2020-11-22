@@ -14,6 +14,45 @@ function Boss.cmd(str)
   Boss.nvim('command', str)
 end
 
+
+function Boss.split_keys(str)
+  local flag = false
+  local result = {}
+  local buf
+
+  for c in str:gmatch"." do
+    if c == '<' then
+      buf = '<'
+      flag = true
+    elseif c == '>' then
+      table.insert(result, buf .. '>')
+      flag = false
+    elseif flag then
+      buf = buf .. c
+    else
+      table.insert(result, c)
+    end
+  end
+
+  return result
+end
+
+function Boss.input(str)
+  Boss.nvim('input', str)
+end
+
+function Boss.typein(str)
+  for _, v in ipairs(Boss.split_keys(str)) do
+    Boss.input(v)
+    Boss.sleep(0.1)
+  end
+end
+
+function Boss.lines(tbl, start, finish)
+  if type(tbl) == 'string' then tbl = vim.split(tbl, "\n") end
+  Boss.nvim('buf_set_lines', 0, start or 0, finish or 0, false, tbl)
+end
+
 function Boss.setup()
   local arr = {
     'tmux kill-pane -a -t 0',
