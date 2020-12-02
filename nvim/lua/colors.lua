@@ -1,4 +1,3 @@
-
 vim.cmd('set termguicolors')
 
 local hl_color = require('helpers').hl_color
@@ -157,6 +156,18 @@ hl_color('TSTitle', Colors.yellow)
 hl_color('TSLiteral', Colors.yellow)
 hl_color('TSURI', Colors.yellow)
 hl_color('TSError', Colors.green)
+
+-- Vim wiki
+
+hl_color('VimwikiLink', '#39A3AC')
+hl_color('Conceal', Colors.red)
+hl_color('VimwikiCode', Colors.special)
+hl_color('VimwikiPre', Colors.gray14)
+hl_color('VimwikiBold', Colors.special)
+hl_color('VimwikiWeblink1', Colors.ruby_red)
+hl_color('VimwikiBold', Colors.special)
+
+-- ---
 
 
 require'nvim-web-devicons'.setup {

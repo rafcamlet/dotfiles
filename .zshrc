@@ -133,16 +133,12 @@ export FFF_FAV9=~/projects
 #}}}
 
 # FZF options {{{
-export FZF_DEFAULT_OPTS='
-  --reverse
-  --height 75% --multi
-  --bind ctrl-f:page-down,ctrl-b:page-up
-'
-export FZF_DEFAULT_COMMAND='fd --hidden --exclude ".git" .';
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND='fd --type d . --color=never'
-export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -100'"
-export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
+# export FZF_DEFAULT_OPTS='--reverse --height 75% --multi --bind ctrl-f:page-down,ctrl-b:page-up'
+# export FZF_DEFAULT_COMMAND='fd --hidden --exclude ".git" .';
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# export FZF_ALT_C_COMMAND='fd --type d . --color=never'
+# export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -100'"
+# export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
 # }}}
 
 export BAT_THEME=Nord

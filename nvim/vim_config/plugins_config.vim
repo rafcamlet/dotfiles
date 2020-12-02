@@ -292,15 +292,6 @@ let g:vimwiki_list = [
 
 let g:vimwiki_global_ext = 0
 
-augroup VimwikiColorGroup
-  autocmd!
-  autocmd User InitVimLoaded highlight Conceal ctermfg=24 ctermbg=NONE
-  autocmd User InitVimLoaded highlight VimwikiWeblink1 ctermfg=13
-  autocmd User InitVimLoaded highlight VimwikiLink ctermfg=9
-  autocmd User InitVimLoaded highlight VimwikiPre ctermfg=241
-  autocmd User InitVimLoaded highlight VimwikiCode ctermfg=12
-  autocmd User InitVimLoaded highlight link VimwikiBold Special
-augroup END
 
 nmap ) <Plug>VimwikiToggleListItem
 vmap ) <Plug>VimwikiToggleListItem

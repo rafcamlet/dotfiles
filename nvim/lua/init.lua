@@ -16,6 +16,7 @@ require 'luapad'.config{
   end
 }
 
+require('telescope').load_extension('fzy_native')
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
@@ -51,7 +52,9 @@ projects.add('Customease', 'projects/customease', {
 
 projects.add('Milabo', 'projects/milabo', {
   init = function()
-    vim.cmd [[nnoremap <buffer> <space>ov :F '.*\.haml$' app<cr>]]
+    -- vim.cmd [[nnoremap <buffer> <space>ov :F '.*\.haml$' app<cr>]]
+    vim.cmd [[nnoremap <buffer> <space>os <cmd>lua require'finders'.find{ pattern = 'scss$', path="app/javascript/styles" }<cr> ]]
+    vim.cmd [[nnoremap <buffer> <space>ov <cmd>lua require'finders'.find{ pattern = 'html.haml$' }<cr> ]]
     vim.cmd [[nnoremap <buffer> <space>oj :F '.*\.js$' app/javascript<cr>]]
   end,
   options = {
@@ -61,9 +64,7 @@ projects.add('Milabo', 'projects/milabo', {
     includeexpr = "Snakecase(v:fname)",
     include = "import "
   },
-  fzf = {
-    s = "app/javascript/styles"
-  }
+  fzf = { }
 })
 
 
@@ -287,6 +288,5 @@ nvim_lsp.sumneko_lua.setup{
 --     }
 --   }
 -- }
-
 
 vim.cmd("autocmd BufEnter * lua require'completion'.on_attach()")

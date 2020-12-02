@@ -70,6 +70,9 @@ Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
 " TEST plugin ==================
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 "
+Plug 'mfussenegger/nvim-dap'
+Plug 'nvim-telescope/telescope-fzf-writer.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'rktjmp/lush.nvim'
 Plug 'tjdevries/colorbuddy.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
@@ -156,7 +159,7 @@ Plug 'HiPhish/awk-ward.nvim'
 
 " Plug 'kien/rainbow_parentheses.vim'
 
-" Plug 'plasticboy/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 " Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " Plug 'posva/vim-vue'

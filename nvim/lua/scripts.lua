@@ -74,6 +74,27 @@ local function vifm(root)
 end
 
 
+hsl = require('lush').hsl
+
+local function adjust_color(h, s, l)
+  local str = vim.api.nvim_get_current_line()
+  local pattern = '#' .. string.rep('[0-9a-fA-F]', 6)
+  local hex = str:match(pattern)
+  local color = hsl(hex)()
+  color['h'] =  color['h'] + h
+  color['s'] =  color['s'] + s
+  color['l'] =  color['l'] + l
+  local result = tostring(hsl(color['h'], color['s'], color['l']))
+  vim.api.nvim_set_current_line(str.gsub(pattern, result))
+end
+
+vim.cmd('nnoremap <k7> <cmd>lua require"scripts".adjust_color(1,0,0)<cr>')
+vim.cmd('nnoremap <k4> <cmd>lua require"scripts".adjust_color(-1,0,0)<cr>')
+vim.cmd('nnoremap <k8> <cmd>lua require"scripts".adjust_color(0,1,0)<cr>')
+vim.cmd('nnoremap <k5> <cmd>lua require"scripts".adjust_color(0,-1,0)<cr>')
+vim.cmd('nnoremap <k9> <cmd>lua require"scripts".adjust_color(0,0,1)<cr>')
+vim.cmd('nnoremap <k6> <cmd>lua require"scripts".adjust_color(0,0,-1)<cr>')
+
 cmd('HorizontalMain', 'horizontal_main()')
 cmd('VerticalMain', 'vertical_main()')
 
@@ -85,5 +106,6 @@ return {
   vertical_main = vertical_main,
   vifm = vifm,
   cmd = cmd,
-  if_qf_open = if_qf_open
+  if_qf_open = if_qf_open,
+  adjust_color = adjust_color
 }

@@ -2,7 +2,7 @@ local Boss = {
   address = 'localhost:3443'
 }
 
-local function sleep(n)
+function Boss.sleep(n)
   os.execute("sleep " .. tonumber(n))
 end
 
@@ -13,7 +13,6 @@ end
 function Boss.cmd(str)
   Boss.nvim('command', str)
 end
-
 
 function Boss.split_keys(str)
   local flag = false
@@ -61,7 +60,7 @@ function Boss.setup()
   }
   for _, v in ipairs(arr) do os.execute(v) end
 
-  sleep(1)
+  Boss.sleep(1)
 
   Boss.connection = vim.api.nvim_call_function(
     'sockconnect',
@@ -79,5 +78,17 @@ function Boss.run(fun)
   fun(Boss)
   Boss.finish()
 end
+
+function Boss.eval(str)
+  local f, err = loadstring(str)
+  if not f then return print(err) end
+  Boss.run(f)
+end
+
+-- aliases
+Boss.c = Boss.cmd
+Boss.i = Boss.input
+Boss.l = Boss.lines
+Boss.t = Boss.typein
 
 return Boss

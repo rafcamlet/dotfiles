@@ -31,6 +31,13 @@ lua require 'ale_highlights'
 "====================================
 "---------Testing_new_features-------
 "====================================
+
+command! -nargs=1 Boss :call luaeval("require'boss'.eval(_A)", <q-args>)
+command! Bundle lua require'finders'.find{ cwd = "/home/r2d2/projects/dotfiles/nvim/bundle/", pattern = '(lua|vim)$' }
+nnoremap <space>ok <cmd>lua require'sfs'()<cr>
+
+nnoremap <space>of <cmd>lua require('finders').grep()<cr>
+
 "
 " let g:lua_tree_side = 'left' "left by default
 " let g:lua_tree_width = 40 "30 by default
@@ -115,8 +122,6 @@ nnoremap <expr> 9 luaeval('require("scripts").if_qf_open(":cn\<cr>", "9")')
 
 inoremap <c-a> <home>
 inoremap <c-e> <end>
-
-nnoremap <space>of <cmd>lua require('telescope.builtin').live_grep()<cr>
 
 nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
