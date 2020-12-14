@@ -37,6 +37,7 @@ command! Bundle lua require'finders'.find{ cwd = "/home/r2d2/projects/dotfiles/n
 nnoremap <space>ok <cmd>lua require'sfs'()<cr>
 
 nnoremap <space>of <cmd>lua require('finders').grep()<cr>
+nnoremap <space>o<c-f> <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
 
 "
 " let g:lua_tree_side = 'left' "left by default

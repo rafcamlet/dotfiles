@@ -14,7 +14,8 @@ local dirs = {
   loyalties = true,
   mailers = true,
   models = true,
-  workers = true
+  workers = true,
+  views = true
 }
 
 local types = {

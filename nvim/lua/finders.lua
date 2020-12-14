@@ -48,7 +48,6 @@ local function find(opts)
   }):find()
 end
 
-
 local function grep(opts)
   opts = opts or {}
 
@@ -84,7 +83,7 @@ local function grep(opts)
   }
 
   pickers.new(opts, {
-    prompt_title = 'fzy grep',
+    prompt_title = 'rg + fzy',
     finder = live_grepper,
     previewer = previewers.vimgrep.new(opts),
     sorter = use_highlighter and sorters.highlighter_only(opts),

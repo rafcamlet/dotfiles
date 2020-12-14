@@ -620,7 +620,7 @@ augroup END
 " ============= voldikss/vim-floaterm ==============
 
 let g:floaterm_position = 'center'
-let g:floaterm_keymap_new = '<space>t'
+" let g:floaterm_keymap_new = '<space>t'
 nnoremap <space>v :FloatermNew --height=1.00 --width=1.00  vifm<cr>
 nnoremap <space>V :exec 'FloatermNew --height=1.00 --width=1.00  vifm ' .. getcwd()<cr>
 
@@ -721,8 +721,9 @@ let g:mkdp_auto_close = 0
 " let g:vim_markdown_frontmatter = 1  " for YAML format
 " let g:vim_markdown_toml_frontmatter = 1  " for TOML format
 " let g:vim_markdown_json_frontmatter = 1  " for JSON format
-"
-"
+
+let g:vim_markdown_conceal_code_blocks = 0
+
 " " ========= vim-pandoc/vim-pandoc-syntax ===========
 " "
 " augroup pandoc_syntax

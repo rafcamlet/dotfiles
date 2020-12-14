@@ -125,7 +125,10 @@ hl_color('YankHighlight', nil, Colors.gray8)
 
 
 hl_color('TelescopeBorder', Colors.paradiso)
-hl_color('TelescopeMatching', Colors.red)
+hl_color('TelescopeMatching', Colors.special)
+hl_color('TelescopeSelection', nil, Colors.gray1)
+hl_color('TelescopeNormal', Colors.gray20)
+
 
 hl_color('LspDiagnosticsVirtualTextError', Colors.error)
 hl_color('LspDiagnosticsVirtualTextWarning', Colors.warning)

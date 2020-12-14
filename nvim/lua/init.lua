@@ -5,7 +5,7 @@ require('tabline').setup()
 require('jumper').setup()
 
 vim.api.nvim_set_keymap('n', '<space>op', '<cmd>lua require("porcelain"){}<cr>', {noremap = true})
--- vim.api.nvim_set_keymap('n', '<space>oo', '<cmd>lua require("tele_fzf"){}<cr>', {noremap = true})
+vim.api.nvim_set_keymap('n', '<space>oo', '<cmd>lua require"finders".find{}<cr>', {noremap = true})
 
 require 'luapad'.config{
   context = {
@@ -16,10 +16,11 @@ require 'luapad'.config{
   end
 }
 
-require('telescope').load_extension('fzy_native')
+
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
+    vim_buffers_everywhere = true, -- Will most likely be renamed to something more useful
     mappings = {
       i = {
         ["<C-j>"] = actions.move_selection_next,
@@ -28,6 +29,7 @@ require('telescope').setup{
     }
   }
 }
+require('telescope').load_extension('fzy_native')
 
 local projects = require('projects')
 
