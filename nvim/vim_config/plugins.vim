@@ -70,6 +70,7 @@ Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
 " TEST plugin ==================
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 "
+Plug 'puremourning/vimspector'
 Plug 'mfussenegger/nvim-dap'
 Plug 'nvim-telescope/telescope-fzf-writer.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
