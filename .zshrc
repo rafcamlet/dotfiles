@@ -41,9 +41,6 @@ bindkey -M isearch " "      magic-space     # normal space during searches
 egalias G='| grep -Pi'
 ealias gs='git status'
 ealias gdn='git diff --name-only '
-alias mv="mv -v"
-alias cp="cp -v"
-alias mkdir="cp -vp"
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"

@@ -20,13 +20,15 @@ require 'luapad'.config{
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
-    vim_buffers_everywhere = true, -- Will most likely be renamed to something more useful
     mappings = {
       i = {
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous
       }
-    }
+    },
+    file_previewer = require'telescope.previewers'.vim_buffer_cat.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_cat.new`
+    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_vimgrep.new`
+    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_qflist.new`
   }
 }
 require('telescope').load_extension('fzy_native')
