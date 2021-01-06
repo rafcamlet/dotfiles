@@ -180,6 +180,7 @@ alias zz='fasd_cd -d -i' # cd with interactive selection
 
 alias v='COLORTERM=tmux-256color vifm -c "vsplit"' # vi file manager
 alias man='vimman'
+alias gmask='mask --maskfile ~/maskfile.md'
 
 eval "$(direnv hook zsh)"
 

@@ -344,19 +344,19 @@ au FileType vue let b:delimitMate_matchpairs = "(:),[:],{:}"
 " =============== junegunn/goyo.vim ================
 
 function! s:goyo_enter()
-  set noshowmode
-  set noshowcmd
-  set scrolloff=999
-  IndentGuidesDisable
-  call lightline#disable()
-  syntax on
+  " set noshowmode
+  " set noshowcmd
+  " set scrolloff=999
+  " IndentGuidesDisable
+  " call lightline#disable()
+  " syntax on
 endfunction
 
 function! s:goyo_leave()
-  set showmode
-  set showcmd
-  call lightline#enable()
-  IndentGuidesEnable
+  " set showmode
+  " set showcmd
+  " call lightline#enable()
+  " IndentGuidesEnable
 endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
@@ -601,6 +601,7 @@ let g:languagetool = { '.' : { 'language' : 'pl-PL' } }
 " =============== rhysd/devdocs.vim ================
 
 let g:devdocs_filetype_map = {
+    \   'lua': 'lua',
     \   'ruby': 'rails',
     \   'javascript.jsx': 'javascript',
     \   'javascript.test': 'chai',
@@ -812,22 +813,6 @@ endfunction
 
 autocmd FileType chadtree nnoremap <silent><buffer> ? :call OpenChadtreeHelp()<cr>
 
-
-" ============ AndrewRadev/switch.vim ==============
-
-let g:speeddating_no_mappings = 1
-
-" Avoid issues because of us remapping <c-a> and <c-x> below
-nnoremap <Plug>SpeedDatingFallbackUp <c-a>
-nnoremap <Plug>SpeedDatingFallbackDown <c-x>
-
-" Manually invoke speeddating in case switch didn't work
-nnoremap <silent><c-a> :if !switch#Switch() <bar>
-      \ call speeddating#increment(v:count1) <bar> endif<cr>
-nnoremap <silent><c-x> :if !switch#Switch({'reverse': 1}) <bar>
-      \ call speeddating#increment(-v:count1) <bar> endif<cr>
-
-
 " ============== Yggdroot/indentLine ===============
 let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*', 'md', 'json']
 let g:markdown_syntax_conceal = 0
@@ -883,4 +868,13 @@ let g:completion_trigger_character = ['.', '::']
 let g:completion_enable_auto_popup = 1
 imap <c-h> <Plug>(completion_next_source)
 " imap <c-k> <Plug>(completion_prev_source) "use <c-k> to switch to next completion
+
+
+
+" ============ simnalamburt/vim-mundo ==============
+"
+nnoremap <F5> :MundoToggle<CR>
+
+
+" =============== sbdchd/neoformat =================
 

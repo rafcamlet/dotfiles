@@ -1,25 +1,55 @@
-package.loaded.init = nil
+require('plenary.reload').reload_module('init')
 
-require'nvim-web-devicons'.setup()
+local vimp = require('vimp')
+
+vimp.unmap_all()
+
+vimp.map_command('Bundle', function()
+  require'finders'.find{
+    cwd = "~/projects/dotfiles/nvim/bundle/",
+    pattern = '(lua|vim)$'
+  }
+end)
+
+local finders = require'finders'
+
+vimp.nnoremap('<space>ok', require'sfs')
+vimp.nnoremap({'override'}, '<space>oo', finders.find)
+vimp.nnoremap({'override'}, '<space>ow', finders.wins)
+vimp.nnoremap({'override'}, '<space>of', finders.grep)
+vimp.nnoremap({'override'}, '<space>op', finders.porcelain)
+vimp.nnoremap('<space>o<c-f>', require('telescope.builtin').current_buffer_fuzzy_find)
+
+vim.cmd([[command! -nargs=1 Boss :call luaeval("require'boss'.eval(_A)", <q-args>)]])
+
 require('tabline').setup()
 require('jumper').setup()
-
-vim.api.nvim_set_keymap('n', '<space>op', '<cmd>lua require("porcelain"){}<cr>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<space>oo', '<cmd>lua require"finders".find{}<cr>', {noremap = true})
 
 require 'luapad'.config{
   context = {
     hl_color = require('helpers').hl_color,
-  },
-  on_init = function()
-    print('Hello form Luapad!')
-  end
+  }
 }
 
+local previewers = require('telescope.previewers')
+local putils = require('telescope.previewers.utils')
+local pfiletype = require('plenary.filetype')
+local new_maker = function(filepath, bufnr, bufname, use_ft_detect, callback)
+  if use_ft_detect == nil then use_ft_detect = true end
+
+  if use_ft_detect then
+    previewers.buffer_previewer_maker(filepath, bufnr, bufname, false, callback)
+    local ft = pfiletype.detect(filepath)
+    putils.regex_highlighter(bufnr, ft)
+  else
+    previewers.buffer_previewer_maker(filepath, bufnr, bufname, use_ft_detect, callback)
+  end
+end
 
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
+    buffer_previewer_maker = new_maker,
     mappings = {
       i = {
         ["<C-j>"] = actions.move_selection_next,
@@ -31,7 +61,7 @@ require('telescope').setup{
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_qflist.new`
   }
 }
-require('telescope').load_extension('fzy_native')
+
 
 local projects = require('projects')
 
@@ -53,10 +83,8 @@ projects.add('Customease', 'projects/customease', {
   }
 })
 
-
 projects.add('Milabo', 'projects/milabo', {
   init = function()
-    -- vim.cmd [[nnoremap <buffer> <space>ov :F '.*\.haml$' app<cr>]]
     vim.cmd [[nnoremap <buffer> <space>os <cmd>lua require'finders'.find{ pattern = 'scss$', path="app/javascript/styles" }<cr> ]]
     vim.cmd [[nnoremap <buffer> <space>ov <cmd>lua require'finders'.find{ pattern = 'html.haml$' }<cr> ]]
     vim.cmd [[nnoremap <buffer> <space>oj :F '.*\.js$' app/javascript<cr>]]
@@ -70,11 +98,6 @@ projects.add('Milabo', 'projects/milabo', {
   },
   fzf = { }
 })
-
-
-local hl_color = require('helpers').hl_color
-hl_color('QuickFixLine', 11)
-hl_color('MatchTag', nil, 53)
 
 
 require "nvim-treesitter.configs".setup {
@@ -152,11 +175,6 @@ vim.g.completion_chain_complete_list = {
   }
 }
 
--- nvim-lspconfig
-hl_color('DiagnosticErrorHl', 13)
-hl_color('LspDiagnosticsError', 209)
-hl_color('LspDiagnosticsWarning', 221)
-
 vim.fn.sign_define("LspDiagnosticsSignError", {text = "->", texthl = "DiagnosticErrorHl"})
 vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "W", texthl = "LspDiagnosticsWarning"})
 vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "I", texthl = "LspDiagnosticsInformation"})
@@ -198,8 +216,6 @@ nvim_lsp.solargraph.setup{
 
 nvim_lsp.tsserver.setup{
   on_attach = on_attach,
-  -- cmd = {"typescript-language-server", "--stdio"},
-  -- root_dir = nvim_lsp_util.root_pattern("package.json", "tsconfig.json", ".git"),
   filetypes = {
     "javascript",
     "javascriptreact",
@@ -242,55 +258,11 @@ nvim_lsp.sumneko_lua.setup{
   }
 }
 
--- nvim_lsp.diagnosticls.setup{
---   filetypes = { "javascript", "javascript.jsx" },
---   init_options = {
---     filetypes = {
---       javascript = "eslint",
---       ["javascript.jsx"] = "eslint",
---       javascriptreact = "eslint",
---       typescriptreact = "eslint",
---     },
---     formatFiletypes = {
---       javascript = "prettierEslint",
---       ["javascript.jsx"] = "prettierEslint",
---     },
---     linters = {
---       eslint = {
---         sourceName = "eslint",
---         command = "./node_modules/.bin/eslint",
---         rootPatterns = { ".git" },
---         debounce = 100,
---         args = {
---           "--stdin",
---           "--stdin-filename",
---           "%filepath",
---           "--format",
---           "json",
---         },
---         parseJson = {
---           errorsRoot = "[0].messages",
---           line = "line",
---           column = "column",
---           endLine = "endLine",
---           endColumn = "endColumn",
---           message = "${message} [${ruleId}]",
---           security = "severity",
---         };
---         securities = {
---           [2] = "error",
---           [1] = "warning"
---         }
---       }
---     },
---     formatters = {
---       prettierEslint = {
---         command = 'prettier-eslint',
---         args = { '--stdin' },
---         rootPatterns = { '.git' },
---       },
---     }
---   }
--- }
+require'neuron'.setup {
+    virtual_titles = true,
+    mappings = true,
+    run = nil, -- function to run when in neuron dir
+    neuron_dir = "~/neuron" -- the directory of all of your notes (currently supports only one directory for notes, find a way to detect neuron.dhall to use any directory)
+}
 
 vim.cmd("autocmd BufEnter * lua require'completion'.on_attach()")

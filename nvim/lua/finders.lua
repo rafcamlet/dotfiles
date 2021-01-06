@@ -1,4 +1,6 @@
 local Job = require('plenary.job')
+
+
 local conf = require('telescope.config').values
 local pickers = require('telescope.pickers')
 local finders = require('telescope.finders')
@@ -40,8 +42,8 @@ local function find(opts)
   pickers.new(opts, {
     prompt_title = 'fd + fzy',
     finder = sfs,
-    previewer = previewers.cat.new(opts),
-    -- previewer = require'telescope.previewers'.vim_buffer_cat.new(opts),
+    -- previewer = previewers.cat.new(opts),
+    previewer = require'telescope.previewers'.cat.new(opts),
     sorter = use_highlighter and sorters.highlighter_only(opts),
   }):find()
 end
@@ -113,7 +115,7 @@ local function wins(opts)
       end
     },
     sorter = conf.generic_sorter(opts),
-    previewer = previewers.vim_buffer_cat.new(opts),
+    previewer = previewers.cat.new(opts),
     attach_mappings = function(prompt_bufnr)
       actions._goto_file_selection:replace(function()
         local selection = actions.get_selected_entry()
@@ -125,8 +127,34 @@ local function wins(opts)
   }):find()
 end
 
+local function porcelain(opts)
+  if not opts then opts = {} end
+
+  opts.entry_maker = function(line)
+    local filename = line:sub(4)
+
+    return {
+      valid = true,
+      ordinal = line,
+      display = line,
+      filename = filename
+    }
+  end
+
+  pickers.new(opts, {
+    prompt_title = 'Git Status Porcelain',
+    finder = finders.new_oneshot_job(
+      { "git", "status", "--porcelain", "--untracked-files=all"},
+      opts
+    ),
+    previewer = previewers.cat.new(opts),
+    sorter = sorters.get_fzy_sorter(),
+  }):find()
+end
+
 return {
   find = find,
   grep = grep,
-  wins = wins
+  wins = wins,
+  porcelain = porcelain
 }

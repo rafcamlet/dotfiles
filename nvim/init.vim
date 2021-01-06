@@ -6,117 +6,19 @@ runtime vim_config/plugins_config.vim
 runtime vim_config/config.vim
 runtime vim_config/keybindings.vim
 runtime vim_config/scripts.vim
-" runtime vim_config/tabline.vim
-" runtime vim_config/projects.vim
 runtime vim_config/custom_colors.vim
 
 " Lua
 
-" lua require 'old_projects'
-" lua require 'projects'
-" lua require 'tui'
 lua require 'colors'
 lua require 'helpers'
 lua require 'init'
 lua require 'scripts'
 lua require 'ruby_helpers'
-" lua require 'ts_highlights'
-lua require 'ale_highlights'
-
-" JSON store:
-" vim_config/json/projects.json
-
-" runtime vim_config/status_line.vim
 
 "====================================
 "---------Testing_new_features-------
 "====================================
-
-command! -nargs=1 Boss :call luaeval("require'boss'.eval(_A)", <q-args>)
-command! Bundle lua require'finders'.find{ cwd = "/home/r2d2/projects/dotfiles/nvim/bundle/", pattern = '(lua|vim)$' }
-nnoremap <space>ok <cmd>lua require'sfs'()<cr>
-
-nnoremap <space>ow <cmd>lua require'finders'.wins()<cr>
-nnoremap <space>of <cmd>lua require('finders').grep()<cr>
-nnoremap <space>o<c-f> <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
-
-"
-" let g:lua_tree_side = 'left' "left by default
-" let g:lua_tree_width = 40 "30 by default
-" let g:lua_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
-" let g:lua_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DIR` or `vim`
-" let g:lua_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
-" let g:lua_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
-" let g:lua_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
-" let g:lua_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
-" let g:lua_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
-" let g:lua_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-" let g:lua_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
-" let g:lua_tree_tab_open = 1 "0 by default, will open the tree when entering a new tab and the tree was previously open
-" let g:lua_tree_allow_resize = 1 "0 by default, will not resize the tree when opening a file
-" let g:lua_tree_show_icons = {
-"     \ 'git': 1,
-"     \ 'folders': 1,
-"     \ 'files': 1,
-"     \ }
-" "If 0, do not show the icons for one of 'git' 'folder' and 'files'
-" "1 by default, notice that if 'files' is 1, it will only display
-" "if nvim-web-devicons is installed and on your runtimepath
-"
-" " You can edit keybindings be defining this variable
-" " You don't have to define all keys.
-" " NOTE: the 'edit' key will wrap/unwrap a folder and open a file
-" let g:lua_tree_bindings = {
-"     \ 'edit':            ['<CR>', 'o'],
-"     \ 'edit_vsplit':     '<C-v>',
-"     \ 'edit_split':      '<C-x>',
-"     \ 'edit_tab':        '<C-t>',
-"     \ 'toggle_ignored':  'I',
-"     \ 'toggle_dotfiles': 'H',
-"     \ 'refresh':         'R',
-"     \ 'preview':         '<Tab>',
-"     \ 'cd':              '<C-]>',
-"     \ 'create':          'a',
-"     \ 'remove':          'd',
-"     \ 'rename':          'r',
-"     \ 'cut':             'x',
-"     \ 'copy':            'c',
-"     \ 'paste':           'p',
-"     \ 'prev_git_item':   '[c',
-"     \ 'next_git_item':   ']c',
-"     \ }
-"
-" " Disable default mappings by plugin
-" " Bindings are enable by default, disabled on any non-zero value
-" " let lua_tree_disable_keybindings=1
-"
-" " default will show icon by default if no icon is provided
-" " default shows no icon by default
-" let g:lua_tree_icons = {
-"     \ 'default': '',
-"     \ 'symlink': '',
-"     \ 'git': {
-"     \   'unstaged': "✗",
-"     \   'staged': "✓",
-"     \   'unmerged': "",
-"     \   'renamed': "➜",
-"     \   'untracked': "★"
-"     \   },
-"     \ 'folder': {
-"     \   'default': "",
-"     \   'open': ""
-"     \   }
-"     \ }
-"
-" nnoremap <c-g><c-g> :LuaTreeToggle<CR>
-" nnoremap <leader>r :LuaTreeRefresh<CR>
-" nnoremap <c-g><c-f> :LuaTreeFindFile<CR>
-" " LuaTreeOpen and LuaTreeClose are also available if you need them
-
-
-" a list of groups can be found at `:help lua_tree_highlight`
-" highlight LuaTreeFolderIcon guifg=blue
-
 
 nnoremap <space>s <cmd>RubyOpenStyle<cr>
 nnoremap <expr> 8 luaeval('require("scripts").if_qf_open(":cp\<cr>", "8")')
