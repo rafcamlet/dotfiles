@@ -3,10 +3,6 @@ local projects = {
   arr = {}
 }
 
--- local function pprint(str)
---   if projects.debug then p(str) end
--- end
-
 local function set_fzf(dict)
   for k, v in pairs(dict) do
     vim.api.nvim_buf_set_keymap(0, 'n', '<space>o'..k, ":F '' "..v..'<cr>', {

@@ -184,7 +184,6 @@ end
 cmd('RubyOpenLoyalties', 'open_loyalty()')
 cmd('RubyCopyClass', 'copy_class()')
 cmd('RubyComponent', 'open_component()')
-cmd('RubyOpenStyle', 'open_style()')
 
 return {
   split_path = split_path,

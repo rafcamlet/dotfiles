@@ -3,7 +3,7 @@ after_init('unload_tabline', 'lua package.loaded.tabline = nil')
 
 local hl_color = require 'helpers'.hl_color
 local get_icon = require'nvim-web-devicons'.get_icon
-local Colors = require'colors'
+local Colors = require'config/colors'
 
 hl_color('TabLine', nil, Colors.gray1)
 
@@ -12,24 +12,6 @@ hl_color('TabLineNr', Colors.very_light_blue, num_background)
 hl_color('TabItem', Colors.gray18)
 hl_color('TabLineSel', Colors.gray22)
 hl_color('TabLineNrSel', Colors.special, num_background)
-
-
--- local highlights = {}
---
--- local function getHl(color)
---   if not color then return 'TabItem' end
---   if highlights[color] then return highlights[color] end
---
---   local guifg = string.format('#%06x', vim.api.nvim_get_hl_by_name(color, true)['foreground'])
---
---   vim.cmd(
---   'hi! TabIcon' .. color ..
---   ' guifg=' .. guifg ..
---   ' guibg=' .. '#ff0000'
---   )
---   return 'TabIcon' .. color
--- end
-
 
 function tabline()
   local result = ''

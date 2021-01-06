@@ -1,6 +1,5 @@
 local Job = require('plenary.job')
 
-
 local conf = require('telescope.config').values
 local pickers = require('telescope.pickers')
 local finders = require('telescope.finders')

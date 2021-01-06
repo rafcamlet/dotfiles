@@ -170,6 +170,9 @@ hl_color('VimwikiBold', Colors.special)
 hl_color('VimwikiWeblink1', Colors.ruby_red)
 hl_color('VimwikiBold', Colors.special)
 
+hl_color('mkdInlineURL', '#39A3AC')
+hl_color('mkdCodeStart', Colors.gray14)
+hl_color('mkdCodeEnd', Colors.gray14)
 -- ---
 
 

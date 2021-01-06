@@ -36,6 +36,8 @@ nnoremap <space>ow  :Windows<cr>
 
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
+inoremap <expr> <c-l> fzf#complete("rg --color=never --no-filename --no-line-number -e '^.*?class +([a-zA-Z0-9:]*) ?.*$' app/models -r '$1' \| sed '/^$/d' \| sort")
+
 " ================ dyng/ctrlsf.vim =================
 
 "By default CtrlSF window will be opened at left, change it to right by
@@ -146,8 +148,6 @@ autocmd User InitVimLoaded call NERDIcon('folder', '', 5)
 autocmd User InitVimLoaded call NERDIcon('js', '', 184)
 autocmd User InitVimLoaded call NERDIcon('json', '', 184)
 autocmd User InitVimLoaded call NERDIcon('text', '', 255)
-
-
 
 
 " =============== vim-ruby/vim-ruby ================
@@ -404,112 +404,11 @@ let g:tagbar_type_vue = {
       \ 'scope2kind' : { 'styleclass' : 's', 'style': 'S' },
       \}
 
+nnoremap <silent> <space>t :TagbarToggle<cr>
+
 " =============== jreybert/vimagit =================
 
 " nnoremap <space><space>g :Magit<cr>
-
-" =============== neoclide/coc.nvim ================
-
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-" if exists('*complete_info')
-"   inoremap <expr> <c-f> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-" else
-"   inoremap <expr> <c-f> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" endif
-
-let g:endwise_no_mappings = v:true
-" inoremap <expr> <Plug>CustomCocCR pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
-
-
-" Use `[c` and `]c` for navigate diagnostics
-" nmap <silent> [c <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-" nmap <silent> gd <Plug>(coc-definition)
-" nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
-" nmap <silent> gr <Plug>(coc-references)
-
-" nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-" function! s:show_documentation()
-"   if &filetype == 'vim' || &filetype == 'lua' || &filetype == 'lua.luapad'
-"     execute 'h '.expand('<cword>')
-"   else
-"     call CocAction('doHover')
-"   endif
-" endfunction
-
-
-" Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
-
-
-" Remap for format selected region
-" vmap <leader>f  <Plug>(coc-format-selected)
-" nmap <leader>f  <Plug>(coc-format-selected)
-
-" augroup cocgroup
-"   autocmd!
-"   " Setup formatexpr specified filetype(s).
-"   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-"   " Update signature help on jump placeholder
-"   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-" augroup end
-
-" " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-" vmap <leader>a  <Plug>(coc-codeaction-selected)
-" nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap for do codeAction of current line
-" nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-" nmap <leader>qf  <Plug>(coc-fix-current)
-
-" xmap if <Plug>(coc-funcobj-i)
-" xmap af <Plug>(coc-funcobj-a)
-" omap if <Plug>(coc-funcobj-i)
-" omap af <Plug>(coc-funcobj-a)
-
-" Use `:Format` for format current buffer
-" command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` for fold current buffer
-" command! -nargs=? Fold :call CocAction('fold', <f-args>)
-
-" " Using CocList
-" " Show all diagnostics
-" nnoremap <silent> <space>ca  :<C-u>CocList diagnostics<cr>
-" " Manage extensions
-" nnoremap <silent> <space>ce  :<C-u>CocList extensions<cr>
-" " Show commands
-" nnoremap <silent> <space>cc  :<C-u>CocList commands<cr>
-" " Find symbol of current document
-" nnoremap <silent> <space>co  :<C-u>CocList outline<cr>
-" " Search workspace symbols
-" nnoremap <silent> <space>cs  :<C-u>CocList -I symbols<cr>
-" " Do default action for next item.
-" nnoremap <silent> <space>cj  :<C-u>CocNext<CR>
-" " Do default action for previous item.
-" nnoremap <silent> <space>ck  :<C-u>CocPrev<CR>
-" " Resume latest coc list
-" nnoremap <silent> <space>cp  :<C-u>CocListResume<CR>
-" nnoremap <silent> <space>cl  :<C-u>CocList<CR>
-" " Remap for rename current word
-" nmap <space>cr <Plug>(coc-rename)
-
-
-" nmap <silent> <C-s> <Plug>(coc-range-select)
-" xmap <silent> <C-s> <Plug>(coc-range-select)
-" command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" nnoremap <space>cc :CocFzfList<cr>
-
 
 " ================= posva/vim-vue ==================
 
@@ -709,7 +608,7 @@ let g:mkdp_auto_close = 0
 
 " " ============ plasticboy/vim-markdown =============
 " " disable header folding
-" let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_folding_disabled = 1
 "
 " " do not use conceal feature, the implementation is not so good
 " let g:vim_markdown_conceal = 0
@@ -744,10 +643,6 @@ hi Pmenu ctermfg=204 ctermbg=207
 hi PmenuSel ctermfg=135 ctermbg=200
 
 
-" ============== tomtom/tcomment_vim ===============
-
-
-
 " ========== Xuyuanp/nerdtree-git-plugin ===========
 let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "✹",
@@ -773,45 +668,6 @@ let g:CtrlSpaceDefaultMappingKey = "<space>op "
 " highlight SignifySignChange ctermfg=7  ctermbg=none
 " highlight SignifySignDelete ctermfg=1 ctermbg=none
 " highlight SignifySignDeleteFirstLine ctermfg=1 
-
-
-" ================ ms-jpq/chadtree =================
-
-function OpenChadtreeHelp()
-  call quickui#textbox#open( [
-      \ "q         - close chad window",
-      \ "<c-r>     - trigger refresh",
-      \ "c         - re-center root at folder",
-      \ "C         - re-center root at root's parent",
-      \ "~         - refocus root at vim cwd",
-      \ "J         - set cursor row to currently active file",
-      \ "<enter>   - open / close folders & open file",
-      \ "<tab>     - open / close folders & preview file",
-      \ "<m-enter> - open / close folders & open file in new tab",
-      \ "w         - open / close folders & open file in vertical split",
-      \ "W         - open / close folders & open file in horizontal split",
-      \ "o         - open file using open / xdg-open",
-      \ ".         - toggle showing hidden items (you need to set your own ignore list)",
-      \ "<s-tab>   - collapse all sub folders",
-      \ "y         - copy file path of items under cursor / visual selection / selection",
-      \ "f         - set glob filter for visible items",
-      \ "F         - clear filtering",
-      \ "s         - select item under cursor / visual selection",
-      \ "S         - clear selection",
-      \ "a         - create new folder / file at location under cursor (name ending with os specific / will be folders)",
-      \ "r         - rename file under cursor",
-      \ "d         - delete item under cursor / visual selection / selection",
-      \ "t         - trash item under cursor / visual selection / selection",
-      \ "p         - copy selected items to location under cursor",
-      \ "x         - move selected items to location under cursor",
-      \ "K         - print ls -l stat to status line",
-      \ "+, =      - increase chad size",
-      \ "-, _      - decrease chad size"
-      \ ]
-      \ , {})
-endfunction
-
-autocmd FileType chadtree nnoremap <silent><buffer> ? :call OpenChadtreeHelp()<cr>
 
 " ============== Yggdroot/indentLine ===============
 let g:indentLine_bufNameExclude = ['_.*', 'NERD_tree.*', 'md', 'json']
@@ -853,11 +709,6 @@ let g:rainbow_conf = {
       \	}
       \}
 
-
-" ============= neovim/nvim-lspconfig ==============
-
-
-
 " =========== nvim-lua/completion-nvim =============
 
 let g:completion_enable_snippet = 'UltiSnips'
@@ -869,12 +720,11 @@ let g:completion_enable_auto_popup = 1
 imap <c-h> <Plug>(completion_next_source)
 " imap <c-k> <Plug>(completion_prev_source) "use <c-k> to switch to next completion
 
-
-
 " ============ simnalamburt/vim-mundo ==============
 "
 nnoremap <F5> :MundoToggle<CR>
 
 
-" =============== sbdchd/neoformat =================
+" ============ pechorin/any-jump.nvim ==============
 
+nnoremap <space>j :AnyJump<cr>

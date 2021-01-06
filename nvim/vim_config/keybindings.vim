@@ -99,8 +99,10 @@ cnoremap <c-a> <home>
 cnoremap <c-0> <end>
 cnoremap <c-x> <del>
 cnoremap <c-v> <c-r>+
-cnoremap <c-n>  <down>
-cnoremap <c-p>  <up>
+cnoremap <c-n> <down>
+cnoremap <c-p> <up>
+inoremap <c-a> <home>
+inoremap <c-e> <end>
 
 command! CopyAbsolutePath let @+ = expand("%:p")
 nnoremap cP :CopyAbsolutePath<cr>

@@ -82,6 +82,34 @@ set signcolumn=yes
 if executable('rg')
   " Use Ag over Grep
   " set grepprg=ag\ --nogroup\ --nocolor
-  set grepprg=rg\ --vimgrep\ $*
+  set grepprg=rg\ -i\ --vimgrep\ $*
   set grepformat=%f:%l:%c:%m
 endif
+
+augroup dynamic_smartcase
+    autocmd!
+    autocmd CmdLineEnter : set ignorecase
+    autocmd CmdLineLeave : set smartcase
+augroup END
+
+autocmd FileType qf nnoremap <buffer> <cr> <cr>
+
+augroup help_autogroup
+    autocmd!
+    autocmd BufEnter * if &ft == 'help' | silent! wincmd L | end
+    autocmd BufEnter * if &ft == 'help' | silent! vertical resize 80 | end
+augroup END
+
+augroup highlight_yank
+  autocmd!
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup = "YankHighlight", timeout = 300 }
+augroup END
+
+augroup myCmdwinEnter
+  autocmd!
+  autocmd CmdwinEnter * nnoremap <buffer> <CR> <CR>
+  autocmd CmdwinEnter * nnoremap <buffer> q :q<cr> 
+augroup END
+
+autocmd BufRead,BufNewFile,BufEnter *.vue setlocal filetype=vue
+autocmd BufRead,BufNewFile,BufEnter *.vue syntax sync fromstart
