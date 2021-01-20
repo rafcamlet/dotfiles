@@ -262,12 +262,6 @@ let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.js,*.vue'
 
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'ruby', 'lua', 'javascript']
 
-augroup VimMarkdown
-  autocmd!
-  autocmd FileType md,markdown hi markdownBold ctermfg=105 cterm=bold
-  autocmd FileType md,markdown hi markdownCode ctermfg=73
-augroup end
-
 
 " ======= thiagoalessio/rainbow_levels.vim =========
 
@@ -606,23 +600,13 @@ let g:coc_fzf_opts = ['--reverse']
 let g:mkdp_auto_close = 0
 
 
-" " ============ plasticboy/vim-markdown =============
-" " disable header folding
-let g:vim_markdown_folding_disabled = 1
-"
-" " do not use conceal feature, the implementation is not so good
-" let g:vim_markdown_conceal = 0
-"
-" " disable math tex conceal feature
-" let g:tex_conceal = ""
-" let g:vim_markdown_math = 1
-"
-" " support front matter of various format
-" let g:vim_markdown_frontmatter = 1  " for YAML format
-" let g:vim_markdown_toml_frontmatter = 1  " for TOML format
-" let g:vim_markdown_json_frontmatter = 1  " for JSON format
+" ============ plasticboy/vim-markdown =============
 
+let g:vim_markdown_folding_disabled = 1
+" let g:vim_markdown_no_default_key_mappings = 1
 let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_conceal = 0
+
 
 " " ========= vim-pandoc/vim-pandoc-syntax ===========
 " "
@@ -709,17 +693,6 @@ let g:rainbow_conf = {
       \	}
       \}
 
-" =========== nvim-lua/completion-nvim =============
-
-let g:completion_enable_snippet = 'UltiSnips'
-set completeopt=menuone,noinsert,noselect
-set shortmess+=c
-imap <silent> <c-n> <Plug>(completion_trigger)
-let g:completion_trigger_character = ['.', '::']
-let g:completion_enable_auto_popup = 1
-imap <c-h> <Plug>(completion_next_source)
-" imap <c-k> <Plug>(completion_prev_source) "use <c-k> to switch to next completion
-
 " ============ simnalamburt/vim-mundo ==============
 "
 nnoremap <F5> :MundoToggle<CR>
@@ -728,3 +701,8 @@ nnoremap <F5> :MundoToggle<CR>
 " ============ pechorin/any-jump.nvim ==============
 
 nnoremap <space>j :AnyJump<cr>
+
+
+" ============ puremourning/vimspector =============
+"
+let g:vimspector_enable_mappings = 'HUMAN'

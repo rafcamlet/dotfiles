@@ -3,7 +3,7 @@ vim.cmd('set termguicolors')
 local hl_color = require('helpers').hl_color
 local after_init = require('helpers').after_init
 
-after_init('unload_colors', 'lua package.loaded.colors = nil')
+after_init('unload_colors', 'lua package.loaded["config/colors"] = nil')
 
 local Colors = {}
 
@@ -173,6 +173,7 @@ hl_color('VimwikiBold', Colors.special)
 hl_color('mkdInlineURL', '#39A3AC')
 hl_color('mkdCodeStart', Colors.gray14)
 hl_color('mkdCodeEnd', Colors.gray14)
+-- hl_color('mkdCode', Colors.special)
 -- ---
 
 

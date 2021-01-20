@@ -1,22 +1,14 @@
-local previewers = require('telescope.previewers')
-local putils = require('telescope.previewers.utils')
-local pfiletype = require('plenary.filetype')
-local new_maker = function(filepath, bufnr, bufname, use_ft_detect, callback)
-  if use_ft_detect == nil then use_ft_detect = true end
-
-  if use_ft_detect then
-    previewers.buffer_previewer_maker(filepath, bufnr, bufname, false, callback)
-    local ft = pfiletype.detect(filepath)
-    putils.regex_highlighter(bufnr, ft)
-  else
-    previewers.buffer_previewer_maker(filepath, bufnr, bufname, use_ft_detect, callback)
-  end
-end
-
+local Telescope = require('telescope')
 local actions = require('telescope.actions')
-require('telescope').setup{
+
+Telescope.setup{
+  extensions = {
+    frecency = {
+      show_scores = true,
+      ignore_patterns = {"*.git/*", "*/tmp/*"},
+    }
+  },
   defaults = {
-    buffer_previewer_maker = new_maker,
     mappings = {
       i = {
         ["<C-j>"] = actions.move_selection_next,
@@ -28,3 +20,5 @@ require('telescope').setup{
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new, -- For buffer previewer use `require'telescope.previewers'.vim_buffer_qflist.new`
   }
 }
+
+Telescope.load_extension("frecency")

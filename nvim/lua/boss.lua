@@ -36,6 +36,11 @@ function Boss.split_keys(str)
   return result
 end
 
+function Boss.cursor(cur)
+  y, x = unpack(cur)
+  Boss.nvim('win_set_cursor', 0, {y, x - 1})
+end
+
 function Boss.input(str)
   Boss.nvim('input', str)
 end
@@ -90,5 +95,6 @@ Boss.c = Boss.cmd
 Boss.i = Boss.input
 Boss.l = Boss.lines
 Boss.t = Boss.typein
+Boss.cur = Boss.cursor
 
 return Boss

@@ -1,3 +1,5 @@
+local Path = require 'plenary.path'
+
 vim.fn.sign_define("LspDiagnosticsSignError", {text = "->", texthl = "DiagnosticErrorHl"})
 vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "W", texthl = "LspDiagnosticsWarning"})
 vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "I", texthl = "LspDiagnosticsInformation"})
@@ -62,16 +64,23 @@ local function get_lua_runtime()
   return result;
 end
 
+
 nvim_lsp.sumneko_lua.setup{
-  filetypes = { 'lua', 'lua.luapad' },
+  cmd = {
+    Path:new('~/src/lua-language-server/bin/Linux/lua-language-server'):expand(),
+    '-E',
+    Path:new('~/src/lua-language-server/main.lua'):expand()
+  },
+  filetypes = { 'lua' },
   on_attach = on_attach,
   settings = {
     Lua = {
       runtime = {
-        version = "LuaJIT"
+        version = "LuaJIT",
+        path = vim.split(package.path, ';'),
       },
       diagnostics = {
-        globals = { "vim", "describe", "it" },
+        globals = { "vim", "describe", "it", "p", "luapad" },
         disable = { "lowercase-global" }
       },
       workspace = {

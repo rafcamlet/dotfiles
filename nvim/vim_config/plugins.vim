@@ -48,7 +48,6 @@ Plug 'tomtom/tcomment_vim'
 Plug 'michaeljsmith/vim-indent-object' "Vim plugin that defines a new text object representing lines of code at the same indent level.
 Plug 'wellle/targets.vim' " Vim plugin that provides additional text objects
 Plug 'majutsushi/tagbar'
-" Plug 'tpope/vim-markdown'
 Plug 'itchyny/lightline.vim' | Plug 'itchyny/vim-gitbranch' | Plug 'maximbaz/lightline-ale'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'airblade/vim-gitgutter' "A Vim plugin which shows a git diff in the gutter
@@ -76,9 +75,14 @@ Plug 'steelsojka/completion-buffers'
 Plug 'voldikss/fzf-floaterm'
 Plug 'voldikss/vim-floaterm'
 
-Plug 'vimwiki/vimwiki'
+" Plug 'vimwiki/vimwiki'
+" Plug 'tpope/vimwiki'
 
 " TEST plugin ==================
+
+Plug 'rafcamlet/simple-wiki.nvim'
+Plug 'tami5/sql.nvim'
+Plug 'nvim-telescope/telescope-frecency.nvim'
 
 Plug 'oberblastmeister/neuron.nvim'
 
@@ -116,6 +120,7 @@ Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() }, 'on': 'DogeGenerate' }
 
 Plug 'HiPhish/awk-ward.nvim', { 'on': 'AwkWard' }
 Plug 'plasticboy/vim-markdown'
+" Plug 'tpope/vim-markdown'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'rhysd/vim-grammarous'
 
@@ -123,6 +128,7 @@ Plug '~/projects/vim-what-i-have-done'
 Plug '~/projects/vim-my-note'
 Plug '~/projects/nvim-sf'
 Plug '~/projects/nvim-luapad'
+" Plug '~/projects/simple-wiki'
 " Plug 'rafcamlet/nvim-luapad', { 'branch': '0.2' }
 " Plug '~/projects/nvim-languagetool'
 

@@ -24,6 +24,39 @@ require 'luapad'.config{
 
 -- Temp settings ↓
 
+local dap = require('dap')
+
+dap.adapters.ruby = {
+  type = 'executable';
+  command = 'node';
+  args = {'/home/r2d2/.config/nvim/bundle/vimspector/gadgets/linux/cust_vscode-ruby/dist/debugger/main.js'};
+}
+
+dap.configurations.ruby = {
+  {
+    type = 'ruby';
+    request = 'launch';
+    name = 'Rails';
+    program = 'bundle';
+    programArgs = {'exec', 'rails', 's'};
+    useBundler = true;
+  },
+}
+
+
+
+
+require 'simple-wiki'.setup {
+  path = '~/Dropbox/wiki',
+  link_key_mapping = '<c-]>'
+}
+
+vimp.map_command('Wiki', require "simple-wiki".index)
+vimp.nnoremap({'override'}, '-', require "simple-wiki".index)
+vimp.nnoremap({'override'}, '_', require "simple-wiki".search)
+
 local ruby_helpers = require 'ruby_helpers'
 vimp.map_command('RubyOpenStyle', ruby_helpers.open_style)
-vimp.nnoremap('<space>s', ruby_helpers.open_style)
+vimp.nnoremap({'override'}, '<space>s', ruby_helpers.open_style)
+
+vimp.nnoremap({'override'}, '<space>oh', require "telescope".extensions.frecency.frecency)
