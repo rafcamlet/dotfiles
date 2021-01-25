@@ -19,7 +19,6 @@ lua require 'ruby_helpers'
 "---------Testing_new_features-------
 "====================================
 
-
 nnoremap <leader>m :MaximizerToggle!<CR>
 nnoremap <leader>da :call vimspector#Launch()<CR>
 nnoremap <leader>dd :TestNearest -strategy=jest<CR>

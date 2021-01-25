@@ -37,9 +37,9 @@ dap.configurations.ruby = {
     type = 'ruby';
     request = 'launch';
     name = 'Rails';
-    program = 'bundle';
-    programArgs = {'exec', 'rails', 's'};
-    useBundler = true;
+    cwd = '/home/r2d2/projects/milabo',
+    program = 'bin/rails';
+    args = {'s'};
   },
 }
 

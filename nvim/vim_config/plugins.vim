@@ -80,6 +80,7 @@ Plug 'voldikss/vim-floaterm'
 
 " TEST plugin ==================
 
+Plug 'kevinhwang91/nvim-bqf'
 Plug 'rafcamlet/simple-wiki.nvim'
 Plug 'tami5/sql.nvim'
 Plug 'nvim-telescope/telescope-frecency.nvim'
@@ -88,6 +89,7 @@ Plug 'oberblastmeister/neuron.nvim'
 
 Plug 'puremourning/vimspector'
 Plug 'mfussenegger/nvim-dap'
+Plug 'theHamsta/nvim-dap-virtual-text'
 Plug 'rktjmp/lush.nvim'
 Plug 'tjdevries/colorbuddy.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
