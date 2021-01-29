@@ -30,7 +30,8 @@ require'completion'.addCompletionSource(
 
 vim.g.completion_chain_complete_list = {
   default = {
-    { complete_items = { 'path', 'lsp', 'buffers', 'snippet', 'dict'} },
+    -- { complete_items = { 'path', 'lsp', 'buffers', 'snippet', 'dict'} },
+    { complete_items = { 'path', 'lsp', 'snippet' } },
     { complete_items = { 'lsp' }},
     -- { mode = { '<c-n>' } },
     -- { mode = { '<c-p>' } }

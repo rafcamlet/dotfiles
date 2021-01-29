@@ -1,3 +1,4 @@
+local vimp = require('vimp')
 local Telescope = require('telescope')
 local actions = require('telescope.actions')
 
@@ -22,3 +23,5 @@ Telescope.setup{
 }
 
 Telescope.load_extension("frecency")
+
+vimp.nnoremap({'override'}, '<space>oh', require('telescope').extensions.frecency.frecency)

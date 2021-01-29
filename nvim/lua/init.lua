@@ -59,4 +59,11 @@ local ruby_helpers = require 'ruby_helpers'
 vimp.map_command('RubyOpenStyle', ruby_helpers.open_style)
 vimp.nnoremap({'override'}, '<space>s', ruby_helpers.open_style)
 
-vimp.nnoremap({'override'}, '<space>oh', require "telescope".extensions.frecency.frecency)
+local tabinator = require'tabinator'
+tabinator.setup()
+vimp.nnoremap({'override'}, '<space>ot', tabinator.find)
+
+
+vimp.map_command('C', function()
+  vim.lsp.diagnostic.clear(vim.api.nvim_get_current_buf())
+end)

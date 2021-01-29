@@ -1,9 +1,9 @@
 local Path = require 'plenary.path'
 
-vim.fn.sign_define("LspDiagnosticsSignError", {text = "->", texthl = "DiagnosticErrorHl"})
-vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "W", texthl = "LspDiagnosticsWarning"})
-vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "I", texthl = "LspDiagnosticsInformation"})
-vim.fn.sign_define("LspDiagnosticsSignHint", {text = "H", texthl = "LspDiagnosticsHint"})
+-- vim.fn.sign_define("LspDiagnosticsSignError", {text = "->", texthl = "DiagnosticErrorHl"})
+-- vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "W", texthl = "LspDiagnosticsWarning"})
+-- vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "I", texthl = "LspDiagnosticsInformation"})
+-- vim.fn.sign_define("LspDiagnosticsSignHint", {text = "H", texthl = "LspDiagnosticsHint"})
 
 local nvim_lsp = require'lspconfig'
 
@@ -12,7 +12,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     underline = true,
     virtual_text = {
       spacing = 4,
-      prefix = '←',
+      prefix = '← ',
     },
     signs = true,
     update_in_insert = false,
@@ -104,7 +104,36 @@ vimp.nnoremap({'override'}, 'gd', vim.lsp.buf.declaration)
 vimp.nnoremap({'override'}, '<c-q>', vim.lsp.buf.formatting)
 vimp.nnoremap({'override'}, '[g', vim.lsp.diagnostic.goto_prev)
 vimp.nnoremap({'override'}, ']g', vim.lsp.diagnostic.goto_next)
-vimp.nnoremap({'override'}, 'ga', vim.lsp.buf.code_action)
+-- vimp.nnoremap({'override'}, 'ga', vim.lsp.buf.code_action)
 vimp.vnoremap({'override'}, 'ga', vim.lsp.buf.range_code_action)
 vimp.nnoremap({'override'}, 'ge', vim.lsp.util.show_line_diagnostics)
-vimp.map_command('Rename', vim.lsp.buf.rename)
+-- vimp.map_command('Rename', vim.lsp.buf.rename)
+
+
+local saga = require 'lspsaga'
+
+-- add your config value here
+-- default value
+-- error_sign = '→',
+-- warn_sign = '→',
+-- hint_sign = '→',
+-- infor_sign = '→',
+-- code_action_icon = ' ',
+-- finder_definition_icon = '  ',
+-- finder_reference_icon = '  ',
+-- definition_preview_icon = '  '
+
+saga.init_lsp_saga({
+  use_saga_diagnostic_handler = 1,
+  use_saga_diagnostic_sign = 1
+})
+
+vimp.nnoremap({'override'}, 'gh', function() require'lspsaga.provider'.lsp_finder() end)
+vimp.nnoremap({'override'}, 'gd', function() require'lspsaga.provider'.preview_definition() end)
+
+vimp.nnoremap({'override'}, 'ga', require'lspsaga.codeaction'.code_action)
+vimp.nnoremap({'override'}, 'gs', require'lspsaga.signaturehelp'.signature_help)
+vimp.nnoremap({'override'}, '[e', require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev)
+vimp.nnoremap({'override'}, ']e', require'lspsaga.diagnostic'.lsp_jump_diagnostic_next)
+
+vimp.map_command('Rename', require('lspsaga.rename').rename)

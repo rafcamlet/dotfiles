@@ -62,6 +62,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/telescope.nvim'
 
 Plug 'neovim/nvim-lspconfig'
+Plug 'glepnir/lspsaga.nvim'
 
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
@@ -130,6 +131,7 @@ Plug '~/projects/vim-what-i-have-done'
 Plug '~/projects/vim-my-note'
 Plug '~/projects/nvim-sf'
 Plug '~/projects/nvim-luapad'
+Plug '~/projects/tabinator'
 " Plug '~/projects/simple-wiki'
 " Plug 'rafcamlet/nvim-luapad', { 'branch': '0.2' }
 " Plug '~/projects/nvim-languagetool'
