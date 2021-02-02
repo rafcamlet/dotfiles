@@ -19,28 +19,13 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   }
 )
 
-local on_attach = function(client)
-  require'completion'.on_attach(client)
-end
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-nvim_lsp.vuels.setup{
-  on_attach = on_attach
-}
-
-nvim_lsp.cssls.setup{
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-nvim_lsp.solargraph.setup{
-  on_attach = on_attach
-}
-
+nvim_lsp.vuels.setup{}
+nvim_lsp.cssls.setup{ capabilities = capabilities }
+nvim_lsp.solargraph.setup{}
 nvim_lsp.tsserver.setup{
-  on_attach = on_attach,
   filetypes = {
     "javascript",
     "javascriptreact",
@@ -72,7 +57,6 @@ nvim_lsp.sumneko_lua.setup{
     Path:new('~/src/lua-language-server/main.lua'):expand()
   },
   filetypes = { 'lua' },
-  on_attach = on_attach,
   settings = {
     Lua = {
       runtime = {

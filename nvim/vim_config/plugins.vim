@@ -66,12 +66,12 @@ Plug 'glepnir/lspsaga.nvim'
 
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
-Plug 'nvim-treesitter/completion-treesitter'
+" Plug 'nvim-treesitter/completion-treesitter'
 Plug 'nvim-treesitter/playground'
 Plug 'nvim-treesitter/nvim-treesitter'
 
-Plug 'nvim-lua/completion-nvim'
-Plug 'steelsojka/completion-buffers'
+" Plug 'nvim-lua/completion-nvim'
+" Plug 'steelsojka/completion-buffers'
 
 Plug 'voldikss/fzf-floaterm'
 Plug 'voldikss/vim-floaterm'
@@ -80,6 +80,7 @@ Plug 'voldikss/vim-floaterm'
 " Plug 'tpope/vimwiki'
 
 " TEST plugin ==================
+Plug 'hrsh7th/nvim-compe'
 
 Plug 'kevinhwang91/nvim-bqf'
 Plug 'rafcamlet/simple-wiki.nvim'
