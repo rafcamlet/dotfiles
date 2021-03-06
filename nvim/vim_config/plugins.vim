@@ -76,10 +76,9 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'voldikss/fzf-floaterm'
 Plug 'voldikss/vim-floaterm'
 
-" Plug 'vimwiki/vimwiki'
-" Plug 'tpope/vimwiki'
-
 " TEST plugin ==================
+Plug 'norcalli/nvim-terminal.lua'
+Plug 'onsails/lspkind-nvim'
 Plug 'hrsh7th/nvim-compe'
 
 Plug 'kevinhwang91/nvim-bqf'
@@ -133,6 +132,7 @@ Plug '~/projects/vim-my-note'
 Plug '~/projects/nvim-sf'
 Plug '~/projects/nvim-luapad'
 Plug '~/projects/tabinator'
+Plug '~/projects/magic-snip'
 " Plug '~/projects/simple-wiki'
 " Plug 'rafcamlet/nvim-luapad', { 'branch': '0.2' }
 " Plug '~/projects/nvim-languagetool'

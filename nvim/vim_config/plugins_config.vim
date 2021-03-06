@@ -277,27 +277,6 @@ hi! link RainbowLevel6 Identifier
 hi! link RainbowLevel7 Normal
 hi! link RainbowLevel8 Comment
 
-" ================ vimwiki/vimwiki =================
-
-let g:vimwiki_list = [
-      \ {'path': '~/Dropbox/vim_wiki', 'syntax': 'markdown', 'ext': '.md', 'nested_syntaxes': {'lua': 'lua', 'bash': 'sh'}},
-      \ {'path': '~/Dropbox/vim_wiki', 'syntax': 'markdown', 'ext': '.md', 'index': 'lua', 'nested_syntaxes': {'lua': 'lua', 'bash': 'sh'}}
-      \]
-
-let g:vimwiki_global_ext = 0
-
-
-nmap ) <Plug>VimwikiToggleListItem
-vmap ) <Plug>VimwikiToggleListItem
-
-nnoremap <plug>MyVimwikiIncreaseLvlWholeItem :VimwikiListChangeLvl increase 1<CR>:call repeat#set("\<Plug>MyVimwikiIncreaseLvlWholeItem")<CR>
-map gl <Plug>MyVimwikiIncreaseLvlWholeItem
-
-nnoremap <plug>MyVimwikidecreaseLvlWholeItem :VimwikiListChangeLvl decrease 1<CR>:call repeat#set("\<Plug>MyVimwikidecreaseLvlWholeItem")<CR>
-map gh <Plug>MyVimwikidecreaseLvlWholeItem
-
-" map <c-enter> <Plug>VimwikiFollowLink
-
 " ============ Valloric/MatchTagAlways =============
 
 let g:mta_filetypes = {
