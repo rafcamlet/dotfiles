@@ -190,18 +190,9 @@ HEROKU_AC_ZSH_SETUP_PATH=/home/r2d2/.cache/heroku/autocomplete/zsh_setup && test
 
 . "$HOME/.local/share/lscolors.sh"
 
-# asdf & rvm {{{
-if [[ "$USER" == "r" ]]; then
-  unset rvm_bin_path
-  unset rvm_prefix
-  unset rvm_version
-  unset rvm_path
-
-  [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
-else
-  . $HOME/.asdf/asdf.sh
-  . $HOME/.asdf/completions/asdf.bash
-fi
+# asdf {{{
+. $HOME/.asdf/asdf.sh
+fpath=(${ASDF_DIR}/completions $fpath)
 # }}}
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh

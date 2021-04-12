@@ -1,4 +1,4 @@
-rofi.theme: /usr/local/share/rofi/themes/android_notification.rasi
+rofi.theme: /usr/share/rofi/themes/android_notification.rasi
 
 ! "Delete previous char" Set from: Default
 rofi.kb-remove-char-back:            BackSpace,Shift+BackSpace

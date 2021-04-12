@@ -84,9 +84,9 @@ local ruby_helpers = require 'ruby_helpers'
 vimp.map_command('RubyOpenStyle', ruby_helpers.open_style)
 vimp.nnoremap({'override'}, '<space>s', ruby_helpers.open_style)
 
-local tabinator = require'tabinator'
-tabinator.setup()
-vimp.nnoremap({'override'}, '<space>ot', tabinator.find)
+-- local tabinator = require'tabinator'
+-- tabinator.setup()
+-- vimp.nnoremap({'override'}, '<space>ot', tabinator.find)
 
 
 vimp.map_command('C', function()
@@ -95,30 +95,30 @@ end)
 
 -- ===========
 
-local magic_snips = require 'magic-snips'
-magic_snips.setup()
-
-magic_snips.add {
-  trigger = 'test$',
-  content = [[
-  ($1)($2) -
-
-
-  -> `v[2]`-`v[1]` --
-  ]]
-}
-
-
-magic_snips.add {
-  trigger = 'a$',
-  content = [[
-  $1|$2
-  `v[1]`-`v[2]`
-  ]]
-}
-
-vim.cmd('inoremap <c-u> <cmd>lua require"magic-snips".magic_snips()<cr>')
-vim.cmd('inoremap <c-i> <cmd>lua require"magic-snips".prev()<cr>')
+-- local magic_snips = require 'magic-snips'
+-- magic_snips.setup()
+--
+-- magic_snips.add {
+--   trigger = 'test$',
+--   content = [[
+--   ($1)($2) -
+--
+--
+--   -> `v[2]`-`v[1]` --
+--   ]]
+-- }
+--
+--
+-- magic_snips.add {
+--   trigger = 'a$',
+--   content = [[
+--   $1|$2
+--   `v[1]`-`v[2]`
+--   ]]
+-- }
+--
+-- vim.cmd('inoremap <c-u> <cmd>lua require"magic-snips".magic_snips()<cr>')
+-- vim.cmd('inoremap <c-i> <cmd>lua require"magic-snips".prev()<cr>')
 
 
 

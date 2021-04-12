@@ -1,0 +1,75 @@
+- name: Setup
+  hosts: localhost
+  become: no
+  tasks:
+    - fail:
+        msg: "Variable '{{ item }}' is not defined"
+      when: item not in vars
+      with_items:
+        - the_user
+        - the_home
+
+    - name: Add keys
+      ansible.builtin.apt_key:
+        url: https://dl.google.com/linux/linux_signing_key.pub
+
+    - name: Add repos
+      apt_repository: "repo={{ item }}"
+      loop:
+        - ppa:neovim-ppa/unstable
+        - deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+
+    - name: Install things
+      apt: "name={{ item }}"
+      ignore_errors: yes
+      loop:
+        - htop
+        - neovim
+        - python3-pip
+        - tmux
+        - zsh
+        - direnv
+        - curl
+        - xclip
+        - i3
+        - vifm
+        - terminator
+        - fzy
+        - fzf
+        - rofi
+        - locate
+        - tree
+        - polybar
+        - google-chrome-stable
+        - sqlite3
+        - libsqlite3-dev
+
+    - name: Install neovim python
+      pip:
+        name: neovim
+        executable: pip3
+
+    - name: Install from git
+      ansible.builtin.git:
+        repo: "{{ item.repo }}"
+        dest: "{{ item.dest }}"
+        update: no
+      loop:
+        - { repo: 'https://github.com/sorin-ionescu/prezto.git', dest: '{{ the_home }}/.zprezto' }
+        - { repo: 'https://github.com/asdf-vm/asdf.git', dest: '{{ the_home }}/.asdf' }
+
+    - name: change user shell to zsh
+      become: yes
+      user:
+        name: "{{ the_user }}"
+        shell: /bin/zsh
+
+    - name: Info
+      debug:
+        msg:
+          - "Do not forget to install rust:"
+          - "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
+          - "And your beloved crates:"
+          - "cargo install ripgrep fd-find bat"
+
+

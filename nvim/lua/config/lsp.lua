@@ -108,7 +108,7 @@ local saga = require 'lspsaga'
 -- definition_preview_icon = '  '
 
 saga.init_lsp_saga({
-  use_saga_diagnostic_handler = 1,
+  -- use_saga_diagnostic_handler = 1,
   use_saga_diagnostic_sign = 1
 })
 

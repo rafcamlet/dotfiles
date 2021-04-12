@@ -5,19 +5,10 @@ function prompt_my_precmd {
   _ruby='%F{1}Ruby:%F{9}'
   _node='%F{3}NodeJS:%F{11}'
 
-  if [[ "$USER" == "r" ]]; then
-    _ruby+=$(rvm-prompt v p)
-    _ruby_gemset=$(rvm-prompt g | sed 's/@//')
-  else
-    _ruby+=$(asdf current ruby | sed 's/ .*$//')
-    _ruby_gemset=''
-    _node+=$(asdf current nodejs | sed 's/ .*$//')
-  fi
+  _ruby+=$(asdf current ruby &> /dev/null && asdf current ruby | sed 's/ .*$//')
+  _ruby_gemset=''
+  _node+=$(asdf current nodejs &>/dev/null && asdf current nodejs | sed 's/ .*$//')
 
-  if [ -n "${_ruby_gemset// }" ]; then
-    _ruby+='%F{1}@%F{9}'
-    _ruby+=${_ruby_gemset}
-  fi
   _ruby+='%f'
   _node+='%f'
 

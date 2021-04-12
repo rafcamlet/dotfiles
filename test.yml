@@ -1,0 +1,17 @@
+- name: Test
+  hosts: localhost
+  become: no
+  tasks:
+    - fail:
+        msg: "Variable '{{ item }}' is not defined"
+      when: item not in vars
+      with_items:
+        - the_user
+        - the_home
+    - block:
+      - name: test
+        debug:
+          msg: "czekolada: {{ the_user }} - {{ the_home }}"
+      - name: install
+        apt: name=htop
+      become: yes

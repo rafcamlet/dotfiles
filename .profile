@@ -21,6 +21,5 @@ xmodmap -e "add control = Control_L"
 xmodmap -e "keycode 94 = Shift_L"
 xmodmap -e "keycode 91 = period period"
 xset r rate 200 40
-numlockx on
 
-export PATH="$HOME/.cargo/bin:$PATH"
+source "$HOME/.cargo/env"
