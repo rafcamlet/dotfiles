@@ -43,6 +43,8 @@
         - google-chrome-stable
         - sqlite3
         - libsqlite3-dev
+        - luarocks
+        - gimp
 
     - name: Install neovim python
       pip:
@@ -70,6 +72,6 @@
           - "Do not forget to install rust:"
           - "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
           - "And your beloved crates:"
-          - "cargo install ripgrep fd-find bat"
+          - "cargo install ripgrep fd-find bat just"
 
 

@@ -6,6 +6,13 @@
 
 - create:
     - ~/bin
+    - ~/.fonts
+    - ~/workdir
+    - ~/workdir/tmp
+    - ~/.docker
+
+# - shell:
+#     - '[[ ! -e /Scripts/file.txt ]] && touch ~/.custom.sh'
 
 - link:
     ~/bin/colors: bin/colors
@@ -28,12 +35,11 @@
 
     ~/.gitconfig: .gitconfig
     ~/.profile: .profile
-    ~/.newsboat: .newsboat
-    ~/.taskrc: .taskrc
     ~/.tmux.conf: .tmux.conf
     ~/.zpreztorc: .zpreztorc
     ~/.zshrc: .zshrc
     ~/.luacheckrc: .luacheckrc
+    ~/.docker/config.json: docker/config.json
 
     ~/.zprezto/modules/prompt/functions/prompt_my_setup: prompt_my_setup
 
