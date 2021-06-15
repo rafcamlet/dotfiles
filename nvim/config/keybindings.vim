@@ -7,13 +7,9 @@ vnoremap ; :
 
 inoremap kj <esc>`^
 
-nnoremap <c-]> g<c-]>
-
 nnoremap <silent> <enter> :put =''<cr>
 cnoremap <silent> <enter> <cr>
-
-map <silent> <Down> g<Down>
-map <silent> <Up> g<Up>
+autocmd FileType qf nnoremap <buffer> <cr> <cr>
 
 nnoremap j gj
 nnoremap k gk
@@ -21,10 +17,7 @@ vnoremap j gj
 vnoremap k gk
 
 nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
-nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
-
-" rails shorts
-nnoremap <leader>i <esc>:Emigration<cr>
+nnoremap <silent> <leader>sv :luafile $MYVIMRC<CR>
 
 nnoremap / /\v
 nnoremap ? ?\v
@@ -41,25 +34,6 @@ vnoremap & :<c-u>silent! execute "'<,'> normal! &"<cr>
 " Format paragraph
 nnoremap Q mp=ip`p
 vnoremap Q =
-
-"common substitution mapings
-nnoremap <leader>s, :.s/,/,\r/<cr>
-nnoremap <leader>s<cr> :.s/\v^\s*//<cr>:.s/\v(\S)@<=\s+/\r/<cr>
-nnoremap <leader>s<tab>  :%s/	/  /<cr>
-nnoremap <leader>sc :.s#_\(\l\)#\u\1#<cr>
-nnoremap <leader>sC :.s#\v(<.)\|_(\l)#\u\1\2#<cr>
-
-nnoremap <leader>sa vip:s/\v$//<left>
-vnoremap <leader>sa :s/\v$//<left>
-
-nnoremap <silent> <Plug>SRemoveMultipleSpace :.s/\v(\S)@<=\s+/ /<cr>:.s/\v\s*$//<cr>:call repeat#set("\<Plug>SRemoveMultipleSpace")<CR>
-nmap <Leader>s<space>  <Plug>SRemoveMultipleSpace
-
-nnoremap <silent> <Plug>SRemoveSemicolon :.s/\v;$//<cr>:call repeat#set("\<Plug>SRemoveSemicolon")<CR>
-nmap <Leader>s; <Plug>SRemoveSemicolon
-
-nnoremap <silent> <Plug>SBrekTags :.s/</\r</<cr>:call repeat#set("\<Plug>SBrekTags")<CR>
-nmap <Leader>st <Plug>SBrekTags
 
 " repeat last action for selected lines
 vnoremap . :normal .<CR>
@@ -83,8 +57,6 @@ nnoremap   <silent>  <c-t><c-q> :tabc<cr>
 
 " Copy to end of line
 nnoremap Y y$
-
-" tnoremap <esc> <c-\><c-n>
 
 " highlight current word without search for next
 nnoremap <silent> * :set hls<cr>*``

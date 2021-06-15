@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-" set termguicolors
+set termguicolors
 set shell=/bin/zsh                             " Set zsh as default shell
 " set shortmess+=A                               " Always edit file, even when swap file is found
 set diffopt=filler,iwhite                      " In diff mode, ignore whitespace changes and align unchanged lines
@@ -71,17 +71,14 @@ set guioptions-=L
 
 set inccommand=nosplit "Shows the effects of a substitution incrementally, as you type
 
-colorscheme shadowmoth
-
 set clipboard+=unnamedplus " integrate system clipboard
 
 set jumpoptions=stack
 set signcolumn=yes
 
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+let &updatetime = 300
+
 if executable('rg')
-  " Use Ag over Grep
-  " set grepprg=ag\ --nogroup\ --nocolor
   set grepprg=rg\ -i\ --vimgrep\ $*
   set grepformat=%f:%l:%c:%m
 endif
@@ -91,8 +88,6 @@ augroup dynamic_smartcase
     autocmd CmdLineEnter : set ignorecase
     autocmd CmdLineLeave : set smartcase
 augroup END
-
-autocmd FileType qf nnoremap <buffer> <cr> <cr>
 
 augroup help_autogroup
     autocmd!
@@ -104,12 +99,3 @@ augroup highlight_yank
   autocmd!
   autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup = "YankHighlight", timeout = 300 }
 augroup END
-
-augroup myCmdwinEnter
-  autocmd!
-  autocmd CmdwinEnter * nnoremap <buffer> <CR> <CR>
-  autocmd CmdwinEnter * nnoremap <buffer> q :q<cr> 
-augroup END
-
-autocmd BufRead,BufNewFile,BufEnter *.vue setlocal filetype=vue
-autocmd BufRead,BufNewFile,BufEnter *.vue syntax sync fromstart
