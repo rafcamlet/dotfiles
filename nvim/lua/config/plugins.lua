@@ -23,13 +23,14 @@ return require('packer').startup(function()
   use 'tpope/vim-fugitive'
   use 'tpope/vim-surround'
   use 'tpope/vim-repeat'
+  use 'tpope/vim-abolish'
 
   -- === DAP ===
   use {'mfussenegger/nvim-dap', config = function()
     vim.cmd [[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]]
-    vim.cmd [[nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>]]
-    vim.cmd [[nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>]]
-    vim.cmd [[nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>]]
+    vim.cmd [[nnoremap <silent> <F8> :lua require'dap'.step_over()<CR>]]
+    vim.cmd [[nnoremap <silent> <F9> :lua require'dap'.step_into()<CR>]]
+    vim.cmd [[nnoremap <silent> <F10> :lua require'dap'.step_out()<CR>]]
     vim.cmd [[nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>]]
     vim.cmd [[nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>]]
     vim.cmd [[nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>]]
@@ -37,18 +38,7 @@ return require('packer').startup(function()
     vim.cmd [[nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>]]
   end}
   use {'rcarriga/nvim-dap-ui', config = 'require("dapui").setup()' }
-  use { 'Pocco81/DAPInstall.nvim', config = function ()
-    local dap_install = require("dap-install")
-    local dbg_list = require("dap-install.debuggers_list").debuggers
-
-    dap_install.setup({
-      installation_path = "/tmp/test_dap_install/"
-    })
-
-    for debugger, _ in pairs(dbg_list) do
-      dap_install.config(debugger, {})
-    end
-  end}
+  use { 'Pocco81/DAPInstall.nvim' }
 
   -- === LSP ===
   use 'neovim/nvim-lspconfig'
@@ -410,4 +400,22 @@ return require('packer').startup(function()
   }
   require('rust-tools').setup(opts)
 end}
+
+use { 'ggandor/lightspeed.nvim', config = function()
+  require'lightspeed'.setup {
+    jump_to_first_match = true,
+    jump_on_partial_input_safety_timeout = 400,
+    highlight_unique_chars = false,
+    grey_out_search_area = true,
+    match_only_the_start_of_same_char_seqs = true,
+    limit_ft_matches = 5,
+    full_inclusive_prefix_key = '<c-x>',
+  }
+end}
+
+use 'editorconfig/editorconfig-vim'
+use 'kevinhwang91/nvim-bqf'
+use {'junegunn/fzf', run = ':call fzf#install()'}
+use {'~/projects/byline'}
+
 end)

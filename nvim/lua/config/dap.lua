@@ -1,24 +1,32 @@
 package.loaded['config/dap'] = nil
 
-local success, dap = pcall(require, 'dap')
-if not success then return end
+local _, dap = pcall(require, 'dap')
+if not dap then return end
 
-dap.adapters.ruby = {
-  type = 'executable';
-  command = 'node';
-  args = {'/root/main.js'};
-}
+local _, dap_install = pcall(require, 'dap-install')
+if not dap_install then return end
 
-dap.configurations.ruby = {
-  {
-    type = 'ruby';
-    request = 'launch';
-    name = 'ruby';
-    program = '/root/test.rb';
-    programArgs = {};
-    useBundler = false;
-  },
-}
+-- local dbg_list = require("dap-install.debuggers_list").debuggers
+
+dap_install.setup()
+dap_install.config('ruby_vsc_dbg', {})
+
+-- dap.adapters.ruby = {
+--   type = 'executable';
+--   command = 'node';
+--   args = {'/root/main.js'};
+-- }
+
+-- dap.configurations.ruby = {
+--   {
+--     type = 'ruby';
+--     request = 'launch';
+--     name = 'ruby';
+--     program = '/root/test.rb';
+--     programArgs = {};
+--     useBundler = false;
+--   },
+-- }
 
 dap.adapters.cpptools = {
   type = 'executable',
