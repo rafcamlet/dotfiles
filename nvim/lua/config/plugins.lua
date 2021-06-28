@@ -120,12 +120,19 @@ return require('packer').startup(function()
       }
     }
   end}
-  use { 'steelsojka/pears.nvim', config = 'require "pears".setup()' }
+  use { 'windwp/nvim-autopairs', config = 'require("nvim-autopairs").setup()' }
 
   use { 'b3nj5m1n/kommentary', config = function()
     config = require('kommentary.config')
     config.configure_language("default", { prefer_single_line_comments = true })
-    config.use_extended_mappings()
+    -- config.use_extended_mappings()
+
+    vim.g.kommentary_create_default_mappings = false
+
+    vim.cmd [[nnoremap <Plug>commentary :call v:lua.kommentary.go(1)<cr>:silent! call repeat#set("\<Plug>commentary", v:count)<cr>]]
+    vim.cmd [[nmap gcc <Plug>commentary]]
+    vim.api.nvim_set_keymap("n", "gc", "<Plug>kommentary_motion_default", {})
+    vim.api.nvim_set_keymap("v", "gc", "<Plug>kommentary_visual_default<C-c>", {})
   end}
 
   use { 'kyazdani42/nvim-tree.lua', config = function()
@@ -417,5 +424,17 @@ use 'editorconfig/editorconfig-vim'
 use 'kevinhwang91/nvim-bqf'
 use {'junegunn/fzf', run = ':call fzf#install()'}
 use {'~/projects/byline'}
+use {'norcalli/nvim-colorizer.lua', config = 'require"colorizer".setup()'}
+
+
+use { 'voldikss/vim-floaterm', config = function()
+  vim.cmd [[
+  let g:floaterm_position = 'center'
+  nnoremap <space>v :FloatermNew --height=1.00 --width=1.00 vifm<cr>
+  nnoremap <space>V :exec 'FloatermNew --height=1.00 --width=1.00  vifm ' .. getcwd()<cr>
+  ]]
+end}
+
+use 'jbyuki/one-small-step-for-vimkind'
 
 end)

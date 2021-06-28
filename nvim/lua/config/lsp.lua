@@ -86,6 +86,7 @@ local on_attach = function(client, bufnr)
   local function key_map(m, r, l) vim.api.nvim_buf_set_keymap(bufnr, m, r, l, { noremap=true, silent=true }) end
 
   key_map('n', 'L', '<cmd>lua require"lspsaga.diagnostic".show_cursor_diagnostics()<CR>')
+  key_map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>')
 
   key_map('n', '[e', '<cmd>lua require"lspsaga.diagnostic".lsp_jump_diagnostic_prev()<CR>')
   key_map('n', ']e', '<cmd>lua require"lspsaga.diagnostic".lsp_jump_diagnostic_next()<CR>')
@@ -94,13 +95,12 @@ local on_attach = function(client, bufnr)
   key_map('v', '<space>ga', '<cmd>lua require("lspsaga.codeaction").range_code_action()<CR>')
 
   -- key_map('n', 'K', '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>')
-  key_map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>')
 
   key_map('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>')
   key_map('n', '<c-]>', '<Cmd>lua vim.lsp.buf.definition()<CR>')
   -- key_map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>')
   key_map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-  key_map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+  -- key_map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
   key_map('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
   key_map('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
   key_map('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
