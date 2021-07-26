@@ -6,7 +6,7 @@
     icon_bell = False
     background_color = "#2e3436"
     cursor_color = "#aaaaaa"
-    font = UbuntuMono Nerd Font 15
+    font = Hack Nerd Font 12
     foreground_color = "#75afc0"
     show_titlebar = False
     scrollbar_position = hidden
