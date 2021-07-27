@@ -18,8 +18,11 @@ local colors = {
   green = '#98c379',
   yellow = '#e5c07b',
   blue = '#61afef',
-  purple = '#7c7cff', -- tweaked to match custom color
+  purple = '#7c7cff',
   teal = '#56b6c2',
+  success = '#cae682',
+  error  = '#e86671',
+  warning = '#e5c07b'
 }
 
 local function mode_alias(m)
@@ -61,154 +64,183 @@ local function mode_color(m)
 end
 
 
+local function ale(kind)
+  local ok, data = pcall(vim.fn["ale#statusline#Count"], vim.api.nvim_get_current_buf())
 
-gl.section.left[1] = {
-  ViModeIcon = {
-    separator = '  ',
-    separator_highlight = {colors.black, colors.bg_light},
-    highlight = {colors.white, colors.black},
-    provider = function() return "   " end,
-  }
-}
+  if not ok then return 0 end
 
-gl.section.left[2] = {
-  CWD = {
-    separator = '  ',
-    separator_highlight = function()
-      return {colors.bg_light, condition.buffer_not_empty() and colors.bg_dim or colors.bg}
-    end,
-    highlight = {colors.white, colors.bg_light},
-    provider = function()
-      local dirname = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-      return ' ' .. dirname .. ' '
-    end,
-  }
-}
+  local errors = data['error'] + data['style_error']
+  local warnings = data['total'] - errors
 
-gl.section.left[3] = {
-  FileIcon = {
-    provider = 'FileIcon',
-    condition = condition.buffer_not_empty,
-    highlight = {colors.gray, colors.bg_dim},
-  }
-}
+  return ({ errors = errors, warnings = warnings})[kind]
+end
 
-gl.section.left[4] = {
-  FileName = {
-    provider = 'FileName',
-    condition = condition.buffer_not_empty,
-    highlight = {colors.gray, colors.bg_dim},
-    separator_highlight = {colors.bg_dim, colors.bg},
-    separator = '  ',
-  }
-}
+local function lsp(kind)
+  kind = ({
+    errors = 'Error',
+    warinings = 'Warning'
+  })[kind]
+  local count = 0
+  for _, client in ipairs(vim.lsp.get_active_clients()) do
+    count = count + vim.lsp.diagnostic.get_count(0, kind, client.id)
+  end
+  return count
+end
 
-gl.section.left[5] = {
-  DiffAdd = {
-    icon = '  ',
-    provider = 'DiffAdd',
-    condition = condition.hide_in_width,
-    highlight = {colors.white, colors.bg},
-  }
-}
-
-gl.section.left[6] = {
-  DiffModified = {
-    icon = '  ',
-    provider = 'DiffModified',
-    condition = condition.hide_in_width,
-    highlight = {colors.gray, colors.bg},
-  }
-}
-
-gl.section.left[7] = {
-  DiffRemove = {
-    icon = '  ',
-    provider = 'DiffRemove',
-    condition = condition.hide_in_width,
-    highlight = {colors.gray, colors.bg},
-  }
-}
-
--- gl.section.left[8] = {
---   CocStatus = {
---     highlight = {colors.gray, colors.bg},
---     provider = function()
---       return vim.fn['coc#status']()
---         :gsub('\u{274c}', '\u{f06a}')         -- 
---         :gsub('\u{26a0}\u{fe0f}', '\u{f071}') -- 
---     end
---   }
--- }
-
--- gl.section.left[9] = {
---   CocFunction = {
---     icon = 'λ ',
---     highlight = {colors.gray, colors.bg},
---     provider = function()
---       local has_func, func_name = pcall(vim.api.nvim_buf_get_var, 0, 'coc_current_function')
---       if not has_func then return '' end
---       return func_name or ''
---     end,
---   }
--- }
-
-gl.section.right[1] = {
-  FileType = {
-    highlight = {colors.gray, colors.bg},
-    provider = function()
-      local buf = require('galaxyline.provider_buffer')
-      return string.lower(buf.get_buffer_filetype())
-    end,
-  }
-}
-
-
-gl.section.right[2] = {
-  GitBranch = {
-    icon = ' ',
-    separator = '  ',
-    condition = condition.check_git_workspace,
-    highlight = {colors.teal, colors.bg},
-    provider = 'GitBranch',
-  }
-}
-
-gl.section.right[3] = {
-  FileLocation = {
-    icon = ' ',
-    separator = ' ',
-    separator_highlight = { colors.bg_dim, colors.bg },
-    highlight = { colors.gray, colors.bg_dim },
-    provider = function()
-      local current_line = vim.fn.line('.')
-      local total_lines = vim.fn.line('$')
-
-      if current_line == 1 then return 'Top' end
-      if current_line == total_lines then return 'Bot' end
-
-      local percent, _ = math.modf((current_line / total_lines) * 100)
-      return ('%.2i%%'):format(percent)
+local function section(name)
+  return {
+    __newindex = function(_, key, val)
+      table.insert(gl.section[name], {
+        [key] = val
+      })
     end
   }
+end
+
+Left = setmetatable({}, section('left'))
+Right = setmetatable({}, section('right'))
+Short = setmetatable({}, section('short_line_left'))
+
+-- ===================
+
+Short.InactiveBugIcon = {
+  separator = '  ',
+  separator_highlight = {colors.black, colors.bg},
+  highlight = {colors.white, colors.black},
+  provider = function() return '   ' end
+}
+
+Short.InactiveName = {
+  provider = 'FileName',
+  highlight = { colors.gray, colors.bg }
+}
+
+Left.ViModeIcon = {
+  separator = '  ',
+  separator_highlight = function()
+    if not condition.hide_in_width() and condition.buffer_not_empty() then
+      return { colors.black, colors.bg_dim }
+    end
+
+    return {colors.black, condition.hide_in_width() and colors.bg_light or colors.bg}
+  end,
+  highlight = {colors.white, colors.black},
+  provider = function() return '   ' end
+}
+
+Left.CWD = {
+  separator = '  ',
+  separator_highlight = function()
+    return {colors.bg_light, condition.buffer_not_empty() and colors.bg_dim or colors.bg}
+  end,
+  condition = condition.hide_in_width,
+  highlight = {colors.white, colors.bg_light},
+  provider = function()
+    local dirname = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+    return ' ' .. dirname .. ' '
+  end,
+}
+
+Left.FileName = {
+  provider = 'FileName',
+  condition = condition.buffer_not_empty,
+  highlight = {colors.gray, colors.bg_dim},
+  separator_highlight = {colors.bg_dim, colors.bg},
+  separator = '  ',
+}
+
+Left.DiffAdd = {
+  icon = '  ',
+  provider = 'DiffAdd',
+  condition = condition.hide_in_width,
+  highlight = {colors.success, colors.bg},
+}
+
+Left.DiffModified = {
+  icon = '  ',
+  provider = 'DiffModified',
+  condition = condition.hide_in_width,
+  highlight = {colors.warning, colors.bg},
+}
+
+Left.DiffRemove = {
+  icon = '  ',
+  provider = 'DiffRemove',
+  condition = condition.hide_in_width,
+  highlight = {colors.error, colors.bg},
+}
+
+
+
+Right.Errors = {
+  icon = '  ',
+  highlight = {colors.error, colors.bg},
+  provider = function()
+    return ('%i '):format(ale('errors') + lsp('errors'))
+  end,
+}
+
+Right.Warnings = {
+  icon = '  ',
+  highlight = {colors.warning, colors.bg},
+  provider = function()
+    return ('%i '):format(ale('warnigns') + lsp('warnigns'))
+  end,
+}
+
+Right.FileIcon = {
+  separator = '  ',
+  highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg},
+  condition = condition.buffer_not_empty,
+  provider = 'FileIcon'
+}
+
+
+Right.FileType = {
+  highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg},
+  provider = function()
+    local buf = require('galaxyline.provider_buffer')
+    return string.lower(buf.get_buffer_filetype())
+  end,
+}
+
+Right.GitBranch = {
+  icon = ' ',
+  separator = '  ',
+  condition = condition.check_git_workspace,
+  highlight = {colors.teal, colors.bg},
+  provider = 'GitBranch',
+}
+
+Right.FileLocation = {
+  icon = ' ',
+  separator = ' ',
+  separator_highlight = { colors.bg_dim, colors.bg },
+  highlight = { colors.gray, colors.bg_dim },
+  provider = function()
+    local current_line = vim.fn.line('.')
+    local total_lines = vim.fn.line('$')
+    if current_line == 1 then return 'Top' end
+    if current_line == total_lines then return 'Bot' end
+    local percent, _ = math.modf((current_line / total_lines) * 100)
+    return ('%.2i%%'):format(percent)
+  end
 }
 
 
 vim.api.nvim_command('hi GalaxyViModeReverse guibg=' .. colors.bg_dim)
 
-gl.section.right[4] = {
-  ViMode = {
-    icon = ' ',
-    separator = ' ',
-    separator_highlight = 'GalaxyViModeReverse',
-    highlight = {colors.bg, mode_color()},
-    provider = function()
-      local m = vim.fn.mode() or vim.fn.visualmode()
-      local mode = mode_alias(m)
-      local color = mode_color(m)
-      vim.api.nvim_command('hi GalaxyViMode guibg=' .. color)
-      vim.api.nvim_command('hi GalaxyViModeReverse guifg=' .. color)
-      return ' ' .. mode .. ' '
-    end,
-  }
+Right.ViMode = {
+  icon = ' ',
+  separator = ' ',
+  separator_highlight = 'GalaxyViModeReverse',
+  highlight = {colors.bg, mode_color()},
+  provider = function()
+    local m = vim.fn.mode() or vim.fn.visualmode()
+    local mode = mode_alias(m)
+    local color = mode_color(m)
+    vim.api.nvim_command('hi GalaxyViMode guibg=' .. color)
+    vim.api.nvim_command('hi GalaxyViModeReverse guifg=' .. color)
+    return ' ' .. mode .. ' '
+  end,
 }

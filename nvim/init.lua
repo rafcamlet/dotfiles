@@ -22,5 +22,6 @@ vim.cmd([[vnoremap <leader>f <cmd>lua require'scripts'.send_to_tmux(true)<cr>]])
 vim.cmd([[nnoremap <space>og <cmd>lua require'finders'.git()<cr>]])
 vim.cmd([[nnoremap <space>of <cmd>lua require'finders'.grep()<cr>]])
 vim.cmd([[nnoremap <space>oo <cmd>lua require'finders'.find()<cr>]])
+vim.cmd([[nnoremap <space>oq <cmd>lua require'finders'.find {cwd = vim.fn.fnamemodify(vim.fn.expand('$MYVIMRC'), ':h'), pattern = "(lua\|vim)$" }<cr>]])
 
 vim.cmd([[nmap <leader>t <Plug>PlenaryTestFile]])

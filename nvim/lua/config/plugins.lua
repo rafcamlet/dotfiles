@@ -15,9 +15,22 @@ return require("packer").startup(function()
 
 	use("wbthomason/packer.nvim")
 
-	use("nvim-lua/plenary.nvim")
-	use("kyazdani42/nvim-web-devicons")
-	use({ "norcalli/nvim-terminal.lua", config = 'require"terminal".setup()' })
+  use("nvim-lua/plenary.nvim")
+
+  use{"kyazdani42/nvim-web-devicons", config = function()
+    require('nvim-web-devicons').setup {
+      override = {
+        rb = {
+          icon = "",
+          color = '#ff5f5f',
+          name = "Rb"
+        }
+      },
+      default = true;
+    }
+  end}
+
+  use({ "norcalli/nvim-terminal.lua", config = 'require"terminal".setup()' })
 
 	use("folke/which-key.nvim")
 
@@ -537,4 +550,26 @@ return require("packer").startup(function()
   use {'rktjmp/lush.nvim', opt = true }
 
   use {'glepnir/galaxyline.nvim', config = 'require"config.statusline"'}
+
+  use {
+    "folke/trouble.nvim",
+    after = "telescope.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup { }
+
+      local trouble = require("trouble.providers.telescope")
+      local telescope = require("telescope")
+
+      telescope.setup {
+        defaults = {
+          mappings = {
+            i = { ["<c-e>"] = trouble.open_with_trouble },
+            n = { ["<c-e>"] = trouble.open_with_trouble },
+          },
+        },
+      }
+
+    end
+  }
 end)
