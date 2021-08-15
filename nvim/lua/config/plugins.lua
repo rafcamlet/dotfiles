@@ -68,9 +68,7 @@ return require("packer").startup(function()
 	-- === My ===
 	-- use 'rafcamlet/nvim-luapad'
 	use("~/projects/nvim-luapad")
-	use({
-		"rafcamlet/simple-wiki.nvim",
-		config = function()
+	use({ "rafcamlet/simple-wiki.nvim", config = function()
 			require("simple-wiki").setup({
 				path = "~/Dropbox/wiki",
 				link_key_mapping = "gf",
@@ -516,17 +514,6 @@ return require("packer").startup(function()
 	-- use({ "~/projects/byline", config = "require'byline'.setup()", after = colorscheme })
 	use({ "norcalli/nvim-colorizer.lua", config = 'require"colorizer".setup()' })
 
-	use({
-		"voldikss/vim-floaterm",
-		config = function()
-			vim.cmd([[
-  let g:floaterm_position = 'center'
-  nnoremap <space>v :FloatermNew --height=1.00 --width=1.00 vifm<cr>
-  nnoremap <space>V :exec 'FloatermNew --height=1.00 --width=1.00  vifm ' .. getcwd()<cr>
-  ]])
-		end,
-	})
-
 	use("jbyuki/one-small-step-for-vimkind")
 
 	use({
@@ -572,4 +559,25 @@ return require("packer").startup(function()
 
     end
   }
+
+  use { 'akinsho/nvim-toggleterm.lua', config = function()
+    require("toggleterm").setup {
+      size = function(term)
+        if term.direction == "horizontal" then
+          return 15
+        elseif term.direction == "vertical" then
+          return vim.o.columns * 0.4
+        end
+      end,
+      open_mapping = [[<c-\>]],
+      direction = 'vertical'
+    }
+
+    vim.g.terminal_color_8 = '#595959'
+    vim.cmd 'tnoremap <c-]> <c-\\><c-n>'
+
+    require 'config.plugins.nvim-toggleterm'
+  end}
+
+  use 'MunifTanjim/nui.nvim'
 end)
