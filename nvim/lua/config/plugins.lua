@@ -68,6 +68,7 @@ return require("packer").startup(function()
 	-- === My ===
 	-- use 'rafcamlet/nvim-luapad'
 	use("~/projects/nvim-luapad")
+	use("~/projects/the-lists")
 	use({ "rafcamlet/simple-wiki.nvim", config = function()
 			require("simple-wiki").setup({
 				path = "~/Dropbox/wiki",
@@ -580,4 +581,7 @@ return require("packer").startup(function()
   end}
 
   use 'MunifTanjim/nui.nvim'
+  use 'folke/lua-dev.nvim'
+
+  use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
 end)

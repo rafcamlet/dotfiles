@@ -212,6 +212,28 @@ Right.GitBranch = {
   provider = 'GitBranch',
 }
 
+
+vim.api.nvim_command('hi GalaxyViModeReverse guibg=' .. colors.bg_dim)
+
+local function luapad_color()
+  if require('luapad.statusline').status() == 'ok' then
+    return colors.green
+  else
+    return colors.red
+  end
+end
+
+Right.Luapad = {
+  separator = '  ',
+  condition = require('luapad.state').current,
+  highlight = {luapad_color(), colors.bg },
+  provider = function()
+    vim.api.nvim_command('hi GalaxyLuapad guifg=' .. luapad_color())
+    local status = require('luapad.statusline').status()
+    return string.upper(tostring(status))
+  end
+}
+
 Right.FileLocation = {
   icon = ' ',
   separator = ' ',

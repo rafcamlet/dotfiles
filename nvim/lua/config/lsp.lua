@@ -139,54 +139,38 @@ local function make_config()
 	}
 end
 
+local function setup_lua(config)
+  local lua_dev_required, lua_dev = pcall(require, "lua-dev")
+  if not lua_dev_required then
+    print('Lua lsp not loaded!')
+    return nil
+  end
+
+  local lua_dev_config = lua_dev.setup {
+    lspconfig = {
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = { "vim", "describe", "it", "p", "luapad", "use", "before_each" },
+            disable = { "lowercase-global" },
+          },
+        }
+      }
+    }
+  }
+
+  return vim.tbl_extend('force', config, lua_dev_config)
+end
+
 local function setup_servers()
 	local servers = require("lspinstall").installed_servers()
 
 	for _, server in pairs(servers) do
 		local config = make_config()
 
-		-- if server == "rust" then
-		--   config.settings = {
-		--   }
-		-- end
+    if server == "lua" then config = setup_lua(config) end
 
-		if server == "lua" then
-			local sumneko_path = vim.split(package.path, ";")
-			table.insert(sumneko_path, "lua/?.lua")
-			table.insert(sumneko_path, "lua/?/init.lua")
-
-			-- https://github.com/tjdevries/nlua.nvim/blob/master/lua/nlua/lsp/nvim.lua:23
-			local function get_lua_runtime()
-				local result = {}
-				for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-					local lua_path = path .. "/lua/"
-					if vim.fn.isdirectory(lua_path) then
-						result[lua_path] = true
-					end
-				end
-				result[vim.fn.expand("$VIMRUNTIME/lua")] = true
-				return result
-			end
-
-			config.settings = {
-				Lua = {
-					runtime = {
-						version = "LuaJIT",
-						path = sumneko_path,
-					},
-					completion = { callSnippet = "Both" },
-					diagnostics = {
-						globals = { "vim", "describe", "it", "p", "luapad", "use", "before_each" },
-						disable = { "lowercase-global" },
-					},
-					workspace = {
-						library = get_lua_runtime(),
-					},
-				},
-			}
-		end
-
-		nvim_lsp[server].setup(config)
+		if config then nvim_lsp[server].setup(config) end
 	end
 end
 
