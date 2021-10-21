@@ -61,8 +61,8 @@ return require("packer").startup(function()
 
   -- === LSP ===
   use "neovim/nvim-lspconfig"
+  use "williamboman/nvim-lsp-installer"
   use "tami5/lspsaga.nvim"
-  use "kabouzeid/nvim-lspinstall"
   use "jose-elias-alvarez/null-ls.nvim"
   use "jose-elias-alvarez/nvim-lsp-ts-utils"
   use({ 'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu' })
@@ -183,21 +183,7 @@ use({
 })
 use({ "windwp/nvim-autopairs", config = 'require("nvim-autopairs").setup()' })
 
-use({
-  "b3nj5m1n/kommentary",
-  config = function()
-    config = require("kommentary.config")
-    config.configure_language("default", { prefer_single_line_comments = true })
-    -- config.use_extended_mappings()
-
-    vim.g.kommentary_create_default_mappings = false
-
-    vim.cmd([[nnoremap <Plug>commentary :call v:lua.kommentary.go(1)<cr>:silent! call repeat#set("\<Plug>commentary", v:count)<cr>]])
-    vim.cmd([[nmap gcc <Plug>commentary]])
-    vim.api.nvim_set_keymap("n", "gc", "<Plug>kommentary_motion_default", {})
-    vim.api.nvim_set_keymap("v", "gc", "<Plug>kommentary_visual_default<C-c>", {})
-  end,
-})
+use "b3nj5m1n/kommentary"
 
 use({
   "kyazdani42/nvim-tree.lua",
@@ -629,5 +615,5 @@ use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
 
 use 'leafgarland/typescript-vim'
 use 'peitalin/vim-jsx-typescript'
-
+use 'thinca/vim-quickrun'
 end)

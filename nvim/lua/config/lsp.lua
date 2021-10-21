@@ -8,12 +8,10 @@ if not saga then
   return
 end
 
-local _, lspinstall = pcall(require, "lspinstall")
-if not lspinstall then
+local is_lsp_installer, lsp_installer = pcall(require, "nvim-lsp-installer")
+if not is_lsp_installer then
   return
 end
-
-lspinstall.setup()
 
 saga.init_lsp_saga({
   -- use_saga_diagnostic_sign = true
@@ -81,26 +79,24 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, m, r, l, { noremap = true, silent = true })
   end
 
-  key_map("n", "L", '<cmd>lua require"lspsaga.diagnostic".show_cursor_diagnostics()<CR>')
+  key_map("n", "L", '<cmd>Lspsaga show_line_diagnostics<CR>')
   -- key_map("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
 
-  key_map("n", "[e", '<cmd>lua require"lspsaga.diagnostic".lsp_jump_diagnostic_prev()<CR>')
-  key_map("n", "]e", '<cmd>lua require"lspsaga.diagnostic".lsp_jump_diagnostic_next()<CR>')
+  key_map("n", "[e", '<cmd>Lspsaga diagnostic_jump_prev<CR>')
+  key_map("n", "]e", '<cmd>Lspsaga diagnostic_jump_next<CR>')
 
   -- key_map("n", "<space>ga", '<cmd>lua require("lspsaga.codeaction").code_action()<CR>')
   key_map("n", "<space>ga", '<cmd>CodeActionMenu<cr>')
+  key_map("v", "<space>ga", '<cmd>Lspsaga range_code_action<CR>')
 
-
-  key_map("v", "<space>ga", '<cmd>lua require("lspsaga.codeaction").range_code_action()<CR>')
-
-  key_map('n', 'K', '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>')
+  key_map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
   key_map('n', '<c-f>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<cr>')
   key_map('n', '<c-b>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>')
 
   key_map("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>")
   key_map("n", "<c-]>", "<Cmd>lua vim.lsp.buf.definition()<CR>")
 
-  key_map("n", "g<c-]>", "<Cmd>lua require'lspsaga.provider'.preview_definition()<CR>")
+  key_map("n", "g<c-]>", "<Cmd>Lspsaga preview_definition<CR>")
 
   -- key_map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>')
   key_map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
@@ -238,21 +234,15 @@ local function setup_ruby(config)
   return config
 end
 
-local function setup_servers()
-  local servers = require("lspinstall").installed_servers()
-
-  for _, server in pairs(servers) do
+lsp_installer.on_server_ready(function(server)
     local config = make_config()
 
-    if server == "lua" then config = setup_lua(config) end
-    if server == "typescript" then config = setup_typescript(config) end
-    if server == "ruby" then config = setup_ruby(config) end
+    if server.name == "sumneko_lua" then config = setup_lua(config) end
+    if server.name == "tsserver" then config = setup_typescript(config) end
+    if server.name == "solargraph" then config = setup_ruby(config) end
 
-    if config then nvim_lsp[server].setup(config) end
-  end
-end
-
-setup_servers()
+    server:setup(config)
+end)
 
 local null_ls_exists, null_ls = pcall(require, 'null-ls')
 if null_ls_exists then
@@ -268,9 +258,4 @@ if null_ls_exists then
   null_ls.config({ sources = sources, debug = true })
 
   nvim_lsp["null-ls"].setup {}
-end
-
-require("lspinstall").post_install_hook = function()
-  setup_servers()
-  vim.cmd("bufdo e")
 end
