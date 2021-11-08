@@ -1,14 +1,10 @@
 package.loaded["config/dap"] = nil
 
-local _, dap = pcall(require, "dap")
-if not dap then
-  return
-end
+local is_dap, dap = pcall(require, "dap")
+if not is_dap then return end
 
-local _, dap_install = pcall(require, "dap-install")
-if not dap_install then
-  return
-end
+local is_dap_install, dap_install = pcall(require, "dap-install")
+if not is_dap_install then return end
 
 -- local dbg_list = require("dap-install.debuggers_list").debuggers
 
@@ -94,3 +90,7 @@ dap.configurations.lua = {
 dap.adapters.nlua = function(callback, config)
   callback({ type = "server", host = config.host, port = config.port })
 end
+
+local is_dapui, dapui = pcall(require, "dapui")
+if not is_dapui then return end
+dapui.setup()

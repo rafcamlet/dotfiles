@@ -56,8 +56,8 @@ return require("packer").startup(function()
       vim.cmd([[nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>]])
     end,
   })
-  -- use({ "rcarriga/nvim-dap-ui", config = 'require("dapui").setup()' })
-  use({ "Pocco81/DAPInstall.nvim" })
+  use "rcarriga/nvim-dap-ui"
+  use "Pocco81/DAPInstall.nvim"
 
   -- === LSP ===
   use "neovim/nvim-lspconfig"
@@ -616,4 +616,5 @@ use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
 use 'leafgarland/typescript-vim'
 use 'peitalin/vim-jsx-typescript'
 use 'thinca/vim-quickrun'
+use 'github/copilot.vim'
 end)
