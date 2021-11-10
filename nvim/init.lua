@@ -4,8 +4,13 @@ config_file "keybindings"
 config_file "settings"
 
 require "config.plugins"
+
+if os.getenv('INSTALL') then return end
+
 require "config.lsp"
 require "config.dap"
+
+vim.cmd 'colorscheme onedark'
 
 vim.cmd([[ au TextYankPost * silent! lua vim.highlight.on_yank {higroup="Visual", timeout=250} ]])
 

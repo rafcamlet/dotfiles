@@ -20,6 +20,7 @@
     ~/bin/player-mpris-tail: bin/player-mpris-tail.py
     ~/bin/t: bin/t
     ~/bin/tm: bin/tm
+    ~/bin/screamer: bin/screamer
 
     ~/.config/bat: bat
     ~/.config/conky: conky

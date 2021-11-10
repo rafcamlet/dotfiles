@@ -1,3 +1,13 @@
+vim.api.nvim_exec(
+  [[
+  augroup Packer
+    autocmd!
+    autocmd BufWritePost plugins.lua call v:lua.compile_plugins()
+  augroup end
+]],
+  false
+)
+
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
@@ -11,7 +21,7 @@ end
 return require("packer").startup(function()
   local colorscheme = "onedark.nvim"
 
-  use({ "navarasu/onedark.nvim", config = 'vim.cmd "colorscheme onedark"' })
+  use({ "navarasu/onedark.nvim"})
 
   use("wbthomason/packer.nvim")
 
@@ -71,8 +81,7 @@ return require("packer").startup(function()
 
   -- === My ===
   -- use 'rafcamlet/nvim-luapad'
-  use("~/projects/nvim-luapad")
-  use("~/projects/the-lists")
+  use("rafcamlet/nvim-luapad")
   use({ "rafcamlet/simple-wiki.nvim", config = function()
     require("simple-wiki").setup({
       path = "~/Dropbox/wiki",
@@ -87,56 +96,84 @@ return require("packer").startup(function()
 
 -- == complete ==
 
-
-use({
-  "hrsh7th/nvim-compe",
-  config = function()
-    require("compe").setup({
-      enabled = true,
-      debug = false,
-      min_length = 1,
-      preselect = "enable",
-      allow_prefix_unmatch = false,
-      source = {
-        path = true,
-        buffer = true,
-        ultisnips = true,
-        nvim_lsp = true,
-      },
-    })
-  end
-})
-
-vim.cmd([[inoremap <silent><expr> <c-n> compe#complete()]])
-vim.cmd([[inoremap <silent><expr> <c-k> compe#confirm('<CR>')]])
-vim.cmd([[inoremap <silent><expr> <c-e> compe#close('<C-e>')]])
-
--- use 'hrsh7th/cmp-nvim-lsp'
--- use 'hrsh7th/cmp-buffer'
+use 'hrsh7th/cmp-nvim-lsp'
+use 'hrsh7th/cmp-buffer'
+use 'hrsh7th/cmp-path'
+use 'hrsh7th/cmp-cmdline'
+use 'saadparwaiz1/cmp_luasnip'
 -- use 'quangnguyen30192/cmp-nvim-ultisnips'
--- use({'hrsh7th/nvim-cmp', config = function()
---   local cmp = require'cmp'
---   cmp.setup({
---     snippet = {
---       expand = function(args)
---         vim.fn["UltiSnips#Anon"](args.body)
---       end,
---     },
---     mapping = {
---       ['<C-D>'] = cmp.mapping.scroll_docs(-4),
---       ['<C-F>'] = cmp.mapping.scroll_docs(4),
---       -- ['<c-space>'] = cmp.mapping.complete(),
---       ['<C-E>'] = cmp.mapping.close(),
---       ['<C-K>'] = cmp.mapping.confirm({ select = true }),
---     },
---     sources = {
---       { name = 'nvim_lsp' },
---       { name = 'ultisnips' },
---       { name = 'buffer' },
---     }
---   })
--- end
--- })
+use({'hrsh7th/nvim-cmp', config = function()
+  local cmp = require'cmp'
+  local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+  end
+
+  cmp.setup({
+    snippet = {
+      expand = function(args)
+        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+      end,
+    },
+    mapping = {
+      ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+      ['<C-n>'] = cmp.mapping({
+        i = function(fallback)
+          if cmp.visible() then cmp.select_next_item() else cmp.complete() end
+        end,
+        c = function(fallback)
+          vim.api.nvim_feedkeys(t('<down>'), 'n', true)
+        end
+      }),
+      ['<C-p>'] = cmp.mapping({
+        c = function()
+          vim.api.nvim_feedkeys(t('<up>'), 'n', true)
+        end,
+        i = function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            fallback()
+          end
+        end
+      }),
+      ['<C-e>'] = cmp.mapping({
+        i = cmp.mapping.abort()
+      }),
+      ['<c-k>'] = cmp.mapping.confirm({ select = true }),
+    },
+    sources = cmp.config.sources({
+      { name = 'path' },
+      { name = 'nvim_lsp' },
+      -- { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'vsnip' }, -- For vsnip users.
+      { name = 'luasnip' }, -- For luasnip users.
+      -- { name = 'snippy' }, -- For snippy users.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  --[[ -- Use buffer source for `/`.
+  cmp.setup.cmdline('/', {
+    sources = {
+      { name = 'buffer' }
+    }
+  }) ]]
+
+  -- Use cmdline & path source for ':'.
+  cmp.setup.cmdline(':', {
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
+end})
 
 -- === TreeSitter ===
 use("nvim-treesitter/nvim-treesitter-textobjects")
@@ -374,8 +411,6 @@ use({
       },
     })
 
-    vim.cmd('nnoremap <space>oo <cmd>lua require("telescope.builtin").find_files()<cr>')
-    vim.cmd('nnoremap <space>of <cmd>lua require("telescope.builtin").live_grep()<cr>')
     vim.cmd('nnoremap <space>ob <cmd>lua require("telescope.builtin").buffers()<cr>')
     vim.cmd('nnoremap <space>ot <cmd>lua require("telescope.builtin").help_tags()<cr>')
   end,
@@ -423,7 +458,7 @@ config = function()
     vim.cmd('autocmd CursorMoved * IndentBlanklineRefresh')
   end})
 
-  use({
+  --[[ use({
     "SirVer/ultisnips",
     config = function()
       vim.g.UltiSnipsExpandTrigger = "<C-j>"
@@ -431,7 +466,9 @@ config = function()
       vim.g.UltiSnipsJumpBackwardTrigger = "<C-k>"
       vim.g.UltiSnipsEditSplit = "vertical"
     end,
-  })
+  }) ]]
+
+  use({"L3MON4D3/LuaSnip", config = "require 'config.plugins.luasnip'"})
 
   use({
     "simrat39/rust-tools.nvim",
@@ -617,4 +654,5 @@ use 'leafgarland/typescript-vim'
 use 'peitalin/vim-jsx-typescript'
 use 'thinca/vim-quickrun'
 use 'github/copilot.vim'
+use 'bogado/file-line'
 end)
