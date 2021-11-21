@@ -45,8 +45,8 @@ vim.cmd [[imap <c-k> <Plug>luasnip-jump-prev]]
 vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true}) ]]
-vim.api.nvim_set_keymap("i", "<C-E>", "<Plug>luasnip-next-choice", {})
-vim.api.nvim_set_keymap("s", "<C-E>", "<Plug>luasnip-next-choice", {})
+vim.api.nvim_set_keymap("i", "<C-f>", "<Plug>luasnip-next-choice", {})
+vim.api.nvim_set_keymap("s", "<C-f>", "<Plug>luasnip-next-choice", {})
 
 
 local ls = require"luasnip"
@@ -66,6 +66,21 @@ ls.config.set_config({
 })
 
 ls.snippets = {
+  ruby = {
+    s('pry', t'binding.pry'),
+  },
+  lua = {
+    s('for', {
+      t'for ',
+      c(1, {
+        sn(nil, {t'i, v in ipairs(', i(1), t')'}),
+        sn(nil, {t'k, v in pairs(', i(1), t')'}),
+      }),
+      t{' do', '\t'},
+      i(0),
+      t{'', 'end'}
+    }),
+  },
   all = {
     s("asdf", {
       t({"Wow! "}), i(1,"test"), t({"", ""}),

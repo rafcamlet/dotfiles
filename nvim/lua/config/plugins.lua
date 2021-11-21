@@ -220,7 +220,11 @@ use({
 })
 use({ "windwp/nvim-autopairs", config = 'require("nvim-autopairs").setup()' })
 
-use "b3nj5m1n/kommentary"
+use ({"b3nj5m1n/kommentary", config = function()
+  require('kommentary.config').configure_language("default", {
+    prefer_single_line_comments = true,
+  })
+end})
 
 use({
   "kyazdani42/nvim-tree.lua",
@@ -229,6 +233,10 @@ use({
     vim.cmd("nnoremap <c-g><c-f> :NvimTreeFindFile<CR>")
 
     local tree_cb = require("nvim-tree.config").nvim_tree_callback
+
+    vim.cmd "let g:nvim_tree_add_trailing = 1"
+    vim.cmd "let g:nvim_tree_disable_window_picker = 1"
+    vim.cmd "let g:nvim_tree_respect_buf_cwd = 1"
 
     require'nvim-tree'.setup {
       update_cwd = true,
@@ -559,20 +567,31 @@ config = function()
   end,
 })
 
-use({
-  "ggandor/lightspeed.nvim",
+-- use({
+--   "ggandor/lightspeed.nvim",
+--   config = function()
+--     require("lightspeed").setup({
+--       jump_to_first_match = true,
+--       jump_on_partial_input_safety_timeout = 400,
+--       highlight_unique_chars = false,
+--       grey_out_search_area = true,
+--       match_only_the_start_of_same_char_seqs = true,
+--       limit_ft_matches = 5,
+--       full_inclusive_prefix_key = "<c-x>",
+--     })
+--   end,
+-- })
+
+use {
+  'phaazon/hop.nvim',
+  branch = 'v1', -- optional but strongly recommended
   config = function()
-    require("lightspeed").setup({
-      jump_to_first_match = true,
-      jump_on_partial_input_safety_timeout = 400,
-      highlight_unique_chars = false,
-      grey_out_search_area = true,
-      match_only_the_start_of_same_char_seqs = true,
-      limit_ft_matches = 5,
-      full_inclusive_prefix_key = "<c-x>",
-    })
-  end,
-})
+    require'hop'.setup { keys = 'asdfjkl;' }
+    -- require'hop'.setup {}
+    vim.api.nvim_set_keymap('n', 's', "<cmd>lua require'hop'.hint_char2()<cr>", {})
+  end
+}
+
 
 use("editorconfig/editorconfig-vim")
 use("kevinhwang91/nvim-bqf")
@@ -655,4 +674,6 @@ use 'peitalin/vim-jsx-typescript'
 use 'thinca/vim-quickrun'
 use 'github/copilot.vim'
 use 'bogado/file-line'
+use { 'camspiers/snap', rocks = {'fzy'}}
+use '~/projects/real_tabline'
 end)

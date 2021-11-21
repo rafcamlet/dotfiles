@@ -251,8 +251,8 @@ if null_ls_exists then
     null_ls.builtins.formatting.rubocop.with({
       args = { "--auto-correct-all", "-f", "quiet", "--stderr", "--stdin", "$FILENAME" }
     }),
-    null_ls.builtins.formatting.eslint_d,
-    null_ls.builtins.diagnostics.eslint_d
+    --[[ null_ls.builtins.formatting.eslint_d,
+    null_ls.builtins.diagnostics.eslint_d ]]
   }
 
   null_ls.config({ sources = sources, debug = true })
