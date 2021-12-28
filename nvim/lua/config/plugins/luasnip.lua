@@ -66,8 +66,11 @@ ls.config.set_config({
 })
 
 ls.snippets = {
-  ruby = {
+  haml = {
     s('pry', t'binding.pry'),
+  },
+  ruby = {
+    s('pry', t'require "pry"; binding.pry'),
   },
   lua = {
     s('for', {

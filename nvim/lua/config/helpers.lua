@@ -12,6 +12,15 @@ function p(...)
   end
 end
 
+local function open_github()
+  local line = vim.api.nvim_get_current_line()
+  local repo = line:match([['(.-/.-)']]) or line:match([["(.-/.-)"]])
+
+  if not repo then return end
+
+  vim.fn.system('xdg-open https://github.com/' .. repo)
+end
+
 function compile_plugins()
   package.loaded["config.plugins"] = nil
   require 'config.plugins'
@@ -32,5 +41,6 @@ vim.cmd [[command! Update lua require'config.helpers'.update()]]
 
 return {
   config_file = config_file,
-  update = update
+  update = update,
+  open_github = open_github
 }

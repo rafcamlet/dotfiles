@@ -1,3 +1,31 @@
+[core]
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+[delta]
+  features = decorations my
+  syntax-theme = Dracula
+  ; syntax-theme =  Visual Studio Dark+
+
+  plus-style = syntax "#232c22"
+  minus-style = syntax "#2c2222"
+[delta "my"]
+  line-numbers = true
+  line-numbers-left-style = "#505050"
+  line-numbers-right-style = "#505050"
+  line-numbers-minus-style = "#ef2929"
+  line-numbers-plus-style = "#98971a"
+  line-numbers-zero-style = gray
+[delta "interactive"]
+  keep-plus-minus-markers = false
+[delta "decorations"]
+  commit-decoration-style = blue ol
+  commit-style = raw
+  file-style = omit
+  hunk-header-decoration-style = "#505050" ul ol
+  hunk-header-file-style = "#75afc0"
+  hunk-header-line-number-style = "#75afc0"
+  hunk-header-style = file line-number syntax
 [user]
   email = raf.camlet@gmail.com
   name = Rafał Camlet

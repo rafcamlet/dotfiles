@@ -92,7 +92,7 @@ augroup END
 augroup help_autogroup
     autocmd!
     autocmd BufEnter * if &ft == 'help' | silent! wincmd L | end
-    autocmd BufEnter * if &ft == 'help' | silent! vertical resize 80 | end
+    autocmd BufEnter * if &ft == 'help' | silent! vertical resize 85 | end
 augroup END
 
 augroup highlight_yank

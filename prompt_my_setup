@@ -1,17 +1,6 @@
 function prompt_my_precmd {
   git-info
 
-  # ruby info
-  _ruby='%F{1}Ruby:%F{9}'
-  _node='%F{3}NodeJS:%F{11}'
-
-  _ruby+=$(asdf current ruby &> /dev/null && asdf current ruby | sed 's/ .*$//')
-  _ruby_gemset=''
-  _node+=$(asdf current nodejs &>/dev/null && asdf current nodejs | sed 's/ .*$//')
-
-  _ruby+='%f'
-  _node+='%f'
-
   # last commit
 
   _git=""
@@ -70,7 +59,7 @@ function prompt_my_setup {
 
   # Define prompts.
   PROMPT='
-%F{15}In ${_colors[3]}%~%f${(e)git_info[prompt]} $_ruby $_git $_node
+%F{15}In ${_colors[3]}%~%f${(e)git_info[prompt]} $_git
 %B%F{1}❯%F{3}❯%F{2}❯%f%b  '
 
   RPROMPT=''

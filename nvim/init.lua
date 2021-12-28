@@ -16,9 +16,6 @@ vim.cmd([[ au TextYankPost * silent! lua vim.highlight.on_yank {higroup="Visual"
 
 vim.cmd([[command! -nargs=1 Boss :call luaeval("require'boss'.eval(_A)", <q-args>)]])
 
-vim.cmd([[ nnoremap <silent> <f2> :silent! Boss c"lua require'byline'.setup()"<cr>]])
-vim.cmd([[ nnoremap <f3> <cmd>Boss c"lua require'byline'.setup()" c"vs"<cr>]])
-
 vim.cmd([[nnoremap <c-q> <cmd>lua require'scripts'.quickfix_toggle()<cr>]])
 
 vim.cmd([[nnoremap <space>f <cmd>lua require'scripts'.send_to_tmux()<cr>]])
@@ -30,6 +27,7 @@ vim.cmd([[nnoremap <space>oo <cmd>lua require'finders'.find()<cr>]])
 vim.cmd([[nnoremap <space>oq <cmd>lua require'finders'.find {cwd = vim.fn.fnamemodify(vim.fn.expand('$MYVIMRC'), ':h'), pattern = "(lua\|vim)$" }<cr>]])
 
 vim.cmd([[nmap <leader>t <Plug>PlenaryTestFile]])
+
 
 function snap_grep()
 
@@ -46,6 +44,7 @@ function snap_grep()
     local cwd = snap.sync(vim.fn.getcwd)
 
     string = request.filter
+
 
     if string.find(string, ";") then
       glob = string.sub(string, string.find(string, ";") + 1, #string)

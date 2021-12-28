@@ -142,29 +142,6 @@ export BAT_THEME=Nord
 
 WORDCHARS='*?_-[]~&;!#$%^(){}<>'
 
-# NVM {{{
-if [[ "$USER" == "r" ]]; then
-  # NVM drastically increas startup time. Move to function.
-
-  start_nvm(){
-    unalias nvm node npm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-  }
-
-  if [ -s "$HOME/.nvm/nvm.sh" ]; then
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-    alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
-    alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
-    alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
-  fi
-fi
-# }}}
-
-# source ~/.zplug/init.zsh
-# # zplug "b4b4r07/enhancd", use:init.sh
-# zplug load
-
 
 # fasd {{{
 
@@ -180,19 +157,29 @@ alias zz='fasd_cd -d -i' # cd with interactive selection
 
 alias v='COLORTERM=tmux-256color vifm -c "vsplit"' # vi file manager
 alias man='vimman'
-alias gmask='mask --maskfile ~/maskfile.md'
 
 eval "$(direnv hook zsh)"
 
-# heroku autocomplete setup {{{
-HEROKU_AC_ZSH_SETUP_PATH=/home/r2d2/.cache/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
-# }}}
-
-. "$HOME/.local/share/lscolors.sh"
+[ -f "$HOME/.local/share/lscolors.sh" ] && source $HOME/.local/share/lscolors.sh
 
 # asdf {{{
 . $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
+# }}}
+
+# fzf-tab {{{
+# https://github.com/Aloxaf/fzf-tab/issues/24
+zstyle -d ':completion:*' format
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# preview directory's content with exa when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# switch group using `,` and `.`
+zstyle ':fzf-tab:*' switch-group ',' '.'
 # }}}
 
 [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
