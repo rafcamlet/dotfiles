@@ -77,14 +77,11 @@ end
 
 local function lsp(kind)
   kind = ({
-    errors = 'Error',
-    warinings = 'Warning'
+    errors = vim.diagnostic.severity.ERROR,
+    warinings =vim.diagnostic.severity.WARN
   })[kind]
-  local count = 0
-  for _, client in ipairs(vim.lsp.get_active_clients()) do
-    count = count + vim.lsp.diagnostic.get_count(0, kind, client.id)
-  end
-  return count
+
+  return #vim.diagnostic.get(0, { severity = kind })
 end
 
 local function section(name)
