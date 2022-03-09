@@ -62,11 +62,11 @@ nnoremap Y y$
 nnoremap <silent> * :set hls<cr>*``
 
 " moving aroung in command mode
-cnoremap <c-h> <left>
+cnoremap <c-b> <left>
 cnoremap <expr> <c-j> pumvisible() ? "<right>" : "<down>"
 cnoremap <expr> <c-k> pumvisible() ? "<left>" : "<up>"
 " set wildcharm=<c-n>
-cnoremap <c-l> <right>
+cnoremap <c-f> <right>
 cnoremap <c-a> <home>
 cnoremap <c-0> <end>
 cnoremap <c-x> <del>

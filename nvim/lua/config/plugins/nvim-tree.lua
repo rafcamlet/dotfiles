@@ -10,6 +10,11 @@ vim.cmd "let g:nvim_tree_respect_buf_cwd = 1"
 require'nvim-tree'.setup {
   update_cwd = true,
   hijack_cursor = false,
+  git = {
+    enable = true,
+    ignore = false,
+    timeout = 500,
+  },
   view = {
     mappings = {
       list = {

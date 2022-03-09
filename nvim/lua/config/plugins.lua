@@ -1,14 +1,15 @@
 vim.api.nvim_exec(
+
   [[
   augroup Packer
     autocmd!
     autocmd BufWritePost plugins.lua call v:lua.compile_plugins()
     autocmd BufEnter plugins.lua nnoremap go :lua require'config.helpers'.open_github()<cr>
+    autocmd BufEnter plugins.lua nnoremap gf :lua require'config.helpers'.open_config()<cr>
   augroup end
 ]],
   false
 )
-
 
 local execute = vim.api.nvim_command
 local fn = vim.fn
@@ -21,7 +22,24 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 return require("packer").startup(function()
-use "shaunsingh/nord.nvim"
+
+  local Use = function(plugin)
+    local plugin_name = plugin
+    if type(plugin) == "table" then plugin_name = plugin[1] end
+
+    local filename = string.gsub(plugin_name, '.*/' , '')
+    filename = filename:gsub('%.nvim', '')
+
+    local config_cmd = ('pcall(require, "config/plugins/%s")'):format(filename)
+
+    if type(plugin) == "table" then
+      plugin.config = config_cmd
+      use(plugin)
+    else
+      use { plugin, config = config_cmd }
+    end
+  end
+
   local colorscheme = "onedark.nvim"
 
   use({ "navarasu/onedark.nvim"})
@@ -45,7 +63,7 @@ use "shaunsingh/nord.nvim"
 
   -- use({ "norcalli/nvim-terminal.lua", config = 'require"terminal".setup()' })
 
-  use("folke/which-key.nvim")
+  use({"folke/which-key.nvim", cmd = 'WhichKey'})
 
   -- === tpope ===
   use("tpope/vim-unimpaired")
@@ -55,20 +73,7 @@ use "shaunsingh/nord.nvim"
   use("tpope/vim-abolish")
 
   -- === DAP ===
-  use({
-    "mfussenegger/nvim-dap",
-    config = function()
-      vim.cmd([[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]])
-      vim.cmd([[nnoremap <silent> <F8> :lua require'dap'.step_over()<CR>]])
-      vim.cmd([[nnoremap <silent> <F9> :lua require'dap'.step_into()<CR>]])
-      vim.cmd([[nnoremap <silent> <F10> :lua require'dap'.step_out()<CR>]])
-      vim.cmd([[nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>]])
-      vim.cmd([[nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>]])
-      vim.cmd([[nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>]])
-      vim.cmd([[nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>]])
-      vim.cmd([[nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>]])
-    end,
-  })
+  use "mfussenegger/nvim-dap"
   use "rcarriga/nvim-dap-ui"
   use "Pocco81/DAPInstall.nvim"
 
@@ -80,11 +85,16 @@ use "shaunsingh/nord.nvim"
   use "jose-elias-alvarez/nvim-lsp-ts-utils"
   use({ 'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu' })
 
-  use({ "ahmedkhalf/lsp-rooter.nvim", config = 'require("lsp-rooter").setup {}' })
+  -- use({ "ahmedkhalf/lsp-rooter.nvim", config = 'require("lsp-rooter").setup {}' })
 
   -- === My ===
-  use("rafcamlet/nvim-luapad")
-  use({ "rafcamlet/simple-wiki.nvim", config = function()
+  -- use("rafcamlet/nvim-luapad")
+  use({"~/projects/jumper", config = 'require"jumper".setup()'})
+  use("~/projects/rails_spotting")
+  use("~/projects/boss")
+  use("~/projects/nvim-luapad")
+  -- use({ "rafcamlet/simple-wiki.nvim", config = function()
+  use({ "~/projects/simple-wiki.nvim", config = function()
     require("simple-wiki").setup({
       path = "~/Dropbox/wiki",
       link_key_mapping = "gf",
@@ -95,6 +105,7 @@ use "shaunsingh/nord.nvim"
   end,
   use {
     "rafcamlet/tabline-framework.nvim",
+    -- "~/projects/tabline_framework",
     requires = "kyazdani42/nvim-web-devicons",
     config = function()
       vim.opt.showtabline = 2
@@ -123,92 +134,8 @@ use("nvim-treesitter/nvim-treesitter-textobjects")
 use("nvim-treesitter/nvim-treesitter-refactor")
 use("nvim-treesitter/playground")
 
-use({
-  "nvim-treesitter/nvim-treesitter",
-  config = function()
-    require("nvim-treesitter.configs").setup({
-      textobjects = {
-        select = {
-          enable = true,
-          keymaps = {
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            ["ic"] = "@class.inner",
-            ["ab"] = "@block.outer",
-            ["ib"] = "@black.inner",
-          },
-        },
-      },
-      playground = {
-        enable = true,
-        updatetime = 25,
-        persist_queries = false,
-      },
-      highlight = {
-        enable = true,
-        custom_captures = {},
-      },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "gn",
-          node_incremental = "<c-j>",
-          node_decremental = "<c-k>",
-          scope_incremental = "<c-l>",
-        },
-      },
-    })
+Use({ "nvim-treesitter/nvim-treesitter"})
 
-    local query = [[
-    [
-      (atx_heading)
-      (setext_heading)
-    ] @text.title
-
-    (code_fence_content) @none
-
-    [
-      (indented_code_block)
-      (fenced_code_block)
-      (code_span)
-    ] @text.literal
-
-
-    (emphasis) @text.emphasis
-    (strong_emphasis) @text.strong
-
-    (link_destination) @text.uri
-
-    (link_text) @text.reference
-
-    (thematic_break) @text.title
-
-    [
-      (list_marker_plus)
-      (list_marker_minus)
-      (list_marker_star)
-      (list_marker_dot)
-      (list_marker_parenthesis)
-    ] @punctuation.special
-
-    [
-      (backslash_escape)
-      (hard_line_break)
-    ] @string.escape
-    ]]
-
-    require("vim.treesitter.query").set_query("markdown", "highlights", query)
-
-    vim.cmd [[hi TSTitle guifg=#e5c07b gui=bold]]
-    vim.cmd [[hi TSURI guifg=#61afef gui=none]]
-    vim.cmd [[hi TSPunctSpecial guifg=#c678dd gui=none]]
-    vim.cmd [[hi TSTextReference guifg=#e86671 gui=none]]
-
-    vim.cmd [[hi TSStrong gui=bold]]
-    vim.cmd [[hi TSEmphasis gui=italic]]
-  end,
-})
 use({ "windwp/nvim-autopairs", config = 'require("nvim-autopairs").setup()' })
 
 use ({"b3nj5m1n/kommentary", config = function()
@@ -216,8 +143,6 @@ use ({"b3nj5m1n/kommentary", config = function()
     prefer_single_line_comments = true,
   })
 end})
-
-use({ "kyazdani42/nvim-tree.lua", config = 'require "config.plugins.nvim-tree"' })
 
 use({
   "numToStr/Navigator.nvim",
@@ -283,71 +208,45 @@ use({
   end,
 })
 
-use({
-  "lewis6991/gitsigns.nvim",
-  requires = { "nvim-lua/plenary.nvim" },
-  config = 'require "config.plugins.gitsigns"'
-})
+Use "lewis6991/gitsigns.nvim"
+
+use 'nvim-telescope/telescope-fzy-native.nvim'
 
 use({
   "nvim-telescope/telescope.nvim",
-  commit = "ec6c13fc092fe8447df77e35013df907a6f3761e",
-  requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } },
-  config = function()
-    local Telescope = require("telescope")
-    local actions = require("telescope.actions")
-
-    Telescope.setup({
-      defaults = {
-        mappings = {
-          i = {
-            ["<c-j>"] = actions.move_selection_next,
-            ["<c-k>"] = actions.move_selection_previous,
-          },
-        },
-        file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-        grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-        qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-      },
-    })
-
-    vim.cmd('nnoremap <space>ob <cmd>lua require("telescope.builtin").buffers()<cr>')
-    vim.cmd('nnoremap <space>ot <cmd>lua require("telescope.builtin").help_tags()<cr>')
-  end,
+  -- commit = "ec6c13fc092fe8447df77e35013df907a6f3761e",
+  requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } }
 })
 
-use({"lukas-reineke/indent-blankline.nvim",
-after = colorscheme,
-config = 'require "config.plugins.indent-blankline"'})
-
-
-  use({"L3MON4D3/LuaSnip", config = "require 'config.plugins.luasnip'"})
-
-  use({ "simrat39/rust-tools.nvim", config = 'require "config.plugins.rust-tools"' })
-
-use {
-  'phaazon/hop.nvim',
-  branch = 'v1', -- optional but strongly recommended
-  config = function()
-    require'hop'.setup { keys = 'asdfjkl;' }
-    -- require'hop'.setup {}
-    vim.api.nvim_set_keymap('n', 's', "<cmd>lua require'hop'.hint_char2()<cr>", {})
-  end
-}
+Use({"lukas-reineke/indent-blankline.nvim", after = colorscheme})
+use({"L3MON4D3/LuaSnip", config = "require 'config.plugins.luasnip'"})
+use({ "simrat39/rust-tools.nvim", config = 'require "config.plugins.rust-tools"' })
 
 use("editorconfig/editorconfig-vim")
 use("kevinhwang91/nvim-bqf")
-use({ "junegunn/fzf", run = ":call fzf#install()" })
+use({ "junegunn/fzf", run = ":call fzf#install()", cmd = 'FZF' })
 use({ "norcalli/nvim-colorizer.lua", config = 'require"colorizer".setup()' })
-
-use("jbyuki/one-small-step-for-vimkind")
+use{"jbyuki/one-small-step-for-vimkind", opt = true}
 
 use({
   "mhartington/formatter.nvim",
+  cmd = "Format",
   config = function()
     require("formatter").setup({
       logging = false,
+      log_level = vim.log.levels.INFO,
       filetype = {
+        sql = {
+          function()
+            local formaters = {
+              { exe = 'pg_format', args = { '-', '-W', '5' }, stdin = true },
+              { exe = "sqlformat", args = { "-", '-k', 'upper', '-a' }, stdin = true }
+            }
+            print('Select formatter (1) pg_format, (2) sqlformat:')
+            local nr = vim.fn.nr2char(vim.fn.getchar())
+            return formaters[tonumber(nr)]
+          end
+        },
         lua = {
           function()
             return { exe = "stylua", args = { "-" }, stdin = true }
@@ -366,6 +265,7 @@ use {'glepnir/galaxyline.nvim', config = 'require"config.statusline"'}
 
 use {
   "folke/trouble.nvim",
+  cmd = 'Trouble',
   after = "telescope.nvim",
   requires = "kyazdani42/nvim-web-devicons",
   config = function()
@@ -405,15 +305,42 @@ use { 'akinsho/nvim-toggleterm.lua', config = function()
   require 'config.plugins.nvim-toggleterm'
 end}
 
-use 'MunifTanjim/nui.nvim'
 use 'folke/lua-dev.nvim'
 
-use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
+use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview' }
 
 use 'leafgarland/typescript-vim'
 use 'peitalin/vim-jsx-typescript'
-use 'thinca/vim-quickrun'
+use {'thinca/vim-quickrun', cmd = 'QuickRun'}
 use 'github/copilot.vim'
 use 'bogado/file-line'
-use { 'camspiers/snap', rocks = {'fzy'}}
+use { 'camspiers/snap', rocks = {'fzy'}, disable = true }
+-- use "nathom/filetype.nvim"
+-- use 'simrat39/symbols-outline.nvim'
+use { 'stevearc/aerial.nvim'}
+use { 'sindrets/diffview.nvim', config = 'require"diffview".setup()', cmd = 'DiffviewOpen' }
+-- use { 'TimUntersberger/neogit', config = "require'neogit'.setup()" }
+--
+-- Use { 'sidebar-nvim/sidebar.nvim', branch = "dev" }
+Use '~/projects/sidebar.nvim'
+Use 'anuvyklack/pretty-fold.nvim'
+Use 'rlane/pounce.nvim'
+use {"elihunter173/dirbuf.nvim", cmd = 'Dirbuf'}
+use { "natecraddock/workspaces.nvim", config = "require'workspaces'.setup()" }
+-- use { 'ibhagwan/fzf-lua', requires = { 'kyazdani42/nvim-web-devicons' } }
+-- use {"j-hui/fidget.nvim", config = "require'fidget'.setup{}" }
+use {'hoschi/yode-nvim', disable = true}
+use {'slim-template/vim-slim'}
+use {'mbbill/undotree', cmd = 'UndotreeToggle'}
+
+Use {
+  "nvim-neo-tree/neo-tree.nvim",
+  branch = "v1.x",
+  requires = {
+    "nvim-lua/plenary.nvim",
+    "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+    "MunifTanjim/nui.nvim"
+  }
+}
+
 end)

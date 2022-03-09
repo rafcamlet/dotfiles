@@ -41,6 +41,7 @@
     ~/.zshrc: .zshrc
     ~/.luacheckrc: .luacheckrc
     ~/.docker/config.json: docker/config.json
+    ~/.alacritty.yml: .alacritty.yml
 
     ~/.zprezto/modules/prompt/functions/prompt_my_setup: prompt_my_setup
 

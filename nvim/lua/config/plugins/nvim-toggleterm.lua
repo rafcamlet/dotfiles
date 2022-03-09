@@ -4,7 +4,7 @@ local Path = require 'plenary.path'
 local path = vim.fn.tempname()
 
 local Vifm = Terminal:new {
-  cmd = ('vifm --choose-files "%s"'):format(path),
+  cmd = ('vifm %s --choose-files "%s"'):format(vim.fn.getcwd(), path),
   direction = "float",
   float_opts = {
     border = "curved",
@@ -14,6 +14,7 @@ local Vifm = Terminal:new {
   close_on_exit = true,
   on_close = function()
     data = Path:new(path):read()
+    if not data then return end
     vim.schedule(function()
       vim.cmd('e ' .. data)
     end)

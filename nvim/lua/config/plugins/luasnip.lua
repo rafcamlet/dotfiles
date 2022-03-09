@@ -1,98 +1,115 @@
-local luasnip = prequire('luasnip')
-local cmp = prequire("cmp")
-
-
---[[ local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end ]]
-
---[[ local check_back_space = function()
-  local col = vim.fn.col('.') - 1
-  if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-    return true
-  else
-    return false
-  end
-end ]]
-
---[[ _G.tab_complete = function()
-  if cmp and cmp.visible() then
-    cmp.select_next_item()
-  elseif luasnip and luasnip.expand_or_jumpable() then
-    return t("<Plug>luasnip-expand-or-jump")
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    cmp.complete()
-  end
-  return ""
-end
-_G.s_tab_complete = function()
-  if cmp and cmp.visible() then
-    cmp.select_prev_item()
-  elseif luasnip and luasnip.jumpable(-1) then
-    return t("<Plug>luasnip-jump-prev")
-  else
-    return t "<S-Tab>"
-  end
-  return ""
-end ]]
-
-vim.cmd [[imap <c-j> <Plug>luasnip-expand-or-jump]]
-vim.cmd [[imap <c-k> <Plug>luasnip-jump-prev]]
-
---[[ vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true}) ]]
-vim.api.nvim_set_keymap("i", "<C-f>", "<Plug>luasnip-next-choice", {})
-vim.api.nvim_set_keymap("s", "<C-f>", "<Plug>luasnip-next-choice", {})
-
-
 local ls = require"luasnip"
-local s = ls.snippet
-local sn = ls.snippet_node
-local isn = ls.indent_snippet_node
-local t = ls.text_node
-local i = ls.insert_node
-local f = ls.function_node
-local c = ls.choice_node
-local d = ls.dynamic_node
-local events = require("luasnip.util.events") 
+local types = require("luasnip.util.types")
+
+vim.keymap.set('i', "<c-j>", "<Plug>luasnip-expand-or-jump")
+vim.keymap.set('i', "<c-k>", "<Plug>luasnip-jump-prev")
+vim.keymap.set({'i', 's'}, "<c-l>", function()
+  if ls.choice_active() then ls.change_choice(1) end
+end)
+
+vim.cmd [[hi! LuasnipChoiceNode guifg=#d19a66]]
+vim.cmd [[hi! LuasnipInsertNode guifg=#61afef]]
 
 ls.config.set_config({
+  ext_opts = {
+    [types.choiceNode] = {
+      active = {
+        virt_text = {{"●", "LuasnipChoiceNode"}}
+      }
+    },
+    [types.insertNode] = {
+      active = {
+        virt_text = {{"●", "LuasnipInsertNode"}}
+      }
+    }
+  },
+  updateevents = "TextChanged,TextChangedI",
   region_check_events = "InsertEnter,CursorHold",
   delete_check_events = "TextChanged,InsertLeave",
 })
 
-ls.snippets = {
-  haml = {
-    s('pry', t'binding.pry'),
-  },
-  ruby = {
-    s('pry', t'require "pry"; binding.pry'),
-  },
-  lua = {
-    s('for', {
-      t'for ',
-      c(1, {
-        sn(nil, {t'i, v in ipairs(', i(1), t')'}),
-        sn(nil, {t'k, v in pairs(', i(1), t')'}),
-      }),
-      t{' do', '\t'},
-      i(0),
-      t{'', 'end'}
-    }),
-  },
-  all = {
-    s("asdf", {
-      t({"Wow! "}), i(1,"test"), t({"", ""}),
-      t("Text!"), i(2),
-      t('kurwa'), i(0)
-    }),
-  s({trig = "b(%d)", regTrig = true},
-    	f(function(args, snip) return
-    		"Captured Text: " .. snip.captures[1] .. "." end, {})
-    )
+local current_nsid = vim.api.nvim_create_namespace("LuaSnipChoiceListSelections")
+local current_win = nil
+
+local function window_for_choiceNode(choiceNode)
+    local buf = vim.api.nvim_create_buf(false, true)
+    local buf_text = {}
+    local row_selection = 0
+    local row_offset = 0
+    local text
+    for _, node in ipairs(choiceNode.choices) do
+        text = node:get_docstring()
+        -- find one that is currently showing
+        if node == choiceNode.active_choice then
+            -- current line is starter from buffer list which is length usually
+            row_selection = #buf_text
+            -- finding how many lines total within a choice selection
+            row_offset = #text
+        end
+        vim.list_extend(buf_text, text)
+    end
+
+    vim.api.nvim_buf_set_text(buf, 0,0,0,0, buf_text)
+    local w, h = vim.lsp.util._make_floating_popup_size(buf_text)
+
+    -- adding highlight so we can see which one is been selected.
+    local extmark = vim.api.nvim_buf_set_extmark(buf,current_nsid,row_selection ,0,
+        {hl_group = 'incsearch',end_line = row_selection + row_offset})
+
+    -- shows window at a beginning of choiceNode.
+    local win = vim.api.nvim_open_win(buf, false, {
+        relative = "win", width = w, height = h, bufpos = choiceNode.mark:pos_begin_end(), style = "minimal", border = 'rounded'})
+
+    -- return with 3 main important so we can use them again
+    return {win_id = win,extmark = extmark,buf = buf}
+end
+
+function choice_popup(choiceNode)
+  -- build stack for nested choiceNodes.
+  if current_win then
+    vim.api.nvim_win_close(current_win.win_id, true)
+    vim.api.nvim_buf_del_extmark(current_win.buf,current_nsid,current_win.extmark)
+  end
+  local create_win = window_for_choiceNode(choiceNode)
+  current_win = {
+    win_id = create_win.win_id,
+    prev = current_win,
+    node = choiceNode,
+    extmark = create_win.extmark,
+    buf = create_win.buf
   }
-}
+end
+
+function update_choice_popup(choiceNode)
+  vim.api.nvim_win_close(current_win.win_id, true)
+  vim.api.nvim_buf_del_extmark(current_win.buf,current_nsid,current_win.extmark)
+  local create_win = window_for_choiceNode(choiceNode)
+  current_win.win_id = create_win.win_id
+  current_win.extmark = create_win.extmark
+  current_win.buf = create_win.buf
+end
+
+function choice_popup_close()
+  vim.api.nvim_win_close(current_win.win_id, true)
+  vim.api.nvim_buf_del_extmark(current_win.buf,current_nsid,current_win.extmark)
+  -- now we are checking if we still have previous choice we were in after exit nested choice
+  current_win = current_win.prev
+  if current_win then
+    -- reopen window further down in the stack.
+    local create_win = window_for_choiceNode(current_win.node)
+    current_win.win_id = create_win.win_id
+    current_win.extmark = create_win.extmark
+    current_win.buf = create_win.buf
+  end
+end
+
+vim.cmd([[
+augroup choice_popup
+  au!
+  au User LuasnipChoiceNodeEnter lua choice_popup(require("luasnip").session.event_node)
+  au User LuasnipChoiceNodeLeave lua choice_popup_close()
+  au User LuasnipChangeChoice lua update_choice_popup(require("luasnip").session.event_node)
+augroup END
+]])
+
+require 'config.plugins.snippets'

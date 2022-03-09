@@ -1,17 +1,11 @@
-local _, nvim_lsp = pcall(require, "lspconfig")
-if not nvim_lsp then
-  return
-end
+local nvim_lsp = prequire("lspconfig")
+if not nvim_lsp then return print_warn('lspconfig not found') end
 
-local _, saga = pcall(require, "lspsaga")
-if not saga then
-  return
-end
+local saga = prequire("lspsaga")
+if not saga then return print_warn('lspsaga not found') end
 
-local is_lsp_installer, lsp_installer = pcall(require, "nvim-lsp-installer")
-if not is_lsp_installer then
-  return
-end
+local lsp_installer = prequire("nvim-lsp-installer")
+if not lsp_installer then return print_warn('nvim-lsp-installer not found') end
 
 saga.init_lsp_saga({
   -- use_saga_diagnostic_sign = true
@@ -50,6 +44,7 @@ saga.init_lsp_saga({
   -- server_filetype_map = {}
 })
 
+
 virtual_text = {
   show = false,
   settings = {
@@ -61,9 +56,7 @@ virtual_text = {
 virtual_text.toggle = function()
   virtual_text.show = not virtual_text.show
 
-  vim.lsp.diagnostic.display(vim.lsp.diagnostic.get(0, 1), 0, 1, {
-    virtual_text = virtual_text.show and virtual_text.settings,
-  })
+  vim.diagnostic.show(nil, 0, nil, { virtual_text = virtual_text.show })
 end
 
 vim.api.nvim_set_keymap("n", "yoe", "<Cmd>lua virtual_text.toggle()<CR>", { silent = true, noremap = true })
@@ -135,15 +128,20 @@ local on_attach = function(client, bufnr)
     false
     )
   end
+
+  require("aerial").on_attach(client, bufnr)
 end
 
 local function make_config()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-  local cmp_lsp_loaded, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
-  if cmp_lsp_loaded then
+  local cmp_lsp = prequire('cmp_nvim_lsp')
+
+  if cmp_lsp then
     capabilities = cmp_lsp.update_capabilities(capabilities)
+  else
+    print_warn('cmp_nvim_lsp not found')
   end
 
   return {
@@ -153,26 +151,23 @@ local function make_config()
 end
 
 local function disable_default_formating(client, bufnr)
-  local null_ls_exists = pcall(require, 'null-ls')
-  if not null_ls_exists then
-    print('null-ls not installed')
-    return
-  end
+  local null_ls = prequire('null-ls')
+  if not null_ls then return print_warn('null-ls not found') end
 
   client.resolved_capabilities.document_formatting = false
   client.resolved_capabilities.document_range_formatting = false
+
   vim.api.nvim_buf_set_keymap(
     bufnr, "n", "Q", "<cmd>lua vim.lsp.buf.formatting()<CR>", { noremap = true, silent = true }
   )
   vim.cmd "command! Format lua vim.lsp.buf.formatting()<CR>"
 end
 
-local function setup_lua(config)
-  local lua_dev_required, lua_dev = pcall(require, "lua-dev")
-  if not lua_dev_required then
-    print('Lua lsp not loaded!')
-    return nil
-  end
+local Servers = {}
+
+Servers.sumneko_lua = function(config)
+  local lua_dev = prequire('lua-dev')
+  if not lua_dev then return print_warn('lua-dev not found') end
 
   local lua_dev_config = lua_dev.setup {
     lspconfig = {
@@ -190,8 +185,7 @@ local function setup_lua(config)
   return vim.tbl_extend('force', config, lua_dev_config)
 end
 
-local function setup_typescript(config)
-  -- disable formating
+Servers.tsserver = function(config)
   config.on_attach = function(client, bufnr)
     disable_default_formating(client, bufnr)
     on_attach(client, bufnr)
@@ -224,9 +218,7 @@ local function setup_typescript(config)
   return config
 end
 
-local function setup_ruby(config)
-  -- disable formating
-
+Servers.solargraph = function(config)
   config.on_attach = function(client, bufnr)
     disable_default_formating(client, bufnr)
     on_attach(client, bufnr)
@@ -237,25 +229,25 @@ end
 lsp_installer.on_server_ready(function(server)
     local config = make_config()
 
-    if server.name == "sumneko_lua" then config = setup_lua(config) end
-    if server.name == "tsserver" then config = setup_typescript(config) end
-    if server.name == "solargraph" then config = setup_ruby(config) end
+    if Servers[server.name] then
+      config = Servers[server.name](config)
+    end
 
     server:setup(config)
 end)
 
-local null_ls_exists, null_ls = pcall(require, 'null-ls')
-if null_ls_exists then
 
-  local sources = {
+local config = make_config()
+require('lspconfig').solargraph.setup(config)
+
+
+local null_ls = prequire('null-ls')
+if not null_ls then return print_warn('null-ls not found') end
+
+null_ls.setup({
+  sources = {
     null_ls.builtins.formatting.rubocop.with({
       args = { "--auto-correct-all", "-f", "quiet", "--stderr", "--stdin", "$FILENAME" }
     }),
-    --[[ null_ls.builtins.formatting.eslint_d,
-    null_ls.builtins.diagnostics.eslint_d ]]
-  }
-
-  null_ls.config({ sources = sources, debug = true })
-
-  nvim_lsp["null-ls"].setup {}
-end
+  },
+})

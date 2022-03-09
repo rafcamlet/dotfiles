@@ -30,6 +30,7 @@ set iskeyword+=-                               " add `-` character as part of wo
 " set wrapmargin=2                             " Wrap 2 characters from the edge of the window
 set fileignorecase                             " case is ignored when using file names and directories
 set spelllang=pl,en
+set mouse=a                                    " enable mouse
 
 " Display extra whitespace
 set list listchars=tab:»»,trail:·,nbsp:·

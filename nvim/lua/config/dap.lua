@@ -1,5 +1,20 @@
 package.loaded["config/dap"] = nil
 
+require("dapui").setup()
+
+vim.cmd [[command! Dap lua require("dapui").toggle()]]
+
+vim.cmd([[nnoremap <silent> <F5> :lua require'dap'.continue()<CR>]])
+vim.cmd([[nnoremap <silent> <F8> :lua require'dap'.step_over()<CR>]])
+vim.cmd([[nnoremap <silent> <F9> :lua require'dap'.step_into()<CR>]])
+vim.cmd([[nnoremap <silent> <F10> :lua require'dap'.step_out()<CR>]])
+vim.cmd([[nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>]])
+vim.cmd([[nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>]])
+vim.cmd([[nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>]])
+vim.cmd([[nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>]])
+vim.cmd([[nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>]])
+
+
 local is_dap, dap = pcall(require, "dap")
 if not is_dap then return end
 
@@ -10,6 +25,23 @@ if not is_dap_install then return end
 
 dap_install.setup()
 
+-- dap_install.config("ruby_vsc", {
+--   configurations = {
+--     {
+--       name = "Run RSpec until the next failure",
+--       type = "ruby",
+--       request = "launch",
+--       cwd = "${workspaceFolder}",
+--       useBundler = false,
+--       pathToBundler = "/home/r/.asdf/shims/bundle",
+--       pathToRDebugIDE = "/home/r/.asdf/shims/rdebug-ide",
+--       showDebuggerOutput = true,
+--       program = "~/workdir/tmp/ruby_example.rb",
+--       args = {''},
+--     },
+--   },
+-- })
+
 dap_install.config("ruby_vsc", {
   configurations = {
     {
@@ -17,12 +49,15 @@ dap_install.config("ruby_vsc", {
       type = "ruby",
       request = "launch",
       cwd = "${workspaceFolder}",
-      useBundler = true,
-      pathToBundler = "/home/r/.asdf/shims/bundle",
-      pathToRDebugIDE = "/home/r/.asdf/shims/rdebug-ide",
+      -- remoteWorkspaceRoot = "${workspaceRoot}",
+      -- remoteHost = "localhost",
+      -- remotePort = "1234"
+      useBundler = false,
+      -- pathToBundler = "/home/r/.asdf/shims/bundle",
+      -- pathToRDebugIDE = "/home/r/.asdf/shims/rdebug-ide",
       showDebuggerOutput = true,
-      program = "${workspaceFolder}/bin/rspec",
-      args = { "--next-failure" },
+      program = "bin/rails",
+      args = {'s'},
     },
   },
 })
@@ -90,7 +125,3 @@ dap.configurations.lua = {
 dap.adapters.nlua = function(callback, config)
   callback({ type = "server", host = config.host, port = config.port })
 end
-
-local is_dapui, dapui = pcall(require, "dapui")
-if not is_dapui then return end
-dapui.setup()
