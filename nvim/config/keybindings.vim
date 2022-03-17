@@ -55,9 +55,6 @@ nnoremap   <silent>  <c-t><c-t> :tabnew<CR>:tabmove<cr>
 nnoremap   <silent>  <c-t><c-m> <c-w>T
 nnoremap   <silent>  <c-t><c-q> :tabc<cr>
 
-" Copy to end of line
-nnoremap Y y$
-
 " highlight current word without search for next
 nnoremap <silent> * :set hls<cr>*``
 

@@ -1,5 +1,4 @@
 vim.api.nvim_exec(
-
   [[
   augroup Packer
     autocmd!
@@ -286,7 +285,7 @@ use {
   end
 }
 
-use { 'akinsho/nvim-toggleterm.lua', config = function()
+use { 'akinsho/nvim-toggleterm.lua', keys = [[<c-\>]], config = function()
   require("toggleterm").setup {
     size = function(term)
       if term.direction == "horizontal" then
@@ -309,7 +308,7 @@ use 'folke/lua-dev.nvim'
 
 use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview' }
 
-use 'leafgarland/typescript-vim'
+use {'leafgarland/typescript-vim', ft = 'typescript' }
 use 'peitalin/vim-jsx-typescript'
 use {'thinca/vim-quickrun', cmd = 'QuickRun'}
 use 'github/copilot.vim'
@@ -321,8 +320,8 @@ use { 'stevearc/aerial.nvim'}
 use { 'sindrets/diffview.nvim', config = 'require"diffview".setup()', cmd = 'DiffviewOpen' }
 -- use { 'TimUntersberger/neogit', config = "require'neogit'.setup()" }
 --
--- Use { 'sidebar-nvim/sidebar.nvim', branch = "dev" }
-Use '~/projects/sidebar.nvim'
+Use { 'sidebar-nvim/sidebar.nvim', branch = "dev" }
+-- Use '~/projects/sidebar.nvim'
 Use 'anuvyklack/pretty-fold.nvim'
 Use 'rlane/pounce.nvim'
 use {"elihunter173/dirbuf.nvim", cmd = 'Dirbuf'}
@@ -330,12 +329,12 @@ use { "natecraddock/workspaces.nvim", config = "require'workspaces'.setup()" }
 -- use { 'ibhagwan/fzf-lua', requires = { 'kyazdani42/nvim-web-devicons' } }
 -- use {"j-hui/fidget.nvim", config = "require'fidget'.setup{}" }
 use {'hoschi/yode-nvim', disable = true}
-use {'slim-template/vim-slim'}
-use {'mbbill/undotree', cmd = 'UndotreeToggle'}
+use { 'slim-template/vim-slim' }
+use { 'mbbill/undotree', cmd = 'UndotreeToggle'}
 
 Use {
   "nvim-neo-tree/neo-tree.nvim",
-  branch = "v1.x",
+  branch = 'main',
   requires = {
     "nvim-lua/plenary.nvim",
     "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
@@ -343,4 +342,5 @@ Use {
   }
 }
 
+use {'dstein64/vim-startuptime', opt = true}
 end)

@@ -55,6 +55,10 @@ PATH=$PATH:$HOME/.luarocks/bin
 
 # Functions -> {{{
 
+function killpuma {
+  pkill -9 -f puma
+}
+
 function vimman {
   if $(command man $1 &> /dev/null); then
     nvim -c "Man $1 $2" -c 'silent only'

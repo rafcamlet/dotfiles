@@ -33,6 +33,7 @@
     ~/.config/terminator: terminator
     ~/.config/vifm: vifm
     ~/.config/tmuxinator: tmuxinator
+    ~/.config/awesome: awesome
 
     ~/.gitconfig: .gitconfig
     ~/.profile: .profile

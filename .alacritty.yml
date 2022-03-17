@@ -26,6 +26,7 @@ window:
 #   #
 #   # Blank space added around the window in pixels. This padding is not scaled by
 #   # DPI and the specified value is always added at both opposing sides.
+  opacity: 0.5
   padding:
     x: 0
     y: 1
@@ -41,6 +42,7 @@ window:
 #   # - transparent: title bar, transparent background and title bar buttons
 #   # - buttonless: title bar, transparent background, but no title bar buttons
 #   decorations: buttonless
+
 
 #   # Startup Mode (changes require restart)
 #   #
@@ -130,6 +132,7 @@ font:
 
 # Colors
 colors:
+  # transparent_background_colors: true
   # Default colours
   primary:
     background: '0x282828'
@@ -242,7 +245,7 @@ colors:
 #   duration: 0
 
 # # Background opacity
-# background_opacity: 1.0
+# background_opacity: 0.8
 
 # # Key bindings
 # #
