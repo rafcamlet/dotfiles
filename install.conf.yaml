@@ -34,6 +34,7 @@
     ~/.config/vifm: vifm
     ~/.config/tmuxinator: tmuxinator
     ~/.config/awesome: awesome
+    ~/.config/kitty: kitty
 
     ~/.gitconfig: .gitconfig
     ~/.profile: .profile

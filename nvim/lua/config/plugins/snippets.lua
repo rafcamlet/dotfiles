@@ -78,6 +78,12 @@ end
 local function for_value(args)
   local str = args[1][1]
   if not str then return 'v' end
+
+  if str:match('%.') then
+    local tbl = vim.split(str, '.', true)
+    str = tbl[#tbl]
+  end
+
   if (str):match('s$') then return str:sub(1, #str - 1) end
   return 'v'
 end

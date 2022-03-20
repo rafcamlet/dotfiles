@@ -33,9 +33,9 @@ require("neo-tree").setup({
     },
   },
   filesystem = {
-    filters = { --These filters are applied to both browsing and searching
-      show_hidden = false,
-      respect_gitignore = true,
+    filtered_items = { --These filters are applied to both browsing and searching
+      hide_dotfiles = false,
+      hide_gitignored = false,
     },
     follow_current_file = false, -- This will find and focus the file in the active buffer every
                                  -- time the current file is changed while the tree is open.

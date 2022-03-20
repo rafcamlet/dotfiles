@@ -10,6 +10,14 @@ local screen = screen
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+
+function p(str)
+  awful.spawn(('notify-send "%s"'):format(str))
+end
+
+require 'config.theme'
+
+
 -- Widget and layout library
 local wibox = require("wibox")
 -- Theme handling library
@@ -53,10 +61,11 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(require 'config.theme')
 
 -- This is used later as the default terminal and editor to run.
-terminal = "/home/r/.cargo/bin/alacritty"
+-- terminal = "/home/r/.cargo/bin/alacritty"
+terminal = "/home/r/bin/kitty -1"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -356,7 +365,12 @@ awful.screen.connect_for_each_screen(function(s)
       c:raise()
     end, {description = "toggle fullscreen", group = "client"}),
 
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle , {description = "toggle floating", group = "client"}),
+    -- awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle , {description = "toggle floating", group = "client"}),
+    awful.key({ modkey, "Control" }, "space",  function()
+      awful.client.floating.toggle()
+      awful.placement.centered()
+    end, {description = "toggle floating", group = "client"}),
+
     awful.key({ modkey, "Shift"   }, "q",      function (c) c:kill() end, {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end, {description = "move to master", group = "client"}),
     awful.key({ modkey,           }, "o",      function (c) c:move_to_screen() end, {description = "move to screen", group = "client"}),
@@ -524,7 +538,7 @@ awful.screen.connect_for_each_screen(function(s)
 
   -- {{{ Signals
   -- Signal function to execute when a new client appears.
-  client.connect_signal("manage", function (c)
+  client.connect_signal("manage", function (c, context)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
     if not awesome.startup then awful.client.setslave(c) end
