@@ -11,39 +11,16 @@ local rep = require('luasnip.extras').rep
 local fmta = require("luasnip.extras.fmt").fmta
 local events = require("luasnip.util.events")
 
-ls.snippets = {}
 
 local function lang(name)
-  if not ls.snippets[name] then ls.snippets[name] = {} end
   return setmetatable({}, {
-    __index = function(self, key)
-      return setmetatable({}, {
-        __index = function(self2, key2)
-          local f = ({
-            s = ls.snippet,
-            sn = ls.snippet_node,
-            isn = ls.indent_snippet_node,
-            t = ls.text_node,
-            i = ls.insert_node,
-            f = ls.function_node,
-            c = ls.choice_node,
-            d = ls.dynamic_node,
-            fmta = require("luasnip.extras.fmt").fmta,
-            events = require("luasnip.util.events")
-          })[key2]
-          return function(...)
-            table.insert(ls.snippets[name], s(key, f(...)))
-          end
-        end
-      })
-    end,
     __newindex = function (_, key, val)
       if type(val) == 'string' then
         val = val:gsub('\n$', '')
-        table.insert(ls.snippets[name], ls.parser.parse_snippet(key, val))
+        ls.add_snippets(name, {ls.parser.parse_snippet(key, val)})
         return
       end
-      table.insert(ls.snippets[name], s(key, val))
+      ls.add_snippets(name, {s(key, val)})
     end
   })
 end
@@ -54,7 +31,6 @@ local ruby = lang('ruby')
 local eruby = lang('eruby')
 local lua  = lang('lua')
 local slim  = lang('slim')
-
 
 haml.pry = 'binding.pry'
 slim.pry = 'binding.pry'
@@ -112,3 +88,5 @@ end
 
 lua.m = "$1 = $1"
 lua.l = 'local '
+
+all.lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et elit volutpat, pretium nulla vel, suscipit neque. Etiam id ipsum rutrum, gravida erat ac, bibendum nisl. Proin ultricies lectus nec iaculis molestie. Duis aliquam risus et nulla consectetur, nec accumsan leo vestibulum. Etiam dapibus luctus velit id facilisis. Fusce sed risus purus. Proin nec gravida mauris. Nam fringilla quam et elit aliquam ullamcorper.'

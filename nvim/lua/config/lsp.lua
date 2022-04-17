@@ -226,6 +226,20 @@ Servers.solargraph = function(config)
   return config
 end
 
+Servers.tailwindcss = function(config)
+  config.settings = {
+    tailwindCSS = {
+      experimental = {
+        classRegex = {
+        "class:\\s+\"([^\"]*)",
+        "class:\\s+'([^\']*)"
+        }
+      }
+    }
+  }
+  return config
+end
+
 lsp_installer.on_server_ready(function(server)
     local config = make_config()
 

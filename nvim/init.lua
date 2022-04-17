@@ -17,6 +17,7 @@ vim.keymap.set('n', '<leader>f', function() require'scripts'.send_to_tmux(true) 
 vim.keymap.set('n', '<space>og', require'finders'.git)
 vim.keymap.set('n', '<space>of', require'finders'.grep)
 vim.keymap.set('n', '<space>oo', require'finders'.find)
+vim.keymap.set('n', '<space>ob', '<cmd> Telescope buffers<cr>')
 
 vim.keymap.set('n', '<space>oq', function()
   require'finders'.find {

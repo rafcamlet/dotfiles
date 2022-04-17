@@ -24,6 +24,7 @@ vim.opt.iskeyword = vim.opt.iskeyword + '-'                               -- add
 vim.opt.fileignorecase = true                             -- case is ignored when using file names and directories
 vim.opt.spelllang = 'pl,en'
 vim.opt.mouse = 'a'                                    -- enable mouse
+vim.opt.autoread = false                               -- disable file change detection
 
 -- Display extra whitespace
 vim.opt.list = true

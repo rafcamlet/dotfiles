@@ -70,6 +70,7 @@ return require("packer").startup(function()
   use("tpope/vim-surround")
   use("tpope/vim-repeat")
   use("tpope/vim-abolish")
+  use("tpope/vim-rails")
 
   -- === DAP ===
   use "mfussenegger/nvim-dap"
@@ -91,7 +92,7 @@ return require("packer").startup(function()
   use({"~/projects/jumper", config = 'require"jumper".setup()'})
   use("~/projects/rails_spotting")
   use("~/projects/boss")
-  use("~/projects/nvim-luapad")
+  use({"~/projects/nvim-luapad"})
   -- use({ "rafcamlet/simple-wiki.nvim", config = function()
   use({ "~/projects/simple-wiki.nvim", config = function()
     require("simple-wiki").setup({
