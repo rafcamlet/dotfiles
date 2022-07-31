@@ -48,9 +48,9 @@ vim.keymap.set('n', '<space>6', '6gt')
 vim.keymap.set('n', '<space>7', '7gt')
 vim.keymap.set('n', '<space>8', '8gt')
 vim.keymap.set('n', '<space>9', '9gt')
-vim.keymap.set('n', '<space>0', ':tabfirst<CR>')
+vim.keymap.set('n', '<space>0', ':tablast<CR>')
 vim.keymap.set('n', '<c-t><c-t>', ':tabnew<CR>:tabmove<cr>')
-vim.keymap.set('n', '<c-t><c-m>', '<c-w>T')
+vim.keymap.set('n', '<c-t><cr>', '<c-w>T')
 vim.keymap.set('n', '<c-t><c-q>', ':tabc<cr>')
 
 -- highlight current word without search for next
@@ -75,3 +75,15 @@ vim.cmd 'command! CopyPath let @+ = expand("%")'
 vim.keymap.set('n', 'cp', ':CopyPath<cr>')
 
 vim.keymap.set('v', 'c', "_c")
+
+local chars = { '_', '.', ':', ',', ';', '|', '/', '\\', '*', '+', '%', '`', '?' }
+for _,char in ipairs(chars) do
+  vim.keymap.set({'x', 'o'}, "i" .. char, string.format(':<C-u>normal! T%svt%s<CR>', char, char), { noremap = true, silent = true })
+  vim.keymap.set({'x', 'o'}, "a" .. char, string.format(':<C-u>normal! F%svf%s<CR>', char, char), { noremap = true, silent = true })
+end
+
+vim.keymap.set('n', 'gp', '`[v`]')
+vim.keymap.set('n', 'g>', '`[v`]>')
+vim.keymap.set('n', 'g<', '`[v`]<')
+vim.keymap.set('n', '[v', '`<')
+vim.keymap.set('n', ']v', '`>')

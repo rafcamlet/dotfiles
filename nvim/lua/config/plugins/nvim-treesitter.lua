@@ -1,4 +1,7 @@
 require("nvim-treesitter.configs").setup({
+  indent = {
+    enable = true
+  },
   textobjects = {
     select = {
       enable = true,
@@ -8,7 +11,7 @@ require("nvim-treesitter.configs").setup({
         ["ac"] = "@class.outer",
         ["ic"] = "@class.inner",
         ["ab"] = "@block.outer",
-        ["ib"] = "@black.inner",
+        ["ib"] = "@block.inner",
       },
     },
   },

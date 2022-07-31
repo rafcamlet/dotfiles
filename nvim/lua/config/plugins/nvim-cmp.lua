@@ -1,9 +1,20 @@
 local cmp = require'cmp'
+local lspkind = require('lspkind')
+
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
 cmp.setup({
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol', -- show only symbol annotations
+      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      -- before = function (entry, vim_item)
+      --   return vim_item
+      -- end
+    })
+  },
   snippet = {
     expand = function(args)
       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
@@ -60,7 +71,12 @@ cmp.setup.cmdline('/', {
 }) ]]
 
 -- Use cmdline & path source for ':'.
+local mapping = cmp.mapping.preset.cmdline()
+mapping["<C-p>"] = nil
+mapping["<C-n>"] = nil
+
 cmp.setup.cmdline(':', {
+  mapping = mapping,
   sources = cmp.config.sources({
     { name = 'path' }
   }, {

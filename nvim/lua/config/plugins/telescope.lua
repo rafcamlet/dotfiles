@@ -23,6 +23,7 @@ Telescope.setup({
 
 require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('workspaces')
+require('telescope').load_extension('zoxide')
 
 vim.cmd('nnoremap <space>ob <cmd>lua require("telescope.builtin").buffers()<cr>')
 vim.cmd('nnoremap <space>ot <cmd>lua require("telescope.builtin").help_tags()<cr>')

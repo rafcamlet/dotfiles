@@ -15,11 +15,13 @@ local function find(opts)
   opts.entry_maker = make_entry.gen_from_file(opts)
 
   local prefix = (opts.cwd or vim.fn.getcwd()) .. ".*"
+  local dir = opts.dir or '.'
 
   local args = {
     "fd",
     "-ptf",
     prefix .. (opts.pattern or ""),
+    dir
   }
 
   if opts.path then

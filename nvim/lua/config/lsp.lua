@@ -106,17 +106,16 @@ local on_attach = function(client, bufnr)
   key_map("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
   key_map("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>")
 
-  -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
-    key_map("n", "Q", "<cmd>lua vim.lsp.buf.formatting()<CR>")
-    vim.cmd "command! Format lua vim.lsp.buf.formatting()<CR>"
-  elseif client.resolved_capabilities.document_range_formatting then
-    key_map("n", "Q", "<cmd>lua vim.lsp.buf.range_formatting()<CR>")
-    vim.cmd "command! Format lua vim.lsp.buf.range_formatting()<CR>"
-  end
+  -- -- Set some keybinds conditional on server capabilities
+  -- if client.server_capabilities.documentFormattingProvider then
+  --   key_map("n", "Q", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+  --   vim.cmd "command! Format lua vim.lsp.buf.formatting()<CR>"
+  -- elseif client.server_capabilities.documentFormattingProvider then
+  --   key_map("n", "Q", "<cmd>lua vim.lsp.buf.range_formatting()<CR>")
+  --   vim.cmd "command! Format lua vim.lsp.buf.range_formatting()<CR>"
+  -- end
 
-  -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
+  if client.server_capabilities.documentHighlightProvider then
     vim.api.nvim_exec(
     [[
     augroup lsp_document_highlight
@@ -129,12 +128,16 @@ local on_attach = function(client, bufnr)
     )
   end
 
-  require("aerial").on_attach(client, bufnr)
+  -- require("aerial").on_attach(client, bufnr)
 end
 
 local function make_config()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
+  -- capabilities.textDocument.foldingRange = {
+  --   dynamicRegistration = false,
+  --   lineFoldingOnly = true
+  -- }
 
   local cmp_lsp = prequire('cmp_nvim_lsp')
 
@@ -154,8 +157,8 @@ local function disable_default_formating(client, bufnr)
   local null_ls = prequire('null-ls')
   if not null_ls then return print_warn('null-ls not found') end
 
-  client.resolved_capabilities.document_formatting = false
-  client.resolved_capabilities.document_range_formatting = false
+  client.server_capabilities.documentFormattingProvider = false
+  client.server_capabilities.document_range_formatting = false
 
   vim.api.nvim_buf_set_keymap(
     bufnr, "n", "Q", "<cmd>lua vim.lsp.buf.formatting()<CR>", { noremap = true, silent = true }

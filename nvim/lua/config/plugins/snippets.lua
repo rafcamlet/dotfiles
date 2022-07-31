@@ -38,6 +38,11 @@ eruby.pry = 'binding.pry'
 ruby.pry = 'require "pry"; binding.pry'
 ruby.class = 'class $1\n  $0\nend'
 
+ruby.is = 'is_expected.to eq $0'
+ruby.param = 'let(:parameter) { create(:parameter, process_step: batch.process_step) }'
+ruby.formula = [[let(:formula) { format('$1', parameter.id) }]]
+ruby.bv = [[create(:batch_value, value: $1, batch: batch, parameter: parameter)]]
+
 lua.class = [[
 ---@class $1
 ${1:ClassName} = {}
@@ -47,7 +52,9 @@ $1.__index = $1
 ---@return $1
 function $1:new(opts)
   opts = opts or {}
-  return setmetatable(opts, self)
+  setmetatable(opts, self)
+  self.__index = self
+  return opts
 end
 ]]
 

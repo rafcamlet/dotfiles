@@ -50,6 +50,19 @@ function send_to_tmux(visual)
   vim.fn.system(([[tmux send-keys -t %s c-m]]):format(pane))
 end
 
+vim.keymap.set("n", "<c-t><c-j>", function()
+  if vim.v.count == 0 then return end
+  local buf = vim.api.nvim_get_current_buf()
+  local tab = vim.api.nvim_list_tabpages()[vim.v.count]
+  if not tab then return end
+  vim.api.nvim_win_close(0, true)
+  vim.api.nvim_set_current_tabpage(tab)
+  vim.cmd('vnew')
+  vim.api.nvim_set_current_buf(buf)
+end,
+  {desc = 'Joins current buffer to other tab'}
+)
+
 return {
   quickfix_toggle = quickfix_toggle,
   send_to_tmux = send_to_tmux,

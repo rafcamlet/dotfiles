@@ -29,6 +29,9 @@ end)
 vim.keymap.set('n', '<space>of', "<cmd>lua require'finders'.live_grep()<cr>")
 vim.keymap.set('n', '<space>ow', "<cmd>Telescope workspaces<cr>")
 vim.keymap.set('n', '<space>oh', "<cmd>Telescope help_tags<cr>")
+vim.keymap.set('n', '<space>oz', "<cmd>Telescope zoxide list<cr>")
+vim.keymap.set('n', '<space><c-o><c-o>', "<cmd>Telescope resume<cr>")
+vim.keymap.set('n', '<space>o<c-o>', "<cmd>Telescope resume<cr>")
 
 vim.cmd([[nmap <leader>t <Plug>PlenaryTestFile]])
 
@@ -52,4 +55,3 @@ end
 vim.cmd 'hi LspReferenceText gui=italic guibg=#393e46'
 vim.cmd 'hi LspReferenceRead gui=italic guibg=#393e46'
 vim.cmd 'hi LspReferenceWrite gui=italic guibg=#393e46'
-

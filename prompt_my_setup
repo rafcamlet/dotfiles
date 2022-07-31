@@ -17,6 +17,11 @@ function prompt_my_precmd {
 
 }
 
+function vim_widget() {
+  echo 'asdf'
+  state[vim]=${${KEYMAP/vicmd/${PURE_PROMPT_VICMD_SYMBOL:-❮}}/(main|viins)/${PURE_PROMPT_SYMBOL:-❯}}
+}
+
 function prompt_my_setup {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
@@ -37,33 +42,33 @@ function prompt_my_setup {
     'prompt' ' %F{green}(%f$(coalesce "%b" "%p" "%c")${git_info[rprompt]}%s%F{green})%f' \
     'rprompt' '%C%D'
 
-
-
-  if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
-    _colors=(
-      "%F{81}"  # Turquoise
-      "%F{208}" # Orange
-      "%F{135}" # Purple
-      "%F{161}" # Hotpink
-      "%F{118}" # Limegreen
-    )
-  else
-    _colors=(
-      "%F{cyan}"
-      "%F{yellow}"
-      "%F{magenta}"
-      "%F{red}"
-      "%F{green}"
-    )
-  fi
-
   # Define prompts.
   PROMPT='
-%F{15}In ${_colors[3]}%~%f${(e)git_info[prompt]} $_git
-%B%F{1}❯%F{3}❯%F{2}❯%f%b  '
+%F{15}In %F{5}%~%f${(e)git_info[prompt]} $_git
+$PREFIX  '
 
+  # RPROMPT='%F{1}1%F{2}2%F{3}3%F{4}4%F{5}5%F{6}6%F{7}7%F{8}8%F{9}9%F{10}10%F{11}11%F{12}12%F{13}13%F{14}14%F{15}15'
   RPROMPT=''
   SPROMPT='zsh: correct %F{1}%R%f to %F{2}%r%f [nyae]? '
 }
+
+function set-data () {
+  INSERT="%B%F{1}❯%F{3}❯%F{2}❯%f%b"
+  NORMAL="%B%F{4}❯%F{4}❯%F{4}❯%f%b"
+
+  case ${KEYMAP} in
+    (vicmd)      PREFIX=$NORMAL ;;
+    (main|viins) PREFIX=$INSERT ;;
+    (*)          PREFIX=$INSERT ;;
+  esac
+}
+
+function zle-line-init zle-keymap-select {
+  set-data
+  zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 prompt_my_setup "$@"

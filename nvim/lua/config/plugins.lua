@@ -67,10 +67,11 @@ return require("packer").startup(function()
   -- === tpope ===
   use("tpope/vim-unimpaired")
   use("tpope/vim-fugitive")
-  use("tpope/vim-surround")
+  -- use("tpope/vim-surround")
   use("tpope/vim-repeat")
   use("tpope/vim-abolish")
   use("tpope/vim-rails")
+  use 'tpope/vim-haml'
 
   -- === DAP ===
   use "mfussenegger/nvim-dap"
@@ -89,6 +90,7 @@ return require("packer").startup(function()
 
   -- === My ===
   -- use("rafcamlet/nvim-luapad")
+  use({"~/projects/winbar-framework.nvim"})
   use({"~/projects/jumper", config = 'require"jumper".setup()'})
   use("~/projects/rails_spotting")
   use("~/projects/boss")
@@ -136,7 +138,7 @@ use("nvim-treesitter/playground")
 
 Use({ "nvim-treesitter/nvim-treesitter"})
 
-use({ "windwp/nvim-autopairs", config = 'require("nvim-autopairs").setup()' })
+Use({ "windwp/nvim-autopairs"})
 
 use ({"b3nj5m1n/kommentary", config = function()
   require('kommentary.config').configure_language("default", {
@@ -211,12 +213,14 @@ use({
 Use "lewis6991/gitsigns.nvim"
 
 use 'nvim-telescope/telescope-fzy-native.nvim'
+use {'jvgrootveld/telescope-zoxide'}
 
-use({
+Use({
   "nvim-telescope/telescope.nvim",
   -- commit = "ec6c13fc092fe8447df77e35013df907a6f3761e",
   requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } }
 })
+
 
 Use({"lukas-reineke/indent-blankline.nvim", after = colorscheme})
 use({"L3MON4D3/LuaSnip", config = "require 'config.plugins.luasnip'"})
@@ -236,6 +240,9 @@ use({
       logging = false,
       log_level = vim.log.levels.INFO,
       filetype = {
+        ruby = {
+          require('formatter.filetypes.ruby').rubocop
+        },
         sql = {
           function()
             local formaters = {
@@ -320,10 +327,9 @@ use { 'camspiers/snap', rocks = {'fzy'}, disable = true }
 use { 'stevearc/aerial.nvim'}
 use { 'sindrets/diffview.nvim', config = 'require"diffview".setup()', cmd = 'DiffviewOpen' }
 -- use { 'TimUntersberger/neogit', config = "require'neogit'.setup()" }
---
-Use { 'sidebar-nvim/sidebar.nvim', branch = "dev" }
--- Use '~/projects/sidebar.nvim'
-Use 'anuvyklack/pretty-fold.nvim'
+
+-- Use { 'sidebar-nvim/sidebar.nvim', branch = "dev" }
+-- Use { 'anuvyklack/pretty-fold.nvim', requires = 'anuvyklack/nvim-keymap-amend' }
 Use 'rlane/pounce.nvim'
 use {"elihunter173/dirbuf.nvim", cmd = 'Dirbuf'}
 use { "natecraddock/workspaces.nvim", config = "require'workspaces'.setup()" }
@@ -344,4 +350,26 @@ Use {
 }
 
 use {'dstein64/vim-startuptime', opt = true}
+use {'onsails/lspkind-nvim'}
+Use {'ziontee113/syntax-tree-surfer', disable = true}
+
+Use { 'abecodes/tabout.nvim', after = {'nvim-cmp'}}
+
+Use {
+  "nvim-neotest/neotest",
+  requires = {
+    "nvim-lua/plenary.nvim",
+    "nvim-treesitter/nvim-treesitter",
+    "antoinemadec/FixCursorHold.nvim",
+    'olimorris/neotest-rspec',
+  }
+}
+
+use { '~/projects/dig.nvim', config = ' dig = require"dig".debug' }
+
+Use {'kylechui/nvim-surround'}
+Use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
+use { 'kkoomen/vim-doge', run = function() vim.fn['doge#install']() end  }
+Use {'anuvyklack/hydra.nvim'}
+use 'TimUntersberger/neogit'
 end)

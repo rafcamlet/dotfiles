@@ -42,6 +42,51 @@ egalias G='| grep -Pi'
 ealias gs='git status'
 ealias gdn='git diff --name-only '
 
+alias ls='exa --icons '
+alias lt='exa -s modified -l '
+
+# vim keys {{{
+bindkey -v
+export KEYTIMEOUT=10
+
+autoload -Uz select-bracketed select-quoted
+zle -N select-quoted
+zle -N select-bracketed
+for km in viopp visual; do
+  bindkey -M $km -- '-' vi-up-line-or-history
+  for c in {a,i}${(s..)^:-\'\"\`\|,./:;=+@}; do
+    bindkey -M $km $c select-quoted
+  done
+  for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+    bindkey -M $km $c select-bracketed
+  done
+done
+
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
+# bindkey "^K" kill-line
+# bindkey "^L" clear-screen
+# bindkey "^R" history-incremental-search-backward
+# bindkey "^U" kill-whole-line
+bindkey "^W" backward-kill-word
+# bindkey "^Y" yank
+
+bindkey "^P" history-substring-search-up
+bindkey "^N" history-substring-search-down
+
+autoload -Uz surround
+zle -N delete-surround surround
+zle -N add-surround surround
+zle -N change-surround surround
+bindkey -M vicmd cs change-surround
+bindkey -M vicmd ds delete-surround
+bindkey -M vicmd ys add-surround
+bindkey -M visual S add-surround
+bindkey kj vi-cmd-mode
+bindkey "kj" vi-cmd-mode
+bindkey -M viins "kj" vi-cmd-mode
+# }}}
+
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export GOBIN=$HOME/go/bin
@@ -149,15 +194,15 @@ WORDCHARS='*?_-[]~&;!#$%^(){}<>'
 
 # fasd {{{
 
-alias a='fasd -a'        # any
-alias s='fasd -si'       # show / search / select
-alias d='fasd -d'        # directory
-# alias f='fasd -f'        # file
-alias sd='fasd -sid'     # interactive directory selection
-alias sf='fasd -sif'     # interactive file selection
-alias z='fasd_cd -d'     # cd, same functionality as j in autojump
-alias zz='fasd_cd -d -i' # cd with interactive selection
-# }}}
+# alias a='fasd -a'        # any
+# alias s='fasd -si'       # show / search / select
+# alias d='fasd -d'        # directory
+# # alias f='fasd -f'        # file
+# alias sd='fasd -sid'     # interactive directory selection
+# alias sf='fasd -sif'     # interactive file selection
+# alias z='fasd_cd -d'     # cd, same functionality as j in autojump
+# alias zz='fasd_cd -d -i' # cd with interactive selection
+# # }}}
 
 alias v='COLORTERM=tmux-256color vifm -c "vsplit"' # vi file manager
 alias man='vimman'
@@ -185,6 +230,8 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 # switch group using `,` and `.`
 zstyle ':fzf-tab:*' switch-group ',' '.'
 # }}}
+
+command -v zoxide &> /dev/null && eval "$(zoxide init zsh)"
 
 [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
 

@@ -34,15 +34,15 @@ zstyle ':prezto:load' pmodule \
          'directory' \
          'spectrum' \
          'fzf-tab' \
-         'autosuggestions' \
-         'fasd' \
          'git' \
          'syntax-highlighting' \
          'history-substring-search' \
+         'autosuggestions' \
          'prompt' \
          'completion' \
 
          # 'ruby' \
+         # 'fasd' \
 
 #
 # Autosuggestions
