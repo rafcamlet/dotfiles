@@ -79,12 +79,14 @@ return require("packer").startup(function()
   use "Pocco81/DAPInstall.nvim"
 
   -- === LSP ===
+
   use "neovim/nvim-lspconfig"
-  use "williamboman/nvim-lsp-installer"
-  use "tami5/lspsaga.nvim"
+  use "williamboman/mason.nvim"
+  use "williamboman/mason-lspconfig.nvim"
+  use "glepnir/lspsaga.nvim"
   use "jose-elias-alvarez/null-ls.nvim"
   use "jose-elias-alvarez/nvim-lsp-ts-utils"
-  use({ 'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu' })
+  -- use({ 'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu' })
 
   -- use({ "ahmedkhalf/lsp-rooter.nvim", config = 'require("lsp-rooter").setup {}' })
 
@@ -293,7 +295,7 @@ use {
   end
 }
 
-use { 'akinsho/nvim-toggleterm.lua', keys = [[<c-\>]], config = function()
+use { 'akinsho/nvim-toggleterm.lua', keys = [[<c-\\>]], config = function()
   require("toggleterm").setup {
     size = function(term)
       if term.direction == "horizontal" then
@@ -372,4 +374,5 @@ Use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 use { 'kkoomen/vim-doge', run = function() vim.fn['doge#install']() end  }
 Use {'anuvyklack/hydra.nvim'}
 use 'TimUntersberger/neogit'
+use {'stevearc/dressing.nvim', config = "require'dressing'.setup()" }
 end)

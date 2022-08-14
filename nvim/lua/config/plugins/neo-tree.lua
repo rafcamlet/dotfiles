@@ -55,6 +55,7 @@ require("neo-tree").setup({
         ["S"] = "open_split",
         ["<c-v>"] = "open_vsplit",
         ["s"] = "open_vsplit",
+        ["<c-t>"] = "open_tabnew",
         ["C"] = "close_node",
         ["<bs>"] = "navigate_up",
         ["."] = "set_root",

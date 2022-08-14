@@ -154,6 +154,12 @@ _G.packer_plugins = {
     path = "/home/r/.local/share/nvim/site/pack/packer/opt/dirbuf.nvim",
     url = "https://github.com/elihunter173/dirbuf.nvim"
   },
+  ["dressing.nvim"] = {
+    config = { "require'dressing'.setup()" },
+    loaded = true,
+    path = "/home/r/.local/share/nvim/site/pack/packer/start/dressing.nvim",
+    url = "https://github.com/stevearc/dressing.nvim"
+  },
   ["editorconfig-vim"] = {
     loaded = true,
     path = "/home/r/.local/share/nvim/site/pack/packer/start/editorconfig-vim",
@@ -227,7 +233,7 @@ _G.packer_plugins = {
   ["lspsaga.nvim"] = {
     loaded = true,
     path = "/home/r/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
-    url = "https://github.com/tami5/lspsaga.nvim"
+    url = "https://github.com/glepnir/lspsaga.nvim"
   },
   ["lua-dev.nvim"] = {
     loaded = true,
@@ -252,6 +258,16 @@ _G.packer_plugins = {
     only_cond = false,
     path = "/home/r/.local/share/nvim/site/pack/packer/opt/markdown-preview.nvim",
     url = "https://github.com/iamcco/markdown-preview.nvim"
+  },
+  ["mason-lspconfig.nvim"] = {
+    loaded = true,
+    path = "/home/r/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
+    url = "https://github.com/williamboman/mason-lspconfig.nvim"
+  },
+  ["mason.nvim"] = {
+    loaded = true,
+    path = "/home/r/.local/share/nvim/site/pack/packer/start/mason.nvim",
+    url = "https://github.com/williamboman/mason.nvim"
   },
   ["neo-tree.nvim"] = {
     config = { 'pcall(require, "config/plugins/neo-tree")' },
@@ -298,16 +314,11 @@ _G.packer_plugins = {
   },
   ["nvim-cmp"] = {
     after = { "tabout.nvim" },
+    config = { 'require "config.plugins.nvim-cmp"' },
     loaded = true,
-    only_config = true
-  },
-  ["nvim-code-action-menu"] = {
-    commands = { "CodeActionMenu" },
-    loaded = false,
-    needs_bufread = true,
-    only_cond = false,
-    path = "/home/r/.local/share/nvim/site/pack/packer/opt/nvim-code-action-menu",
-    url = "https://github.com/weilbith/nvim-code-action-menu"
+    only_config = true,
+    path = "/home/r/.local/share/nvim/site/pack/packer/start/nvim-cmp",
+    url = "https://github.com/hrsh7th/nvim-cmp"
   },
   ["nvim-colorizer.lua"] = {
     config = { 'require"colorizer".setup()' },
@@ -324,11 +335,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/r/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
     url = "https://github.com/rcarriga/nvim-dap-ui"
-  },
-  ["nvim-lsp-installer"] = {
-    loaded = true,
-    path = "/home/r/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
-    url = "https://github.com/williamboman/nvim-lsp-installer"
   },
   ["nvim-lsp-ts-utils"] = {
     loaded = true,
@@ -359,7 +365,7 @@ _G.packer_plugins = {
   },
   ["nvim-toggleterm.lua"] = {
     config = { "\27LJ\2\2y\0\1\2\0\6\1\0159\1\0\0\a\1\1\0X\1\3Ä)\1\15\0L\1\2\0X\1\bÄ9\1\0\0\a\1\2\0X\1\5Ä6\1\3\0009\1\4\0019\1\5\1\24\1\0\1L\1\2\0K\0\1\0\fcolumns\6o\bvim\rvertical\15horizontal\14directionµÊÃô\19ô≥Ê˛\3˚\1\1\0\3\0\r\0\0206\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\4\0003\2\3\0=\2\5\1B\0\2\0016\0\6\0009\0\a\0'\1\t\0=\1\b\0006\0\6\0009\0\n\0'\1\v\0B\0\2\0016\0\0\0'\1\f\0B\0\2\1K\0\1\0#config.plugins.nvim-toggleterm\30tnoremap <c-]> <c-\\><c-n>\bcmd\f#595959\21terminal_color_8\6g\bvim\tsize\1\0\2\17open_mapping\n<c-\\>\14direction\rvertical\0\nsetup\15toggleterm\frequire\0" },
-    keys = { { "", "<c-\\>" } },
+    keys = { { "", "<c-\\\\>" } },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -485,8 +491,11 @@ _G.packer_plugins = {
   },
   ["telescope.nvim"] = {
     after = { "trouble.nvim" },
+    config = { 'pcall(require, "config/plugins/telescope")' },
     loaded = true,
-    only_config = true
+    only_config = true,
+    path = "/home/r/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   ["trouble.nvim"] = {
     commands = { "Trouble" },
@@ -624,14 +633,18 @@ time([[Config for nvim-ufo]], false)
 time([[Config for nvim-web-devicons]], true)
 try_loadstring("\27LJ\2\2ê\1\0\0\4\0\b\0\v6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\6\0005\2\4\0005\3\3\0=\3\5\2=\2\a\1B\0\2\1K\0\1\0\roverride\1\0\1\fdefault\2\arb\1\0\0\1\0\3\ncolor\f#ff5f5f\ticon\bÓûë\tname\aRb\nsetup\22nvim-web-devicons\frequire\0", "config", "nvim-web-devicons")
 time([[Config for nvim-web-devicons]], false)
+-- Config for: nvim-surround
+time([[Config for nvim-surround]], true)
+pcall(require, "config/plugins/nvim-surround")
+time([[Config for nvim-surround]], false)
 -- Config for: rust-tools.nvim
 time([[Config for rust-tools.nvim]], true)
 require "config.plugins.rust-tools"
 time([[Config for rust-tools.nvim]], false)
--- Config for: hydra.nvim
-time([[Config for hydra.nvim]], true)
-pcall(require, "config/plugins/hydra")
-time([[Config for hydra.nvim]], false)
+-- Config for: tabline-framework.nvim
+time([[Config for tabline-framework.nvim]], true)
+try_loadstring("\27LJ\2\2ü\2\0\0\4\0\15\0\0216\0\0\0009\0\1\0)\1\2\0=\1\2\0006\0\3\0'\1\4\0B\0\2\0029\0\5\0005\1\a\0006\2\3\0'\3\6\0B\2\2\2=\2\b\0015\2\t\0=\2\n\0015\2\v\0=\2\f\0015\2\r\0=\2\14\1B\0\2\1K\0\1\0\fhl_fill\1\0\2\abg\f#000000\afg\f#ffffff\vhl_sel\1\0\2\abg\f#282c34\afg\f#abb2bf\ahl\1\0\2\abg\f#181A1F\afg\f#abb2bf\vrender\1\0\0-tabline_framework.examples.fancy_indexes\nsetup\22tabline_framework\frequire\16showtabline\bopt\bvim\0", "config", "tabline-framework.nvim")
+time([[Config for tabline-framework.nvim]], false)
 -- Config for: nvim-autopairs
 time([[Config for nvim-autopairs]], true)
 pcall(require, "config/plugins/nvim-autopairs")
@@ -640,10 +653,10 @@ time([[Config for nvim-autopairs]], false)
 time([[Config for jumper]], true)
 require"jumper".setup()
 time([[Config for jumper]], false)
--- Config for: nvim-surround
-time([[Config for nvim-surround]], true)
-pcall(require, "config/plugins/nvim-surround")
-time([[Config for nvim-surround]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+pcall(require, "config/plugins/telescope")
+time([[Config for telescope.nvim]], false)
 -- Config for: neotest
 time([[Config for neotest]], true)
 pcall(require, "config/plugins/neotest")
@@ -668,18 +681,18 @@ time([[Config for nvim-miniyank]], false)
 time([[Config for vim-visual-multi]], true)
 try_loadstring("\27LJ\2\2Ê\6\0\0\2\0\3\0\0056\0\0\0009\0\1\0'\1\2\0B\0\2\1K\0\1\0∆\6    let g:VM_Mono_hl   = 'Visual'\n    let g:VM_Extend_hl = 'WildMenu'\n    let g:VM_Cursor_hl = 'Visual'\n    let g:VM_Insert_hl = 'IncSearch'\n\n    let g:VM_highlight_matches = 'red'\n    let g:VM_leader = '<space>'\n    let g:VM_maps = {}\n    let g:VM_maps['Find Under']         = '<C-d>'\n    let g:VM_maps['Find Subword Under'] = '<C-d>'\n\n    let g:VM_maps['Add Cursor Down']             = '<C-U>'\n    let g:VM_maps['Visual Cursors']              = '<space>'\n    let g:VM_maps['Switch Mode']                 = 'v'\n    let g:VM_maps['Visual Regex']                = '/'\n\n    \" autocmd User visual_multi_start nnoremap <c-l> l\n    \" autocmd User visual_multi_start nnoremap <c-h> h\n    \" autocmd User visual_multi_exit nnoremap  <c-l> :TmuxNavigateRight<CR>\n    \" autocmd User visual_multi_exit nnoremap  <c-h> :TmuxNavigateLeft<CR>\n    \bcmd\bvim\0", "config", "vim-visual-multi")
 time([[Config for vim-visual-multi]], false)
--- Config for: tabline-framework.nvim
-time([[Config for tabline-framework.nvim]], true)
-try_loadstring("\27LJ\2\2ü\2\0\0\4\0\15\0\0216\0\0\0009\0\1\0)\1\2\0=\1\2\0006\0\3\0'\1\4\0B\0\2\0029\0\5\0005\1\a\0006\2\3\0'\3\6\0B\2\2\2=\2\b\0015\2\t\0=\2\n\0015\2\v\0=\2\f\0015\2\r\0=\2\14\1B\0\2\1K\0\1\0\fhl_fill\1\0\2\abg\f#000000\afg\f#ffffff\vhl_sel\1\0\2\abg\f#282c34\afg\f#abb2bf\ahl\1\0\2\abg\f#181A1F\afg\f#abb2bf\vrender\1\0\0-tabline_framework.examples.fancy_indexes\nsetup\22tabline_framework\frequire\16showtabline\bopt\bvim\0", "config", "tabline-framework.nvim")
-time([[Config for tabline-framework.nvim]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-pcall(require, "config/plugins/telescope")
-time([[Config for telescope.nvim]], false)
 -- Config for: kommentary
 time([[Config for kommentary]], true)
 try_loadstring("\27LJ\2\2|\0\0\3\0\5\0\b6\0\0\0'\1\1\0B\0\2\0029\0\2\0'\1\3\0005\2\4\0B\0\3\1K\0\1\0\1\0\1 prefer_single_line_comments\2\fdefault\23configure_language\22kommentary.config\frequire\0", "config", "kommentary")
 time([[Config for kommentary]], false)
+-- Config for: dressing.nvim
+time([[Config for dressing.nvim]], true)
+require'dressing'.setup()
+time([[Config for dressing.nvim]], false)
+-- Config for: hydra.nvim
+time([[Config for hydra.nvim]], true)
+pcall(require, "config/plugins/hydra")
+time([[Config for hydra.nvim]], false)
 -- Config for: gitsigns.nvim
 time([[Config for gitsigns.nvim]], true)
 pcall(require, "config/plugins/gitsigns")
@@ -727,7 +740,6 @@ pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file DiffviewOpen lua r
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file QuickRun lua require("packer.load")({'vim-quickrun'}, { cmd = "QuickRun", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file WhichKey lua require("packer.load")({'which-key.nvim'}, { cmd = "WhichKey", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Trouble lua require("packer.load")({'trouble.nvim'}, { cmd = "Trouble", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file CodeActionMenu lua require("packer.load")({'nvim-code-action-menu'}, { cmd = "CodeActionMenu", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Dirbuf lua require("packer.load")({'dirbuf.nvim'}, { cmd = "Dirbuf", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file UndotreeToggle lua require("packer.load")({'undotree'}, { cmd = "UndotreeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file FZF lua require("packer.load")({'fzf'}, { cmd = "FZF", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
@@ -735,7 +747,7 @@ time([[Defining lazy-load commands]], false)
 
 -- Keymap lazy-loads
 time([[Defining lazy-load keymaps]], true)
-vim.cmd [[noremap <silent> <c-\> <cmd>lua require("packer.load")({'nvim-toggleterm.lua'}, { keys = "<lt>c-\\>", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.api.nvim_set_keymap("", "<c-\\>", "<cmd>lua require('packer.load')({'nvim-toggleterm.lua'}, { keys = '<lt>c-\\\\>', prefix = '' }, _G.packer_plugins)<cr>", { noremap = true, silent = true })
 time([[Defining lazy-load keymaps]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]

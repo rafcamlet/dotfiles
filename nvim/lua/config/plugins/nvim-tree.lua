@@ -25,7 +25,7 @@ require'nvim-tree'.setup {
         { key = "<C-]>", cb = tree_cb("cd") },
         { key = "<C-v>", cb = tree_cb("vsplit") },
         { key = "<C-x>", cb = tree_cb("split") },
-        { key = "<C-t>", cb = tree_cb("tabnew") },
+        { key = "<c-t>", cb = tree_cb("tabnew") },
         { key = "<", cb = tree_cb("prev_sibling") },
         { key = ">", cb = tree_cb("next_sibling") },
         { key = "<s-cr>", cb = tree_cb("close_node") },
