@@ -32,6 +32,7 @@ local eruby = lang('eruby')
 local lua  = lang('lua')
 local slim  = lang('slim')
 
+all.p = 'process_step_name'
 haml.pry = 'binding.pry'
 slim.pry = 'binding.pry'
 eruby.pry = 'binding.pry'

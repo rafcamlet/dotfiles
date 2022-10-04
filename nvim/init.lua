@@ -55,3 +55,8 @@ end
 vim.cmd 'hi LspReferenceText gui=italic guibg=#393e46'
 vim.cmd 'hi LspReferenceRead gui=italic guibg=#393e46'
 vim.cmd 'hi LspReferenceWrite gui=italic guibg=#393e46'
+
+vim.api.nvim_create_user_command('OpenMigration', function()
+  local path = vim.fn.system 'ls -tr db/migrate | tail -1'
+  vim.cmd('e db/migrate/' .. path)
+end, {})

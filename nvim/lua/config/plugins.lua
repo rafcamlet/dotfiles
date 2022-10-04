@@ -107,65 +107,65 @@ return require("packer").startup(function()
     vim.cmd('nnoremap - <CMD>lua require "simple-wiki".index()<CR>')
     vim.cmd('nnoremap _ <CMD>lua require "simple-wiki".search()<CR>')
   end,
-  use {
-    "rafcamlet/tabline-framework.nvim",
-    -- "~/projects/tabline_framework",
-    requires = "kyazdani42/nvim-web-devicons",
-    config = function()
-      vim.opt.showtabline = 2
-      require('tabline_framework').setup {
-        render = require('tabline_framework.examples.fancy_indexes'),
-        hl = { fg = '#abb2bf', bg = '#181A1F' },
-        hl_sel = { fg = '#abb2bf', bg = '#282c34'},
-        hl_fill = { fg = '#ffffff', bg = '#000000'},
-      }
-    end
-  }
-})
-
-
--- == complete ==
-
-use 'hrsh7th/cmp-nvim-lsp'
-use 'hrsh7th/cmp-buffer'
-use 'hrsh7th/cmp-path'
-use 'hrsh7th/cmp-cmdline'
-use 'saadparwaiz1/cmp_luasnip'
-use({'hrsh7th/nvim-cmp', config = 'require "config.plugins.nvim-cmp"'})
-
--- === TreeSitter ===
-use("nvim-treesitter/nvim-treesitter-textobjects")
-use("nvim-treesitter/nvim-treesitter-refactor")
-use("nvim-treesitter/playground")
-
-Use({ "nvim-treesitter/nvim-treesitter"})
-
-Use({ "windwp/nvim-autopairs"})
-
-use ({"b3nj5m1n/kommentary", config = function()
-  require('kommentary.config').configure_language("default", {
-    prefer_single_line_comments = true,
+    use {
+      "rafcamlet/tabline-framework.nvim",
+      -- "~/projects/tabline_framework",
+      requires = "kyazdani42/nvim-web-devicons",
+      config = function()
+        vim.opt.showtabline = 2
+        require('tabline_framework').setup {
+          render = require('tabline_framework.examples.fancy_indexes'),
+          hl = { fg = '#abb2bf', bg = '#181A1F' },
+          hl_sel = { fg = '#abb2bf', bg = '#282c34'},
+          hl_fill = { fg = '#ffffff', bg = '#000000'},
+        }
+      end
+    }
   })
-end})
 
-use({
-  "numToStr/Navigator.nvim",
-  config = function()
-    require("Navigator").setup()
-    local map = vim.api.nvim_set_keymap
-    local opts = { noremap = true, silent = true }
 
-    map("n", "<c-h>", "<CMD>lua require('Navigator').left()<CR>", opts)
-    map("n", "<c-j>", "<CMD>lua require('Navigator').down()<CR>", opts)
-    map("n", "<c-k>", "<CMD>lua require('Navigator').up()<CR>", opts)
-    map("n", "<c-l>", "<CMD>lua require('Navigator').right()<CR>", opts)
-  end,
-})
+  -- == complete ==
 
-use({
-  "mg979/vim-visual-multi",
-  config = function()
-    vim.cmd([[
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use 'saadparwaiz1/cmp_luasnip'
+  use({'hrsh7th/nvim-cmp', config = 'require "config.plugins.nvim-cmp"', tag = 'v0.0.1'})
+
+  -- === TreeSitter ===
+  use("nvim-treesitter/nvim-treesitter-textobjects")
+  use("nvim-treesitter/nvim-treesitter-refactor")
+  use("nvim-treesitter/playground")
+
+  Use({ "nvim-treesitter/nvim-treesitter"})
+
+  Use({ "windwp/nvim-autopairs"})
+
+  use ({"b3nj5m1n/kommentary", config = function()
+    require('kommentary.config').configure_language("default", {
+      prefer_single_line_comments = true,
+    })
+  end})
+
+  use({
+    "numToStr/Navigator.nvim",
+    config = function()
+      require("Navigator").setup()
+      local map = vim.api.nvim_set_keymap
+      local opts = { noremap = true, silent = true }
+
+      map("n", "<c-h>", "<CMD>lua require('Navigator').left()<CR>", opts)
+      map("n", "<c-j>", "<CMD>lua require('Navigator').down()<CR>", opts)
+      map("n", "<c-k>", "<CMD>lua require('Navigator').up()<CR>", opts)
+      map("n", "<c-l>", "<CMD>lua require('Navigator').right()<CR>", opts)
+    end,
+  })
+
+  use({
+    "mg979/vim-visual-multi",
+    config = function()
+      vim.cmd([[
     let g:VM_Mono_hl   = 'Visual'
     let g:VM_Extend_hl = 'WildMenu'
     let g:VM_Cursor_hl = 'Visual'
@@ -187,192 +187,190 @@ use({
     " autocmd User visual_multi_exit nnoremap  <c-l> :TmuxNavigateRight<CR>
     " autocmd User visual_multi_exit nnoremap  <c-h> :TmuxNavigateLeft<CR>
     ]])
-  end,
-})
+    end,
+  })
 
-use({
-  "Arkham/nvim-miniyank",
-  config = function()
-    vim.cmd([[
+  use({
+    "Arkham/nvim-miniyank",
+    config = function()
+      vim.cmd([[
     map p <Plug>(miniyank-autoput)
     map P <Plug>(miniyank-autoPut)
     map <silent><c-p> <Plug>(miniyank-cycle)
     map <silent><c-n> <Plug>(miniyank-cycleback)
     ]])
-  end,
-})
+    end,
+  })
 
-use({
-  "AndrewRadev/splitjoin.vim",
-  config = function()
-    vim.g.splitjoin_ruby_curly_braces = 0
-    vim.g.splitjoin_ruby_curly_braces = 0
-    vim.g.splitjoin_ruby_hanging_args = 0
-    vim.g.splitjoin_html_attributes_bracket_on_new_line = 1
-  end,
-})
+  use({
+    "AndrewRadev/splitjoin.vim",
+    config = function()
+      vim.g.splitjoin_ruby_curly_braces = 0
+      vim.g.splitjoin_ruby_curly_braces = 0
+      vim.g.splitjoin_ruby_hanging_args = 0
+      vim.g.splitjoin_html_attributes_bracket_on_new_line = 1
+    end,
+  })
 
-Use "lewis6991/gitsigns.nvim"
+  Use "lewis6991/gitsigns.nvim"
 
-use 'nvim-telescope/telescope-fzy-native.nvim'
-use {'jvgrootveld/telescope-zoxide'}
+  use 'nvim-telescope/telescope-fzy-native.nvim'
+  use {'jvgrootveld/telescope-zoxide'}
 
-Use({
-  "nvim-telescope/telescope.nvim",
-  -- commit = "ec6c13fc092fe8447df77e35013df907a6f3761e",
-  requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } }
-})
+  Use({
+    "nvim-telescope/telescope.nvim",
+    -- commit = "ec6c13fc092fe8447df77e35013df907a6f3761e",
+    requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } }
+  })
 
+  Use({"lukas-reineke/indent-blankline.nvim", after = colorscheme})
+  use({"L3MON4D3/LuaSnip", config = "require 'config.plugins.luasnip'"})
+  use({ "simrat39/rust-tools.nvim", config = 'require "config.plugins.rust-tools"' })
 
-Use({"lukas-reineke/indent-blankline.nvim", after = colorscheme})
-use({"L3MON4D3/LuaSnip", config = "require 'config.plugins.luasnip'"})
-use({ "simrat39/rust-tools.nvim", config = 'require "config.plugins.rust-tools"' })
+  use("editorconfig/editorconfig-vim")
+  use("kevinhwang91/nvim-bqf")
+  use({ "junegunn/fzf", run = ":call fzf#install()", cmd = 'FZF' })
+  use({ "NvChad/nvim-colorizer.lua", config = 'require"colorizer".setup()' })
+  use{"jbyuki/one-small-step-for-vimkind", opt = true}
 
-use("editorconfig/editorconfig-vim")
-use("kevinhwang91/nvim-bqf")
-use({ "junegunn/fzf", run = ":call fzf#install()", cmd = 'FZF' })
-use({ "norcalli/nvim-colorizer.lua", config = 'require"colorizer".setup()' })
-use{"jbyuki/one-small-step-for-vimkind", opt = true}
-
-use({
-  "mhartington/formatter.nvim",
-  cmd = "Format",
-  config = function()
-    require("formatter").setup({
-      logging = false,
-      log_level = vim.log.levels.INFO,
-      filetype = {
-        ruby = {
-          require('formatter.filetypes.ruby').rubocop
+  use({
+    "mhartington/formatter.nvim",
+    cmd = "Format",
+    config = function()
+      require("formatter").setup({
+        logging = false,
+        log_level = vim.log.levels.INFO,
+        filetype = {
+          ruby = {
+            require('formatter.filetypes.ruby').rubocop
+          },
+          sql = {
+            function()
+              local formaters = {
+                { exe = 'pg_format', args = { '-', '-W', '5' }, stdin = true },
+                { exe = "sqlformat", args = { "-", '-k', 'upper', '-a' }, stdin = true }
+              }
+              print('Select formatter (1) pg_format, (2) sqlformat:')
+              local nr = vim.fn.nr2char(vim.fn.getchar())
+              return formaters[tonumber(nr)]
+            end
+          },
+          lua = {
+            function()
+              return { exe = "stylua", args = { "-" }, stdin = true }
+            end,
+          },
         },
-        sql = {
-          function()
-            local formaters = {
-              { exe = 'pg_format', args = { '-', '-W', '5' }, stdin = true },
-              { exe = "sqlformat", args = { "-", '-k', 'upper', '-a' }, stdin = true }
-            }
-            print('Select formatter (1) pg_format, (2) sqlformat:')
-            local nr = vim.fn.nr2char(vim.fn.getchar())
-            return formaters[tonumber(nr)]
-          end
-        },
-        lua = {
-          function()
-            return { exe = "stylua", args = { "-" }, stdin = true }
-          end,
-        },
-      },
-    })
-  end,
-})
+      })
+    end,
+  })
 
-use 'nanotee/luv-vimdocs'
+  use 'nanotee/luv-vimdocs'
 
-use {'rktjmp/lush.nvim', opt = true }
+  use {'rktjmp/lush.nvim', opt = true }
 
-use {'glepnir/galaxyline.nvim', config = 'require"config.statusline"'}
+  use {'glepnir/galaxyline.nvim', config = 'require"config.statusline"'}
 
-use {
-  "folke/trouble.nvim",
-  cmd = 'Trouble',
-  after = "telescope.nvim",
-  requires = "kyazdani42/nvim-web-devicons",
-  config = function()
-    require("trouble").setup { }
+  -- use {
+  --   "folke/trouble.nvim",
+  --   cmd = 'Trouble',
+  --   after = "telescope.nvim",
+  --   requires = "kyazdani42/nvim-web-devicons",
+  --   config = function()
+  --     require("trouble").setup { }
+  --     local trouble = require("trouble.providers.telescope")
+  --     local telescope = require("telescope")
+  --     telescope.setup {
+  --       defaults = {
+  --         mappings = {
+  --           i = { ["<c-e>"] = trouble.open_with_trouble },
+  --           n = { ["<c-e>"] = trouble.open_with_trouble },
+  --         },
+  --       },
+  --     }
+  --   end
+  -- }
 
-    local trouble = require("trouble.providers.telescope")
-    local telescope = require("telescope")
-
-    telescope.setup {
-      defaults = {
-        mappings = {
-          i = { ["<c-e>"] = trouble.open_with_trouble },
-          n = { ["<c-e>"] = trouble.open_with_trouble },
-        },
-      },
+  use { 'akinsho/toggleterm.nvim', keys = [[<c-\>]], config = function()
+    require("toggleterm").setup {
+      size = function(term)
+        if term.direction == "horizontal" then
+          return 15
+        elseif term.direction == "vertical" then
+          return vim.o.columns * 0.4
+        end
+      end,
+      open_mapping = [[<c-\>]],
+      direction = 'vertical'
     }
 
-  end
-}
+    vim.g.terminal_color_8 = '#595959'
+    vim.cmd 'tnoremap <c-]> <c-\\><c-n>'
 
-use { 'akinsho/nvim-toggleterm.lua', keys = [[<c-\\>]], config = function()
-  require("toggleterm").setup {
-    size = function(term)
-      if term.direction == "horizontal" then
-        return 15
-      elseif term.direction == "vertical" then
-        return vim.o.columns * 0.4
-      end
-    end,
-    open_mapping = [[<c-\>]],
-    direction = 'vertical'
+    require 'config.plugins.nvim-toggleterm'
+  end}
+
+  use 'folke/lua-dev.nvim'
+
+  use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview' }
+
+  use {'leafgarland/typescript-vim', ft = 'typescript' }
+  use 'peitalin/vim-jsx-typescript'
+  use {'thinca/vim-quickrun', cmd = 'QuickRun'}
+  -- use 'github/copilot.vim'
+  use 'bogado/file-line'
+  -- use { 'camspiers/snap', rocks = {'fzy'}, disable = true }
+  -- use "nathom/filetype.nvim"
+  -- use 'simrat39/symbols-outline.nvim'
+  -- use { 'stevearc/aerial.nvim'}
+  use { 'sindrets/diffview.nvim', config = 'require"diffview".setup()', cmd = 'DiffviewOpen' }
+  -- use { 'TimUntersberger/neogit', config = "require'neogit'.setup()" }
+
+  -- Use { 'sidebar-nvim/sidebar.nvim', branch = "dev" }
+  -- Use { 'anuvyklack/pretty-fold.nvim', requires = 'anuvyklack/nvim-keymap-amend' }
+  Use 'rlane/pounce.nvim'
+  use {"elihunter173/dirbuf.nvim", cmd = 'Dirbuf'}
+  use { "natecraddock/workspaces.nvim", config = "require'workspaces'.setup()" }
+  -- use { 'ibhagwan/fzf-lua', requires = { 'kyazdani42/nvim-web-devicons' } }
+  -- use {"j-hui/fidget.nvim", config = "require'fidget'.setup{}" }
+  use {'hoschi/yode-nvim', disable = true}
+  use { 'slim-template/vim-slim' }
+  use { 'mbbill/undotree', cmd = 'UndotreeToggle'}
+
+  Use {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = 'main',
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim"
+    }
   }
 
-  vim.g.terminal_color_8 = '#595959'
-  vim.cmd 'tnoremap <c-]> <c-\\><c-n>'
+  use {'dstein64/vim-startuptime', opt = true}
+  use {'onsails/lspkind-nvim'}
+  Use {'ziontee113/syntax-tree-surfer', disable = true}
 
-  require 'config.plugins.nvim-toggleterm'
-end}
+  Use { 'abecodes/tabout.nvim', after = {'nvim-cmp'}}
 
-use 'folke/lua-dev.nvim'
-
-use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview' }
-
-use {'leafgarland/typescript-vim', ft = 'typescript' }
-use 'peitalin/vim-jsx-typescript'
-use {'thinca/vim-quickrun', cmd = 'QuickRun'}
-use 'github/copilot.vim'
-use 'bogado/file-line'
-use { 'camspiers/snap', rocks = {'fzy'}, disable = true }
--- use "nathom/filetype.nvim"
--- use 'simrat39/symbols-outline.nvim'
-use { 'stevearc/aerial.nvim'}
-use { 'sindrets/diffview.nvim', config = 'require"diffview".setup()', cmd = 'DiffviewOpen' }
--- use { 'TimUntersberger/neogit', config = "require'neogit'.setup()" }
-
--- Use { 'sidebar-nvim/sidebar.nvim', branch = "dev" }
--- Use { 'anuvyklack/pretty-fold.nvim', requires = 'anuvyklack/nvim-keymap-amend' }
-Use 'rlane/pounce.nvim'
-use {"elihunter173/dirbuf.nvim", cmd = 'Dirbuf'}
-use { "natecraddock/workspaces.nvim", config = "require'workspaces'.setup()" }
--- use { 'ibhagwan/fzf-lua', requires = { 'kyazdani42/nvim-web-devicons' } }
--- use {"j-hui/fidget.nvim", config = "require'fidget'.setup{}" }
-use {'hoschi/yode-nvim', disable = true}
-use { 'slim-template/vim-slim' }
-use { 'mbbill/undotree', cmd = 'UndotreeToggle'}
-
-Use {
-  "nvim-neo-tree/neo-tree.nvim",
-  branch = 'main',
-  requires = {
-    "nvim-lua/plenary.nvim",
-    "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-    "MunifTanjim/nui.nvim"
+  Use {
+    "nvim-neotest/neotest",
+    cmd = 'Neotest',
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      'olimorris/neotest-rspec',
+    }
   }
-}
 
-use {'dstein64/vim-startuptime', opt = true}
-use {'onsails/lspkind-nvim'}
-Use {'ziontee113/syntax-tree-surfer', disable = true}
+  -- use { '~/projects/dig.nvim', config = ' dig = require"dig".debug' }
 
-Use { 'abecodes/tabout.nvim', after = {'nvim-cmp'}}
-
-Use {
-  "nvim-neotest/neotest",
-  requires = {
-    "nvim-lua/plenary.nvim",
-    "nvim-treesitter/nvim-treesitter",
-    "antoinemadec/FixCursorHold.nvim",
-    'olimorris/neotest-rspec',
-  }
-}
-
-use { '~/projects/dig.nvim', config = ' dig = require"dig".debug' }
-
-Use {'kylechui/nvim-surround'}
-Use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
-use { 'kkoomen/vim-doge', run = function() vim.fn['doge#install']() end  }
-Use {'anuvyklack/hydra.nvim'}
-use 'TimUntersberger/neogit'
-use {'stevearc/dressing.nvim', config = "require'dressing'.setup()" }
+  Use {'kylechui/nvim-surround'}
+  Use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
+  -- use { 'kkoomen/vim-doge', run = function() vim.fn['doge#install']() end  }
+  Use {'anuvyklack/hydra.nvim'}
+  use 'TimUntersberger/neogit'
+  use {'stevearc/dressing.nvim', config = "require'dressing'.setup()" }
+  -- use {'phaazon/mind.nvim', config = 'require"mind".setup()'}
 end)

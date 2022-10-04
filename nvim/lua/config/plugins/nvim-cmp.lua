@@ -39,6 +39,7 @@ cmp.setup({
         vim.api.nvim_feedkeys(t('<up>'), 'n', true)
       end,
       i = function(fallback)
+        asdf()
         if cmp.visible() then
           cmp.select_prev_item()
         else

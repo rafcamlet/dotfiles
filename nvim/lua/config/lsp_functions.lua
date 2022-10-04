@@ -14,10 +14,8 @@ local function keybindings(bufnr)
   key_map("n", "<space>lo", '<cmd>LSoutlineToggle<cr>')
 
   key_map('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
-  key_map('n', '<c-f>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<cr>')
-  key_map('n', '<c-b>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>')
-
   key_map("n", "<c-]>", "<Cmd>lua vim.lsp.buf.definition()<CR>")
+  key_map("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
 
   vim.cmd "command! Rename Lspsaga rename"
 
