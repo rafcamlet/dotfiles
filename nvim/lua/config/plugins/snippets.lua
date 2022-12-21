@@ -11,16 +11,21 @@ local rep = require('luasnip.extras').rep
 local fmta = require("luasnip.extras.fmt").fmta
 local events = require("luasnip.util.events")
 
+local iter = 0
+local function gen_next()
+  iter = iter + 1
+  return iter
+end
 
 local function lang(name)
   return setmetatable({}, {
     __newindex = function (_, key, val)
       if type(val) == 'string' then
         val = val:gsub('\n$', '')
-        ls.add_snippets(name, {ls.parser.parse_snippet(key, val)})
+        ls.add_snippets(name, {ls.parser.parse_snippet(key, val)}, { key = gen_next() })
         return
       end
-      ls.add_snippets(name, {s(key, val)})
+      ls.add_snippets(name, {s(key, val)}, { key = gen_next() })
     end
   })
 end
@@ -31,18 +36,18 @@ local ruby = lang('ruby')
 local eruby = lang('eruby')
 local lua  = lang('lua')
 local slim  = lang('slim')
+local js  = lang('javascript')
+local python  = lang('python')
 
-all.p = 'process_step_name'
 haml.pry = 'binding.pry'
 slim.pry = 'binding.pry'
 eruby.pry = 'binding.pry'
+eruby.log = 'console.log($0)'
+js.log = 'console.log($0)'
 ruby.pry = 'require "pry"; binding.pry'
-ruby.class = 'class $1\n  $0\nend'
 
+ruby.class = 'class $1\n  $0\nend'
 ruby.is = 'is_expected.to eq $0'
-ruby.param = 'let(:parameter) { create(:parameter, process_step: batch.process_step) }'
-ruby.formula = [[let(:formula) { format('$1', parameter.id) }]]
-ruby.bv = [[create(:batch_value, value: $1, batch: batch, parameter: parameter)]]
 
 lua.class = [[
 ---@class $1
@@ -96,5 +101,7 @@ end
 
 lua.m = "$1 = $1"
 lua.l = 'local '
+
+lua.key = [[vim.keymap.set('n', '${1:lhs}', ${0:rhs})]]
 
 all.lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et elit volutpat, pretium nulla vel, suscipit neque. Etiam id ipsum rutrum, gravida erat ac, bibendum nisl. Proin ultricies lectus nec iaculis molestie. Duis aliquam risus et nulla consectetur, nec accumsan leo vestibulum. Etiam dapibus luctus velit id facilisis. Fusce sed risus purus. Proin nec gravida mauris. Nam fringilla quam et elit aliquam ullamcorper.'

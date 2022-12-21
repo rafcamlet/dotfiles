@@ -5,6 +5,10 @@ vim.cmd([[
 ]])
 
 require("neo-tree").setup({
+  source_selector = {
+    winbar = false,
+    statusline = false
+  },
   close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
   popup_border_style = "rounded",
   enable_git_status = true,
@@ -38,14 +42,14 @@ require("neo-tree").setup({
       hide_gitignored = false,
     },
     follow_current_file = false, -- This will find and focus the file in the active buffer every
-                                 -- time the current file is changed while the tree is open.
+    -- time the current file is changed while the tree is open.
     use_libuv_file_watcher = false, -- This will use the OS level file watchers
-                                    -- to detect changes instead of relying on nvim autocmd events.
+    -- to detect changes instead of relying on nvim autocmd events.
     hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
-                                            -- in whatever position is specified in window.position
-                          -- "open_split",  -- netrw disabled, opening a directory opens within the
-                                            -- window like netrw would, regardless of window.position
-                          -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
+    -- in whatever position is specified in window.position
+    -- "open_split",  -- netrw disabled, opening a directory opens within the
+    -- window like netrw would, regardless of window.position
+    -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
     window = {
       position = "left",
       width = 40,
@@ -128,4 +132,6 @@ require("neo-tree").setup({
 })
 
 vim.keymap.set('n', '<c-g><c-g>', '<cmd>NeoTreeFocusToggle<cr>')
-vim.keymap.set('n', '<c-g><c-f>', '<cmd>NeoTreeReveal<cr>')
+vim.keymap.set('n', '<c-g><c-b>', '<cmd>Neotree buffers<cr>')
+vim.keymap.set('n', '<c-g><c-h>', '<cmd>Neotree right git_status<cr>')
+vim.keymap.set('n', '<c-g><c-f>', '<cmd>Neotree reveal_force_cwd<cr>')

@@ -601,10 +601,16 @@ layout = wibox.layout.fixed.horizontal()
     end)
     -- }}}
 
+awful.ewmh.add_activate_filter(function() return false end, "ewmh")
+awful.ewmh.add_activate_filter(function() return false end, "rules")
+
     -- Autostart
     -- awful.spawn.with_shell('google-chrome')
     awful.spawn.with_shell('flameshot')
     awful.spawn.with_shell('feh --bg-scale ~/wallpaper.jpeg')
+    awful.spawn.with_shell('dropbox start &>/dev/null &')
 
     beautiful.useless_gap = 2
     beautiful.gap_single_client = false
+
+

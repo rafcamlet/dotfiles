@@ -62,7 +62,7 @@ return require("packer").startup(function()
 
   -- use({ "norcalli/nvim-terminal.lua", config = 'require"terminal".setup()' })
 
-  use({"folke/which-key.nvim", cmd = 'WhichKey'})
+  Use({"folke/which-key.nvim"})
 
   -- === tpope ===
   use("tpope/vim-unimpaired")
@@ -83,6 +83,7 @@ return require("packer").startup(function()
   use "neovim/nvim-lspconfig"
   use "williamboman/mason.nvim"
   use "williamboman/mason-lspconfig.nvim"
+  use "jayp0521/mason-nvim-dap.nvim"
   use "glepnir/lspsaga.nvim"
   use "jose-elias-alvarez/null-ls.nvim"
   use "jose-elias-alvarez/nvim-lsp-ts-utils"
@@ -93,10 +94,13 @@ return require("packer").startup(function()
   -- === My ===
   -- use("rafcamlet/nvim-luapad")
   use({"~/projects/winbar-framework.nvim"})
-  use({"~/projects/jumper", config = 'require"jumper".setup()'})
+  -- use({"~/projects/jumper", config = 'require"jumper".setup()'})
+  use({"~/projects/jumper2", config = 'require"jumper".setup()'})
   use("~/projects/rails_spotting")
   use("~/projects/boss")
-  use({"~/projects/nvim-luapad"})
+  use({"~/projects/nvim-luapad", config = function()
+    require('luapad').setup({ wipe = false })
+  end})
   -- use({ "rafcamlet/simple-wiki.nvim", config = function()
   use({ "~/projects/simple-wiki.nvim", config = function()
     require("simple-wiki").setup({
@@ -108,8 +112,8 @@ return require("packer").startup(function()
     vim.cmd('nnoremap _ <CMD>lua require "simple-wiki".search()<CR>')
   end,
     use {
-      "rafcamlet/tabline-framework.nvim",
-      -- "~/projects/tabline_framework",
+      -- "rafcamlet/tabline-framework.nvim",
+      "~/projects/tabline_framework",
       requires = "kyazdani42/nvim-web-devicons",
       config = function()
         vim.opt.showtabline = 2
@@ -216,6 +220,7 @@ return require("packer").startup(function()
 
   use 'nvim-telescope/telescope-fzy-native.nvim'
   use {'jvgrootveld/telescope-zoxide'}
+  use 'nvim-telescope/telescope-dap.nvim'
 
   Use({
     "nvim-telescope/telescope.nvim",
@@ -328,13 +333,13 @@ return require("packer").startup(function()
 
   -- Use { 'sidebar-nvim/sidebar.nvim', branch = "dev" }
   -- Use { 'anuvyklack/pretty-fold.nvim', requires = 'anuvyklack/nvim-keymap-amend' }
-  Use 'rlane/pounce.nvim'
+  Use {'rlane/pounce.nvim', disable = true }
   use {"elihunter173/dirbuf.nvim", cmd = 'Dirbuf'}
   use { "natecraddock/workspaces.nvim", config = "require'workspaces'.setup()" }
   -- use { 'ibhagwan/fzf-lua', requires = { 'kyazdani42/nvim-web-devicons' } }
   -- use {"j-hui/fidget.nvim", config = "require'fidget'.setup{}" }
   use {'hoschi/yode-nvim', disable = true}
-  use { 'slim-template/vim-slim' }
+  -- use { 'slim-template/vim-slim' }
   use { 'mbbill/undotree', cmd = 'UndotreeToggle'}
 
   Use {
@@ -373,4 +378,38 @@ return require("packer").startup(function()
   use 'TimUntersberger/neogit'
   use {'stevearc/dressing.nvim', config = "require'dressing'.setup()" }
   -- use {'phaazon/mind.nvim', config = 'require"mind".setup()'}
+  --
+  use({
+    "andrewferrier/debugprint.nvim",
+    config = function()
+      local eruby = {
+        left = 'console.log(`',
+        right = '`)',
+        mid_var = "${",
+        right_var = '}`)',
+      }
+
+      require("debugprint").setup({
+        print_tag = '',
+        filetypes = { eruby = eruby }
+      })
+    end
+  })
+
+  Use {'ziontee113/neo-minimap'}
+
+  use {
+    'https://gitlab.com/madyanov/svart.nvim',
+    as = 'svart',
+    config = function()
+      vim.keymap.set({ "n", "x", "o" }, "s", "<Cmd>Svart<CR>")       -- begin search
+      vim.keymap.set({ "n", "x", "o" }, "S", "<Cmd>SvartRegex<CR>") 
+    end
+  }
+
+  use 'vim-denops/denops.vim'
+  use {'uga-rosa/scorpeon.vim', config = function()
+    vim.g.scorpeon_extensions_path = vim.fn.expand('~/.cache/scorpeon/extensions')
+    vim.g.scorpeon_highlight = { enable = { 'slim' } }
+  end}
 end)

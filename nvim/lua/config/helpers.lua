@@ -60,7 +60,9 @@ local function update()
   vim.cmd 'PackerSync'
 end
 
-vim.cmd [[command! Update lua require'config.helpers'.update()]]
+vim.api.nvim_create_user_command('Update', function()
+  require'config.helpers'.update()
+end, {})
 
 return {
   config_file = config_file,

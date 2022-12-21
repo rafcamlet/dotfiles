@@ -1,6 +1,17 @@
 package.loaded["config/dap"] = nil
 
-require("dapui").setup()
+require("mason-nvim-dap").setup()
+
+require("dapui").setup({
+  layouts = {
+    {
+      elements = { "repl" },
+      size = 0.30,
+      position = "top",
+    }
+  }
+})
+
 
 vim.cmd [[command! Dap lua require("dapui").toggle()]]
 
@@ -14,16 +25,30 @@ vim.cmd([[nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil
 vim.cmd([[nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>]])
 vim.cmd([[nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>]])
 
+require("which-key").register({
+  d = {
+    name = "Dap",
+    s = { function() require('dapui').float_element('stacks', { enter = true }) end, 'Callstack' },
+    b = { function() require('dapui').float_element('breakpoints', { enter = true }) end, 'Breakpoints' }
+  },
+}, { prefix = "<leader>" })
 
-local is_dap, dap = pcall(require, "dap")
-if not is_dap then return end
 
-local is_dap_install, dap_install = pcall(require, "dap-install")
-if not is_dap_install then return end
+local dap = require("dap")
+-- dap.set_log_level('DEBUG')
+
+
+
+
+-- local is_dap, dap = pcall(require, "dap")
+-- if not is_dap then return end
+
+-- local is_dap_install, dap_install = pcall(require, "dap-install")
+-- if not is_dap_install then return end
 
 -- local dbg_list = require("dap-install.debuggers_list").debuggers
 
-dap_install.setup()
+-- dap_install.setup()
 
 -- dap_install.config("ruby_vsc", {
 --   configurations = {
@@ -42,25 +67,25 @@ dap_install.setup()
 --   },
 -- })
 
-dap_install.config("ruby_vsc", {
-  configurations = {
-    {
-      name = "Run RSpec until the next failure",
-      type = "ruby",
-      request = "launch",
-      cwd = "${workspaceFolder}",
-      -- remoteWorkspaceRoot = "${workspaceRoot}",
-      -- remoteHost = "localhost",
-      -- remotePort = "1234"
-      useBundler = false,
-      -- pathToBundler = "/home/r/.asdf/shims/bundle",
-      -- pathToRDebugIDE = "/home/r/.asdf/shims/rdebug-ide",
-      showDebuggerOutput = true,
-      program = "bin/rails",
-      args = {'s'},
-    },
-  },
-})
+-- dap_install.config("ruby_vsc", {
+--   configurations = {
+--     {
+--       name = "Run RSpec until the next failure",
+--       type = "ruby",
+--       request = "launch",
+--       cwd = "${workspaceFolder}",
+--       -- remoteWorkspaceRoot = "${workspaceRoot}",
+--       -- remoteHost = "localhost",
+--       -- remotePort = "1234"
+--       useBundler = false,
+--       -- pathToBundler = "/home/r/.asdf/shims/bundle",
+--       -- pathToRDebugIDE = "/home/r/.asdf/shims/rdebug-ide",
+--       showDebuggerOutput = true,
+--       program = "bin/rails",
+--       args = {'s'},
+--     },
+--   },
+-- })
 
 -- dap.adapters.ruby = {
 --   type = 'executable';

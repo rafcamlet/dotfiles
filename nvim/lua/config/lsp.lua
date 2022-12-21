@@ -3,7 +3,7 @@ local mason_lspconfig = require("mason-lspconfig")
 
 mason_lspconfig.setup()
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local servers = mason_lspconfig.get_installed_servers()
 vim.list_extend(servers, {'solargraph'})

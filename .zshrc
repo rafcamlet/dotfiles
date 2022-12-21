@@ -231,6 +231,11 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 zstyle ':fzf-tab:*' switch-group ',' '.'
 # }}}
 
+# viratualenv {{{
+# export WORKON_HOME=~/.virtualenvs
+# . virtualenvwrapper.sh
+# }}}
+
 command -v zoxide &> /dev/null && eval "$(zoxide init zsh)"
 
 [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh

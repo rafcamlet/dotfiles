@@ -149,3 +149,45 @@ Hydra({
       { 'q', nil, { exit = true, nowait = true, desc = 'exit' } },
    }
 })
+
+
+vim.cmd([[nnoremap <c-c> <esc>]])
+
+local function find(path)
+  return function()
+    require'finders'.find { cwd = vim.fn.getcwd() .. path }
+  end
+end
+
+hint = [[
+  Ruby Finders
+  ^
+  _v_:  views
+  _c_:  controllers
+  _m_:  models
+  _p_:  policies
+  ^
+  ^             _<esc>_, _<c-c>_
+]]
+
+Hydra({
+  name = 'Find',
+  hint = hint,
+  config = {
+    color = 'teal',
+    hint = {
+      border = 'rounded',
+      position = 'middle'
+    }
+  },
+  mode = {'n'},
+  body = '<space>or',
+  heads = {
+    { 'v', find('/app/views') },
+    { 'c', find('/app/controllers') },
+    { 'm', find('/app/models') },
+    { 'p', find('/app/policies') },
+    { '<esc>', nil, { exit = true}},
+    { '<c-c>', nil, { exit = true}},
+   }
+})

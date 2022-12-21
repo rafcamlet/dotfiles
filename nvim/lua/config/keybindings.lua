@@ -8,7 +8,7 @@ vim.keymap.set('v', ';', ':')
 
 vim.keymap.set('i', 'kj', '<esc>`^')
 
-vim.keymap.set('n', "<enter>", ":put =''<cr>")
+vim.keymap.set('n', "<enter>", ":silent put =''<cr>")
 vim.keymap.set('c', '<enter>', '<cr>')
 -- autocmd FileType qf nvim.keymap.set('', ' <buffer> <cr> <cr>
 

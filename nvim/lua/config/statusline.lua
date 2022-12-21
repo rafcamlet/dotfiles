@@ -8,7 +8,7 @@ gl.short_line_list = { 'NvimTree' }
 
 -- onedark
 local colors = {
-  bg = '#282c34',
+  bg = '#202324',
   bg_dim = '#333842',
   bg_light = '#444b59',
   black = '#222222',
@@ -188,6 +188,7 @@ Right.Warnings = {
 Right.FileIcon = {
   separator = '  ',
   highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg},
+  separator_highlight = {colors.teal, colors.bg},
   condition = condition.buffer_not_empty,
   provider = 'FileIcon'
 }
@@ -205,6 +206,7 @@ Right.GitBranch = {
   icon = ' ',
   separator = '  ',
   condition = condition.check_git_workspace,
+  separator_highlight = {colors.teal, colors.bg},
   highlight = {colors.teal, colors.bg},
   provider = 'GitBranch',
 }
