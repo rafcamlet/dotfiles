@@ -5,7 +5,7 @@ local make_entry = require "telescope.make_entry"
 
 local chain_finder = require 'my_telescope.chain_finder'
 
-local function live_grep(opts)
+local function live_grep_buffers(opts)
   opts = opts or {}
 
   opts.entry_maker = make_entry.gen_from_vimgrep(opts)
@@ -24,8 +24,20 @@ local function live_grep(opts)
           query = string.sub(prompt, 1, string.find(prompt, ";") - 1)
         end
 
+        local buf_tbl = {}
+        local bufs_list = vim.api.nvim_list_bufs()
+
+        for _, v in ipairs(bufs_list) do
+          if  vim.api.nvim_buf_is_loaded(v) then
+            local name = vim.api.nvim_buf_get_name(v)
+            if name ~= '' then
+              table.insert(buf_tbl, name)
+            end
+          end
+        end
+
         return vim.tbl_flatten({
-          conf.vimgrep_arguments, '--max-columns', '500', query, "."
+          conf.vimgrep_arguments, '--max-columns', '500', query, buf_tbl
         })
       end
     }, {
@@ -40,11 +52,11 @@ local function live_grep(opts)
   }
 
   pickers.new(opts, {
-    prompt_title = "rg + fzy",
+    prompt_title = "buffers: rg + fzy",
     finder = chain_finder(opts),
     previewer = conf.grep_previewer(opts),
     sorter = sorters.highlighter_only(opts),
   }):find()
 end
 
-return live_grep
+return live_grep_buffers

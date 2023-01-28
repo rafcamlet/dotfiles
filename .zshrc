@@ -241,3 +241,7 @@ command -v zoxide &> /dev/null && eval "$(zoxide init zsh)"
 [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+autoload -Uz compinit
+zstyle ':completion:*' menu select
+fpath+=~/.zfunc

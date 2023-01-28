@@ -41,6 +41,7 @@ local python  = lang('python')
 
 haml.pry = 'binding.pry'
 slim.pry = 'binding.pry'
+slim.log = 'console.log($0)'
 eruby.pry = 'binding.pry'
 eruby.log = 'console.log($0)'
 js.log = 'console.log($0)'

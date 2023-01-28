@@ -1,14 +1,10 @@
-local Job = require("plenary.job")
 local conf = require("telescope.config").values
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
 local previewers = require("telescope.previewers")
-local sorters = require("telescope.sorters")
 local make_entry = require("telescope.make_entry")
 local actions = require("telescope.actions")
 local action_state = require "telescope.actions.state"
-
-local minimum_grep_characters = 0
 
 local function find(opts)
   opts = opts or {}
@@ -33,48 +29,6 @@ local function find(opts)
     finder = finders.new_oneshot_job(args, opts),
     previewer = conf.file_previewer(opts),
     sorter = conf.generic_sorter(opts),
-  }):find()
-end
-
-local function grep(opts)
-  opts = opts or {}
-
-  local live_grepper = finders._new({
-    fn_command = function(_, prompt)
-      if #prompt < minimum_grep_characters then
-        return nil
-      end
-
-      local rg_prompt, fzf_prompt
-      if string.find(prompt, ";") then
-        rg_prompt = string.sub(prompt, 1, string.find(prompt, ";") - 1)
-        fzf_prompt = string.sub(prompt, string.find(prompt, ";") + 1, #prompt)
-      else
-        rg_prompt = prompt
-        fzf_prompt = ""
-      end
-
-      local rg_args = vim.tbl_flatten({ conf.vimgrep_arguments, rg_prompt, "." })
-      table.remove(rg_args, 1)
-
-      return {
-        writer = Job:new({
-          command = "rg",
-          args = rg_args,
-        }),
-        command = "fzy",
-        args = { "-e", fzf_prompt },
-      }
-    end,
-
-    entry_maker = make_entry.gen_from_vimgrep(opts),
-  })
-
-  pickers.new(opts, {
-    prompt_title = "rg + fzy",
-    finder = live_grepper,
-    previewer = conf.grep_previewer(opts),
-    sorter = sorters.highlighter_only(opts)
   }):find()
 end
 
@@ -142,7 +96,6 @@ local function git(opts)
       else
         return { "git", "diff", "HEAD~" .. State.index, "--name-only" }
       end
-
     end,
     opts.entry_maker,
     opts.max_results,
@@ -180,4 +133,5 @@ return {
   wins = wins,
   git = git,
   live_grep = require 'live_grep',
+  live_grep_buffers = require 'live_grep_buffers',
 }

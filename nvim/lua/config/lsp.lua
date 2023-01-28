@@ -1,12 +1,24 @@
-require("mason").setup()
-local mason_lspconfig = require("mason-lspconfig")
+local mason = prequire('mason')
+if not mason then return end
+mason.setup()
 
+local mason_lspconfig = require("mason-lspconfig")
 mason_lspconfig.setup()
+
+local neodev = prequire('neodev')
+if neodev then
+  neodev.setup({
+    plugins = {'line_maker'}, -- installed opt or start plugins in packpath
+  })
+else
+  print_warn('Neodev missing')
+end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local servers = mason_lspconfig.get_installed_servers()
 vim.list_extend(servers, {'solargraph'})
+-- vim.list_extend(servers, {'ruby_ls'})
 
 Settings = {}
 Settings.sumneko_lua = {
@@ -18,13 +30,28 @@ Settings.sumneko_lua = {
   }
 }
 
+Settings.ruby_ls = {
+  cmd = { "bundle", "exec", "ruby-lsp" }
+}
+
+local attached_servers = {}
+
 local function on_attach(client, bufnr)
   local lsp_functions = require('config.lsp_functions')
   lsp_functions.keybindings(bufnr)
   lsp_functions.highlights(client)
+
+  if client.name == 'ruby_ls' then
+    lsp_functions.request_diagnostic(client, bufnr)
+  end
+
+  if not attached_servers[client.name] then
+    attached_servers[client.name] = true
+    require('notify')(client.name .. ' started')
+  end
 end
 
-for i, server in ipairs(servers) do
+for _, server in ipairs(servers) do
   local settings = Settings[server] or {}
 
   require('lspconfig')[server].setup {
@@ -78,6 +105,9 @@ for type, icon in pairs(signs) do
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
+vim.cmd 'hi LspReferenceText gui=italic guibg=#393e46'
+vim.cmd 'hi LspReferenceRead gui=italic guibg=#393e46'
+vim.cmd 'hi LspReferenceWrite gui=italic guibg=#393e46'
 
 -- virtual_text = {
 --   show = false,

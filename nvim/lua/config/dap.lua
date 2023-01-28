@@ -1,8 +1,13 @@
 package.loaded["config/dap"] = nil
 
-require("mason-nvim-dap").setup()
+local mason = prequire("mason-nvim-dap")
+if mason then mason.setup() end
 
-require("dapui").setup({
+local dap = prequire("dap")
+local dapui = prequire("dapui")
+if not dap or not dapui then return end
+
+dapui.setup({
   layouts = {
     {
       elements = { "repl" },
@@ -34,7 +39,6 @@ require("which-key").register({
 }, { prefix = "<leader>" })
 
 
-local dap = require("dap")
 -- dap.set_log_level('DEBUG')
 
 

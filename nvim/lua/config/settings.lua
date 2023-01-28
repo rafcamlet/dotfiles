@@ -105,7 +105,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
       if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_get_option(buf, 'filetype') == 'help' then
         vim.api.nvim_set_current_buf(buf)
         vim.cmd 'wincmd L'
-        vim.cmd 'vertical resize 85'
+        vim.cmd 'vertical resize 90'
       end
     end)
   end
